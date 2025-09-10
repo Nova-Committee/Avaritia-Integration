@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "avaritia_integration:item/blaze_cube/blaze_cube_screw"
+  }
+}

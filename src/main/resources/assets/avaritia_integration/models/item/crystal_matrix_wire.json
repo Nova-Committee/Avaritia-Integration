@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "avaritia_integration:item/crystal_matrix/crystal_matrix_wire"
+  }
+}
