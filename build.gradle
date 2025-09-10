@@ -79,6 +79,10 @@ repositories {
         }
     }
     maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+    maven {
         url = uri("https://maven.theillusivec4.top")
     }
     maven {
@@ -94,6 +98,32 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    //Refined Storage
+    implementation fg.deobf("curse.maven:refined-storage-243076:${refined_Storage_version}")
+    //Thermal Expansion
+    implementation fg.deobf("curse.maven:thermal-expansion-69163:${thermal_expansion_version}")
+    //Thermal Foundation
+    implementation fg.deobf("curse.maven:thermal-foundation-222880:${thermal_foundation_version}")
+    //CoFH Core
+    implementation fg.deobf("curse.maven:cofh-core-69162:${cofh_core_version}")
+    //Create
+    implementation fg.deobf("curse.maven:create-328085:${create_version}")
+    //PneumaticCraft: Repressurized
+    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_version}")
+    //Botania
+    implementation fg.deobf("curse.maven:botania-225643:${botania_version}")
+    //Ender IO
+    implementation fg.deobf("curse.maven:ender-io-64578:${ender_io_version}")
+    //Blood Magic
+    implementation fg.deobf("maven.modrinth:blood-magic:${blood_magic_version}")
+    //Applied Energistics
+    implementation fg.deobf("curse.maven:applied-energistics-2-223794:${applied_energistics_version}")
+    //GuideME
+    implementation fg.deobf("curse.maven:guideme-1173950:${guideme_version}")
+    //Patchouli
+    implementation fg.deobf("curse.maven:patchouli-306770:${patchouli_version}")
+    //Curios
+    implementation fg.deobf("curse.maven:curios-309927:${curios_version}")
     //Mixin
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:[0.4.1,0.5.0)"))
