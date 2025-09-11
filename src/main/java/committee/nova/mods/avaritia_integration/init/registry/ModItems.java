@@ -91,7 +91,7 @@ public class ModItems {
 
     public static RegistryObject<Item> item(String name, Supplier<Item> item, boolean exist) {
         var regItem = ITEMS.register(name, item);
-        if (exist) ModCreativeModeTabs.ACCEPT_ITEM.add(regItem);
+
         return regItem;
     }
 }

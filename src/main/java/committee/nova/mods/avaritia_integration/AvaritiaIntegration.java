@@ -1,8 +1,11 @@
 package committee.nova.mods.avaritia_integration;
 
 import com.mojang.logging.LogUtils;
+import committee.nova.mods.avaritia_integration.init.registry.ModBlocks;
 import committee.nova.mods.avaritia_integration.init.registry.ModCreativeModeTabs;
 import committee.nova.mods.avaritia_integration.init.registry.ModItems;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -29,12 +32,15 @@ public class AvaritiaIntegration
         MinecraftForge.EVENT_BUS.register(this);
 
         ModItems.ITEMS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
         ModCreativeModeTabs.CREATIVE_TABS.register(modEventBus);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        event.enqueueWork(() ->{
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.asgard_dandelion.getId(),ModBlocks.potted_asgard_dandelion);
+        });
     }
 
 
