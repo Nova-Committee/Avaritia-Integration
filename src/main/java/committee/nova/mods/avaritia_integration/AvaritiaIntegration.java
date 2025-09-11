@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration;
 
 import com.mojang.logging.LogUtils;
+import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
 import committee.nova.mods.avaritia_integration.init.registry.ModBlocks;
 import committee.nova.mods.avaritia_integration.init.registry.ModCreativeModeTabs;
 import committee.nova.mods.avaritia_integration.init.registry.ModItems;
@@ -33,6 +34,7 @@ public class AvaritiaIntegration
 
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModCreativeModeTabs.CREATIVE_TABS.register(modEventBus);
     }
 
