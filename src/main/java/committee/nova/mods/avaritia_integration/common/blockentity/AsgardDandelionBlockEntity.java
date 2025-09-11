@@ -2,7 +2,6 @@ package committee.nova.mods.avaritia_integration.common.blockentity;
 
 import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;

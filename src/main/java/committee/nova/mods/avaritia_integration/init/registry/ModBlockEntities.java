@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.common.blockentity.AsgardDandelionBlockEntity;
+import committee.nova.mods.avaritia_integration.common.blockentity.SoarleanderBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -15,6 +16,13 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(
                     AsgardDandelionBlockEntity::new,
                     ModBlocks.asgard_dandelion.get()
+            ).build(null)
+    );
+    public static final RegistryObject<BlockEntityType<SoarleanderBlockEntity>> SOARLEANDER = BLOCK_ENTITIES.register(
+            "soarleander",
+            () -> BlockEntityType.Builder.of(
+                    SoarleanderBlockEntity::new,
+                    ModBlocks.soarleander.get()
             ).build(null)
     );
 }

@@ -5,10 +5,12 @@ import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
 import committee.nova.mods.avaritia_integration.init.registry.ModBlocks;
 import committee.nova.mods.avaritia_integration.init.registry.ModCreativeModeTabs;
 import committee.nova.mods.avaritia_integration.init.registry.ModItems;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -60,6 +62,16 @@ public class AvaritiaIntegration
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             
+        }
+    }
+
+
+    @SubscribeEvent
+    public void onLivingDrops(LivingDropsEvent event) {
+        if (event.getEntity() instanceof Chicken) {
+            if (event.getSource() == event.getEntity().level().damageSources().fellOutOfWorld()) {
+                event.getDrops().clear();
+            }
         }
     }
 }

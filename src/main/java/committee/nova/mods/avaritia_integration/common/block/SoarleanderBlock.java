@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.common.block;
 
 import committee.nova.mods.avaritia_integration.common.blockentity.AsgardDandelionBlockEntity;
+import committee.nova.mods.avaritia_integration.common.blockentity.SoarleanderBlockEntity;
 import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
@@ -8,6 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,16 +19,16 @@ import vazkii.botania.forge.block.ForgeSpecialFlowerBlock;
 
 import java.util.function.Supplier;
 
-public class ModFlowerBlock extends ForgeSpecialFlowerBlock {
-    public ModFlowerBlock(MobEffect stewEffect, int stewDuration, Properties props, Supplier<BlockEntityType<? extends SpecialFlowerBlockEntity>> blockEntityType) {
+public class SoarleanderBlock extends ForgeSpecialFlowerBlock {
+    public SoarleanderBlock(MobEffect stewEffect, int stewDuration, BlockBehaviour.Properties props, Supplier<BlockEntityType<? extends SpecialFlowerBlockEntity>> blockEntityType) {
         super(stewEffect, stewDuration, props, blockEntityType);
     }
 
     public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new AsgardDandelionBlockEntity(pos, state);
+        return new SoarleanderBlockEntity(pos, state);
     }
 
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return BotaniaBlock.createTickerHelper(type, ModBlockEntities.ASGARD_DANDELION.get(), AsgardDandelionBlockEntity::commonTick);
+        return BotaniaBlock.createTickerHelper(type, ModBlockEntities.SOARLEANDER.get(), SoarleanderBlockEntity::commonTick);
     }
 }
