@@ -11,6 +11,8 @@ import vazkii.botania.api.block_entity.RadiusDescriptor;
 import vazkii.botania.api.block_entity.RadiusDescriptor.Rectangle;
 import vazkii.botania.api.mana.ManaPool;
 
+import java.awt.*;
+
 public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
     private static final int RANGE = 8;
 
@@ -90,7 +92,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
     public int getColor() {
         long gameTime = level != null ? level.getGameTime() : 0;
         float hue = (gameTime % 100) / 100.0f;
-        return java.awt.Color.HSBtoRGB(hue, 1.0f, 1.0f) & 0xFFFFFF;
+        return Color.HSBtoRGB(hue, 1.0f, 1.0f) & 0xFFFFFF;
     }
 
     @Override

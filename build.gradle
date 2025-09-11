@@ -124,6 +124,8 @@ dependencies {
     implementation fg.deobf("curse.maven:patchouli-306770:${patchouli_version}")
     //Curios
     implementation fg.deobf("curse.maven:curios-309927:${curios_version}")
+    //Jade
+    implementation fg.deobf("curse.maven:jade-324717:6855440")
     //Mixin
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:[0.4.1,0.5.0)"))

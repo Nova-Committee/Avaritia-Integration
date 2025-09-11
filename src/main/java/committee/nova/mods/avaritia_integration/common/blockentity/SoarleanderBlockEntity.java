@@ -3,11 +3,9 @@ package committee.nova.mods.avaritia_integration.common.blockentity;
 import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.damagesource.DamageSource;
@@ -16,9 +14,6 @@ import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.block_entity.GeneratingFlowerBlockEntity;
 import vazkii.botania.api.block_entity.RadiusDescriptor;
 import vazkii.botania.api.BotaniaAPI;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class SoarleanderBlockEntity extends GeneratingFlowerBlockEntity {
     private static final int MANA_PER_DAMAGE = 32;
@@ -48,8 +43,8 @@ public class SoarleanderBlockEntity extends GeneratingFlowerBlockEntity {
     @Override
     public void tickFlower() {
         super.tickFlower();
-
         if (level == null || level.isClientSide) return;
+
 
         if (level.getGameTime() % 5 == 0) {
             Vec3 offset = level.getBlockState(getBlockPos()).getOffset(level, getBlockPos());
@@ -67,10 +62,21 @@ public class SoarleanderBlockEntity extends GeneratingFlowerBlockEntity {
         level.getEntitiesOfClass(LivingEntity.class, area, entity ->
                         !(entity instanceof Player) && !(entity instanceof ArmorStand) && entity.isAlive())
                 .forEach(this::attackEntity);
+        double particleChance = 1F - (double) getMana() / (double) getMaxMana() / 3.5F;
+        int color = getColor();
+        float red = (color >> 16 & 0xFF) / 255F;
+        float green = (color >> 8 & 0xFF) / 255F;
+        float blue = (color & 0xFF) / 255F;
+        if (Math.random() > particleChance) {
+            Vec3 offset = level.getBlockState(getBlockPos()).getOffset(level, getBlockPos());
+            double x = getBlockPos().getX() + offset.x;
+            double y = getBlockPos().getY() + offset.y;
+            double z = getBlockPos().getZ() + offset.z;
+            BotaniaAPI.instance().sparkleFX(getLevel(), x + 0.3 + Math.random() * 0.5, y + 0.5 + Math.random() * 0.5, z + 0.3 + Math.random() * 0.5, red, green, blue, (float) Math.random(), 5);
+        }
     }
 
     private void attackEntity(LivingEntity entity) {
-
         boolean isChicken = entity instanceof Chicken;
 
         DamageSource voidDamage = level.damageSources().fellOutOfWorld();
