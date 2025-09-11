@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.common.blockentity.AsgardDandelionBlockEntity;
+import committee.nova.mods.avaritia_integration.common.blockentity.InfinityManaPoolBlockEntity;
 import committee.nova.mods.avaritia_integration.common.blockentity.SoarleanderBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -23,6 +24,13 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(
                     SoarleanderBlockEntity::new,
                     ModBlocks.soarleander.get()
+            ).build(null)
+    );
+    public static final RegistryObject<BlockEntityType<InfinityManaPoolBlockEntity>> INFINITY_MANA_POOL = BLOCK_ENTITIES.register(
+            "infinity_mana_pool",
+            () -> BlockEntityType.Builder.of(
+                    InfinityManaPoolBlockEntity::new,
+                    ModBlocks.infinity_mana_pool.get()
             ).build(null)
     );
 }

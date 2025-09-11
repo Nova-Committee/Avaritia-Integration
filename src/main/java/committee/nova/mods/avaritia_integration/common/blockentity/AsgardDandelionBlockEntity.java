@@ -26,9 +26,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
 
         if (level == null || level.isClientSide) return;
 
-        if (level.getGameTime() % 2 == 0) {
-            addMana(2147483647);
-        }
+        addMana(2147483647);
 
         if (getMana() > 0) {
             for (int dx = -RANGE; dx <= RANGE; dx++) {

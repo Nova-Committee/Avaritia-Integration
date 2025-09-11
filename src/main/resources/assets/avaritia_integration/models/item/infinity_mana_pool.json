@@ -1,0 +1,11 @@
+{
+  "parent": "avaritia_integration:block/infinity_mana_pool",
+  "overrides": [
+    {
+      "model": "avaritia_integration:block/infinity_mana_pool_full",
+      "predicate": {
+        "botania:full": 1.0
+      }
+    }
+  ]
+}

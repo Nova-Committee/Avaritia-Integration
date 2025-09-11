@@ -1,0 +1,9 @@
+{
+  "parent": "avaritia_integration:block/shapes/infinity_mana_pool",
+  "textures": {
+    "bottom": "avaritia_integration:block/botania/infinity_mana_pool_bottom",
+    "inside": "avaritia_integration:block/botania/infinity_mana_pool_inside",
+    "side": "avaritia_integration:block/botania/infinity_mana_pool_side",
+    "top": "avaritia_integration:block/botania/infinity_mana_pool_top"
+  }
+}

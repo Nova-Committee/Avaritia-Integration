@@ -177,7 +177,23 @@ publishing {
         }
     }
 }
+Map<String, String> commonSystemProperties = [
+        'forge.logging.console.level': 'debug',
+        "mixin.debug.export": "true",
+        "mixin.config":"${mod_id}.mixins.json"
+]
 
+mixin {
+    add(sourceSets.main, "${mod_id}.refmap.json")
+    config "${mod_id}.mixins.json"
+}
+jar {
+    manifest {
+        attributes([
+                "MixinConfigs"          : "${mod_id}.mixins.json"
+        ])
+    }
+}
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }

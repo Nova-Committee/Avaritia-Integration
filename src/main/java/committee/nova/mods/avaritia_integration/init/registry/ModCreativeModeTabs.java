@@ -74,6 +74,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.neutron_wire.get());
                 output.accept(ModBlocks.asgard_dandelion.get());
                 output.accept(ModBlocks.soarleander.get());
+                output.accept(ModBlocks.infinity_mana_pool.get());
             })
             .build());
 
