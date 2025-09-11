@@ -40,6 +40,7 @@ public class AvaritiaIntegration
     {
         event.enqueueWork(() ->{
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.asgard_dandelion.getId(),ModBlocks.potted_asgard_dandelion);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.soarleander.getId(),ModBlocks.potted_soarleander);
         });
     }
 

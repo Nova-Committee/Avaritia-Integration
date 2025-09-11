@@ -73,6 +73,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModItems.neutron_spring.get());
                 output.accept(ModItems.neutron_wire.get());
                 output.accept(ModBlocks.asgard_dandelion.get());
+                output.accept(ModBlocks.soarleander.get());
             })
             .build());
 
