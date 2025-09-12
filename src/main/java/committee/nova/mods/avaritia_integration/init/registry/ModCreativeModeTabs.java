@@ -75,6 +75,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.asgard_dandelion.get());
                 output.accept(ModBlocks.soarleander.get());
                 output.accept(ModBlocks.infinity_mana_pool.get());
+                output.accept(ModBlocks.infinity_potato.get());
             })
             .build());
 

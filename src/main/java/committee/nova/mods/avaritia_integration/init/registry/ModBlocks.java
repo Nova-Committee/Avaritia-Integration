@@ -3,6 +3,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.common.block.AsgardDandelionBlock;
 import committee.nova.mods.avaritia_integration.common.block.InfinityManaPoolBlock;
+import committee.nova.mods.avaritia_integration.common.block.InfinityTinyPotatoBlock;
 import committee.nova.mods.avaritia_integration.common.block.SoarleanderBlock;
 import committee.nova.mods.avaritia_integration.common.blockentity.AsgardDandelionBlockEntity;
 import committee.nova.mods.avaritia_integration.common.blockentity.SoarleanderBlockEntity;
@@ -15,6 +16,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import vazkii.botania.common.block.BotaniaBlock;
+import vazkii.botania.common.block.BotaniaBlocks;
 import vazkii.botania.common.block.mana.ManaPoolBlock;
 import vazkii.botania.xplat.XplatAbstractions;
 
@@ -40,6 +43,8 @@ public class ModBlocks {
     public static final RegistryObject<Block> infinity_mana_pool = registerBlock("infinity_mana_pool",()->
             new InfinityManaPoolBlock(InfinityManaPoolBlock.Variant.CREATIVE, BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
+    public static final RegistryObject<Block> infinity_potato = registerBlock("infinity_potato", InfinityTinyPotatoBlock::new
+    );
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = BLOCKS.register(name,block);

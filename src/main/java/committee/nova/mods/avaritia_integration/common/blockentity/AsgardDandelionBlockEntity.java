@@ -35,7 +35,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
                         BlockPos pos = getBlockPos().offset(dx, dy, dz);
                         if (level.getBlockEntity(pos) instanceof ManaPool pool) {
                             if (!pool.isFull()) {
-                                int manaToSend = Math.min(getMana(), 1600);
+                                int manaToSend = Math.min(getMana(), 32000);
                                 if (manaToSend > 0) {
                                     pool.receiveMana(manaToSend);
                                     addMana(-manaToSend);
