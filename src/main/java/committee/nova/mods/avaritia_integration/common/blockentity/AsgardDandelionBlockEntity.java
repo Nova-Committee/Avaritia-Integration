@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.common.blockentity;
 
 import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -10,6 +11,7 @@ import vazkii.botania.api.block_entity.GeneratingFlowerBlockEntity;
 import vazkii.botania.api.block_entity.RadiusDescriptor;
 import vazkii.botania.api.block_entity.RadiusDescriptor.Rectangle;
 import vazkii.botania.api.mana.ManaPool;
+import vazkii.botania.api.mana.ManaReceiver;
 
 import java.awt.*;
 
@@ -33,7 +35,9 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
                 for (int dy = -RANGE; dy <= RANGE; dy++) {
                     for (int dz = -RANGE; dz <= RANGE; dz++) {
                         BlockPos pos = getBlockPos().offset(dx, dy, dz);
-                        if (level.getBlockEntity(pos) instanceof ManaPool pool) {
+                        BlockEntity be = level.getBlockEntity(pos);
+
+                        if (be instanceof ManaPool pool) {
                             if (!pool.isFull()) {
                                 int manaToSend = Math.min(getMana(), 32000);
                                 if (manaToSend > 0) {
@@ -43,6 +47,19 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
                                     if (getMana() <= 0) {
                                         break;
                                     }
+                                }
+                            }
+                        }
+
+                        else if (be instanceof ManaReceiver receiver && receiver.canReceiveManaFromBursts()) {
+
+                            int manaToSend = Math.min(getMana(), 32000);
+                            if (manaToSend > 0) {
+                                receiver.receiveMana(manaToSend);
+                                addMana(-manaToSend);
+                                sync();
+                                if (getMana() <= 0) {
+                                    break;
                                 }
                             }
                         }

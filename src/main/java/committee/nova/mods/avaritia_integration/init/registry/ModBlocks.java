@@ -18,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import vazkii.botania.common.block.BotaniaBlock;
 import vazkii.botania.common.block.BotaniaBlocks;
+import vazkii.botania.common.block.FloatingSpecialFlowerBlock;
 import vazkii.botania.common.block.mana.ManaPoolBlock;
 import vazkii.botania.xplat.XplatAbstractions;
 
@@ -25,17 +26,27 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, AvaritiaIntegration.MOD_ID);
-    public static final BlockBehaviour.Properties FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY);
+    public static final BlockBehaviour.Properties ASGARD_FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(level -> 15);
+    public static final BlockBehaviour.Properties SOARLEANDER_FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(level -> 5);
+
     public static final BlockEntityType<AsgardDandelionBlockEntity> ASGARD = XplatAbstractions.INSTANCE.createBlockEntityType(AsgardDandelionBlockEntity::new);
     public static final BlockEntityType<SoarleanderBlockEntity> SOARLEANDER = XplatAbstractions.INSTANCE.createBlockEntityType(SoarleanderBlockEntity::new);
-        public static final RegistryObject<Block> asgard_dandelion =  registerBlock("asgard_dandelion",()->
-                new AsgardDandelionBlock(MobEffects.HUNGER, 0, FLOWER_PROPS, () -> ASGARD));
 
-        public static final RegistryObject<Block> potted_asgard_dandelion =  registerBlock("potted_asgard_dandelion",()->
+
+        public static final RegistryObject<Block> asgard_dandelion = registerBlock("asgard_dandelion",()->
+                new AsgardDandelionBlock(MobEffects.HUNGER, 0, ASGARD_FLOWER_PROPS, () -> ASGARD));
+
+        public static final RegistryObject<Block> asgard_dandelion_floating = registerBlock("asgard_dandelion_floating",
+                () -> new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS, () -> ASGARD));
+
+        public static final RegistryObject<Block> potted_asgard_dandelion = registerBlock("potted_asgard_dandelion",()->
             new FlowerPotBlock(()-> ((FlowerPotBlock)Blocks.FLOWER_POT),ModBlocks.asgard_dandelion,BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion().lightLevel(level -> 15)));
 
-    public static final RegistryObject<Block> soarleander =  registerBlock("soarleander",()->
-            new SoarleanderBlock(MobEffects.WITHER, 0, FLOWER_PROPS, () -> SOARLEANDER));
+    public static final RegistryObject<Block> soarleander = registerBlock("soarleander",()->
+            new SoarleanderBlock(MobEffects.WITHER, 1, SOARLEANDER_FLOWER_PROPS, () -> SOARLEANDER));
+
+    public static final RegistryObject<Block> soarleander_floating = registerBlock("soarleander_floating",
+            () -> new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS, () -> SOARLEANDER));
 
     public static final RegistryObject<Block> potted_soarleander =  registerBlock("potted_soarleander",()->
             new FlowerPotBlock(()-> ((FlowerPotBlock)Blocks.FLOWER_POT),ModBlocks.soarleander,BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion().lightLevel(level -> 5)));

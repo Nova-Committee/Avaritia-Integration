@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "avaritia_integration:asgard_dandelion"
+    "avaritia_integration:asgard_dandelion",
+    "avaritia_integration:soarleander"
   ]
 }

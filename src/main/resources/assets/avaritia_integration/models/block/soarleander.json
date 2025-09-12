@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "botania:block/shapes/cross",
   "render_type": "minecraft:cutout",
   "textures": {
     "cross": "avaritia_integration:item/items/soarleander"

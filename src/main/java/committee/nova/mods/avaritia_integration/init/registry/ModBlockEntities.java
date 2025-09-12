@@ -14,17 +14,17 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, AvaritiaIntegration.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<AsgardDandelionBlockEntity>> ASGARD_DANDELION = BLOCK_ENTITIES.register(
-            "asgard_dandelion",
+            "asgard_dandelion_be",
             () -> BlockEntityType.Builder.of(
                     AsgardDandelionBlockEntity::new,
-                    ModBlocks.asgard_dandelion.get()
+                    ModBlocks.asgard_dandelion.get(),ModBlocks.asgard_dandelion_floating.get()
             ).build(null)
     );
     public static final RegistryObject<BlockEntityType<SoarleanderBlockEntity>> SOARLEANDER = BLOCK_ENTITIES.register(
-            "soarleander",
+            "soarleander_be",
             () -> BlockEntityType.Builder.of(
                     SoarleanderBlockEntity::new,
-                    ModBlocks.soarleander.get()
+                    ModBlocks.soarleander.get(),ModBlocks.soarleander_floating.get()
             ).build(null)
     );
     public static final RegistryObject<BlockEntityType<InfinityManaPoolBlockEntity>> INFINITY_MANA_POOL = BLOCK_ENTITIES.register(

@@ -8,8 +8,10 @@ import committee.nova.mods.avaritia_integration.init.registry.ModItems;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,6 +21,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import vazkii.botania.api.BotaniaForgeCapabilities;
+import vazkii.botania.api.block.Wandable;
+import vazkii.botania.api.mana.ManaReceiver;
+import vazkii.botania.common.lib.ResourceLocationHelper;
+import vazkii.botania.forge.CapabilityUtil;
 
 @Mod(AvaritiaIntegration.MOD_ID)
 public class AvaritiaIntegration
@@ -42,6 +49,8 @@ public class AvaritiaIntegration
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
+        IEventBus bus = MinecraftForge.EVENT_BUS;
+        bus.addGenericListener(BlockEntity.class, this::attachBeCaps);
         event.enqueueWork(() ->{
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.asgard_dandelion.getId(),ModBlocks.potted_asgard_dandelion);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.soarleander.getId(),ModBlocks.potted_soarleander);
@@ -64,5 +73,14 @@ public class AvaritiaIntegration
                 event.getDrops().clear();
             }
         }
+    }
+    private void attachBeCaps(AttachCapabilitiesEvent<BlockEntity> e) {
+        BlockEntity be = e.getObject();
+
+        if (be.getType() == ModBlockEntities.INFINITY_MANA_POOL.get())  {
+            e.addCapability(ResourceLocationHelper.prefix("mana_receiver"), CapabilityUtil.makeProvider(BotaniaForgeCapabilities.MANA_RECEIVER, (ManaReceiver)be));
+            e.addCapability(ResourceLocationHelper.prefix("wandable"), CapabilityUtil.makeProvider(BotaniaForgeCapabilities.WANDABLE, (Wandable)be));
+        }
+
     }
 }
