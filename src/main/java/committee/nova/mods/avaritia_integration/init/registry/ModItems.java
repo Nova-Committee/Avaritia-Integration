@@ -3,8 +3,8 @@ package committee.nova.mods.avaritia_integration.init.registry;
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.common.item.BloodOrbOfArmokItem;
-import committee.nova.mods.avaritia_integration.common.item.StredgeuniverseItem;
+import committee.nova.mods.avaritia_integration.common.item.*;
+import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -47,7 +47,6 @@ public class ModItems {
     public static final RegistryObject<Item> crystal_matrix_spring = item("crystal_matrix_spring", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> crystal_matrix_wire = item("crystal_matrix_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     //infinity
-
     public static final RegistryObject<Item> infinity_bolt = item("infinity_bolt", ()-> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
     public static final RegistryObject<Item> infinity_dense_plate = item("infinity_dense_plate", ()-> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
     public static final RegistryObject<Item> infinity_double_plate = item("infinity_double_plate", ()-> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
@@ -60,7 +59,7 @@ public class ModItems {
     public static final RegistryObject<Item> infinity_screw = item("infinity_screw", ()-> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
     public static final RegistryObject<Item> infinity_spring = item("infinity_spring", ()-> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
     public static final RegistryObject<Item> infinity_wire = item("infinity_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-
+    //neutron
     public static final RegistryObject<Item> neutron_bolt = item("neutron_bolt", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_dense_plate = item("neutron_dense_plate", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_double_plate = item("neutron_double_plate", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
@@ -72,10 +71,30 @@ public class ModItems {
     public static final RegistryObject<Item> neutron_screw = item("neutron_screw", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_spring = item("neutron_spring", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_wire = item("neutron_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
+//SlashBlade
+    public static final RegistryObject<Item> STREDGEUNIVERSE = item("stredgeuniverse", StredgeuniverseItem::new);
+//BloodMagic
+    public static final RegistryObject<Item> blood_orb_of_armok = item("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
+//EnderIO
+    public static final RegistryObject<Item> infinity_capacitor = item("infinity_capacitor", () -> new InfinityCapacitorItem(InfinityCapacitorData.INSTANCE, new Item.Properties().rarity(ModRarities.EPIC)));
+    public static final RegistryObject<Item> infinity_grinding_ball = item("infinity_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
+    public static final RegistryObject<Item> neutron_grinding_ball = item("neutron_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
+//Create
+    public static final RegistryObject<Item> creative_mechanism = item("creative_mechanism", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
+    public static final RegistryObject<Item> creative_compound = item("creative_compound", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
 
-    public static final RegistryObject<Item> STREDGEUNIVERSE = ITEMS.register("stredgeuniverse", StredgeuniverseItem::new);
+//Applied Energistics
+    public static final RegistryObject<Item> infinity_me_storage_component = item("infinity_me_storage_component", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
 
-    public static final RegistryObject<Item> blood_orb_of_armok = ITEMS.register("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
+//Thermal Expansion
+    public static final RegistryObject<Item> creative_augment_base = item("creative_augment_base", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
+
+//PneumaticCraft: Repressurized
+    public static final RegistryObject<Item> creative_compressed_iron = item("creative_compressed_iron", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
+
+//Refined Storage
+    public static final RegistryObject<Item> infinity_storge_part = item("infinity_storage_part", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
+
 
     public static RegistryObject<Item> item(String name) {
         return item(name, true);

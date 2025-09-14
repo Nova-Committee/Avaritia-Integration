@@ -54,15 +54,36 @@
   "item.avaritia_integration.neutron_spring": "Neutron Spring",
   "item.avaritia_integration.neutron_wire": "Neutron Wire",
 
+  "item.avaritia_integration.blood_orb_of_armok": "Blood Orb of Armok",
+
+  "item.avaritia_integration.infinity_capacitor": "Infinity Capacitor",
+  "item.avaritia_integration.infinity_grinding_ball": "Infinity Grinding Ball",
+  "item.avaritia_integration.neutron_grinding_ball": "Neutron Grinding Ball",
+
   "block.avaritia_integration.asgard_dandelion": "§cAsgard Dandelion",
   "block.avaritia_integration.potted_asgard_dandelion": "§cPotted Asgard Dandelion",
   "block.avaritia_integration.soarleander": "§cSoarleander",
   "block.avaritia_integration.potted_soarleander": "§cPotted Soarleander",
+  "block.avaritia_integration.asgard_dandelion_floating": "§cFloating Asgard Dandelion",
+  "block.avaritia_integration.soarleander_floating": "§cFloating Soarleander",
+  "block.avaritia_integration.infinity_mana_pool": "Infinity Mana Pool",
+  "block.avaritia_integration.infinity_potato": "Infinity Tiny Potato",
 
   "item.avaritia_integration.stredgeuniverse": "§cThe §6Strongest §eBlade §2in §bthe §3Universe §1[End of All Things · Boundless Starry Sky]",
   "item.avaritia_integration.stredgeuniverse.tooltip1": "§5§o“Liberated here, the mightiest power in the universe“",
   "item.avaritia_integration.stredgeuniverse.tooltip2": "§5§o“This is the end for Blade Swords“",
   "item.avaritia_integration.stredgeuniverse.tooltip3": "§5§o“Aaaaaah, at the sight of this blade, all I see is fear.“",
   "item.avaritia_integration.stredgeuniverse.tooltip4": "§5§o“The boundless sea of stars has been split open! My god, what is this!“",
-  "item.avaritia_integration.stredgeuniverse.tooltip5": "§5§o“You will never imagine what you will become beneath this blade.“"
+  "item.avaritia_integration.stredgeuniverse.tooltip5": "§5§o“You will never imagine what you will become beneath this blade.“",
+
+  "item.avaritia_integration.creative_mechanism": "Creative Mechanism",
+  "item.avaritia_integration.creative_compound": "Creative Compound",
+
+  "item.avaritia_integration.infinity_me_storage_component": "Infinity ME Storage Component",
+
+  "item.avaritia_integration.creative_augment_base": "Creative Augment Base",
+
+  "item.avaritia_integration.creative_compressed_iron": "Creative Compressed Iron",
+
+  "item.avaritia_integration.infinity_storage_part": "Infinity Storage Part"
 }

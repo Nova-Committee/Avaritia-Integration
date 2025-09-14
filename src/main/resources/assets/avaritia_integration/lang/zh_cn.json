@@ -54,15 +54,36 @@
   "item.avaritia_integration.neutron_spring": "中子弹簧",
   "item.avaritia_integration.neutron_wire": "中子线",
 
+  "item.avaritia_integration.blood_orb_of_armok": "阿尔莫克之血宝珠",
+
+  "item.avaritia_integration.infinity_capacitor": "无尽电容",
+  "item.avaritia_integration.infinity_grinding_ball": "无尽磨珠",
+  "item.avaritia_integration.neutron_grinding_ball": "中子磨珠",
+
   "block.avaritia_integration.asgard_dandelion": "§c阿斯加德蒲公英",
   "block.avaritia_integration.potted_asgard_dandelion": "§c盆栽阿斯加德蒲公英",
   "block.avaritia_integration.soarleander": "§c索利安德之嗜",
   "block.avaritia_integration.potted_soarleander": "§c盆栽索利安德之嗜",
+  "block.avaritia_integration.asgard_dandelion_floating": "§c浮空阿斯加德蒲公英",
+  "block.avaritia_integration.soarleander_floating": "§c浮空索利安德之嗜",
+  "block.avaritia_integration.infinity_mana_pool": "无尽魔力池",
+  "block.avaritia_integration.infinity_potato": "无尽小土豆",
 
   "item.avaritia_integration.stredgeuniverse": "§c宇§6宙§e最§2强§b之§3刃§1「万物终结·无尽星空」",
   "item.avaritia_integration.stredgeuniverse.tooltip1": "§5§o“在此解放，宇宙最强之力”",
   "item.avaritia_integration.stredgeuniverse.tooltip2": "§5§o“拔刀剑的末日到了”",
   "item.avaritia_integration.stredgeuniverse.tooltip3": "§5§o“啊啊啊啊啊，看见这把刀，我就看见了恐惧。”",
   "item.avaritia_integration.stredgeuniverse.tooltip4": "§5§o“无尽的星海被划开了！我的天，这是什么！”",
-  "item.avaritia_integration.stredgeuniverse.tooltip5": "§5§o“你永远无法想象刀刃之下，你会成为什么。”"
+  "item.avaritia_integration.stredgeuniverse.tooltip5": "§5§o“你永远无法想象刀刃之下，你会成为什么。”",
+
+  "item.avaritia_integration.creative_mechanism": "创世构件",
+  "item.avaritia_integration.creative_compound": "创世化合物",
+
+  "item.avaritia_integration.infinity_me_storage_component": "无尽ME存储组件",
+
+  "item.avaritia_integration.creative_augment_base": "创造升级模板",
+
+  "item.avaritia_integration.creative_compressed_iron": "创造压缩铁锭",
+
+  "item.avaritia_integration.infinity_storage_part": "无限存储元件"
 }

@@ -80,6 +80,16 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.infinity_potato.get());
                 output.accept(ModItems.STREDGEUNIVERSE.get());
                 output.accept(ModItems.blood_orb_of_armok.get());
+                output.accept(ModItems.infinity_capacitor.get());
+                output.accept(ModItems.neutron_grinding_ball.get());
+                output.accept(ModItems.infinity_grinding_ball.get());
+                output.accept(ModItems.creative_mechanism.get());
+                output.accept(ModItems.creative_compound.get());
+                output.accept(ModItems.infinity_me_storage_component.get());
+                output.accept(ModItems.creative_augment_base.get());
+                output.accept(ModItems.creative_compressed_iron.get());
+                output.accept(ModItems.infinity_storge_part.get());
+
             })
             .build());
 

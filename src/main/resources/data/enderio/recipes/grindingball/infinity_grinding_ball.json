@@ -1,0 +1,8 @@
+{
+  "type": "enderio:grinding_ball",
+  "chance": 5.0,
+  "durability": 2147483647,
+  "grinding": 5.0,
+  "item": "avaritia_integration:infinity_grinding_ball",
+  "power": 0.01
+}

@@ -1,0 +1,8 @@
+{
+  "type": "enderio:grinding_ball",
+  "chance": 5.0,
+  "durability": 32767,
+  "grinding": 1.0,
+  "item": "avaritia_integration:neutron_grinding_ball",
+  "power": 0.1
+}
