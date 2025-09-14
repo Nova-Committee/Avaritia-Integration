@@ -57,5 +57,12 @@
   "block.avaritia_integration.asgard_dandelion": "§c阿斯加德蒲公英",
   "block.avaritia_integration.potted_asgard_dandelion": "§c盆栽阿斯加德蒲公英",
   "block.avaritia_integration.soarleander": "§c索利安德之嗜",
-  "block.avaritia_integration.potted_soarleander": "§c盆栽索利安德之嗜"
+  "block.avaritia_integration.potted_soarleander": "§c盆栽索利安德之嗜",
+
+  "item.avaritia_integration.stredgeuniverse": "§c宇§6宙§e最§2强§b之§3刃§1「万物终结·无尽星空」",
+  "item.avaritia_integration.stredgeuniverse.tooltip1": "§5§o“在此解放，宇宙最强之力”",
+  "item.avaritia_integration.stredgeuniverse.tooltip2": "§5§o“拔刀剑的末日到了”",
+  "item.avaritia_integration.stredgeuniverse.tooltip3": "§5§o“啊啊啊啊啊，看见这把刀，我就看见了恐惧。”",
+  "item.avaritia_integration.stredgeuniverse.tooltip4": "§5§o“无尽的星海被划开了！我的天，这是什么！”",
+  "item.avaritia_integration.stredgeuniverse.tooltip5": "§5§o“你永远无法想象刀刃之下，你会成为什么。”"
 }

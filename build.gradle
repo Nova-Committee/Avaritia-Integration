@@ -20,7 +20,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
     mappings channel: mapping_channel, version: mapping_version
-
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     copyIdeResources = true
 
     runs {
@@ -125,7 +125,9 @@ dependencies {
     //Curios
     implementation fg.deobf("curse.maven:curios-309927:${curios_version}")
     //Jade
-    implementation fg.deobf("curse.maven:jade-324717:6855440")
+    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
+    //SlashBlade
+    implementation fg.deobf("curse.maven:slashblade-resharped-1022428:${slash_blade_version}")
     //Mixin
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:[0.4.1,0.5.0)"))

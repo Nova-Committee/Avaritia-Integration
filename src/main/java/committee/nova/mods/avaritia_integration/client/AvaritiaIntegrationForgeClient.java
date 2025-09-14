@@ -18,8 +18,13 @@ import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
 import vazkii.botania.common.lib.ResourceLocationHelper;
 import vazkii.botania.forge.CapabilityUtil;
 
+
 @Mod.EventBusSubscriber(modid = AvaritiaIntegration.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AvaritiaIntegrationForgeClient {
+
+    public AvaritiaIntegrationForgeClient(){
+
+    }
 
     @SubscribeEvent
     public static void registerLoaders(ModelEvent.RegisterGeometryLoaders event) {
@@ -47,5 +52,6 @@ public class AvaritiaIntegrationForgeClient {
             );
         }
     }
+
 
 }

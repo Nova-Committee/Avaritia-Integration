@@ -3,6 +3,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.common.item.StredgeuniverseItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -69,6 +70,7 @@ public class ModItems {
     public static final RegistryObject<Item> neutron_spring = item("neutron_spring", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_wire = item("neutron_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
 
+    public static final RegistryObject<Item> STREDGEUNIVERSE = ITEMS.register("stredgeuniverse", StredgeuniverseItem::new);
 
     public static RegistryObject<Item> item(String name) {
         return item(name, true);

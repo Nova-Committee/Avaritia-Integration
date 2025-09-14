@@ -8,17 +8,33 @@ import committee.nova.mods.avaritia_integration.common.blockentity.InfinityManaP
 import committee.nova.mods.avaritia_integration.common.blockentity.SoarleanderBlockEntity;
 import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
 import committee.nova.mods.avaritia_integration.init.registry.ModBlocks;
+import committee.nova.mods.avaritia_integration.init.registry.ModItems;
+import mods.flammpfeil.slashblade.client.renderer.model.BladeModel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.botania.client.render.block_entity.SpecialFlowerBlockEntityRenderer;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = AvaritiaIntegration.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AvaritiaIntegrationModClient {
+
+
+    public AvaritiaIntegrationModClient() {
+
+    }
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
