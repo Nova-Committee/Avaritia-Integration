@@ -78,7 +78,7 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.soarleander_floating.get());
                 output.accept(ModBlocks.infinity_mana_pool.get());
                 output.accept(ModBlocks.infinity_potato.get());
-                output.accept(ModItems.STREDGEUNIVERSE.get());
+                output.accept(ModItems.STREDGEUNIVERSE.get().getDefaultInstance());
                 output.accept(ModItems.blood_orb_of_armok.get());
                 output.accept(ModItems.infinity_capacitor.get());
                 output.accept(ModItems.neutron_grinding_ball.get());
