@@ -1,12 +1,10 @@
 package committee.nova.mods.avaritia_integration.common.block;
 
 import committee.nova.mods.avaritia_integration.common.blockentity.InfinityTinyPotatoBlockEntity;
-import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
+import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -136,5 +134,5 @@ public class InfinityTinyPotatoBlock extends BotaniaWaterloggedBlock implements 
     }
 
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.INFINITY_TINY_POTATO.get(), InfinityTinyPotatoBlockEntity::commonTick);
+        return createTickerHelper(type, BotaniaReg.INFINITY_TINY_POTATO.get(), InfinityTinyPotatoBlockEntity::commonTick);
     }}

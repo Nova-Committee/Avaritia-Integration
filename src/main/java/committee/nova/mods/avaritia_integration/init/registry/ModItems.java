@@ -5,19 +5,17 @@ import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.common.item.*;
 import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import wayoftime.bloodmagic.common.item.BloodOrb;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ModItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, AvaritiaIntegration.MOD_ID);
+import static committee.nova.mods.avaritia_integration.init.registry.Registries.item;
 
+public class ModItems {
     //blaze_cube
     public static final RegistryObject<Item> blaze_cube_bolt = item("blaze_cube_bolt", ()-> new BaseItem(pro -> pro.rarity(ModRarities.UNCOMMON)));
     public static final RegistryObject<Item> blaze_cube_dense_plate = item("blaze_cube_dense_plate", ()-> new BaseItem(pro -> pro.rarity(ModRarities.UNCOMMON)));
@@ -74,7 +72,7 @@ public class ModItems {
 //SlashBlade
     public static final RegistryObject<Item> STREDGEUNIVERSE = item("stredgeuniverse", StredgeuniverseItem::new);
 //BloodMagic
-    public static final RegistryObject<Item> blood_orb_of_armok = item("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
+    //public static final RegistryObject<Item> blood_orb_of_armok = item("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
 //EnderIO
     public static final RegistryObject<Item> infinity_capacitor = item("infinity_capacitor", () -> new InfinityCapacitorItem(InfinityCapacitorData.INSTANCE, new Item.Properties().rarity(ModRarities.EPIC)));
     public static final RegistryObject<Item> infinity_grinding_ball = item("infinity_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
@@ -95,30 +93,4 @@ public class ModItems {
 //Refined Storage
     public static final RegistryObject<Item> infinity_storge_part = item("infinity_storage_part", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
 
-
-    public static RegistryObject<Item> item(String name) {
-        return item(name, true);
-    }
-
-    public static RegistryObject<Item> item(String name, boolean exist) {
-        return item(name, (e) -> new BaseItem(), exist);
-    }
-
-    public static RegistryObject<Item> item(String name, Function<String, Item> item) {
-        return item(name, item, true);
-    }
-
-    public static RegistryObject<Item> item(String name, Function<String, Item> item, boolean exist) {
-        return item(name, () -> item.apply(name), exist);
-    }
-
-    public static RegistryObject<Item> item(String name, Supplier<Item> item) {
-        return item(name, item, true);
-    }
-
-    public static RegistryObject<Item> item(String name, Supplier<Item> item, boolean exist) {
-        var regItem = ITEMS.register(name, item);
-
-        return regItem;
-    }
 }

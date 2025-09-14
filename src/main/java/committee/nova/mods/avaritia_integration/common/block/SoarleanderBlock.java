@@ -1,8 +1,7 @@
 package committee.nova.mods.avaritia_integration.common.block;
 
-import committee.nova.mods.avaritia_integration.common.blockentity.AsgardDandelionBlockEntity;
 import committee.nova.mods.avaritia_integration.common.blockentity.SoarleanderBlockEntity;
-import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
+import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
@@ -29,6 +28,6 @@ public class SoarleanderBlock extends ForgeSpecialFlowerBlock {
     }
 
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return BotaniaBlock.createTickerHelper(type, ModBlockEntities.SOARLEANDER.get(), SoarleanderBlockEntity::commonTick);
+        return BotaniaBlock.createTickerHelper(type, BotaniaReg.SOARLEANDER_BLOCK_ENTITIES.get(), SoarleanderBlockEntity::commonTick);
     }
 }

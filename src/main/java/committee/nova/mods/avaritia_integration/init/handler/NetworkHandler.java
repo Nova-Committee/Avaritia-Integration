@@ -1,9 +1,10 @@
-package committee.nova.mods.avaritia_integration.util;
+package committee.nova.mods.avaritia_integration.init.handler;
 
-import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.common.net.ClientEntityRemovePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,17 +12,45 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static committee.nova.mods.avaritia_integration.AvaritiaIntegration.MOD_ID;
+
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class NetworkHandler {
+    private static final String PROTOCOL_VERSION = "1";
+    private static int messageID = 0;
+    public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
+
+
+    @SubscribeEvent
+    public static void registerMessage(FMLCommonSetupEvent event) {
+        NetworkHandler.addNetworkMessage(ClientEntityRemovePacket.class,
+                ClientEntityRemovePacket::encode,
+                ClientEntityRemovePacket::new,
+                ClientEntityRemovePacket::handle);
+    }
+
+    public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
+        PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
+        messageID++;
+    }
+
     /**
      * 向指定位置附近的所有玩家发送数据包
      * @param packet 要发送的数据包
@@ -36,7 +65,7 @@ public class NetworkHandler {
                     player -> player.distanceToSqr(position.x, position.y, position.z) < radius * radius
             );
             for (ServerPlayer player : players) {
-                AvaritiaIntegration.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), packet);
+                PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), packet);
             }
         }
     }
@@ -53,7 +82,7 @@ public class NetworkHandler {
      * @param packet 要发送的数据包
      */
     public static void sendToServer(Object packet) {
-        AvaritiaIntegration.PACKET_HANDLER.sendToServer(packet);
+        PACKET_HANDLER.sendToServer(packet);
     }
 
     /**
@@ -62,7 +91,7 @@ public class NetworkHandler {
      */
     public static void sendToServerSafe(Object packet) {
         if (Minecraft.getInstance().getConnection() != null) {
-            AvaritiaIntegration.PACKET_HANDLER.sendToServer(packet);
+            PACKET_HANDLER.sendToServer(packet);
         }
     }
 
@@ -74,7 +103,7 @@ public class NetworkHandler {
      * @param player 目标玩家
      */
     public static void sendToPlayer(Object packet, ServerPlayer player) {
-        AvaritiaIntegration.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), packet);
+        PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), packet);
     }
 
     /**
@@ -82,7 +111,7 @@ public class NetworkHandler {
      * @param packet 要发送的数据包
      */
     public static void sendToAllPlayers(Object packet) {
-        AvaritiaIntegration.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), packet);
+        PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), packet);
     }
 
     /**
@@ -92,12 +121,12 @@ public class NetworkHandler {
      */
     public static void safeSendToAll(Object packet, boolean fromClient) {
         if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) {
-            AvaritiaIntegration.PACKET_HANDLER.send(
+            PACKET_HANDLER.send(
                     PacketDistributor.ALL.noArg(),
                     packet
             );
         } else if (fromClient) {
-            AvaritiaIntegration.PACKET_HANDLER.sendToServer(packet);
+            PACKET_HANDLER.sendToServer(packet);
         }
     }
 
@@ -121,7 +150,7 @@ public class NetworkHandler {
     }
 
     public static void send(PacketDistributor.PacketTarget target, Object object) {
-        AvaritiaIntegration.PACKET_HANDLER.send(target, object);
+        PACKET_HANDLER.send(target, object);
     }
 
     /**
@@ -130,7 +159,7 @@ public class NetworkHandler {
      * @param entity 目标实体
      */
     public static void sendToTrackingEntity(Object packet, Entity entity) {
-        AvaritiaIntegration.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), packet);
+        PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), packet);
     }
 
     /**
@@ -139,7 +168,7 @@ public class NetworkHandler {
      * @param entity 目标实体
      */
     public static void sendToTrackingEntityAndSelf(Object packet, Entity entity) {
-        AvaritiaIntegration.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), packet);
+        PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), packet);
     }
 
     /**
@@ -148,7 +177,7 @@ public class NetworkHandler {
      * @param dimension 目标维度
      */
     public static void sendToDimension(Object packet, ResourceKey<Level> dimension) {
-        AvaritiaIntegration.PACKET_HANDLER.send(PacketDistributor.DIMENSION.with(() -> dimension), packet);
+        PACKET_HANDLER.send(PacketDistributor.DIMENSION.with(() -> dimension), packet);
     }
 
     /**
@@ -158,7 +187,7 @@ public class NetworkHandler {
      * @param radius 半径
      */
     public static void sendToAllAround(Object packet, Vec3 pos, double radius, ResourceKey<Level> dimension) {
-        AvaritiaIntegration.PACKET_HANDLER.send(PacketDistributor.NEAR.with(() ->
+        PACKET_HANDLER.send(PacketDistributor.NEAR.with(() ->
                         new PacketDistributor.TargetPoint(pos.x, pos.y, pos.z, radius, dimension)),
                 packet);
     }

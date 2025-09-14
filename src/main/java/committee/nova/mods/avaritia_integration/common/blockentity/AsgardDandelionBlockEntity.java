@@ -1,6 +1,6 @@
 package committee.nova.mods.avaritia_integration.common.blockentity;
 
-import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
+import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,7 +19,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
     private static final int RANGE = 8;
 
     public AsgardDandelionBlockEntity( BlockPos pos, BlockState state) {
-        super(ModBlockEntities.ASGARD_DANDELION.get(), pos, state);
+        super(BotaniaReg.ASGARD_DANDELION.get(), pos, state);
     }
 
     @Override

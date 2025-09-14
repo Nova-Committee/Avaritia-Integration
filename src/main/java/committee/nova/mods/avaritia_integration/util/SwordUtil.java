@@ -1,5 +1,7 @@
 package committee.nova.mods.avaritia_integration.util;
 
+import committee.nova.mods.avaritia_integration.common.net.ClientEntityRemovePacket;
+import committee.nova.mods.avaritia_integration.init.handler.NetworkHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;

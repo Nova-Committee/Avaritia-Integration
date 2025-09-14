@@ -1,32 +1,23 @@
 package committee.nova.mods.avaritia_integration.common.blockentity;
 
-import committee.nova.mods.avaritia_integration.init.registry.ModBlockEntities;
-import committee.nova.mods.avaritia_integration.init.registry.ModBlocks;
-import net.minecraft.client.renderer.EffectInstance;
+import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Component.Serializer;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.Nameable;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.DyeColor;
@@ -37,34 +28,26 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CandleCakeBlock;
-import net.minecraft.world.level.block.PotatoBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.common.BotaniaStats;
 import vazkii.botania.common.block.BotaniaBlocks;
-import vazkii.botania.common.block.block_entity.ExposedSimpleInventoryBlockEntity;
-import vazkii.botania.common.block.block_entity.TinyPotatoBlockEntity;
 import vazkii.botania.common.block.decor.TinyPotatoBlock;
 import vazkii.botania.common.handler.BotaniaSounds;
 import vazkii.botania.common.helper.PlayerHelper;
 import vazkii.botania.common.helper.VecHelper;
 import vazkii.botania.common.lib.ResourceLocationHelper;
 
-import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.IntStream;
 
 import static vazkii.botania.common.lib.ResourceLocationHelper.prefix;
 
@@ -80,7 +63,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
     private int birthdayTick = 0;
     private static final List<Block> ALL_CANDLE_CAKES;
     public InfinityTinyPotatoBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.INFINITY_TINY_POTATO.get(), pos, state);
+        super(BotaniaReg.INFINITY_TINY_POTATO.get(), pos, state);
     }
 
     public void interact(Player player, InteractionHand hand, ItemStack stack, Direction side) {
