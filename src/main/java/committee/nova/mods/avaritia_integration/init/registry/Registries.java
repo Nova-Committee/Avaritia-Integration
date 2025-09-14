@@ -66,7 +66,7 @@ public class Registries {
 
     public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, boolean hasItem, boolean exist, Item.Properties properties) {
         var reg = BLOCKS.register(name, block);
-        if (hasItem) ModItems.item(name, () -> new BlockItem(reg.get(), properties), exist);
+        if (hasItem) item(name, () -> new BlockItem(reg.get(), properties), exist);
         return reg;
     }
     public static RegistryObject<Item> item(String name) {
@@ -91,7 +91,7 @@ public class Registries {
 
     public static RegistryObject<Item> item(String name, Supplier<Item> item, boolean exist) {
         var regItem = ITEMS.register(name, item);
-        if (exist) ModCreativeModeTabs.ACCEPT_ITEM.add(regItem);
+        if (exist) ACCEPT_ITEM.add(regItem);
         return regItem;
     }
 

@@ -2,16 +2,10 @@ package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
-import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.common.item.*;
 import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static committee.nova.mods.avaritia_integration.init.registry.Registries.item;
 

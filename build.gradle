@@ -88,6 +88,7 @@ repositories {
     maven {
         url = "https://repo.spongepowered.org/repository/maven-public"
     }
+    maven { url "https://maven.kessokuteatime.work/releases" }
 }
 
 dependencies {
@@ -111,7 +112,7 @@ dependencies {
     //PneumaticCraft: Repressurized
     implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_version}")
     //Botania
-    implementation fg.deobf("curse.maven:botania-225643:${botania_version}")
+    compileOnly fg.deobf("curse.maven:botania-225643:${botania_version}")
     //Ender IO
     implementation fg.deobf("curse.maven:ender-io-64578:${ender_io_version}")
     //Blood Magic
@@ -132,7 +133,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:[0.4.1,0.5.0)"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:[0.4.1,0.5.0)"))
-    implementation(jarJar("maven.modrinth:integration:[jo2wGsvz,)"))
+    implementation(jarJar("com.iafenvoy.integration:integration-forge:[0.2,)"))
 }
 
 tasks.named('processResources', ProcessResources).configure {

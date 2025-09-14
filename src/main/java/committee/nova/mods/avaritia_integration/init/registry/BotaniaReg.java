@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.init.registry;
 
 import com.iafenvoy.integration.entrypoint.EntryPointProvider;
+import com.iafenvoy.integration.entrypoint.IntegrationEntryPoint;
 import committee.nova.mods.avaritia.api.common.block.BaseBlock;
 import committee.nova.mods.avaritia_integration.common.block.AsgardDandelionBlock;
 import committee.nova.mods.avaritia_integration.common.block.InfinityManaPoolBlock;
@@ -28,7 +29,7 @@ import static committee.nova.mods.avaritia_integration.init.registry.Registries.
  * @author: cnlimiter
  */
 @EntryPointProvider(slug = "botania")
-public class BotaniaReg {
+public class BotaniaReg implements IntegrationEntryPoint {
     public static final BlockBehaviour.Properties ASGARD_FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(level -> 15);
     public static final BlockBehaviour.Properties SOARLEANDER_FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(level -> 5);
 
@@ -116,4 +117,15 @@ public class BotaniaReg {
                     infinity_potato.get()
             ).build(null)
     );
+//    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+//    public static class Bus {
+//        @SubscribeEvent
+//        public static void commonSetup(final FMLCommonSetupEvent event)
+//        {
+//            IntegrationExecutor.runWhenLoad("botania",()->()-> {
+////                ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaReg.asgard_dandelion.getId(),BotaniaReg.potted_asgard_dandelion);
+////                ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaReg.soarleander.getId(),BotaniaReg.potted_soarleander);
+//            });
+//        }
+//    }
 }
