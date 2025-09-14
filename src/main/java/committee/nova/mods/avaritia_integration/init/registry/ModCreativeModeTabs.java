@@ -75,8 +75,11 @@ public class ModCreativeModeTabs {
                 output.accept(ModBlocks.asgard_dandelion.get());
                 output.accept(ModBlocks.asgard_dandelion_floating.get());
                 output.accept(ModBlocks.soarleander.get());
+                output.accept(ModBlocks.soarleander_floating.get());
                 output.accept(ModBlocks.infinity_mana_pool.get());
                 output.accept(ModBlocks.infinity_potato.get());
+                output.accept(ModItems.STREDGEUNIVERSE.get());
+                output.accept(ModItems.blood_orb_of_armok.get());
             })
             .build());
 

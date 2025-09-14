@@ -3,11 +3,14 @@ package committee.nova.mods.avaritia_integration.init.registry;
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.common.item.BloodOrbOfArmokItem;
 import committee.nova.mods.avaritia_integration.common.item.StredgeuniverseItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import wayoftime.bloodmagic.common.item.BloodOrb;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -71,6 +74,8 @@ public class ModItems {
     public static final RegistryObject<Item> neutron_wire = item("neutron_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
 
     public static final RegistryObject<Item> STREDGEUNIVERSE = ITEMS.register("stredgeuniverse", StredgeuniverseItem::new);
+
+    public static final RegistryObject<Item> blood_orb_of_armok = ITEMS.register("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
 
     public static RegistryObject<Item> item(String name) {
         return item(name, true);
