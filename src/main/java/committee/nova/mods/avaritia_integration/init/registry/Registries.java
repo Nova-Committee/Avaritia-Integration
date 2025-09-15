@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
+import committee.nova.mods.avaritia.init.registry.ModCreativeModeTabs;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -31,7 +32,7 @@ public class Registries {
 
     public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_TABS.register("avaritia_integration_group", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.tab.Integration"))
-            .icon(()-> committee.nova.mods.avaritia_integration.init.registry.ModItems.infinity_gear.get().getDefaultInstance())
+            .icon(() -> committee.nova.mods.avaritia_integration.init.registry.ModItems.infinity_gear.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 for (var item : ACCEPT_ITEM) {
                     output.accept(item.get());
@@ -60,15 +61,16 @@ public class Registries {
         return itemBlock(name, block, true, true, new Item.Properties().rarity(rarity));
     }
 
-    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block,  boolean hasItem, Item.Properties properties) {
+    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, boolean hasItem, Item.Properties properties) {
         return itemBlock(name, block, hasItem, true, properties);
     }
 
     public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, boolean hasItem, boolean exist, Item.Properties properties) {
         var reg = BLOCKS.register(name, block);
-        if (hasItem) ModItems.item(name, () -> new BlockItem(reg.get(), properties), exist);
+        if (hasItem) item(name, () -> new BlockItem(reg.get(), properties), exist);
         return reg;
     }
+
     public static RegistryObject<Item> item(String name) {
         return item(name, true);
     }

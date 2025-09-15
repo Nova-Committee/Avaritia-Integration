@@ -1,6 +1,5 @@
 package committee.nova.mods.avaritia_integration.init.registry;
 
-import com.iafenvoy.integration.entrypoint.EntryPointProvider;
 import committee.nova.mods.avaritia.api.common.block.BaseBlock;
 import committee.nova.mods.avaritia_integration.common.block.AsgardDandelionBlock;
 import committee.nova.mods.avaritia_integration.common.block.InfinityManaPoolBlock;
@@ -27,7 +26,6 @@ import static committee.nova.mods.avaritia_integration.init.registry.Registries.
 /**
  * @author: cnlimiter
  */
-@EntryPointProvider(slug = "botania")
 public class BotaniaReg {
     public static final BlockBehaviour.Properties ASGARD_FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(level -> 15);
     public static final BlockBehaviour.Properties SOARLEANDER_FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(level -> 5);
@@ -41,47 +39,47 @@ public class BotaniaReg {
             true, ModList.get().isLoaded("botania")
     );
 
-    public static final RegistryObject<Block> asgard_dandelion_floating =  Registries.itemBlock("asgard_dandelion_floating",
+    public static final RegistryObject<Block> asgard_dandelion_floating = Registries.itemBlock("asgard_dandelion_floating",
             () -> ModList.get().isLoaded("botania") ? new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS, () -> ASGARD) : new BaseBlock(BlockBehaviour.Properties.of()),
             true, ModList.get().isLoaded("botania")
     );
 
-    public static final RegistryObject<Block> potted_asgard_dandelion =  Registries.itemBlock("potted_asgard_dandelion",
+    public static final RegistryObject<Block> potted_asgard_dandelion = Registries.itemBlock("potted_asgard_dandelion",
             () -> ModList.get().isLoaded("botania") ?
-                    new FlowerPotBlock(()-> ((FlowerPotBlock)Blocks.FLOWER_POT),asgard_dandelion,BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion().lightLevel(level -> 15))
+                    new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), asgard_dandelion, BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion().lightLevel(level -> 15))
                     : new BaseBlock(BlockBehaviour.Properties.of()),
             true, ModList.get().isLoaded("botania")
     );
 
-    public static final RegistryObject<Block> soarleander =  Registries.itemBlock("soarleander",
+    public static final RegistryObject<Block> soarleander = Registries.itemBlock("soarleander",
             () -> ModList.get().isLoaded("botania") ?
                     new SoarleanderBlock(MobEffects.WITHER, 1, SOARLEANDER_FLOWER_PROPS, () -> SOARLEANDER)
                     : new BaseBlock(BlockBehaviour.Properties.of()),
             true, ModList.get().isLoaded("botania")
     );
 
-    public static final RegistryObject<Block> soarleander_floating =  Registries.itemBlock("soarleander_floating",
+    public static final RegistryObject<Block> soarleander_floating = Registries.itemBlock("soarleander_floating",
             () -> ModList.get().isLoaded("botania") ?
                     new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS, () -> SOARLEANDER)
                     : new BaseBlock(BlockBehaviour.Properties.of()),
             true, ModList.get().isLoaded("botania")
     );
 
-    public static final RegistryObject<Block> potted_soarleander =  Registries.itemBlock("potted_soarleander",
+    public static final RegistryObject<Block> potted_soarleander = Registries.itemBlock("potted_soarleander",
             () -> ModList.get().isLoaded("botania") ?
-                    new FlowerPotBlock(()-> ((FlowerPotBlock)Blocks.FLOWER_POT),soarleander,BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion().lightLevel(level -> 5))
+                    new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), soarleander, BlockBehaviour.Properties.copy(Blocks.POTTED_DANDELION).noOcclusion().lightLevel(level -> 5))
                     : new BaseBlock(BlockBehaviour.Properties.of()),
             true, ModList.get().isLoaded("botania")
     );
 
-    public static final RegistryObject<Block> infinity_mana_pool =  Registries.itemBlock("infinity_mana_pool",
+    public static final RegistryObject<Block> infinity_mana_pool = Registries.itemBlock("infinity_mana_pool",
             () -> ModList.get().isLoaded("botania") ?
                     new InfinityManaPoolBlock(InfinityManaPoolBlock.Variant.CREATIVE, BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK))
                     : new BaseBlock(BlockBehaviour.Properties.of()),
             true, ModList.get().isLoaded("botania")
     );
 
-    public static final RegistryObject<Block> infinity_potato =  Registries.itemBlock("infinity_potato",
+    public static final RegistryObject<Block> infinity_potato = Registries.itemBlock("infinity_potato",
             () -> ModList.get().isLoaded("botania") ?
                     new InfinityTinyPotatoBlock()
                     : new BaseBlock(BlockBehaviour.Properties.of()),
@@ -92,14 +90,14 @@ public class BotaniaReg {
             "asgard_dandelion_be",
             () -> BlockEntityType.Builder.of(
                     AsgardDandelionBlockEntity::new,
-                    asgard_dandelion.get(),asgard_dandelion_floating.get()
+                    asgard_dandelion.get(), asgard_dandelion_floating.get()
             ).build(null)
     );
     public static final RegistryObject<BlockEntityType<SoarleanderBlockEntity>> SOARLEANDER_BLOCK_ENTITIES = BLOCK_ENTITIES.register(
             "soarleander_be",
             () -> BlockEntityType.Builder.of(
                     SoarleanderBlockEntity::new,
-                    soarleander.get(),soarleander_floating.get()
+                    soarleander.get(), soarleander_floating.get()
             ).build(null)
     );
     public static final RegistryObject<BlockEntityType<InfinityManaPoolBlockEntity>> INFINITY_MANA_POOL = BLOCK_ENTITIES.register(
