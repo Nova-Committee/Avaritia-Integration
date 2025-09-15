@@ -3,7 +3,6 @@ package committee.nova.mods.avaritia_integration;
 import com.mojang.logging.LogUtils;
 import committee.nova.mods.avaritia_integration.init.handler.CapHandler;
 import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
-import committee.nova.mods.avaritia_integration.init.registry.ModBlocks;
 import committee.nova.mods.avaritia_integration.init.registry.ModItems;
 import committee.nova.mods.avaritia_integration.init.registry.Registries;
 import net.minecraft.world.level.block.Blocks;
