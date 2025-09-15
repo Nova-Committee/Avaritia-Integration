@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia.api.common.block.BaseBlock;
 import committee.nova.mods.avaritia_integration.api.event.ClientInitEvent;
+import committee.nova.mods.avaritia_integration.api.event.InitEvent;
 import committee.nova.mods.avaritia_integration.api.module.AbModule;
 import committee.nova.mods.avaritia_integration.api.module.InModule;
 import committee.nova.mods.avaritia_integration.client.render.InfinityManaPoolRender;
@@ -21,13 +22,25 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
+import vazkii.botania.api.BotaniaForgeCapabilities;
+import vazkii.botania.api.BotaniaForgeClientCapabilities;
+import vazkii.botania.api.block.Wandable;
+import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
+import vazkii.botania.api.mana.ManaReceiver;
 import vazkii.botania.client.render.block_entity.SpecialFlowerBlockEntityRenderer;
 import vazkii.botania.common.block.BotaniaBlocks;
 import vazkii.botania.common.block.FloatingSpecialFlowerBlock;
+import vazkii.botania.common.lib.ResourceLocationHelper;
+import vazkii.botania.forge.CapabilityUtil;
 import vazkii.botania.xplat.XplatAbstractions;
 
 import static committee.nova.mods.avaritia_integration.init.registry.Registries.BLOCK_ENTITIES;
@@ -36,7 +49,7 @@ import static committee.nova.mods.avaritia_integration.init.registry.Registries.
  * @author: cnlimiter
  */
 @InModule(value = "botania_reg", dependencies = "botania")
-@InModule.Subscriber(modBus = true)
+@InModule.Subscriber()
 public class BotaniaReg extends AbModule {
 
     public static final BlockBehaviour.Properties ASGARD_FLOWER_PROPS = BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(level -> 15);
@@ -128,6 +141,12 @@ public class BotaniaReg extends AbModule {
     );
 
     @Override
+    protected void init(InitEvent event) {
+        IEventBus bus = MinecraftForge.EVENT_BUS;
+        bus.addListener(this::attachCommonCap);
+    }
+
+    @Override
     protected void clientInit(ClientInitEvent event) {
         BlockEntityRenderers.register(INFINITY_MANA_POOL.get(), InfinityManaPoolRender::new);
         BlockEntityRenderers.register(ASGARD_DANDELION.get(), SpecialFlowerBlockEntityRenderer::new);
@@ -137,5 +156,34 @@ public class BotaniaReg extends AbModule {
         ItemBlockRenderTypes.setRenderLayer(asgard_dandelion_floating.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(soarleander.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(soarleander_floating.get(), RenderType.cutout());
+        IEventBus bus = MinecraftForge.EVENT_BUS;
+        bus.addListener(this::attachClientCap);
+    }
+
+    public void attachClientCap(AttachCapabilitiesEvent<BlockEntity> e) {
+        BlockEntity be = e.getObject();
+        if (be instanceof AsgardDandelionBlockEntity tile) {
+            e.addCapability(ResourceLocationHelper.prefix("wand_hud"),
+                    CapabilityUtil.makeProvider(BotaniaForgeClientCapabilities.WAND_HUD, new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud(tile))
+            );
+        }
+        if (be instanceof SoarleanderBlockEntity tile) {
+            e.addCapability(ResourceLocationHelper.prefix("wand_hud"),
+                    CapabilityUtil.makeProvider(BotaniaForgeClientCapabilities.WAND_HUD, new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud(tile))
+            );
+        }
+        if (be instanceof InfinityManaPoolBlockEntity tile) {
+            e.addCapability(ResourceLocationHelper.prefix("wand_hud"),
+                    CapabilityUtil.makeProvider(BotaniaForgeClientCapabilities.WAND_HUD, new InfinityManaPoolBlockEntity.WandHud(tile))
+            );
+        }
+    }
+
+    public void attachCommonCap(AttachCapabilitiesEvent<BlockEntity> e) {
+        BlockEntity be = e.getObject();
+        if (be instanceof InfinityManaPoolBlockEntity) {
+            e.addCapability(ResourceLocationHelper.prefix("mana_receiver"), CapabilityUtil.makeProvider(BotaniaForgeCapabilities.MANA_RECEIVER, (ManaReceiver) be));
+            e.addCapability(ResourceLocationHelper.prefix("wandable"), CapabilityUtil.makeProvider(BotaniaForgeCapabilities.WANDABLE, (Wandable) be));
+        }
     }
 }

@@ -5,21 +5,9 @@ import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.api.module.AbModule;
 import committee.nova.mods.avaritia_integration.api.module.InModule;
 import committee.nova.mods.avaritia_integration.common.item.InfinityCapacitorItem;
-import committee.nova.mods.avaritia_integration.common.item.StredgeuniverseItem;
 import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
-import mods.flammpfeil.slashblade.client.renderer.model.BladeModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Supplier;
 
 import static committee.nova.mods.avaritia_integration.init.registry.Registries.item;
 
@@ -28,7 +16,7 @@ import static committee.nova.mods.avaritia_integration.init.registry.Registries.
  * @author: cnlimiter
  */
 @InModule(value = "core_reg", dependencies = "avaritia")
-@InModule.Subscriber(modBus = true)
+@InModule.Subscriber
 public class CoreReg  extends AbModule {
     //blaze_cube
     public static final RegistryObject<Item> blaze_cube_bolt = item("blaze_cube_bolt", ()-> new BaseItem(pro -> pro.rarity(ModRarities.UNCOMMON)));
@@ -84,7 +72,6 @@ public class CoreReg  extends AbModule {
     public static final RegistryObject<Item> neutron_spring = item("neutron_spring", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_wire = item("neutron_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     //SlashBlade
-    public static final RegistryObject<Item> stredgeuniverse = item("stredgeuniverse", StredgeuniverseItem::new);
     //BloodMagic
     //public static final RegistryObject<Item> blood_orb_of_armok = item("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
 //EnderIO
@@ -107,11 +94,5 @@ public class CoreReg  extends AbModule {
     //Refined Storage
     public static final RegistryObject<Item> infinity_storge_part = item("infinity_storage_part", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
 
-    @SubscribeEvent
-    public void Baked(final ModelEvent.ModifyBakingResult event) {
-        ModelResourceLocation loc2 = new ModelResourceLocation(
-                Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(CoreReg.stredgeuniverse.get())), "inventory");
-        BladeModel model2 = new BladeModel(event.getModels().get(loc2), event.getModelBakery());
-        event.getModels().put(loc2, model2);
-    }
+
 }

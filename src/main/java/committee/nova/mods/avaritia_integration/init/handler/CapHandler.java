@@ -10,10 +10,5 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber
 public class CapHandler {
-    @SubscribeEvent
-    public static void attachBeCaps(AttachCapabilitiesEvent<BlockEntity> e) {
-//        IntegrationExecutor.runWhenLoad("botania", () -> () -> {
-//            BotaniaUtils.attachBeCapabilities(e);
-//        });
-    }
+
 }
