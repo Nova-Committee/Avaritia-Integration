@@ -3,7 +3,7 @@ package committee.nova.mods.avaritia_integration.common.item;
 
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.init.registry.ModSlashArts;
+import committee.nova.mods.avaritia_integration.init.registry.SlashbladeReg;
 import committee.nova.mods.avaritia_integration.util.SwordUtil;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemTierSlashBlade;
@@ -51,7 +51,7 @@ public class StredgeuniverseItem extends ItemSlashBlade {
 				return Ingredient.EMPTY;
 			}
 		}, Integer.MAX_VALUE,-2.4f, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
-		this.slashArts = ModSlashArts.meteoritesword.getId();
+		this.slashArts = SlashbladeReg.meteoritesword.getId();
 	}
 
 	@Override
