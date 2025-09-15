@@ -1,12 +1,17 @@
 package committee.nova.mods.avaritia_integration.module;
 
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import java.util.function.Consumer;
-
+/**
+ * Base module interface
+ *
+ * @author IAFEnvoy
+ */
 public interface Module {
-    void setup();
+    void init();
 
-    void registerEvent(IEventBus modBus,IEventBus gameBus);
+    void process();
+
+    //TODO::Maybe auto bus?
+    void registerEvent(IEventBus modBus, IEventBus gameBus);
 }

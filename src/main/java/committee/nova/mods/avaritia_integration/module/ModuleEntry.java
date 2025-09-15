@@ -4,6 +4,10 @@ import net.minecraftforge.api.distmarker.Dist;
 
 import java.lang.annotation.*;
 
+/**
+ * Define a module
+ * @author IAFEnvoy
+ */
 @SuppressWarnings("unused")
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -17,7 +21,7 @@ public @interface ModuleEntry {
     /*
     When should this module load
      */
-    ModMeta[] targets() default {};
+    ModMeta[] target() default {};
 
     /*
     Which side should load
