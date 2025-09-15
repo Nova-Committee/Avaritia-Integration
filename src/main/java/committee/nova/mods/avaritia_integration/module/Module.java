@@ -8,10 +8,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
  * @author IAFEnvoy
  */
 public interface Module {
-    void init();
+    default void init(IEventBus registryBus) {
+    }
 
-    void process();
+    default void process() {
+    }
 
     //TODO::Maybe auto bus?
-    void registerEvent(IEventBus modBus, IEventBus gameBus);
+    default void registerEvent(IEventBus modBus, IEventBus gameBus) {
+    }
 }

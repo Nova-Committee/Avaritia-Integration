@@ -1,7 +1,7 @@
-package committee.nova.mods.avaritia_integration.common.block;
+package committee.nova.mods.avaritia_integration.module.botania.item.block;
 
-import committee.nova.mods.avaritia_integration.common.blockentity.SoarleanderBlockEntity;
-import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
+import committee.nova.mods.avaritia_integration.module.botania.item.block.entity.SoarleanderBlockEntity;
+import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
@@ -23,11 +23,13 @@ public class SoarleanderBlock extends ForgeSpecialFlowerBlock {
         super(stewEffect, stewDuration, props, blockEntityType);
     }
 
+    @Override
     public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new SoarleanderBlockEntity(pos, state);
     }
 
+    @Override
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return BotaniaBlock.createTickerHelper(type, BotaniaReg.SOARLEANDER_BLOCK_ENTITIES.get(), SoarleanderBlockEntity::commonTick);
+        return BotaniaBlock.createTickerHelper(type, BotaniaIntegrationBlockEntities.SOARLEANDER_BLOCK_ENTITIES.get(), SoarleanderBlockEntity::commonTick);
     }
 }

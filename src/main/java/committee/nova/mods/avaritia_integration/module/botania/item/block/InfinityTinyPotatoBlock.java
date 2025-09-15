@@ -1,7 +1,7 @@
-package committee.nova.mods.avaritia_integration.common.block;
+package committee.nova.mods.avaritia_integration.module.botania.item.block;
 
-import committee.nova.mods.avaritia_integration.common.blockentity.InfinityTinyPotatoBlockEntity;
-import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
+import committee.nova.mods.avaritia_integration.module.botania.item.block.entity.InfinityTinyPotatoBlockEntity;
+import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -40,18 +39,21 @@ public class InfinityTinyPotatoBlock extends BotaniaWaterloggedBlock implements 
 
     public InfinityTinyPotatoBlock() {
         super(Properties.copy(BotaniaBlocks.tinyPotato));
-        this.registerDefaultState((BlockState)this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH));
+        this.registerDefaultState(this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH));
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(new Property[]{BlockStateProperties.HORIZONTAL_FACING});
+        builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 
+    @Override
     public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
+    @Override
     public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         BlockEntity var5 = level.getBlockEntity(pos);
         if (var5 instanceof TinyPotatoBlockEntity tater) {
@@ -61,11 +63,11 @@ public class InfinityTinyPotatoBlock extends BotaniaWaterloggedBlock implements 
         }
     }
 
+    @Override
     public void onRemove(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             BlockEntity be = world.getBlockEntity(pos);
-            if (be instanceof SimpleInventoryBlockEntity) {
-                SimpleInventoryBlockEntity inventory = (SimpleInventoryBlockEntity)be;
+            if (be instanceof SimpleInventoryBlockEntity inventory) {
                 Containers.dropContents(world, pos, inventory.getItemHandler());
                 world.updateNeighbourForOutputSignal(pos, this);
             }
@@ -75,6 +77,7 @@ public class InfinityTinyPotatoBlock extends BotaniaWaterloggedBlock implements 
 
     }
 
+    @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return SHAPE;
     }
@@ -82,7 +85,7 @@ public class InfinityTinyPotatoBlock extends BotaniaWaterloggedBlock implements 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof InfinityTinyPotatoBlockEntity potatoTile){
+        if (tile instanceof InfinityTinyPotatoBlockEntity potatoTile) {
             ItemStack heldItem = player.getItemInHand(hand);
             potatoTile.interact(player, hand, heldItem, hit.getDirection());
 
@@ -102,37 +105,44 @@ public class InfinityTinyPotatoBlock extends BotaniaWaterloggedBlock implements 
         return InteractionResult.sidedSuccess(world.isClientSide());
     }
 
+    @Override
     public @NotNull BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return (BlockState)super.getStateForPlacement(ctx).setValue(BlockStateProperties.HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite());
+        return super.getStateForPlacement(ctx).setValue(BlockStateProperties.HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
+    @Override
     public @NotNull BlockState mirror(@NotNull BlockState state, Mirror mirror) {
-        return (BlockState)state.setValue(BlockStateProperties.HORIZONTAL_FACING, mirror.mirror((Direction)state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
+        return state.setValue(BlockStateProperties.HORIZONTAL_FACING, mirror.mirror(state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
     }
 
+    @Override
     public @NotNull BlockState rotate(@NotNull BlockState state, Rotation rot) {
-        return (BlockState)state.setValue(BlockStateProperties.HORIZONTAL_FACING, rot.rotate((Direction)state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
+        return state.setValue(BlockStateProperties.HORIZONTAL_FACING, rot.rotate(state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
     }
 
+    @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @org.jetbrains.annotations.Nullable LivingEntity living, ItemStack stack) {
         if (stack.hasCustomHoverName()) {
             BlockEntity var7 = world.getBlockEntity(pos);
-            if (var7 instanceof TinyPotatoBlockEntity) {
-                TinyPotatoBlockEntity tater = (TinyPotatoBlockEntity)var7;
+            if (var7 instanceof TinyPotatoBlockEntity tater) {
                 tater.name = stack.getHoverName();
             }
         }
 
     }
 
+    @Override
     public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
+    @Override
     public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new InfinityTinyPotatoBlockEntity(pos, state);
     }
 
+    @Override
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BotaniaReg.INFINITY_TINY_POTATO.get(), InfinityTinyPotatoBlockEntity::commonTick);
-    }}
+        return createTickerHelper(type, BotaniaIntegrationBlockEntities.INFINITY_TINY_POTATO.get(), InfinityTinyPotatoBlockEntity::commonTick);
+    }
+}

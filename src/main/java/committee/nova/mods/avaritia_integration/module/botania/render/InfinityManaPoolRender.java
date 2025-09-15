@@ -1,4 +1,4 @@
-package committee.nova.mods.avaritia_integration.client.render;
+package committee.nova.mods.avaritia_integration.module.botania.render;
 
 
 

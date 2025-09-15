@@ -1,6 +1,6 @@
-package committee.nova.mods.avaritia_integration.common.blockentity;
+package committee.nova.mods.avaritia_integration.module.botania.item.block.entity;
 
-import committee.nova.mods.avaritia_integration.init.registry.BotaniaReg;
+import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -62,16 +62,17 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
     private int nextDoIt = 0;
     private int birthdayTick = 0;
     private static final List<Block> ALL_CANDLE_CAKES;
+
     public InfinityTinyPotatoBlockEntity(BlockPos pos, BlockState state) {
-        super(BotaniaReg.INFINITY_TINY_POTATO.get(), pos, state);
+        super(BotaniaIntegrationBlockEntities.INFINITY_TINY_POTATO.get(), pos, state);
     }
 
     public void interact(Player player, InteractionHand hand, ItemStack stack, Direction side) {
         boolean flag = stack.isEmpty();
-        if (level != null && !level.isClientSide) {
-            jump();
+        if (this.level != null && !this.level.isClientSide) {
+            this.jump();
             if (flag) {
-                addEffects(level, worldPosition, player);
+                this.addEffects(this.level, this.worldPosition, player);
             }
             if (this.name.getString().toLowerCase(Locale.ROOT).trim().endsWith("shia labeouf") && this.nextDoIt == 0) {
                 this.nextDoIt = 40;
@@ -85,11 +86,12 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
     /**
      * 给与周围所有生物3分钟2级所有正面BUFF
      * 补满玩家饥饿值
-     * @param world 世界
-     * @param pos 土豆坐标
+     *
+     * @param world  世界
+     * @param pos    土豆坐标
      * @param player 右键的玩家
      */
-    private void addEffects(Level world, BlockPos pos, Player player){
+    private void addEffects(Level world, BlockPos pos, Player player) {
         int radius = 10;
         int time = 3600;
         int lv = 1;
@@ -115,6 +117,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
 
     }
 
+    @Override
     public boolean triggerEvent(int id, int param) {
         if (id == 0) {
             this.jumpTicks = param;
@@ -143,7 +146,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
     }
 
     private void tickBirthday() {
-        Direction facing = (Direction)this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+        Direction facing = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         BlockPos facingPos = this.getBlockPos().relative(facing);
         if (this.level.hasChunkAt(facingPos)) {
             BlockState facingState = this.level.getBlockState(facingPos);
@@ -158,13 +161,13 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
                     MutableComponent message = Component.literal("<").append(this.getDisplayName()).append("> ").append(Component.translatable("botania.tater_birthday." + messageIndex, args));
                     Iterator var10 = players.iterator();
 
-                    while(var10.hasNext()) {
-                        Player player = (Player)var10.next();
+                    while (var10.hasNext()) {
+                        Player player = (Player) var10.next();
                         player.sendSystemMessage(message);
                     }
 
                     this.jump();
-                    TinyPotatoBlock.spawnHearts((ServerLevel)this.level, this.getBlockPos());
+                    TinyPotatoBlock.spawnHearts((ServerLevel) this.level, this.getBlockPos());
                 }
 
                 if (messageIndex == messageTimes.size() - 1) {
@@ -177,17 +180,17 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
                     explosions.add(explosion);
                     ItemStack rocket = new ItemStack(Items.FIREWORK_ROCKET);
                     CompoundTag rocketFireworks = rocket.getOrCreateTagElement("Fireworks");
-                    rocketFireworks.putByte("Flight", (byte)0);
+                    rocketFireworks.putByte("Flight", (byte) 0);
                     rocketFireworks.put("Explosions", explosions);
-                    this.level.addFreshEntity(new FireworkRocketEntity(this.level, (double)facingPos.getX() + 0.5, (double)facingPos.getY() + 0.5, (double)facingPos.getZ() + 0.5, rocket));
+                    this.level.addFreshEntity(new FireworkRocketEntity(this.level, (double) facingPos.getX() + 0.5, (double) facingPos.getY() + 0.5, (double) facingPos.getZ() + 0.5, rocket));
                     this.level.removeBlock(facingPos, false);
                     this.level.levelEvent(2001, facingPos, Block.getId(facingState));
-                    this.level.playSound((Player)null, this.getBlockPos(), SoundEvents.GENERIC_EAT, SoundSource.BLOCKS, 1.0F, 0.5F + (float)Math.random() * 0.5F);
+                    this.level.playSound(null, this.getBlockPos(), SoundEvents.GENERIC_EAT, SoundSource.BLOCKS, 1.0F, 0.5F + (float) Math.random() * 0.5F);
                     Iterator var12 = players.iterator();
 
-                    while(var12.hasNext()) {
-                        Player player = (Player)var12.next();
-                        PlayerHelper.grantCriterion((ServerPlayer)player, BIRTHDAY_ADVANCEMENT, "code_triggered");
+                    while (var12.hasNext()) {
+                        Player player = (Player) var12.next();
+                        PlayerHelper.grantCriterion((ServerPlayer) player, BIRTHDAY_ADVANCEMENT, "code_triggered");
                     }
                 }
             }
@@ -195,6 +198,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
 
     }
 
+    @Override
     public void setChanged() {
         super.setChanged();
         if (this.level != null && !this.level.isClientSide) {
@@ -204,14 +208,17 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
     }
 
 
+    @Override
     public @NotNull Component getName() {
         return BotaniaBlocks.tinyPotato.getName();
     }
 
+    @Override
     public @org.jetbrains.annotations.Nullable Component getCustomName() {
         return this.name.getString().isEmpty() ? null : this.name;
     }
 
+    @Override
     public @NotNull Component getDisplayName() {
         return this.hasCustomName() ? this.getCustomName() : this.getName();
     }
@@ -220,7 +227,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
         int idx = ALL_CANDLE_CAKES.indexOf(state.getBlock());
         if (idx == -1) {
             return null;
-        } else if (!(Boolean)state.getValue(CandleCakeBlock.LIT)) {
+        } else if (!(Boolean) state.getValue(CandleCakeBlock.LIT)) {
             return null;
         } else {
             return idx == 16 ? DyeColor.byId(rand.nextInt(16)) : DyeColor.byId(idx);

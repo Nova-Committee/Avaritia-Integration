@@ -1,9 +1,9 @@
-package committee.nova.mods.avaritia_integration.client.render;
+package committee.nova.mods.avaritia_integration.module.botania.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.common.blockentity.InfinityTinyPotatoBlockEntity;
+import committee.nova.mods.avaritia_integration.module.botania.item.block.entity.InfinityTinyPotatoBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -19,11 +19,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
-import org.joml.Quaternionf;
 import vazkii.botania.common.helper.VecHelper;
 
 import javax.annotation.Nonnull;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class InfinityTinyPotatoBlockEntityRender implements BlockEntityRenderer<InfinityTinyPotatoBlockEntity> {

@@ -89,7 +89,7 @@ public final class ModuleManager {
             ModuleData data = entry.getKey();
             try {
                 Module module = entry.getValue();
-                module.init();
+                module.init(modBus);
                 module.registerEvent(modBus, MinecraftForge.EVENT_BUS);
                 initialized.add(data.id);
             } catch (Exception e) {

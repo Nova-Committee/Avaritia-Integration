@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Define depended mod meta
+ *
  * @author IAFEnvoy
  */
 @Documented
