@@ -1,7 +1,5 @@
 package committee.nova.mods.avaritia_integration.init.handler;
 
-import com.iafenvoy.integration.IntegrationExecutor;
-import committee.nova.mods.avaritia_integration.util.BotaniaUtils;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,8 +12,8 @@ import net.minecraftforge.fml.common.Mod;
 public class CapHandler {
     @SubscribeEvent
     public static void attachBeCaps(AttachCapabilitiesEvent<BlockEntity> e) {
-        IntegrationExecutor.runWhenLoad("botania", () -> () -> {
-            BotaniaUtils.attachBeCapabilities(e);
-        });
+//        IntegrationExecutor.runWhenLoad("botania", () -> () -> {
+//            BotaniaUtils.attachBeCapabilities(e);
+//        });
     }
 }

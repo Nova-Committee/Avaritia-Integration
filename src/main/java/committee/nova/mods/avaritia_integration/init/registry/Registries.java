@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -31,13 +32,21 @@ public class Registries {
 
     public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_TABS.register("avaritia_integration_group", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.tab.Integration"))
-            .icon(()-> committee.nova.mods.avaritia_integration.init.registry.ModItems.infinity_gear.get().getDefaultInstance())
+            //.icon(()-> committee.nova.mods.avaritia_integration.init.registry.ModItems.infinity_gear.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 for (var item : ACCEPT_ITEM) {
                     output.accept(item.get());
                 }
             })
             .build());
+
+
+    public static void init(IEventBus bus) {
+        BLOCKS.register(bus);
+        ITEMS.register(bus);
+        CREATIVE_TABS.register(bus);
+        BLOCK_ENTITIES.register(bus);
+    }
 
     private static RegistryObject<Block> baseBlock(String name, Supplier<Block> block) {
         return BLOCKS.register(name, block);
