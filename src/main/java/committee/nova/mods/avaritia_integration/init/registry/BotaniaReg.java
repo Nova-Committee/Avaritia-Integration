@@ -28,7 +28,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
 import vazkii.botania.api.BotaniaForgeCapabilities;
@@ -143,7 +142,11 @@ public class BotaniaReg extends AbModule {
     @Override
     protected void init(InitEvent event) {
         IEventBus bus = MinecraftForge.EVENT_BUS;
-        bus.addListener(this::attachCommonCap);
+        bus.addGenericListener(BlockEntity.class, this::attachCommonCap);
+        event.enqueueWork(() ->{
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaReg.asgard_dandelion.getId(),BotaniaReg.potted_asgard_dandelion);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaReg.soarleander.getId(),BotaniaReg.potted_soarleander);
+        });
     }
 
     @Override
@@ -157,7 +160,7 @@ public class BotaniaReg extends AbModule {
         ItemBlockRenderTypes.setRenderLayer(soarleander.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(soarleander_floating.get(), RenderType.cutout());
         IEventBus bus = MinecraftForge.EVENT_BUS;
-        bus.addListener(this::attachClientCap);
+        bus.addGenericListener(BlockEntity.class, this::attachClientCap);
     }
 
     public void attachClientCap(AttachCapabilitiesEvent<BlockEntity> e) {
