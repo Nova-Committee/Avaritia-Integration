@@ -26,10 +26,8 @@ import vazkii.botania.common.lib.ResourceLocationHelper;
 import vazkii.botania.forge.CapabilityUtil;
 
 @OnlyIn(Dist.CLIENT)
-@ModuleEntry(id = BotaniaClientModule.MOD_ID + "_client", target = @ModMeta(BotaniaClientModule.MOD_ID), side = Dist.CLIENT)
+@ModuleEntry(id = BotaniaModule.MOD_ID + "_client", target = @ModMeta(BotaniaModule.MOD_ID), side = Dist.CLIENT)
 public final class BotaniaClientModule implements Module {
-    public static final String MOD_ID = "botania";
-
     @Override
     public void process() {
         BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), ManaPoolBlockEntityRenderer::new);

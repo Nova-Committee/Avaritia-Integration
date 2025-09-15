@@ -20,6 +20,7 @@ This mod add capability between Re:Avaritia and many other mods.
 | GregTechCEu Modern            |         |   🔲   |       |
 | Mekanism                      |         |   🔲   |       |
 | Mekanism Advanced Generators  |         |   🔲   |       |
+| NuclearCraft: Neoteric        |         |   🔲   |       |
 | PneumaticCraft: Repressurized |         |   🔲   |       |
 | Refined Storage               |         |   🔲   |       |
 | SlashBlade                    |         |   🚧   |       |

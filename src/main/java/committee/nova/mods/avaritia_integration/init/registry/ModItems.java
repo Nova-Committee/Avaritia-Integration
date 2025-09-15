@@ -2,16 +2,9 @@ package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
-import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.common.item.*;
-import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
+import committee.nova.mods.avaritia_integration.module.slashblade.item.StredgeuniverseItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static committee.nova.mods.avaritia_integration.init.registry.Registries.item;
 
@@ -69,14 +62,8 @@ public class ModItems {
     public static final RegistryObject<Item> neutron_screw = item("neutron_screw", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_spring = item("neutron_spring", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_wire = item("neutron_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
-//SlashBlade
-    public static final RegistryObject<Item> STREDGEUNIVERSE = item("stredgeuniverse", StredgeuniverseItem::new);
 //BloodMagic
     //public static final RegistryObject<Item> blood_orb_of_armok = item("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
-//EnderIO
-    public static final RegistryObject<Item> infinity_capacitor = item("infinity_capacitor", () -> new InfinityCapacitorItem(InfinityCapacitorData.INSTANCE, new Item.Properties().rarity(ModRarities.EPIC)));
-    public static final RegistryObject<Item> infinity_grinding_ball = item("infinity_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-    public static final RegistryObject<Item> neutron_grinding_ball = item("neutron_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
 //Create
     public static final RegistryObject<Item> creative_mechanism = item("creative_mechanism", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
     public static final RegistryObject<Item> creative_compound = item("creative_compound", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));

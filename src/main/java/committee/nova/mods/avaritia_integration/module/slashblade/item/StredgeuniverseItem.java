@@ -1,5 +1,5 @@
 
-package committee.nova.mods.avaritia_integration.common.item;
+package committee.nova.mods.avaritia_integration.module.slashblade.item;
 
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;

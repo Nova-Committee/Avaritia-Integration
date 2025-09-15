@@ -1,4 +1,4 @@
-package committee.nova.mods.avaritia_integration.common.item;
+package committee.nova.mods.avaritia_integration.module.enderio.item;
 
 import com.enderio.api.capability.IMultiCapabilityItem;
 import com.enderio.api.capability.MultiCapabilityProvider;

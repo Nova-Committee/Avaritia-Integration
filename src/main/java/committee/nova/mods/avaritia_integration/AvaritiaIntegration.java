@@ -24,7 +24,7 @@ public class AvaritiaIntegration {
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
 
-        ModItems.STREDGEUNIVERSE.getId();
+        ModItems.blaze_cube_bolt.getId();
         Registries.ITEMS.register(modEventBus);
         Registries.BLOCKS.register(modEventBus);
         Registries.BLOCK_ENTITIES.register(modEventBus);
