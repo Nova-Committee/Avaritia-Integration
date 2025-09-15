@@ -71,28 +71,4 @@ public class CoreReg  extends AbModule {
     public static final RegistryObject<Item> neutron_screw = item("neutron_screw", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_spring = item("neutron_spring", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
     public static final RegistryObject<Item> neutron_wire = item("neutron_wire", ()-> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
-    //SlashBlade
-    //BloodMagic
-    //public static final RegistryObject<Item> blood_orb_of_armok = item("blood_orb_of_armok", () -> new BloodOrbOfArmokItem(() -> new BloodOrb(new ResourceLocation(AvaritiaIntegration.MOD_ID), 1,1000000000, 10)));
-//EnderIO
-    public static final RegistryObject<Item> infinity_capacitor = item("infinity_capacitor", () -> new InfinityCapacitorItem(InfinityCapacitorData.INSTANCE, new Item.Properties().rarity(ModRarities.EPIC)));
-    public static final RegistryObject<Item> infinity_grinding_ball = item("infinity_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-    public static final RegistryObject<Item> neutron_grinding_ball = item("neutron_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
-    //Create
-    public static final RegistryObject<Item> creative_mechanism = item("creative_mechanism", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-    public static final RegistryObject<Item> creative_compound = item("creative_compound", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-
-    //Applied Energistics
-    public static final RegistryObject<Item> infinity_me_storage_component = item("infinity_me_storage_component", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-
-    //Thermal Expansion
-    public static final RegistryObject<Item> creative_augment_base = item("creative_augment_base", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-
-    //PneumaticCraft: Repressurized
-    public static final RegistryObject<Item> creative_compressed_iron = item("creative_compressed_iron", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-
-    //Refined Storage
-    public static final RegistryObject<Item> infinity_storge_part = item("infinity_storage_part", () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
-
-
 }
