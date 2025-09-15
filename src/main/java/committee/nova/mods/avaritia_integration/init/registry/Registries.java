@@ -28,13 +28,13 @@ public class Registries {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(net.minecraft.core.registries.Registries.CREATIVE_MODE_TAB, AvaritiaIntegration.MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, AvaritiaIntegration.MOD_ID);
 
-    public static final List<RegistryObject<Item>> ACCEPT_ITEM = new ArrayList<>();
+    public static final List<RegistryObject<? extends Item>> ACCEPT_ITEM = new ArrayList<>();
 
     public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_TABS.register("avaritia_integration_group", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.tab.Integration"))
-            .icon(() -> committee.nova.mods.avaritia_integration.init.registry.ModItems.infinity_gear.get().getDefaultInstance())
+            .icon(() -> ModItems.infinity_gear.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
-                for (var item : ACCEPT_ITEM) {
+                for (RegistryObject<? extends Item> item : ACCEPT_ITEM) {
                     output.accept(item.get());
                 }
             })

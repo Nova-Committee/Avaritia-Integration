@@ -43,7 +43,6 @@ public final class BotaniaModule implements Module {
     @SubscribeEvent
     public static void attachBeCaps(AttachCapabilitiesEvent<BlockEntity> e) {
         BlockEntity be = e.getObject();
-        //FIXME::Why not write directly into class
         if (be.getType() == BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get()) {
             e.addCapability(ResourceLocationHelper.prefix("mana_receiver"), CapabilityUtil.makeProvider(BotaniaForgeCapabilities.MANA_RECEIVER, (ManaReceiver) be));
             e.addCapability(ResourceLocationHelper.prefix("wandable"), CapabilityUtil.makeProvider(BotaniaForgeCapabilities.WANDABLE, (Wandable) be));

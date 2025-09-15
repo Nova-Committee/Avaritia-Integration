@@ -43,7 +43,7 @@ public class InfinityTinyPotatoBlockEntityRender implements BlockEntityRenderer<
 
         // 基础数据
         BlockState blockState = potato.getBlockState();
-        BakedModel model = blockRenderDispatcher.getBlockModel(blockState);
+        BakedModel model = this.blockRenderDispatcher.getBlockModel(blockState);
         RenderType layer = Sheets.translucentCullBlockSheet();
 
         // 移动到中心
@@ -72,11 +72,11 @@ public class InfinityTinyPotatoBlockEntityRender implements BlockEntityRenderer<
         ms.pushPose();
         ms.translate(-0.5F, 0, -0.5F);
         VertexConsumer buffer = buffers.getBuffer(layer);
-        renderModel(ms, buffer, light, overlay, model);
+        this.renderModel(ms, buffer, light, overlay, model);
         ms.popPose();
 
         // 渲染名字
-        renderName(potato, ms, buffers, light);
+        this.renderName(potato, ms, buffers, light);
 
         ms.popPose();
     }

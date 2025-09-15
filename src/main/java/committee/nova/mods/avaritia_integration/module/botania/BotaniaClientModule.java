@@ -1,7 +1,5 @@
 package committee.nova.mods.avaritia_integration.module.botania;
 
-import committee.nova.mods.avaritia_integration.module.botania.render.InfinityManaPoolRender;
-import committee.nova.mods.avaritia_integration.module.botania.render.InfinityTinyPotatoBlockEntityRender;
 import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
 import committee.nova.mods.avaritia_integration.module.ModuleEntry;
@@ -10,6 +8,7 @@ import committee.nova.mods.avaritia_integration.module.botania.item.block.entity
 import committee.nova.mods.avaritia_integration.module.botania.item.block.entity.SoarleanderBlockEntity;
 import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlockEntities;
 import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlocks;
+import committee.nova.mods.avaritia_integration.module.botania.render.InfinityTinyPotatoBlockEntityRender;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -21,6 +20,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import vazkii.botania.api.BotaniaForgeClientCapabilities;
 import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
+import vazkii.botania.client.render.block_entity.ManaPoolBlockEntityRenderer;
 import vazkii.botania.client.render.block_entity.SpecialFlowerBlockEntityRenderer;
 import vazkii.botania.common.lib.ResourceLocationHelper;
 import vazkii.botania.forge.CapabilityUtil;
@@ -32,7 +32,7 @@ public final class BotaniaClientModule implements Module {
 
     @Override
     public void process() {
-        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), InfinityManaPoolRender::new);
+        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), ManaPoolBlockEntityRenderer::new);
         BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(), SpecialFlowerBlockEntityRenderer::new);
         BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.SOARLEANDER_BLOCK_ENTITIES.get(), SpecialFlowerBlockEntityRenderer::new);
         BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_TINY_POTATO.get(), InfinityTinyPotatoBlockEntityRender::new);
@@ -49,7 +49,6 @@ public final class BotaniaClientModule implements Module {
 
     @SubscribeEvent
     public static void attachBeCapabilities(AttachCapabilitiesEvent<BlockEntity> e) {
-        //FIXME::Why not write directly into class
         BlockEntity be = e.getObject();
         if (be instanceof AsgardDandelionBlockEntity tile)
             e.addCapability(ResourceLocationHelper.prefix("wand_hud"), CapabilityUtil.makeProvider(BotaniaForgeClientCapabilities.WAND_HUD, new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud<>(tile)));
