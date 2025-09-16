@@ -16,7 +16,10 @@ public final class AICreativeTabs {
     public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = register("avaritia_integration_group", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.tab.Integration"))
             .icon(() -> AIItems.INFINITY_GEAR.get().getDefaultInstance())
-            .displayItems(ModuleManager::collectCreativeTabItems)
+            .displayItems((parameters, output) -> {
+                AIItems.ITEMS.forEach(r -> output.accept(r.get()));
+                ModuleManager.collectCreativeTabItems(parameters, output);
+            })
             .build());
 
     private static <T extends CreativeModeTab> RegistryObject<T> register(String id, Supplier<T> obj) {
