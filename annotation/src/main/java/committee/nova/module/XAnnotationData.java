@@ -1,4 +1,4 @@
-package committee.nova.mods.avaritia_integration.api.module;
+package committee.nova.module;
 
 import java.util.Map;
 

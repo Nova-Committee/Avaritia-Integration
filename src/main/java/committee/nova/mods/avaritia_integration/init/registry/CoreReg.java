@@ -3,9 +3,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.api.module.AbModule;
-import committee.nova.mods.avaritia_integration.api.module.InModule;
-import committee.nova.mods.avaritia_integration.common.item.InfinityCapacitorItem;
-import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
+import committee.nova.module.InModule;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 

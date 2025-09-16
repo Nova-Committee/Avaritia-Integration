@@ -27,11 +27,11 @@ public class AnnotatedTypeLoader implements Supplier<XConfiguration> {
     @Override
     public XConfiguration get() {
         Map<String, Object> properties = ModList.get().getModContainerById(modId).map(ModContainer::getModInfo).map(IModInfo::getModProperties).orElse(Collections.EMPTY_MAP);
-        boolean useJson = (Boolean) properties.getOrDefault("kiwiJsonMap", FMLEnvironment.production);
+        boolean useJson = (Boolean) properties.getOrDefault("xJsonMap", FMLEnvironment.production);
         if (!useJson) {
             return new DevEnvAnnotatedTypeLoader(modId).get();
         }
-        String name = "/%s.kiwi.json".formatted(modId);
+        String name = "/%s.x.json".formatted(modId);
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
         if (is == null) {
             return null;

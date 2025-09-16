@@ -9,7 +9,6 @@ import com.mojang.logging.LogUtils;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.api.LoadingContext;
 import committee.nova.mods.avaritia_integration.api.ModContext;
-import committee.nova.mods.avaritia_integration.api.module.InModule.Subscriber;
 import committee.nova.mods.avaritia_integration.api.config.AnnotatedTypeLoader;
 import committee.nova.mods.avaritia_integration.api.config.XConfiguration;
 import committee.nova.mods.avaritia_integration.api.event.ClientInitEvent;
@@ -18,6 +17,8 @@ import committee.nova.mods.avaritia_integration.api.event.PostInitEvent;
 import committee.nova.mods.avaritia_integration.api.event.ServerInitEvent;
 import committee.nova.mods.avaritia_integration.api.util.Util;
 import committee.nova.mods.avaritia_integration.api.util.schedule.Scheduler;
+import committee.nova.module.InModule;
+import committee.nova.module.XAnnotationData;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.resources.ResourceKey;
@@ -247,7 +248,7 @@ public class XModule {
                 ModLoader.get().addWarning(new ModLoadingWarning(
                         modInfo,
                         ModLoadingStage.ERROR,
-                        "msg.kiwi.no_dependencies",
+                        "msg.x.no_dependencies",
                         i.id,
                         dependencies));
             }
@@ -293,7 +294,7 @@ public class XModule {
         for (ModuleInfo info : XModules.get()) {
             counter.clear();
             info.context.setActiveContainer();
-            Subscriber subscriber = info.module.getClass().getDeclaredAnnotation(Subscriber.class);
+            InModule.Subscriber subscriber = info.module.getClass().getDeclaredAnnotation(InModule.Subscriber.class);
             if (subscriber != null && (!subscriber.clientOnly() || FMLEnvironment.dist.isClient())) {
                 // processEvents(info.module);
                 IEventBus eventBus;

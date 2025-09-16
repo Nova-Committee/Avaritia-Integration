@@ -1,7 +1,7 @@
 package committee.nova.mods.avaritia_integration.api.config;
 
 import com.google.gson.annotations.SerializedName;
-import committee.nova.mods.avaritia_integration.api.module.XAnnotationData;
+import committee.nova.module.XAnnotationData;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ import java.util.List;
  * @author: cnlimiter
  */
 public class XConfiguration {
-    @SerializedName("XModule")
+    @SerializedName("InModule")
     public List<XAnnotationData> modules = List.of();
 }

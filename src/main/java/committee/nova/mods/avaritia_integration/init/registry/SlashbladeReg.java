@@ -1,11 +1,10 @@
 package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.api.event.InitEvent;
 import committee.nova.mods.avaritia_integration.api.module.AbModule;
-import committee.nova.mods.avaritia_integration.api.module.InModule;
 import committee.nova.mods.avaritia_integration.common.item.StredgeuniverseItem;
 import committee.nova.mods.avaritia_integration.util.MeteoriteSwordSlashArts;
+import committee.nova.module.InModule;
 import mods.flammpfeil.slashblade.client.renderer.model.BladeModel;
 import mods.flammpfeil.slashblade.registry.ComboStateRegistry;
 import mods.flammpfeil.slashblade.slasharts.SlashArts;

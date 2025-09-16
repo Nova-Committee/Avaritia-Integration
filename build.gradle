@@ -60,7 +60,25 @@ minecraft {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets {
+    main.resources.srcDirs += "$rootDir/src/generated/resources"
+    main.java.srcDirs += "$rootDir/annotation/src/main/java"
+    main.resources.srcDirs += "$rootDir/annotation-processor/src/main/resources"
+    main.java.srcDirs += "$rootDir/annotation-processor/src/main/java"
+}
+
+sourceSets {
+    processor {
+        compileClasspath += sourceSets.main.runtimeClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+        java {
+            srcDirs = ["$rootDir/annotation-processor/src/main/java"]
+        }
+        resources {
+            srcDirs = ["$rootDir/annotation-processor/src/main/resources"]
+        }
+    }
+}
 
 repositories {
     maven {
@@ -92,7 +110,10 @@ repositories {
 }
 
 dependencies {
-       minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    implementation project(':annotation')
+    annotationProcessor project(':annotation-processor')
     //Avaritia
     implementation fg.deobf("curse.maven:re-avaritia-623969:6956226")
     //JEI
@@ -138,6 +159,9 @@ dependencies {
 }
 
 tasks.named('processResources', ProcessResources).configure {
+    from('src/main/java') {
+        include '**/*.json'
+    }
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
             forge_version: forge_version, forge_version_range: forge_version_range,

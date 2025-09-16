@@ -2,7 +2,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.api.module.AbModule;
-import committee.nova.mods.avaritia_integration.api.module.InModule;
+import committee.nova.module.InModule;
 import committee.nova.mods.avaritia_integration.common.item.BloodOrbOfArmokItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

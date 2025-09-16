@@ -17,8 +17,8 @@ public class AvaritiaIntegration
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public AvaritiaIntegration() throws Exception {
-        XModule.init(FMLJavaModLoadingContext.get().getModEventBus());
         Registries.init(FMLJavaModLoadingContext.get().getModEventBus());
+        XModule.init(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
 

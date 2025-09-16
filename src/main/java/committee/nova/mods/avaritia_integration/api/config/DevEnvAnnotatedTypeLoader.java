@@ -2,8 +2,8 @@ package committee.nova.mods.avaritia_integration.api.config;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import committee.nova.mods.avaritia_integration.api.module.InModule;
-import committee.nova.mods.avaritia_integration.api.module.XAnnotationData;
+import committee.nova.module.InModule;
+import committee.nova.module.XAnnotationData;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModAnnotation;
 import net.minecraftforge.forgespi.language.IModFileInfo;

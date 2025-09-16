@@ -4,7 +4,7 @@ import committee.nova.mods.avaritia.api.common.block.BaseBlock;
 import committee.nova.mods.avaritia_integration.api.event.ClientInitEvent;
 import committee.nova.mods.avaritia_integration.api.event.InitEvent;
 import committee.nova.mods.avaritia_integration.api.module.AbModule;
-import committee.nova.mods.avaritia_integration.api.module.InModule;
+import committee.nova.module.InModule;
 import committee.nova.mods.avaritia_integration.client.render.InfinityManaPoolRender;
 import committee.nova.mods.avaritia_integration.client.render.InfinityTinyPotatoBlockEntityRender;
 import committee.nova.mods.avaritia_integration.common.block.AsgardDandelionBlock;
