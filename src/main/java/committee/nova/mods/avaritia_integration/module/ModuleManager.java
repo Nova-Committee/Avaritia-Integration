@@ -1,6 +1,10 @@
 package committee.nova.mods.avaritia_integration.module;
 
 import com.mojang.logging.LogUtils;
+import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.util.ConfigLoader;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,6 +34,8 @@ import java.util.*;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ModuleManager {
     private static final Logger LOGGER = LogUtils.getLogger();
+    private static final String DISABLE_CONFIG_PATH = "./config/avaritia/integration/disabled_modules.json";
+    private static final DisableConfig DISABLED_MODULES = ConfigLoader.load(DisableConfig.class, DISABLE_CONFIG_PATH, new DisableConfig());
     private static final List<ModuleData> ALL_MODULES = ModList.get()
             .getAllScanData()
             .stream().flatMap(x -> x.getAnnotations().stream())
@@ -38,7 +44,7 @@ public final class ModuleManager {
             .toList();
     private static final Map<ModuleData, Module> ENABLED_MODULES = ALL_MODULES
             .stream()
-            .filter(ModuleData::enabled)
+            .filter(x -> x.getEnableState().shouldLoad())
             .collect(LinkedHashMap::new, (p, c) -> p.put(c, createModule(c)), HashMap::putAll);
 
     @Nullable
@@ -61,20 +67,8 @@ public final class ModuleManager {
         return obj instanceof Module module ? module : null;
     }
 
-    public static EnableState getState(String value, String minVersion, String maxVersion) {
-        Optional<? extends ModContainer> container = ModList.get().getModContainerById(value);
-        if (container.isEmpty()) return EnableState.MISSING_MOD;
-        IModInfo info = container.get().getModInfo();
-        if (!minVersion.isEmpty()) {
-            ArtifactVersion min = new DefaultArtifactVersion(minVersion);
-            if (info.getVersion().compareTo(min) < 0) return EnableState.VERSION_TOO_LOW;
-        }
-        if (!maxVersion.isEmpty()) {
-            ArtifactVersion max = new DefaultArtifactVersion(maxVersion);
-            if (info.getVersion().compareTo(max) > 0) return EnableState.VERSION_TOO_HIGH;
-        }
-        //TODO::Manual disable module
-        return EnableState.ENABLED;
+    public static List<ModuleData> getAllModules() {
+        return ALL_MODULES;
     }
 
     @ApiStatus.Internal
@@ -138,22 +132,134 @@ public final class ModuleManager {
         }
     }
 
-    public record ModuleData(String id, String className, List<EnableState> states) {
+    private static Optional<ArtifactVersion> getModVersion(String id) {
+        return ModList.get().getModContainerById(id).map(ModContainer::getModInfo).map(IModInfo::getVersion);
+    }
+
+    private static ErrorType getState(String id, String minVersion, String maxVersion) {
+        Optional<ArtifactVersion> optional = getModVersion(id);
+        if (optional.isEmpty()) return ErrorType.MISSING_MOD;
+        ArtifactVersion version = optional.get();
+        if (!minVersion.isEmpty()) {
+            ArtifactVersion min = new DefaultArtifactVersion(minVersion);
+            if (version.compareTo(min) < 0) return ErrorType.VERSION_TOO_LOW;
+        }
+        if (!maxVersion.isEmpty()) {
+            ArtifactVersion max = new DefaultArtifactVersion(maxVersion);
+            if (version.compareTo(max) > 0) return ErrorType.VERSION_TOO_HIGH;
+        }
+        return ErrorType.NONE;
+    }
+
+    public static DependencyData getDependencyData(String id, String minVersion, String maxVersion) {
+        return new DependencyData(id, minVersion, maxVersion, getState(id, minVersion, maxVersion));
+    }
+
+    public static void switchEnableState(ModuleData data) {
+        String id = data.id;
+        if (DISABLED_MODULES.disabled().contains(id)) DISABLED_MODULES.disabled().remove(id);
+        else DISABLED_MODULES.disabled().add(id);
+        DISABLED_MODULES.save();
+    }
+
+    public record ModuleData(String id, String className, List<DependencyData> dependencies) {
         @SuppressWarnings("unchecked")
         public static ModuleData parse(ModFileScanData.AnnotationData data) {
             String className = data.memberName();
             Map<String, Object> annotationData = data.annotationData();
             String id = annotationData.get("id").toString();
             List<Map<String, Object>> target = (List<Map<String, Object>>) annotationData.getOrDefault("target", List.of());
-            return new ModuleData(id, className, target.stream().map(m -> getState(m.get("value").toString(), m.getOrDefault("minVersion", "").toString(), m.getOrDefault("maxVersion", "").toString())).toList());
+            return new ModuleData(id, className, target.stream().map(m -> getDependencyData(m.get("value").toString(), m.getOrDefault("minVersion", "").toString(), m.getOrDefault("maxVersion", "").toString())).toList());
         }
 
-        public boolean enabled() {
-            return this.states.stream().filter(x -> x != EnableState.ENABLED).findAny().isEmpty();
+        public EnableState getEnableState() {
+            if (DISABLED_MODULES.disabled().contains(this.id)) return EnableState.DISABLED;
+            return this.dependencies.stream().filter(x -> x.state != ErrorType.NONE).findAny().isEmpty() ? EnableState.ENABLED : EnableState.ERROR;
+        }
+
+        public Component getTranslateKey() {
+            return Component.translatable("module.%s.name.%s".formatted(AvaritiaIntegration.MOD_ID, this.id));
+        }
+
+        public Component getStateKey() {
+            EnableState state = this.getEnableState();
+            return Component.translatable("screen.%s.state.%s".formatted(AvaritiaIntegration.MOD_ID, state.name().toLowerCase(Locale.ROOT))).withStyle(state.getColor());
+        }
+
+        public List<Component> getErrorTooltip() {
+            EnableState state = this.getEnableState();
+            if (!state.hasError()) return List.of();
+            return this.dependencies.stream().map(DependencyData::getErrorMessage).filter(Optional::isPresent).map(Optional::get).toList();
+        }
+    }
+
+    public record DependencyData(String id, String minVersion, String maxVersion, ErrorType state) {
+        public Optional<Component> getErrorMessage() {
+            String version = getModVersion(this.id).map(Object::toString).orElse("???");
+            return switch (this.state) {
+                case NONE -> Optional.empty();
+                case MISSING_MOD ->
+                        Optional.of(Component.translatable("screen.%s.message.missing_mod".formatted(AvaritiaIntegration.MOD_ID), this.formatVersionRange(), this.id));
+                case VERSION_TOO_HIGH ->
+                        Optional.of(Component.translatable("screen.%s.message.version_too_high".formatted(AvaritiaIntegration.MOD_ID), this.formatVersionRange(), this.id, version));
+                case VERSION_TOO_LOW ->
+                        Optional.of(Component.translatable("screen.%s.message.version_too_low".formatted(AvaritiaIntegration.MOD_ID), this.formatVersionRange(), this.id, version));
+            };
+        }
+
+        public Component formatVersionRange() {
+            if (this.minVersion.isEmpty()) {
+                if (this.maxVersion.isEmpty())
+                    return Component.translatable("screen.avaritia_integration.message.version_any");
+                else
+                    return Component.translatable("screen.avaritia_integration.message.version_lower", this.maxVersion);
+            } else {
+                if (this.maxVersion.isEmpty())
+                    return Component.translatable("screen.avaritia_integration.message.version_higher", this.minVersion);
+                else
+                    return Component.translatable("screen.avaritia_integration.message.version_between", this.minVersion, this.maxVersion);
+            }
+        }
+    }
+
+    public record DisableConfig(List<String> disabled) {
+        public DisableConfig() {
+            this(new LinkedList<>());
+        }
+
+        public void save() {
+            ConfigLoader.save(DISABLE_CONFIG_PATH, this);
         }
     }
 
     public enum EnableState {
-        ENABLED, DISABLED, MISSING_MOD, VERSION_TOO_HIGH, VERSION_TOO_LOW
+        ENABLED(true, false, ChatFormatting.GREEN),
+        DISABLED(false, false, ChatFormatting.YELLOW),
+        ERROR(false, true, ChatFormatting.RED);
+        private final boolean shouldLoad;
+        private final boolean error;
+        private final ChatFormatting color;
+
+        EnableState(boolean shouldLoad, boolean error, ChatFormatting color) {
+            this.shouldLoad = shouldLoad;
+            this.error = error;
+            this.color = color;
+        }
+
+        public boolean shouldLoad() {
+            return this.shouldLoad;
+        }
+
+        public boolean hasError() {
+            return this.error;
+        }
+
+        public ChatFormatting getColor() {
+            return this.color;
+        }
+    }
+
+    public enum ErrorType {
+        NONE, MISSING_MOD, VERSION_TOO_HIGH, VERSION_TOO_LOW;
     }
 }

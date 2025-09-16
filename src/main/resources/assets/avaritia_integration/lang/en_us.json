@@ -1,5 +1,5 @@
 {
-  "itemGroup.tab.Integration": "Avaritia:Integration",
+  "itemGroup.tab.Integration": "Avaritia: Integration",
 
   "item.avaritia_integration.blaze_cube_bolt": "Blaze Cube Bolt",
   "item.avaritia_integration.blaze_cube_dense_plate": "Blaze Cube Dense Plate",
@@ -85,5 +85,30 @@
 
   "item.avaritia_integration.creative_compressed_iron": "Creative Compressed Iron",
 
-  "item.avaritia_integration.infinity_storage_part": "Infinity Storage Part"
+  "item.avaritia_integration.infinity_storage_part": "Infinity Storage Part",
+
+  "screen.avaritia_integration.module.title": "Avaritia: Integration Modules",
+  "screen.avaritia_integration.module.warning": "All changes make here need to restart game to take effect",
+  "screen.avaritia_integration.module.back": "Back",
+  "screen.avaritia_integration.module.enable": "Enable",
+  "screen.avaritia_integration.module.disable": "Disable",
+  "screen.avaritia_integration.message.version_between": "version between %s and %s",
+  "screen.avaritia_integration.message.version_higher": "version higher than %s",
+  "screen.avaritia_integration.message.version_lower": "version lower that %s",
+  "screen.avaritia_integration.message.version_any": "any version",
+  "screen.avaritia_integration.message.missing_mod": "Require %s of %s, but now it's missing!",
+  "screen.avaritia_integration.message.version_too_high": "Require %s of %s, but current version %s is too high!",
+  "screen.avaritia_integration.message.version_too_low": "Require %s of %s, but current version %s is too low!",
+  "screen.avaritia_integration.state.enabled": "Enabled",
+  "screen.avaritia_integration.state.disabled": "Disabled Manually",
+  "screen.avaritia_integration.state.error": "Disabled Automatically (Hover to see errors)",
+  "module.avaritia_integration.name.ae2": "Applied Energistics 2",
+  "module.avaritia_integration.name.bloodmagic": "Blood Magic",
+  "module.avaritia_integration.name.botania": "Botania",
+  "module.avaritia_integration.name.create": "Create",
+  "module.avaritia_integration.name.enderio": "Ender IO",
+  "module.avaritia_integration.name.pneumaticcraft": "PneumaticCraft: Repressurized",
+  "module.avaritia_integration.name.refinedstorage": "Refined Storage",
+  "module.avaritia_integration.name.slashblade": "SlashBlade",
+  "module.avaritia_integration.name.thermal_expansion": "Thermal Expansion"
 }

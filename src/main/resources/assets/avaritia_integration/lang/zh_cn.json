@@ -85,5 +85,30 @@
 
   "item.avaritia_integration.creative_compressed_iron": "创造压缩铁锭",
 
-  "item.avaritia_integration.infinity_storage_part": "无限存储元件"
+  "item.avaritia_integration.infinity_storage_part": "无限存储元件",
+
+  "screen.avaritia_integration.module.title": "无尽：集成 模块管理",
+  "screen.avaritia_integration.module.warning": "在这里做出的任何更改均需要重启才能生效",
+  "screen.avaritia_integration.module.back": "返回",
+  "screen.avaritia_integration.module.enable": "启用",
+  "screen.avaritia_integration.module.disable": "禁用",
+  "screen.avaritia_integration.message.version_between": "在 %s 和 %s 之间版本",
+  "screen.avaritia_integration.message.version_higher": "高于 %s 版本",
+  "screen.avaritia_integration.message.version_lower": "低于 %s 版本",
+  "screen.avaritia_integration.message.version_any": "任意版本",
+  "screen.avaritia_integration.message.missing_mod": "需要%s的%s，但是目前没有安装！",
+  "screen.avaritia_integration.message.version_too_high": "需要%s的%s，但是当前版本%s过高！",
+  "screen.avaritia_integration.message.version_too_low": "需要%s的%s，但是当前版本%s过低！",
+  "screen.avaritia_integration.state.enabled": "已启用",
+  "screen.avaritia_integration.state.disabled": "已手动禁用",
+  "screen.avaritia_integration.state.error": "已自动禁用（鼠标放在此以显示错误）",
+  "module.avaritia_integration.name.ae2": "应用能源2",
+  "module.avaritia_integration.name.bloodmagic": "血魔法",
+  "module.avaritia_integration.name.botania": "植物魔法",
+  "module.avaritia_integration.name.create": "机械动力",
+  "module.avaritia_integration.name.enderio": "末影接口",
+  "module.avaritia_integration.name.pneumaticcraft": "气动工艺",
+  "module.avaritia_integration.name.refinedstorage": "精致存储",
+  "module.avaritia_integration.name.slashblade": "拔刀剑",
+  "module.avaritia_integration.name.thermal_expansion": "热力拓展（热力膨胀）"
 }
