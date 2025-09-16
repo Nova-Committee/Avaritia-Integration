@@ -3,7 +3,7 @@ package committee.nova.mods.avaritia_integration.module.enderio.registry;
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
+import committee.nova.mods.avaritia_integration.module.enderio.data.InfinityCapacitorData;
 import committee.nova.mods.avaritia_integration.module.enderio.item.InfinityCapacitorItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -12,7 +12,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings("unused")
 public final class EnderIOIntegrationItems {
     public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(Registries.ITEM, AvaritiaIntegration.MOD_ID);
 

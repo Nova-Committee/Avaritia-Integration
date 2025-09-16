@@ -1,43 +1,42 @@
-package committee.nova.mods.avaritia_integration.common.item.misc;
+package committee.nova.mods.avaritia_integration.module.enderio.data;
 
 import com.enderio.api.capacitor.CapacitorModifier;
 import com.enderio.api.capacitor.ICapacitorData;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.util.INBTSerializable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
 public class InfinityCapacitorData implements ICapacitorData, INBTSerializable<Tag> {
     public static final InfinityCapacitorData INSTANCE = new InfinityCapacitorData();
 
-    private static final float BASE = 9.999999046325684F;
-
     private InfinityCapacitorData() {
     }
 
     @Override
     public float getBase() {
-        return BASE;
+        return 10;
     }
 
     @Override
-    public float getModifier(CapacitorModifier modifier) {
-        return getBase();
+    public float getModifier(@NotNull CapacitorModifier modifier) {
+        return this.getBase();
     }
 
     @Override
-    public Map<CapacitorModifier, Float> getAllModifiers() {
+    public @NotNull Map<CapacitorModifier, Float> getAllModifiers() {
         return Map.of();
     }
 
     @Override
     public Tag serializeNBT() {
-        return FloatTag.valueOf(BASE);
+        return FloatTag.valueOf(this.getBase());
     }
 
     @Override
     public void deserializeNBT(Tag nbt) {
-        // 无需实现，因为这是固定值
+        // We use fixed value so don't need to modify it.
     }
 }

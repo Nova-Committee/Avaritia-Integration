@@ -52,7 +52,6 @@ public final class BotaniaModule implements Module {
         gameBus.addGenericListener(BlockEntity.class, BotaniaModule::attachCommonCapability);
     }
 
-    @SubscribeEvent
     public static void attachCommonCapability(AttachCapabilitiesEvent<BlockEntity> e) {
         BlockEntity be = e.getObject();
         if (be.getType() == BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get()) {

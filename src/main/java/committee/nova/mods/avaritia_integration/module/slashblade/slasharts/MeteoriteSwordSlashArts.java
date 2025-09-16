@@ -1,6 +1,6 @@
-package committee.nova.mods.avaritia_integration.util;
+package committee.nova.mods.avaritia_integration.module.slashblade.slasharts;
 
-import committee.nova.mods.avaritia_integration.common.entity.MeteoriteSwordEntity;
+import committee.nova.mods.avaritia_integration.module.slashblade.entity.MeteoriteSwordEntity;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.capability.slashblade.ISlashBladeState;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;

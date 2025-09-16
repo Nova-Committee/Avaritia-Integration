@@ -1,4 +1,4 @@
-package committee.nova.mods.avaritia_integration.common.entity;
+package committee.nova.mods.avaritia_integration.module.slashblade.entity;
 
 import committee.nova.mods.avaritia_integration.util.SwordUtil;
 import mods.flammpfeil.slashblade.SlashBlade.RegistryEvents;
@@ -16,12 +16,12 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.PlayMessages;
 
 public class MeteoriteSwordEntity extends EntityAbstractSummonedSword {
-
     public MeteoriteSwordEntity(EntityType<? extends Projectile> entityTypeIn, Level worldIn) {
         super(entityTypeIn, worldIn);
-        this.setPierce((byte)1);
+        this.setPierce((byte) 1);
     }
 
+    @Override
     public void defineSynchedData() {
         super.defineSynchedData();
     }
@@ -30,6 +30,7 @@ public class MeteoriteSwordEntity extends EntityAbstractSummonedSword {
         return new MeteoriteSwordEntity(RegistryEvents.StormSwords, worldIn);
     }
 
+    @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         Entity targetEntity = entityHitResult.getEntity();
         if (targetEntity instanceof LivingEntity living && this.getOwner() instanceof Player player) {
@@ -40,6 +41,7 @@ public class MeteoriteSwordEntity extends EntityAbstractSummonedSword {
         super.onHitEntity(entityHitResult);
     }
 
+    @Override
     protected void onHitBlock(BlockHitResult blockraytraceresult) {
         this.burst();
     }

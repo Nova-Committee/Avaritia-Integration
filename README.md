@@ -12,18 +12,18 @@ This mod add capability between Re:Avaritia and many other mods.
 | Mod                           | Content | Status | Notes |
 |-------------------------------|:--------|:------:|-------|
 | Apotheosis                    |         |   🔲   |       |
-| Applied Energistics 2         |         |   🔲   |       |
+| Applied Energistics 2         |         |   🚧   |       |
 | Blood Magic                   |         |   🚧   |       |
 | Botania                       |         |   🚧   |       |
-| Create                        |         |   🔲   |       |
+| Create                        |         |   🚧   |       |
 | Ender IO                      |         |   🚧   |       |
 | GregTechCEu Modern            |         |   🔲   |       |
 | Mekanism                      |         |   🔲   |       |
 | Mekanism Advanced Generators  |         |   🔲   |       |
 | NuclearCraft: Neoteric        |         |   🔲   |       |
-| PneumaticCraft: Repressurized |         |   🔲   |       |
-| Refined Storage               |         |   🔲   |       |
+| PneumaticCraft: Repressurized |         |   🚧   |       |
+| Refined Storage               |         |   🚧   |       |
 | SlashBlade                    |         |   🚧   |       |
 | Tetra                         |         |   🔲   |       |
 | Tinker's Construct 3          |         |   🔲   |       |
-| Thermal Series                |         |   🔲   |       |
+| Thermal Series                |         |   🚧   |       |
