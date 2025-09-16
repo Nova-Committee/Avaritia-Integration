@@ -3,6 +3,7 @@ package committee.nova.mods.avaritia_integration.init.registry;
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModCreativeModeTabs;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.module.ModuleManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -37,39 +38,9 @@ public class Registries {
                 for (RegistryObject<? extends Item> item : ACCEPT_ITEM) {
                     output.accept(item.get());
                 }
+                ModuleManager.collectCreativeTabItems(parameters, output);
             })
             .build());
-
-    private static RegistryObject<Block> baseBlock(String name, Supplier<Block> block) {
-        return BLOCKS.register(name, block);
-    }
-
-
-    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block) {
-        return itemBlock(name, block, true);
-    }
-
-    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, boolean hasItem) {
-        return itemBlock(name, block, hasItem, true, new Item.Properties());
-    }
-
-    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, boolean hasItem, boolean exist) {
-        return itemBlock(name, block, hasItem, exist, new Item.Properties());
-    }
-
-    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, Rarity rarity) {
-        return itemBlock(name, block, true, true, new Item.Properties().rarity(rarity));
-    }
-
-    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, boolean hasItem, Item.Properties properties) {
-        return itemBlock(name, block, hasItem, true, properties);
-    }
-
-    public static RegistryObject<Block> itemBlock(String name, Supplier<Block> block, boolean hasItem, boolean exist, Item.Properties properties) {
-        var reg = BLOCKS.register(name, block);
-        if (hasItem) item(name, () -> new BlockItem(reg.get(), properties), exist);
-        return reg;
-    }
 
     public static RegistryObject<Item> item(String name) {
         return item(name, true);

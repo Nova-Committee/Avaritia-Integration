@@ -1,7 +1,7 @@
 package committee.nova.mods.avaritia_integration.module;
 
 import com.mojang.logging.LogUtils;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -10,7 +10,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.moddiscovery.ModAnnotation;
 import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.forgespi.language.ModFileScanData;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
@@ -89,8 +88,13 @@ public final class ModuleManager {
             ModuleData data = entry.getKey();
             try {
                 Module module = entry.getValue();
+                if (module == null) continue;
                 module.init(modBus);
                 module.registerEvent(modBus, MinecraftForge.EVENT_BUS);
+                if (FMLEnvironment.dist.isClient()) {
+                    module.initClient();
+                    module.registerClientEvent(modBus, MinecraftForge.EVENT_BUS);
+                }
                 initialized.add(data.id);
             } catch (Exception e) {
                 ModuleManager.LOGGER.error("Failed to setup module {}.", data.id, e);
@@ -109,32 +113,43 @@ public final class ModuleManager {
             ModuleData data = entry.getKey();
             try {
                 Module module = entry.getValue();
+                if (module == null) continue;
                 module.process();
+                if (FMLEnvironment.dist.isClient()) module.processClient();
                 processed.add(data.id);
             } catch (Exception e) {
-                ModuleManager.LOGGER.error("Failed to setup module {}.", data.id, e);
+                ModuleManager.LOGGER.error("Failed to post module {}.", data.id, e);
             }
         }
         ModuleManager.LOGGER.info("Successfully processed {} modules: {}", processed.size(), String.join(", ", processed));
     }
 
-    public record ModuleData(String id, String className, List<EnableState> states, List<Dist> dist) {
+    @ApiStatus.Internal
+    public static void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
+        for (Map.Entry<ModuleData, Module> entry : ENABLED_MODULES.entrySet()) {
+            ModuleData data = entry.getKey();
+            try {
+                Module module = entry.getValue();
+                if (module == null) continue;
+                module.collectCreativeTabItems(parameters, output);
+            } catch (Exception e) {
+                ModuleManager.LOGGER.error("Failed to append creative tab items {}.", data.id, e);
+            }
+        }
+    }
+
+    public record ModuleData(String id, String className, List<EnableState> states) {
         @SuppressWarnings("unchecked")
         public static ModuleData parse(ModFileScanData.AnnotationData data) {
             String className = data.memberName();
             Map<String, Object> annotationData = data.annotationData();
             String id = annotationData.get("id").toString();
             List<Map<String, Object>> target = (List<Map<String, Object>>) annotationData.getOrDefault("target", List.of());
-            List<ModAnnotation.EnumHolder> sideHolder = (List<ModAnnotation.EnumHolder>) annotationData.get("side");
-            List<Dist> side;
-            if (sideHolder == null) side = List.of(Dist.CLIENT, Dist.DEDICATED_SERVER);
-            else
-                side = sideHolder.stream().map(x -> "CLIENT".equals(x.getValue()) ? Dist.CLIENT : Dist.DEDICATED_SERVER).toList();
-            return new ModuleData(id, className, target.stream().map(m -> getState(m.get("value").toString(), m.getOrDefault("minVersion", "").toString(), m.getOrDefault("maxVersion", "").toString())).toList(), side);
+            return new ModuleData(id, className, target.stream().map(m -> getState(m.get("value").toString(), m.getOrDefault("minVersion", "").toString(), m.getOrDefault("maxVersion", "").toString())).toList());
         }
 
         public boolean enabled() {
-            return this.dist.contains(FMLEnvironment.dist) && this.states.stream().filter(x -> x != EnableState.ENABLED).findAny().isEmpty();
+            return this.states.stream().filter(x -> x != EnableState.ENABLED).findAny().isEmpty();
         }
     }
 

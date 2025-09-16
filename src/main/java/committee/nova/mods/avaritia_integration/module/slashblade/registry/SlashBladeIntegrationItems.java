@@ -2,7 +2,6 @@ package committee.nova.mods.avaritia_integration.module.slashblade.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.module.slashblade.item.StredgeuniverseItem;
-import committee.nova.mods.avaritia_integration.module.Shared;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -19,8 +18,6 @@ public final class SlashBladeIntegrationItems {
     public static final RegistryObject<Item> STREDGEUNIVERSE = item("stredgeuniverse", StredgeuniverseItem::new);
 
     public static <T extends Item> RegistryObject<T> register(String id, Supplier<T> obj) {
-        RegistryObject<T> r = REGISTRY.register(id, obj);
-        Shared.appendItemToGroup(r);
-        return r;
+        return REGISTRY.register(id, obj);
     }
 }

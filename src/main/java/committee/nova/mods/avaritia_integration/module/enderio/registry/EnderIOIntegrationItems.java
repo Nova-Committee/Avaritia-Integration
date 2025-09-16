@@ -4,7 +4,6 @@ import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.common.item.misc.InfinityCapacitorData;
-import committee.nova.mods.avaritia_integration.module.Shared;
 import committee.nova.mods.avaritia_integration.module.enderio.item.InfinityCapacitorItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -22,8 +21,6 @@ public final class EnderIOIntegrationItems {
     public static final RegistryObject<Item> NEUTRON_GRINDING_BALL = register("neutron_grinding_ball", () -> new BaseItem(pro -> pro.rarity(ModRarities.RARE)));
 
     public static <T extends Item> RegistryObject<T> register(String id, Supplier<T> obj) {
-        RegistryObject<T> r = REGISTRY.register(id, obj);
-        Shared.appendItemToGroup(r);
-        return r;
+        return REGISTRY.register(id, obj);
     }
 }

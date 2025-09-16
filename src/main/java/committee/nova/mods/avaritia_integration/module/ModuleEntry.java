@@ -1,7 +1,5 @@
 package committee.nova.mods.avaritia_integration.module;
 
-import net.minecraftforge.api.distmarker.Dist;
-
 import java.lang.annotation.*;
 
 /**
@@ -23,9 +21,4 @@ public @interface ModuleEntry {
     When should this module load
      */
     ModMeta[] target() default {};
-
-    /*
-    Which side should load
-    */
-    Dist[] side() default {Dist.CLIENT, Dist.DEDICATED_SERVER};
 }
