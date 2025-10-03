@@ -32,6 +32,6 @@ public class AEUniversalCellHandler implements ICellHandler
         AEUniversalCellData cellData = AEUniversalCellData.computeIfAbsentCellDataForItemStack(itemStack);
         if(cellData == null) return null;
 
-        return new AEUniversalCellInventory(cellData.getOriginalStorage(), itemStack, cellItem);
+        return new AEUniversalCellInventory(cellData, itemStack, cellItem);
     }
 }
