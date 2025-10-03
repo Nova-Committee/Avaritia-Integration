@@ -14,6 +14,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public class AEUniversalCellHandler implements ICellHandler
 {
+    public static final AEUniversalCellHandler INSTANCE = new AEUniversalCellHandler();
+
+    private AEUniversalCellHandler() {}
+
     @Override
     public boolean isCell(ItemStack itemStack)
     {

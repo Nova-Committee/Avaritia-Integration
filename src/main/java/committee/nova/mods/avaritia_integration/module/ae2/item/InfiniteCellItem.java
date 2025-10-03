@@ -1,11 +1,15 @@
 package committee.nova.mods.avaritia_integration.module.ae2.item;
 
 
+import appeng.core.definitions.AEItems;
+import committee.nova.mods.avaritia_integration.module.ae2.registry.AE2IntegrationItems;
+
 public class InfiniteCellItem extends AEUniversalCellItem
 {
     public InfiniteCellItem(Properties pProperties, double idleDrain)
     {
-        // TODO 传入正确可用的Item作为元件和外壳
-        super(pProperties, null, null, idleDrain, -1, -1);
+        super(pProperties, AE2IntegrationItems.INFINITY_ME_STORAGE_COMPONENT.get(),
+                AEItems.ITEM_CELL_HOUSING.asItem(),
+                idleDrain, -1, -1);
     }
 }
