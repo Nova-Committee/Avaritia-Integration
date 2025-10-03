@@ -8,7 +8,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Nullable;
 
-/** 决定如何从ItemStack构建一个 {@link AEUniversalCellInventory} */
+/**
+ * 决定如何从ItemStack构建一个 {@link AEUniversalCellInventory}
+ * @author Frostbite
+ */
 public class AEUniversalCellHandler implements ICellHandler
 {
     @Override

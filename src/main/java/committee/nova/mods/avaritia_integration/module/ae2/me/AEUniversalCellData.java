@@ -21,6 +21,7 @@ import java.util.*;
  * uuid -> {@link net.minecraft.world.level.saveddata.SavedData} 数据的管理类
  * <p>每个元件单独对应一个文件： data/ae_universal_cell_data/<uuid>.dat
  * <p>单文件损坏只影响单元件，降低风险。
+ * @author Frostbite
  */
 public class AEUniversalCellData extends SavedData
 {

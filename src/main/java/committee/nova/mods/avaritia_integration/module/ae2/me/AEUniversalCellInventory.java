@@ -14,6 +14,7 @@ import java.util.Map;
 
 /**
  * 能存储多种不同资源的元件的内部存储
+ * @author Frostbite
  */
 public class AEUniversalCellInventory implements StorageCell
 {
