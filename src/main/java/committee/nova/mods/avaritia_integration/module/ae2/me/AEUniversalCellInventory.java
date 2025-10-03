@@ -6,6 +6,7 @@ import appeng.api.config.IncludeExclude;
 import appeng.api.networking.security.IActionSource;
 import appeng.api.stacks.AEItemKey;
 import appeng.api.stacks.AEKey;
+import appeng.api.stacks.GenericStack;
 import appeng.api.stacks.KeyCounter;
 import appeng.api.storage.StorageCells;
 import appeng.api.storage.cells.CellState;
@@ -19,7 +20,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -472,12 +475,25 @@ public class AEUniversalCellInventory implements StorageCell {
         IAEUniversalCell.setUsedBytes(itemStack, usedBytesClamped);
         IAEUniversalCell.setUsedTypes(itemStack, usedTypesClamped);
         IAEUniversalCell.setCellState(itemStack, cellType, usedBytesClamped, usedTypesClamped);
+
+        // 取迭代到的前 5 个 kv，对应数量>0 的条目，构造成 GenericStack 列表
+        List<GenericStack> show = new ArrayList<>(5);
+        int count = 0;
+        for (Map.Entry<AEKey, Long> e : storage.entrySet())
+        {
+            long v = (e.getValue() == null ? 0L : e.getValue());
+            if (v <= 0L) continue;
+            show.add(new GenericStack(e.getKey(), v));
+            if (++count >= 5) break;
+        }
+        IAEUniversalCell.setTooltipShowStacks(itemStack, show);
     }
 
     // 简单算数工具------------------------------------------------------------------------------------------
 
-    // 除法，然后向上取整
-    private static long ceilDiv(long a, long b) {
+    /** 除法，然后向上取整 */
+    private static long ceilDiv(long a, long b)
+    {
         if (b <= 0) throw new IllegalArgumentException("div by non-positive");
         if (a <= 0) return 0;
         long q = a / b;
@@ -485,24 +501,27 @@ public class AEUniversalCellInventory implements StorageCell {
         return r == 0 ? q : (q + 1);
     }
 
-    // 加法
-    private static long safeAdd(long a, long b) {
+    /** 加法 */
+    private static long safeAdd(long a, long b)
+    {
         long r = a + b;
         // 简单溢出保护，向上钳制
         if (((a ^ r) & (b ^ r)) < 0) return Long.MAX_VALUE;
         return r;
     }
 
-    // 除法
-    private static long safeSub(long a, long b) {
+    /** 除法 */
+    private static long safeSub(long a, long b)
+    {
         long r = a - b;
         // 简单溢出保护，向下钳制
         if (((a ^ b) & (a ^ r)) < 0) return Long.MIN_VALUE;
         return r;
     }
 
-    // 乘法
-    private static long safeMul(long a, long b) {
+    /** 乘法 */
+    private static long safeMul(long a, long b)
+    {
         if (a == 0 || b == 0) return 0;
         if (a > Long.MAX_VALUE / b) return Long.MAX_VALUE;
         return a * b;
