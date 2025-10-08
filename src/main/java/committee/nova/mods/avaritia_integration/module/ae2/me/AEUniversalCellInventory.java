@@ -16,37 +16,37 @@ import appeng.api.upgrades.IUpgradeInventory;
 import appeng.core.definitions.AEItems;
 import appeng.util.ConfigInventory;
 import appeng.util.prioritylist.IPartitionList;
+import it.unimi.dsi.fastutil.longs.Long2LongMap;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 能存储多种不同资源的元件的内部存储（通用盘）
  * <p>
- * 初始化时对现有存量做一次“全量计算”，把状态缓存到内存（已用字节、已用类型、各 apb 桶累计）。
+ * usedBytes 仅由“值字节”组成：Σ ceil( sum(apb-bucket) / amountPerByte )。
  * <p>
- * 之后 insert/extract 仅做“增量更新”，不会每次重算整表。
+ * insert/extract 走增量：维护 bucketSums、storedTypesCached、usedBytesCached。
  * <p>
- * 支持“无限字节/无限类型”（<=0），内部统一映射为 Long.MAX_VALUE；无限字节时每类型开销视为 0。
+ * 支持 AE2 升级卡：分区（白/黑）、模糊、均分、虚空、递归盘保护。
  * <p>
- * 处理 AE2 的升级卡语义：分区（白/黑名单）、模糊卡、均分卡、虚空卡、递归盘保护。
- * <p>
- * 每次变更后：即时更新物品 NBT（用于 tooltip 的已用字节/类型和状态）+ 立即 setDirty()；忽略 persist().
+ * 每次变更后：立即刷新物品 NBT（tooltip 用）并标脏 SavedData。
  *
  * @author Frostbite
  */
-public class AEUniversalCellInventory implements StorageCell {
+public class AEUniversalCellInventory implements StorageCell
+{
 
     /** 对应的 SavedData（用于 setDirty 通知存盘） */
     private final @NotNull AEUniversalCellData cellData;
 
-    /** 来自AEUniversalCellData的原始存储引用（AEKey -> amount） */
-    private final @NotNull Map<AEKey, Long> storage;
+    /** 来自 AEUniversalCellData 的原始存储引用 */
+    private final @NotNull Object2LongMap<AEKey> storage;
 
     /** 对应的物品堆（用于更新客户端 NBT 用于 tooltip/states） */
     private final @NotNull ItemStack itemStack;
@@ -54,18 +54,15 @@ public class AEUniversalCellInventory implements StorageCell {
     /** 元件类型（由物品类实现，提供总字节/总类型/待机功耗等固定信息） */
     private final @NotNull IAEUniversalCell cellType;
 
-    // 运行时缓存----------------------------------------------------------------------
+    // 运行时缓存 ----------------------------------------------------------------------
 
     /** 有效总字节（<=0 视为无限 -> Long.MAX_VALUE） */
     private final long totalBytesEff;
 
-    /** 每类型字节开销；有限总字节时约为 totalBytes/128；无限字节时为 0。 */
-    private final long bytesPerTypeEff;
-
     /** 有效“最多类型数”（<=0 视为无限 -> Long.MAX_VALUE） */
     private final long totalTypesEff;
 
-    /** 当前“已用字节”，按[已用类型 * bytesPerType + Σ桶内ceil(Σamount/amountPerByte)]计算 */
+    /** 当前“已用字节”，按 Σ桶内 ceil(Σamount/amountPerByte) 计算 */
     private long usedBytesCached;
 
     /** 当前“已用类型数”（value>0 的 AEKey 数量） */
@@ -75,7 +72,7 @@ public class AEUniversalCellInventory implements StorageCell {
      * apb 桶累计：key=amountPerByte（>0），value=该桶内所有 Key 的数量总和。
      * 用于 O(1) 计算“额外再塞多少单位会增加几个字节”
      */
-    private final Map<Long, Long> bucketSums = new HashMap<>();
+    private final Long2LongOpenHashMap bucketSums = new Long2LongOpenHashMap();
 
     public AEUniversalCellInventory(@NotNull AEUniversalCellData cellData,
                                     @NotNull ItemStack itemStack,
@@ -86,6 +83,8 @@ public class AEUniversalCellInventory implements StorageCell {
         this.itemStack = itemStack;
         this.cellType = cellType;
 
+        this.bucketSums.defaultReturnValue(0L);
+
         // 统一把 无限 映射为 Long.MAX_VALUE，简化后续判断
         long totalBytes = cellType.getTotalBytes();
         this.totalBytesEff = (totalBytes <= 0) ? Long.MAX_VALUE : totalBytes;
@@ -93,36 +92,32 @@ public class AEUniversalCellInventory implements StorageCell {
         long totalTypes = cellType.getTotalTypes();
         this.totalTypesEff = (totalTypes <= 0) ? Long.MAX_VALUE : totalTypes;
 
-        // 有限总字节时，每类型开销与原版等比，为totalBytes/128，无限字节时设为0
-        this.bytesPerTypeEff = (this.totalBytesEff == Long.MAX_VALUE) ? 0 : Math.max(1, this.totalBytesEff / 128);
-
         // 首次全量统计：填充 storedTypesCached、bucketSums、usedBytesCached
         long types = 0;
-        for (Map.Entry<AEKey, Long> e : storage.entrySet())
+        for (Object2LongMap.Entry<AEKey> e : storage.object2LongEntrySet())
         {
-            long v = (e.getValue() == null ? 0 : e.getValue());
+            long v = e.getLongValue();
             if (v <= 0) continue;
             types++;
             long apb = Math.max(1, e.getKey().getType().getAmountPerByte());
-            bucketSums.merge(apb, v, Long::sum);
+            bucketSums.addTo(apb, v);
         }
         this.storedTypesCached = types;
 
         long bytesForValues = 0;
-        for (Map.Entry<Long, Long> b : bucketSums.entrySet())
+        for (Long2LongMap.Entry b : bucketSums.long2LongEntrySet())
         {
-            long apb = b.getKey();
-            long sum = b.getValue();
+            long apb = b.getLongKey();
+            long sum = b.getLongValue();
             bytesForValues = safeAdd(bytesForValues, ceilDiv(sum, apb));
         }
-        long typeOverhead = (bytesPerTypeEff == 0) ? 0 : safeMul(types, bytesPerTypeEff);
-        this.usedBytesCached = safeAdd(typeOverhead, bytesForValues);
+        this.usedBytesCached = bytesForValues;
 
-        // 初始化后把统计状态写进ItemStack给客户端显示用
+        // 初始化后把统计状态写进 ItemStack 给客户端显示用
         updateItemTooltipState();
     }
 
-    // StorageCell接口 ----------------------------------------------------------------------------------
+    // StorageCell 接口 ----------------------------------------------------------------
 
     /** 获取状态灯 */
     @Override
@@ -149,14 +144,14 @@ public class AEUniversalCellInventory implements StorageCell {
         return cellType.getIdleDrain();
     }
 
-    /** 允许被放入其他存储元件内（此元件对应物品仅存储UUID和几个预览物品，因此无需担心nbt过大） */
+    /** 允许被放入其他存储元件内（此元件对应物品仅存储UUID和几个预览物品） */
     @Override
     public boolean canFitInsideCell()
     {
         return true;
     }
 
-    /** 忽略persist，我们在insert/extract后立即setDirty，随后由SavedData处理存盘 */
+    /** 忽略 persist，我们在 insert/extract 后立即 setDirty，随后由 SavedData 处理存盘 */
     @Override
     public void persist()
     {
@@ -173,9 +168,9 @@ public class AEUniversalCellInventory implements StorageCell {
         if (!matchesPartitionAndUpgrades(what)) return 0;
         if (!canNestStorageCells(what)) return 0;
 
-        // 取当前apb与现存量
+        // 取当前 apb 与现存量
         final long amountPerByte = Math.max(1, what.getType().getAmountPerByte());
-        final long current = storage.getOrDefault(what, 0L);
+        final long current = storage.getLong(what);
 
         final long freeBytes = freeBytes();
         final boolean openingNewType = (current <= 0);
@@ -183,18 +178,17 @@ public class AEUniversalCellInventory implements StorageCell {
         // 先算“仅向现有类型堆叠”的可塞单位（针对当前 apb）
         long allowedUnits = remainingUnitsIntoExistingFor(amountPerByte, freeBytes);
 
-        // 新开类型，需满足：有类型名额 && 有足够字节支付bytesPerType的先验成本
+        // 新开类型：需满足“有类型名额”
         if (openingNewType)
         {
             if (storedTypesCached >= totalTypesEff)
             {
-                return handleOverflowVoidOnInsert(what, amount, /*inserted*/0);
+                return handleOverflowVoidOnInsert(what, amount, /*inserted*/ 0);
             }
-            long newTypeCostUnits = (bytesPerTypeEff == 0) ? 0 : safeMul(bytesPerTypeEff, amountPerByte);
-            allowedUnits = Math.max(0, allowedUnits - newTypeCostUnits);
+            // 若 freeBytes==0 但 apb 桶存在碎片，allowedUnits 仍可能>0（允许借碎片完成首字节）
             if (allowedUnits <= 0)
             {
-                return handleOverflowVoidOnInsert(what, amount, /*inserted*/0);
+                return handleOverflowVoidOnInsert(what, amount, /*inserted*/ 0);
             }
         }
 
@@ -206,7 +200,7 @@ public class AEUniversalCellInventory implements StorageCell {
             allowedUnits = Math.min(allowedUnits, canGrowBy);
             if (allowedUnits <= 0)
             {
-                return handleOverflowVoidOnInsert(what, amount, /*inserted*/0);
+                return handleOverflowVoidOnInsert(what, amount, /*inserted*/ 0);
             }
         }
 
@@ -217,15 +211,15 @@ public class AEUniversalCellInventory implements StorageCell {
         if (mode == Actionable.MODULATE)
         {
             // ---- 增量更新缓存：桶累计、已用字节、已用类型数 ----
-            final long oldBucket = bucketSums.getOrDefault(amountPerByte, 0L);
+            final long oldBucket = bucketSums.get(amountPerByte);
             final long newBucket = safeAdd(oldBucket, toInsert);
 
             // 值字节的增量 = ceil(new/apb) - ceil(old/apb)
             final long deltaValueBytes = safeSub(ceilDiv(newBucket, amountPerByte), ceilDiv(oldBucket, amountPerByte));
 
-            // 打开新类型：类型管理开销 +1 个类型
-            if (openingNewType) {
-                if (bytesPerTypeEff > 0) usedBytesCached = safeAdd(usedBytesCached, bytesPerTypeEff);
+            // 打开新类型：仅 +1 个类型
+            if (openingNewType)
+            {
                 storedTypesCached = safeAdd(storedTypesCached, 1);
             }
 
@@ -242,13 +236,13 @@ public class AEUniversalCellInventory implements StorageCell {
         return toInsert;
     }
 
-    /** 取出处理 */
+    /** 取出实现 */
     @Override
     public long extract(AEKey what, long amount, Actionable mode, IActionSource source)
     {
         if (amount <= 0) return 0;
 
-        final long current = storage.getOrDefault(what, 0L);
+        final long current = storage.getLong(what);
         if (current <= 0) return 0;
 
         final long taken = Math.min(amount, current);
@@ -256,10 +250,10 @@ public class AEUniversalCellInventory implements StorageCell {
         if (mode == Actionable.MODULATE)
         {
             final long amountPerByte = Math.max(1, what.getType().getAmountPerByte());
-            final long oldBucket = bucketSums.getOrDefault(amountPerByte, 0L);
+            final long oldBucket = bucketSums.get(amountPerByte);
             final long newBucket = Math.max(0, oldBucket - taken);
 
-            // 值字节的增量 = ceil(new/apb) - ceil(old/apb) （注意可能是负数）
+            // 值字节的增量 = ceil(new/apb) - ceil(old/apb)（可能为负）
             final long deltaValueBytes = safeSub(ceilDiv(newBucket, amountPerByte), ceilDiv(oldBucket, amountPerByte));
 
             usedBytesCached = safeAdd(usedBytesCached, deltaValueBytes);
@@ -271,9 +265,7 @@ public class AEUniversalCellInventory implements StorageCell {
             }
             else
             {
-                storage.remove(what);
-                // 类型变为 0：减少类型管理开销与类型数
-                if (bytesPerTypeEff > 0) usedBytesCached = safeSub(usedBytesCached, bytesPerTypeEff);
+                storage.removeLong(what);
                 storedTypesCached = Math.max(0, storedTypesCached - 1);
             }
 
@@ -290,9 +282,9 @@ public class AEUniversalCellInventory implements StorageCell {
     @Override
     public void getAvailableStacks(KeyCounter out)
     {
-        for (Map.Entry<AEKey, Long> entry : storage.entrySet())
+        for (Object2LongMap.Entry<AEKey> entry : storage.object2LongEntrySet())
         {
-            long value = (entry.getValue() == null ? 0 : entry.getValue());
+            long value = entry.getLongValue();
             if (value > 0) out.add(entry.getKey(), value);
         }
     }
@@ -303,7 +295,7 @@ public class AEUniversalCellInventory implements StorageCell {
         return this.itemStack.getHoverName();
     }
 
-    // 内部辅助工具 ------------------------------------------------------------------------------------
+    // 内部辅助工具 --------------------------------------------------------------------
 
     /** 当前剩余字节（无限时为 Long.MAX_VALUE）。 */
     private long freeBytes()
@@ -313,22 +305,20 @@ public class AEUniversalCellInventory implements StorageCell {
         return Math.max(0, freeBytes);
     }
 
-    /** 是否还能新开一种类型 */
+    /** 是否还能新开一种类型（仅看类型名额；若无剩余字节但存在任意 apb 桶碎片，也允许借碎片开启） */
     private boolean canHoldNewItemGeneric(long freeBytes)
     {
         if (storedTypesCached >= totalTypesEff) return false; // 没有类型名额
-        if (bytesPerTypeEff == 0) return true; // 无限字节，不受类型开销限制
-        if (freeBytes > bytesPerTypeEff) return true;
-        if (freeBytes < bytesPerTypeEff) return false;
-        // 等于时，需借助“已有桶的未凑满空间”来塞入
-        return hasAnyBucketPartial();
+        if (freeBytes > 0) return true;                       // 还能增加值字节
+        return hasAnyBucketPartial();                         // 或仍可用“桶碎片”（不增字节）开新类型
     }
 
     /** 是否存在任何“桶”未凑满 1 字节（sum % amountPerByte != 0） */
     private boolean hasAnyBucketPartial()
     {
-        for (Map.Entry<Long, Long> buket : bucketSums.entrySet()) {
-            long apb = buket.getKey(), sum = buket.getValue();
+        for (Long2LongMap.Entry bucket : bucketSums.long2LongEntrySet())
+        {
+            long apb = bucket.getLongKey(), sum = bucket.getLongValue();
             if (sum > 0 && (sum % apb) != 0) return true;
         }
         return false;
@@ -336,12 +326,12 @@ public class AEUniversalCellInventory implements StorageCell {
 
     /**
      * 在“不新开类型”的前提下，能往“当前 apb 的桶”继续塞入多少单位：
-     * 即 该桶补齐到下一个字节的“缺口单位数” + freeBytes * apb
-     * 若freeBytes为无限，直接返回Long.MAX_VALUE
+     * 即：该桶补齐到下一个字节的“缺口单位数” + freeBytes * apb
+     * 若 freeBytes 为无限，直接返回 Long.MAX_VALUE
      */
     private long remainingUnitsIntoExistingFor(long amountPerByte, long freeBytes)
     {
-        long sum = bucketSums.getOrDefault(amountPerByte, 0L);
+        long sum = bucketSums.get(amountPerByte);
         long pad = (sum == 0) ? 0 : ((amountPerByte - (sum % amountPerByte)) % amountPerByte);
         if (freeBytes == Long.MAX_VALUE) return Long.MAX_VALUE;
         long extra = safeMul(freeBytes, amountPerByte);
@@ -349,8 +339,8 @@ public class AEUniversalCellInventory implements StorageCell {
     }
 
     /** 递归盘保护：若 what 是“另一个存储盘”且该盘声明不能嵌入，则拒收。 */
-    private boolean canNestStorageCells(AEKey what)
-    {
+    private boolean canNestStorageCells(AEKey what
+    ) {
         if (what instanceof AEItemKey itemKey)
         {
             ItemStack s = itemKey.toStack();
@@ -394,8 +384,6 @@ public class AEUniversalCellInventory implements StorageCell {
 
     /**
      * 均分卡：计算“当前 what（apb）”的单位上限。无均分卡时返回 Long.MAX_VALUE。
-     * 逻辑与原版一致：净字节 = 总字节 - bytesPerType * 估计类型数；
-     * 将净字节换算到当前 apb 的单位后，除以估计类型数并向上取整。
      */
     private long computeEqualDistributionCap(long apb)
     {
@@ -410,7 +398,7 @@ public class AEUniversalCellInventory implements StorageCell {
                 ? cwi.getConfigInventory(itemStack)
                 : null;
 
-        // ae原版逻辑：只有在“非模糊 + 白名单 + 配置非空”时，用配置条目数估算类型数
+        // ae 原版逻辑：只有在“非模糊 + 白名单 + 配置非空”时，用配置条目数估算类型数
         if (!hasFuzzy && whitelist && config != null && !config.keySet().isEmpty())
         {
             estimatedTypes = config.keySet().size();
@@ -420,16 +408,14 @@ public class AEUniversalCellInventory implements StorageCell {
         if (estimatedTypes <= 0) return 0L;
         if (totalBytesEff == Long.MAX_VALUE) return Long.MAX_VALUE; // 无限字节 => 不限额
 
-        long netBytes = totalBytesEff - safeMul(bytesPerTypeEff, estimatedTypes);
-        if (netBytes <= 0) return 0L;
-
+        long netBytes = totalBytesEff;
         long units = safeMul(netBytes, apb);
         return ceilDiv(units, estimatedTypes); // 向上取整
     }
 
     /**
-     * 虚空卡处理（与ae原版一致）：
-     * - 若“未分区”且“无法再开新类型”，则：已存在该类型 => 全吞（返回 amount）；否则仅返回本次成功插入的 inserted（通常 0）
+     * 虚空卡处理（与 ae 原版一致）：
+     * - 若“未分区”且“无法再开新类型”，则：已存在该类型 => 全吞（返回 amount）；否则仅返回 inserted（通常 0）
      * - 其它情况，只要装了虚空卡 => 全吞（返回 amount）
      * 未装虚空卡 => 返回 inserted
      */
@@ -450,16 +436,15 @@ public class AEUniversalCellInventory implements StorageCell {
 
         if (unpartitioned && !canOpen)
         {
-            boolean exists = storage.getOrDefault(what, 0L) > 0;
+            boolean exists = storage.getLong(what) > 0;
             return exists ? amount : inserted;
         }
         return amount;
     }
 
     /**
-     * 更新物品NBT（字节/类型 & 状态）以供客户端后续使用，并立即 setDirty。
-     * <p>
-     * 注意，这里的状态更新仍然处于服务端，但是状态更新后，nbt数据会在客户端下次读取时随menu同步
+     * 更新物品 NBT（字节/类型 & 状态）以供客户端后续使用，并立即 setDirty。
+     * 注意：状态更新后，nbt 数据会在客户端下次读取时随 menu 同步
      */
     private void afterMutationUpdateClientAndSave()
     {
@@ -467,7 +452,7 @@ public class AEUniversalCellInventory implements StorageCell {
         cellData.setDirty();
     }
 
-    /** 把“已用字节/类型 & 状态”写到物品 NBT（仅供客户端tooltip用，不参与服务端逻辑） */
+    /** 把“已用字节/类型 & 状态 + 预览堆栈前五条”写到物品 NBT（仅供客户端 tooltip 用） */
     private void updateItemTooltipState()
     {
         int usedBytesClamped = (int) Math.min(Integer.MAX_VALUE, Math.max(0, usedBytesCached));
@@ -479,9 +464,9 @@ public class AEUniversalCellInventory implements StorageCell {
         // 取迭代到的前 5 个 kv，对应数量>0 的条目，构造成 GenericStack 列表
         List<GenericStack> show = new ArrayList<>(5);
         int count = 0;
-        for (Map.Entry<AEKey, Long> e : storage.entrySet())
+        for (Object2LongMap.Entry<AEKey> e : storage.object2LongEntrySet())
         {
-            long v = (e.getValue() == null ? 0L : e.getValue());
+            long v = e.getLongValue();
             if (v <= 0L) continue;
             show.add(new GenericStack(e.getKey(), v));
             if (++count >= 5) break;
@@ -489,7 +474,7 @@ public class AEUniversalCellInventory implements StorageCell {
         IAEUniversalCell.setTooltipShowStacks(itemStack, show);
     }
 
-    // 简单算数工具------------------------------------------------------------------------------------------
+    // 简单算数工具 --------------------------------------------------------------------
 
     /** 除法，然后向上取整 */
     private static long ceilDiv(long a, long b)
@@ -501,25 +486,23 @@ public class AEUniversalCellInventory implements StorageCell {
         return r == 0 ? q : (q + 1);
     }
 
-    /** 加法 */
+    /** 加法（带上溢钳制） */
     private static long safeAdd(long a, long b)
     {
         long r = a + b;
-        // 简单溢出保护，向上钳制
         if (((a ^ r) & (b ^ r)) < 0) return Long.MAX_VALUE;
         return r;
     }
 
-    /** 除法 */
+    /** 减法（带下溢钳制） */
     private static long safeSub(long a, long b)
     {
         long r = a - b;
-        // 简单溢出保护，向下钳制
         if (((a ^ b) & (a ^ r)) < 0) return Long.MIN_VALUE;
         return r;
     }
 
-    /** 乘法 */
+    /** 乘法（带上溢钳制） */
     private static long safeMul(long a, long b)
     {
         if (a == 0 || b == 0) return 0;

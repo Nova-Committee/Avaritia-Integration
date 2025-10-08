@@ -1,6 +1,9 @@
 package committee.nova.mods.avaritia_integration.module.ae2.me;
 
 import appeng.api.stacks.AEKey;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
+import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -15,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.UUID;
 
 /**
  * uuid -> {@link net.minecraft.world.level.saveddata.SavedData} 数据的管理类
@@ -48,29 +51,30 @@ public class AEUniversalCellData extends SavedData
     private static final String SAVED_FOLDER_NAME = "ae_universal_cell_data";
 
     /** 原始仓库存放在此处，后续 AEUniversalCellInventory 使用此仓库的引用来构建 */
-    private final Map<AEKey, Long> storage;
+    private final Object2LongOpenHashMap<AEKey> storage;
 
     /**
      * 上次反序列化失败而保留下来的“原始条目”队列。
      * - 每次 save() 都会把它写入到 INV_SAVED_TAG/ERROR_ENTRIES_TAG。
      * - 每次 load() 都会尝试“重读”；成功则并入 storage 并打印信息，失败则静默保留。
      */
-    private final List<CompoundTag> pendingReadErrors;
+    private final ObjectArrayList<CompoundTag> pendingReadErrors;
 
-    public AEUniversalCellData(@NotNull Map<AEKey, Long> storage)
+    public AEUniversalCellData(@NotNull Object2LongOpenHashMap<AEKey> storage)
     {
-        this(storage, new ArrayList<>());
+        this(storage, new ObjectArrayList<>());
     }
 
-    private AEUniversalCellData(@NotNull Map<AEKey, Long> storage,
-                                @NotNull List<CompoundTag> pendingReadErrors)
+    private AEUniversalCellData(@NotNull Object2LongOpenHashMap<AEKey> storage,
+                                @NotNull ObjectArrayList<CompoundTag> pendingReadErrors)
     {
         this.storage = storage;
+        this.storage.defaultReturnValue(0L);
         this.pendingReadErrors = pendingReadErrors;
     }
 
     /** 获取原始存储数据 */
-    public @NotNull Map<AEKey, Long> getOriginalStorage()
+    public @NotNull Object2LongMap<AEKey> getOriginalStorage()
     {
         return storage;
     }
@@ -125,7 +129,9 @@ public class AEUniversalCellData extends SavedData
         tag.putString(UUID_TAG, fresh.toString());
 
         // 创建并注册新的 SavedData（注册到 DataStorage 后由世界存档生命周期负责持久化）
-        AEUniversalCellData newData = new AEUniversalCellData(new HashMap<>());
+        Object2LongOpenHashMap<AEKey> s = new Object2LongOpenHashMap<>();
+        s.defaultReturnValue(0L);
+        AEUniversalCellData newData = new AEUniversalCellData(s);
         dataStorage.set(makeKey(fresh), newData);
         newData.setDirty(); // 标脏以便尽快保存
 
@@ -139,13 +145,12 @@ public class AEUniversalCellData extends SavedData
         // 统一放在 INV_SAVED_TAG 里
         CompoundTag invTag = new CompoundTag();
 
-        // 正常条目
+        // 正常条目（结构与键名保持不变）
         ListTag entriesList = new ListTag();
-        for (Map.Entry<AEKey, Long> KAentry : storage.entrySet())
+        for (Object2LongMap.Entry<AEKey> e : storage.object2LongEntrySet())
         {
-            AEKey key = KAentry.getKey();
-            Long amountObj = KAentry.getValue();
-            long amount = amountObj == null ? 0L : amountObj;
+            AEKey key = e.getKey();
+            long amount = e.getLongValue();
 
             if (key == null)
             {
@@ -174,7 +179,6 @@ public class AEUniversalCellData extends SavedData
         ListTag errorList = new ListTag();
         for (CompoundTag bad : pendingReadErrors)
         {
-            // 这里直接写入一份 copy，避免外部引用导致的潜在修改
             errorList.add(bad.copy());
         }
         invTag.put(ERROR_ENTRIES_TAG, errorList);
@@ -186,8 +190,9 @@ public class AEUniversalCellData extends SavedData
     /** 从硬盘反序列化，用于 SavedData 的工厂方法 */
     public static AEUniversalCellData load(CompoundTag tag)
     {
-        HashMap<AEKey, Long> storage = new HashMap<>();
-        List<CompoundTag> errorQueue = new ArrayList<>();
+        Object2LongOpenHashMap<AEKey> storage = new Object2LongOpenHashMap<>();
+        storage.defaultReturnValue(0L);
+        ObjectArrayList<CompoundTag> errorQueue = new ObjectArrayList<>();
 
         // 统一从 INV_SAVED_TAG 读取
         CompoundTag invTag = tag.getCompound(INV_SAVED_TAG);
@@ -209,10 +214,9 @@ public class AEUniversalCellData extends SavedData
                     continue;
                 }
                 long amount = entry.getLong(ENTRY_AMOUNT_TAG);
-                storage.merge(key, amount, Long::sum);
+                storage.addTo(key, amount); // fastutil 原生累加，零装箱
             }
-            catch
-            (Throwable ex)
+            catch(Throwable ex)
             {
                 // 解析失败 -> 放入错误队列，打印
                 errorQueue.add(entry.copy());
@@ -233,7 +237,7 @@ public class AEUniversalCellData extends SavedData
                 if (key != null)
                 {
                     long amount = badEntry.getLong(ENTRY_AMOUNT_TAG);
-                    storage.merge(key, amount, Long::sum);
+                    storage.addTo(key, amount);
                     recovered = true;
                 }
             }
