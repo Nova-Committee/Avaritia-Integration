@@ -4,7 +4,6 @@ import appeng.api.config.FuzzyMode;
 import appeng.api.stacks.GenericStack;
 import appeng.api.stacks.KeyCounter;
 import appeng.api.storage.StorageCells;
-import appeng.api.storage.cells.CellState;
 import appeng.api.storage.cells.ICellWorkbenchItem;
 import appeng.api.storage.cells.StorageCell;
 import appeng.api.upgrades.IUpgradeInventory;
@@ -18,6 +17,7 @@ import appeng.util.InteractionUtil;
 import appeng.util.Platform;
 import committee.nova.mods.avaritia_integration.module.ae2.localization.AEUniversalTooltips;
 import committee.nova.mods.avaritia_integration.module.ae2.me.IAEUniversalCell;
+import committee.nova.mods.avaritia_integration.module.ae2.me.biginteger.IAEBigIntegerCell;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -35,6 +35,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,44 +45,32 @@ import java.util.Optional;
  * 用于承载物品到存储系统的桥接物品
  * @author Frostbite
  */
-public abstract class AEUniversalCellItem extends Item implements IAEUniversalCell, ICellWorkbenchItem
+public class AEBigIntegerCellItem extends Item implements IAEBigIntegerCell, ICellWorkbenchItem
 {
     private final @Nullable ItemLike coreItem;
     private final @Nullable ItemLike housingItem;
     private final double idleDrain;
-    private final int totalBytes;
-    private final int totalTypes;
 
-    public AEUniversalCellItem(Properties pProperties, @Nullable Item coreItem, @Nullable Item housingItem, double idleDrain, int totalTypes, int kilobytes)
+    public AEBigIntegerCellItem(Properties pProperties, @Nullable Item coreItem, @Nullable Item housingItem, double idleDrain)
     {
         super(pProperties);
+        this.idleDrain = idleDrain;
         this.coreItem = coreItem;
         this.housingItem = housingItem;
-        this.idleDrain = idleDrain;
-        this.totalBytes = kilobytes > 0 ? kilobytes * 1024 : -1;
-        this.totalTypes = totalTypes;
-    }
-
-
-    public static int getColor(ItemStack stack, int tintIndex)
-    {
-        if (tintIndex != 1) return 0xFFFFFF; // 白
-        CellState state = IAEUniversalCell.getCellState(stack);
-        return state.getStateColor();
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack pStack,
+    public void appendHoverText(@NotNull ItemStack stack,
                                 @Nullable Level pLevel,
                                 @NotNull List<Component> lines,
                                 @NotNull TooltipFlag pIsAdvanced)
     {
         if (Platform.isClient())
         {
-            long used = IAEUniversalCell.getUsedBytes(pStack);
-            lines.add(AEUniversalTooltips.bytesUsed(used, getTotalBytes()));
-            long typesUsed = IAEUniversalCell.getUsedTypes(pStack);
-            lines.add(AEUniversalTooltips.typesUsed(typesUsed, getTotalTypes()));
+            BigInteger used = IAEBigIntegerCell.getUsedBytes(stack);
+            lines.add(AEUniversalTooltips.bytesUsed(used, -1));
+            long typesUsed = IAEBigIntegerCell.getUsedTypes(stack);
+            lines.add(AEUniversalTooltips.typesUsed(typesUsed, -1));
         }
     }
 
@@ -118,15 +107,7 @@ public abstract class AEUniversalCellItem extends Item implements IAEUniversalCe
         }
 
         // 显示进度条：true（进度由组件内部根据存储状态/配色绘制）
-        return Optional.of(new StorageCellTooltipComponent(
-                upgrades, content, hasMore, true
-        ));
-    }
-
-    @Override
-    public int getTotalBytes()
-    {
-        return this.totalBytes;
+        return Optional.of(new StorageCellTooltipComponent(upgrades, content, hasMore, true));
     }
 
     @Override
@@ -136,15 +117,9 @@ public abstract class AEUniversalCellItem extends Item implements IAEUniversalCe
     }
 
     @Override
-    public int getTotalTypes()
-    {
-        return totalTypes;
-    }
-
-    @Override
     public IUpgradeInventory getUpgrades(ItemStack is)
     {
-        return UpgradeInventories.forItem(is, 4);
+        return UpgradeInventories.forItem(is, 2);
     }
 
     @Override

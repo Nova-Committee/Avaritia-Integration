@@ -1,4 +1,4 @@
-package committee.nova.mods.avaritia_integration.module.ae2.me;
+package committee.nova.mods.avaritia_integration.module.ae2.me.biginteger;
 
 import appeng.api.storage.cells.ICellHandler;
 import appeng.api.storage.cells.ISaveProvider;
@@ -7,33 +7,29 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * 决定如何从ItemStack构建一个 {@link AEUniversalCellInventory}
- * @author Frostbite
- */
-public class AEUniversalCellHandler implements ICellHandler
+public class AEBigIntegerCellHandler implements ICellHandler
 {
-    public static final AEUniversalCellHandler INSTANCE = new AEUniversalCellHandler();
+    public static final AEBigIntegerCellHandler INSTANCE = new AEBigIntegerCellHandler();
 
-    private AEUniversalCellHandler() {}
+    private AEBigIntegerCellHandler() {}
 
     @Override
     public boolean isCell(ItemStack itemStack)
     {
         // 只允许堆叠为1的创建为元件，以防止极端情况下可能存在的刷物品bug
-        return itemStack.getItem() instanceof IAEUniversalCell && itemStack.getCount() == 1;
+        return itemStack.getItem() instanceof IAEBigIntegerCell && itemStack.getCount() == 1;
     }
 
     @Override
     public @Nullable StorageCell getCellInventory(ItemStack itemStack, @Nullable ISaveProvider iSaveProvider)
     {
         if(ServerLifecycleHooks.getCurrentServer() == null) return null;
-        if(!(itemStack.getItem() instanceof IAEUniversalCell cellItem)) return null;
+        if(!(itemStack.getItem() instanceof IAEBigIntegerCell cellItem)) return null;
         if(itemStack.getCount() != 1) return null;
 
-        AEUniversalCellData cellData = AEUniversalCellData.computeIfAbsentCellDataForItemStack(itemStack);
+        AEBigIntegerCellData cellData = AEBigIntegerCellData.computeIfAbsentCellDataForItemStack(itemStack);
         if(cellData == null) return null;
 
-        return new AEUniversalCellInventory(cellData, itemStack, cellItem, iSaveProvider);
+        return new AEBigIntegerCellInventory(cellData, itemStack, cellItem, iSaveProvider);
     }
 }
