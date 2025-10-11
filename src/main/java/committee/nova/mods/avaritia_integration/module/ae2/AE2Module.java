@@ -8,6 +8,7 @@ import committee.nova.mods.avaritia_integration.module.Module;
 import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 import committee.nova.mods.avaritia_integration.module.ae2.client.AE2ClientPlugin;
 import committee.nova.mods.avaritia_integration.module.ae2.me.AEUniversalCellHandler;
+import committee.nova.mods.avaritia_integration.module.ae2.me.biginteger.AEBigIntegerCellHandler;
 import committee.nova.mods.avaritia_integration.module.ae2.registry.AE2IntegrationItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -33,11 +34,15 @@ public final class AE2Module implements Module {
     {
         Module.super.process();
         StorageCells.addCellHandler(AEUniversalCellHandler.INSTANCE);
+        StorageCells.addCellHandler(AEBigIntegerCellHandler.INSTANCE);
 
         Upgrades.add(AEItems.FUZZY_CARD, AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get(), 1);
         Upgrades.add(AEItems.VOID_CARD, AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get(), 1);
         Upgrades.add(AEItems.INVERTER_CARD, AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get(), 1);
         Upgrades.add(AEItems.EQUAL_DISTRIBUTION_CARD, AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get(), 1);
+
+        Upgrades.add(AEItems.FUZZY_CARD, AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG.get(), 1);
+        Upgrades.add(AEItems.INVERTER_CARD, AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG.get(), 1);
     }
 
     @Override
@@ -51,5 +56,6 @@ public final class AE2Module implements Module {
     {
         output.accept(AE2IntegrationItems.INFINITY_ME_STORAGE_COMPONENT.get());
         output.accept(AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get());
+        output.accept(AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG.get());
     }
 }

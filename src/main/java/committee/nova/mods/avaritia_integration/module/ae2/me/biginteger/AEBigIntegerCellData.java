@@ -1,8 +1,8 @@
-package committee.nova.mods.avaritia_integration.module.ae2.me;
+package committee.nova.mods.avaritia_integration.module.ae2.me.biginteger;
 
 import appeng.api.stacks.AEKey;
-import it.unimi.dsi.fastutil.objects.Object2LongMap;
-import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -16,19 +16,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 
-/**
- * uuid -> {@link net.minecraft.world.level.saveddata.SavedData} 数据的管理类
- * <p>每个元件单独对应一个文件： data/ae_universal_cell_data/<uuid>.dat
- * <p>单文件损坏只影响单元件，降低风险。
+/** 基于AEUniversalCellData的BigInteger版本，无其他逻辑更变，
+ *  所有调试信息版本也仍使用AEUniversalCellData统一通知。
+ *
  * @author Frostbite
  */
-public class AEUniversalCellData extends SavedData
+public class AEBigIntegerCellData extends SavedData
 {
-
     /** 主容器子标签 */
     public static final String INV_SAVED_TAG = "inventory";
 
@@ -41,17 +40,17 @@ public class AEUniversalCellData extends SavedData
     /** 单条目里的 key 子标签名 */
     private static final String ENTRY_KEY_TAG = "key";
 
-    /** 单条目里的 amount 子标签名 */
+    /** 单条目里的 amount 子标签名（BigInteger 序列化为 byte[]） */
     private static final String ENTRY_AMOUNT_TAG = "amount";
 
-    /** 在ItemStack中，用于元件仓库 UUID 的 nbt 子标签名 */
+    /** 在 ItemStack NBT 中用于存盘 UUID 的子标签名（与 Long 版保持一致） */
     public static final String UUID_TAG = "ae_universal_cell_uuid";
 
     /** 统一目录名（位于 world/data/ 下） */
     private static final String SAVED_FOLDER_NAME = "ae_universal_cell_data";
 
-    /** 原始仓库存放在此处，后续 AEUniversalCellInventory 使用此仓库的引用来构建 */
-    private final Object2LongOpenHashMap<AEKey> storage;
+    /** 原始仓库存放在此处，后续使用此仓库的引用来构建 */
+    private final Object2ObjectMap<AEKey, BigInteger> storage;
 
     /**
      * 上次反序列化失败而保留下来的“原始条目”队列。
@@ -60,43 +59,43 @@ public class AEUniversalCellData extends SavedData
      */
     private final ObjectArrayList<CompoundTag> pendingReadErrors;
 
-    public AEUniversalCellData(@NotNull Object2LongOpenHashMap<AEKey> storage)
+    public AEBigIntegerCellData(@NotNull Object2ObjectMap<AEKey, BigInteger> storage)
     {
         this(storage, new ObjectArrayList<>());
     }
 
-    private AEUniversalCellData(@NotNull Object2LongOpenHashMap<AEKey> storage,
-                                @NotNull ObjectArrayList<CompoundTag> pendingReadErrors)
+    private AEBigIntegerCellData(@NotNull Object2ObjectMap<AEKey, BigInteger> storage,
+                                 @NotNull ObjectArrayList<CompoundTag> pendingReadErrors)
     {
         this.storage = storage;
-        this.storage.defaultReturnValue(0L);
+        this.storage.defaultReturnValue(BigInteger.ZERO);
         this.pendingReadErrors = pendingReadErrors;
     }
 
-    /** 获取原始存储数据 */
-    public @NotNull Object2LongMap<AEKey> getOriginalStorage()
+    /** 获取原始存储数据（保持与 Long 版一致的对外接口） */
+    public @NotNull Object2ObjectMap<AEKey, BigInteger> getOriginalStorage()
     {
         return storage;
     }
 
     /** 根据 UUID 获取对应的数据（仅当磁盘上已有对应文件时返回） */
-    public static @Nullable AEUniversalCellData getCellDataByUUID(@NotNull UUID uuid)
+    public static @Nullable AEBigIntegerCellData getCellDataByUUID(@NotNull UUID uuid)
     {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return null;
 
-        // 不是必须，但有助于在迁移存档后首次读写前保证目录存在
         ensureSaveDirExists(server);
 
         final String key = makeKey(uuid);
-        return server.overworld().getDataStorage().get(AEUniversalCellData::load, key);
+        return server.overworld().getDataStorage().get(AEBigIntegerCellData::load, key);
     }
 
     /**
      * 如果 ItemStack 存在 UUID 且对应数据文件存在，则加载；
      * 否则为其分配一个全新 UUID，创建并注册新的 SavedData，并把 UUID 写回该物品。
+     * —— 保持与 1.21.1 版本相同的语义：旧 UUID 若无文件则生成新 UUID。
      */
-    public static @Nullable AEUniversalCellData computeIfAbsentCellDataForItemStack(@NotNull ItemStack itemStack)
+    public static @Nullable AEBigIntegerCellData computeIfAbsentCellDataForItemStack(@NotNull ItemStack itemStack)
     {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return null;
@@ -106,13 +105,13 @@ public class AEUniversalCellData extends SavedData
         final var dataStorage = server.overworld().getDataStorage();
         final CompoundTag tag = itemStack.getOrCreateTag();
 
-        // 先尝试读取已有 UUID 且对应文件存在
+        // 读取已有 UUID（从 NBT）
         if (tag.contains(UUID_TAG))
         {
             try
             {
                 UUID existing = UUID.fromString(tag.getString(UUID_TAG));
-                AEUniversalCellData data = getCellDataByUUID(existing);
+                AEBigIntegerCellData data = getCellDataByUUID(existing);
                 if (data != null)
                 {
                     return data;
@@ -128,21 +127,21 @@ public class AEUniversalCellData extends SavedData
         UUID fresh;
         do {
             fresh = UUID.randomUUID();
-        } while (getCellDataByUUID(fresh) != null); // 近乎不可能，但防御一下
+        } while (getCellDataByUUID(fresh) != null);
 
-        // 写回物品上的 UUID
+        // 写回物品的 UUID（NBT）
         tag.putString(UUID_TAG, fresh.toString());
 
         // 创建并注册新的 SavedData（注册到 DataStorage 后由世界存档生命周期负责持久化）
-        Object2LongOpenHashMap<AEKey> s = new Object2LongOpenHashMap<>();
-        s.defaultReturnValue(0L);
-        AEUniversalCellData newData = new AEUniversalCellData(s);
+        Object2ObjectOpenHashMap<AEKey, BigInteger> s = new Object2ObjectOpenHashMap<>();
+        s.defaultReturnValue(BigInteger.ZERO);
+        AEBigIntegerCellData newData = new AEBigIntegerCellData(s);
         dataStorage.set(makeKey(fresh), newData);
         // 不为空数据标脏，直到有insert/extract操作后由它们标脏
         return newData;
     }
 
-    /** 硬盘序列化 */
+    /** 硬盘序列化（1.20.1：无 HolderLookup） */
     @Override
     public @NotNull CompoundTag save(@NotNull CompoundTag tag)
     {
@@ -151,10 +150,10 @@ public class AEUniversalCellData extends SavedData
 
         // 正常条目（结构与键名保持不变）
         ListTag entriesList = new ListTag();
-        for (Object2LongMap.Entry<AEKey> e : storage.object2LongEntrySet())
+        for (Object2ObjectMap.Entry<AEKey, BigInteger> e : storage.object2ObjectEntrySet())
         {
             AEKey key = e.getKey();
-            long amount = e.getLongValue();
+            BigInteger amount = e.getValue();
 
             if (key == null)
             {
@@ -166,11 +165,11 @@ public class AEUniversalCellData extends SavedData
             try
             {
                 CompoundTag entry = new CompoundTag();
-                entry.put(ENTRY_KEY_TAG, key.toTagGeneric()); // 通用写法，包含 #c
-                entry.putLong(ENTRY_AMOUNT_TAG, amount);
+                entry.put(ENTRY_KEY_TAG, key.toTagGeneric());
+                entry.putByteArray(ENTRY_AMOUNT_TAG, amount.toByteArray());
                 entriesList.add(entry);
             }
-            catch(Throwable ex)
+            catch (Throwable ex)
             {
                 // 序列化失败：无法可靠得到要保存的信息 -> 打印并略过
                 System.err.println("[AEUniversalCellData] Failed to serialize entry: key=" + key
@@ -191,11 +190,11 @@ public class AEUniversalCellData extends SavedData
         return tag;
     }
 
-    /** 从硬盘反序列化，用于 SavedData 的工厂方法 */
-    public static AEUniversalCellData load(CompoundTag tag)
+    /** 从硬盘反序列化（1.20.1：无 HolderLookup） */
+    public static AEBigIntegerCellData load(CompoundTag tag)
     {
-        Object2LongOpenHashMap<AEKey> storage = new Object2LongOpenHashMap<>();
-        storage.defaultReturnValue(0L);
+        Object2ObjectMap<AEKey, BigInteger> storage = new Object2ObjectOpenHashMap<>();
+        storage.defaultReturnValue(BigInteger.ZERO);
         ObjectArrayList<CompoundTag> errorQueue = new ObjectArrayList<>();
 
         // 统一从 INV_SAVED_TAG 读取
@@ -210,17 +209,17 @@ public class AEUniversalCellData extends SavedData
             {
                 CompoundTag keyTag = entry.getCompound(ENTRY_KEY_TAG);
                 AEKey key = AEKey.fromTagGeneric(keyTag);
-                if(key == null)
+                if (key == null)
                 {
                     // 解析失败 -> 放入错误队列，打印
                     errorQueue.add(entry.copy());
                     System.err.println("[AEUniversalCellData] Failed to deserialize entry (null key). Entry=" + entry);
                     continue;
                 }
-                long amount = entry.getLong(ENTRY_AMOUNT_TAG);
-                storage.addTo(key, amount); // fastutil 原生累加，零装箱
+                BigInteger amount = new BigInteger(entry.getByteArray(ENTRY_AMOUNT_TAG));
+                addTo(storage, key, amount);
             }
-            catch(Throwable ex)
+            catch (Throwable ex)
             {
                 // 解析失败 -> 放入错误队列，打印
                 errorQueue.add(entry.copy());
@@ -240,12 +239,12 @@ public class AEUniversalCellData extends SavedData
                 AEKey key = AEKey.fromTagGeneric(keyTag);
                 if (key != null)
                 {
-                    long amount = badEntry.getLong(ENTRY_AMOUNT_TAG);
-                    storage.addTo(key, amount);
+                    BigInteger amount = new BigInteger(badEntry.getByteArray(ENTRY_AMOUNT_TAG));
+                    addTo(storage, key, amount);
                     recovered = true;
                 }
             }
-            catch(Throwable ignored)
+            catch (Throwable ignored)
             {
                 recovered = false;
             }
@@ -261,12 +260,12 @@ public class AEUniversalCellData extends SavedData
                 errorQueue.add(badEntry.copy());
             }
         }
-        return new AEUniversalCellData(storage, errorQueue);
+        return new AEBigIntegerCellData(storage, errorQueue);
     }
 
     // ---------------------------------- 辅助方法 ----------------------------------
 
-    /** 生成 DataStorage 的路径（1.20.1 支持子路径，但不会自动建目录） */
+    /** 生成 DataStorage 的路径（保持子路径：ae_universal_cell_data/<uuid>） */
     private static String makeKey(@NotNull UUID uuid)
     {
         return SAVED_FOLDER_NAME + "/" + uuid;
@@ -282,10 +281,27 @@ public class AEUniversalCellData extends SavedData
         {
             Files.createDirectories(dir); // 已存在则静默通过
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             // 不中断，但留痕方便排查
             System.err.println("[AEUniversalCellData] Failed to create save directory: " + dir + " : " + e);
+        }
+    }
+
+    /** 简单的工具：保持与 Long 版语义一致（仅累加正值） */
+    private static void addTo(Object2ObjectMap<AEKey, BigInteger> map, AEKey key, BigInteger delta)
+    {
+        if (delta == null) return;
+        if (delta.signum() <= 0) return;
+        BigInteger prev = map.getOrDefault(key, BigInteger.ZERO);
+        BigInteger now = prev.add(delta);
+        if (now.signum() == 0)
+        {
+            map.remove(key);
+        }
+        else
+        {
+            map.put(key, now);
         }
     }
 }

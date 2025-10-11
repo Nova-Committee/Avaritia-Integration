@@ -13,12 +13,14 @@ public class AE2StorageModels
     public static void registerStorageModels()
     {
         StorageCellModels.registerModel(AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get(), MODEL_CELL_CREATIVE);
+        StorageCellModels.registerModel(AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG.get(), MODEL_CELL_CREATIVE);
     }
 
     public static void registerItemColors(RegisterColorHandlersEvent.Item event)
     {
         event.register(AEUniversalCellItem::getColor,
-                AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get()
+                AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get(),
+                AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG.get()
         );
     }
 }
