@@ -9,15 +9,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class InfinityCapacitorData implements ICapacitorData, INBTSerializable<Tag> {
-    public static final InfinityCapacitorData INSTANCE = new InfinityCapacitorData();
+public class AICapacitorData implements ICapacitorData, INBTSerializable<Tag> {
+    private final float baseLevel;
 
-    private InfinityCapacitorData() {
+    public AICapacitorData(float baseLevel) {
+        this.baseLevel = baseLevel;
     }
 
     @Override
     public float getBase() {
-        return 10;
+        return this.baseLevel;
     }
 
     @Override
@@ -37,6 +38,5 @@ public class InfinityCapacitorData implements ICapacitorData, INBTSerializable<T
 
     @Override
     public void deserializeNBT(Tag nbt) {
-        // We use fixed value so don't need to modify it.
     }
 }

@@ -8,18 +8,19 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class InfinityCapacitorItem extends Item implements IMultiCapabilityItem {
+public class AICapacitorItem extends Item implements IMultiCapabilityItem {
     private final ICapacitorData data;
 
-    public InfinityCapacitorItem(ICapacitorData data, Properties properties) {
+    public AICapacitorItem(ICapacitorData data, Properties properties) {
         super(properties);
         this.data = data;
     }
 
     @Override
-    public @Nullable MultiCapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt, MultiCapabilityProvider provider) {
+    public @Nullable MultiCapabilityProvider initCapabilities(@NotNull ItemStack stack, @Nullable CompoundTag nbt, MultiCapabilityProvider provider) {
         provider.add(EIOCapabilities.CAPACITOR, LazyOptional.of(() -> this.data));
         return provider;
     }

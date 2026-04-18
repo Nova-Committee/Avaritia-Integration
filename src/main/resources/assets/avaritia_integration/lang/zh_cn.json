@@ -62,12 +62,15 @@
 
   "item.avaritia_integration.blood_orb_of_armok": "阿尔莫克之血宝珠",
 
+  "item.avaritia_integration.blaze_cube_capacitor": "炽骨立方电容",
+  "item.avaritia_integration.crystal_matrix_capacitor": "水晶矩阵电容",
+  "item.avaritia_integration.neutron_capacitor": "中子电容",
   "item.avaritia_integration.infinity_capacitor": "无尽电容",
   "item.avaritia_integration.infinity_grinding_ball": "无尽磨珠",
   "item.avaritia_integration.neutron_grinding_ball": "中子磨珠",
 
-  "item.avaritia_integration.infinity_energy_tablet": "无尽能量版",
-  "item.avaritia_integration.neutron_energy_tablet": "中子能量版",
+  "item.avaritia_integration.infinity_energy_tablet": "无尽能量板",
+  "item.avaritia_integration.neutron_energy_tablet": "中子能量板",
   "item.avaritia_integration.infinity_control_circuit": "永恒无尽控制电路",
   "item.avaritia_integration.neutron_control_circuit": "中子辐射控制电路",
   "item.avaritia_integration.alloy_infinity": "无尽合金",
@@ -150,7 +153,6 @@
   "item.avaritia_integration.ignis_cake_base": "熔火蛋糕胚",
   "item.avaritia_integration.star_cake": "恒星蛋糕",
   "item.avaritia_integration.star_cake_base": "恒星蛋糕胚",
-  "block.avaritia_integration.crystal_matrix_casing": "水晶矩阵机壳",
   "block.avaritia_integration.extreme_basin": "超限工作盆",
   "block.avaritia_integration.extreme_blaze_burner": "终焉燃烧室",
   "block.avaritia_integration.extreme_crushing_wheel": "终极粉碎轮",
