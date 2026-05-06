@@ -7,6 +7,7 @@ import com.simibubi.create.content.logistics.chute.ChuteBlockEntity;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import committee.nova.mods.avaritia_integration.module.create.content.extreme_fan.compat.ChuteInteractingFanBlockEntity;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +22,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @MethodsReturnNonnullByDefault
-public class ExtremeEncasedFanBlockEntity extends KineticBlockEntity implements IAirCurrentSource {
+public class ExtremeEncasedFanBlockEntity extends KineticBlockEntity implements IAirCurrentSource, ChuteInteractingFanBlockEntity {
     public AirCurrent airCurrent;
     protected int airCurrentUpdateCooldown;
     protected int entitySearchCooldown;
@@ -54,6 +55,11 @@ public class ExtremeEncasedFanBlockEntity extends KineticBlockEntity implements 
     @Override
     public AirCurrent getAirCurrent() {
         return airCurrent;
+    }
+
+    @Override
+    public float getChuteFanSpeed() {
+        return getSpeed();
     }
 
     @Nullable
