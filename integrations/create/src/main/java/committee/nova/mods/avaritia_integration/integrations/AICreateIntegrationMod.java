@@ -1,5 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations;
 
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 
 @Mod(AICreateIntegrationMod.MOD_ID)
@@ -7,5 +9,5 @@ public final class AICreateIntegrationMod {
 
     public static final String MOD_ID = "avaritia_integration_create";
 
-    public AICreateIntegrationMod() {}
+    public AICreateIntegrationMod(IEventBus bus, ModContainer modContainer) {}
 }
