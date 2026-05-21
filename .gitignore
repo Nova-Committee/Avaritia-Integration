@@ -18,7 +18,7 @@ classes/
 .metadata
 .settings
 *.launch
-*/src/generated/resources/.cache/
+/src/generated/resources/.cache/
 
 *.patch
 *.DS_Store
