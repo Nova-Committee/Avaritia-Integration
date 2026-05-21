@@ -63,6 +63,9 @@
 
   "item.avaritia_integration.blood_orb_of_armok": "Blood Orb of Armok",
 
+  "item.avaritia_integration.blaze_cube_capacitor": "Blaze Cube Capacitor",
+  "item.avaritia_integration.crystal_matrix_capacitor": "Crystal Matrix Capacitor",
+  "item.avaritia_integration.neutron_capacitor": "Neutron Capacitor",
   "item.avaritia_integration.infinity_capacitor": "Infinity Capacitor",
   "item.avaritia_integration.infinity_grinding_ball": "Infinity Grinding Ball",
   "item.avaritia_integration.neutron_grinding_ball": "Neutron Grinding Ball",
@@ -156,7 +159,6 @@
   "item.avaritia_integration.ignis_cake_base": "Ignis Cake Base",
   "item.avaritia_integration.star_cake": "Star Cake",
   "item.avaritia_integration.star_cake_base": "Star Cake Base",
-  "block.avaritia_integration.crystal_matrix_casing": "Crystal Matrix Casing",
   "block.avaritia_integration.extreme_basin": "Extreme Basin",
   "block.avaritia_integration.extreme_blaze_burner": "Extreme Blaze Burner",
   "block.avaritia_integration.extreme_crushing_wheel": "Extreme Crushing Wheel",
