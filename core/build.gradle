@@ -1,0 +1,47 @@
+ext.ai_mod_id = mod_id
+ext.ai_mod_name = mod_name
+ext.ai_mod_description = mod_description
+ext.ai_run_directory = 'core'
+
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    // Avaritia
+    implementation "curse.maven:re-avaritia-623969:${avaritia_version}"
+    // JEI
+    implementation "curse.maven:jei-238222:${jei_version}"
+    // Refined Storage
+    implementation "curse.maven:refined-storage-243076:${refined_Storage_version}"
+    // Create
+    implementation "curse.maven:create-328085:${create_version}"
+    // PneumaticCraft: Repressurized
+    implementation "curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_version}"
+    // Ender IO
+    implementation "curse.maven:ender-io-64578:${ender_io_version}"
+    // Applied Energistics
+    implementation "org.appliedenergistics:appliedenergistics2:${applied_energistics_version}"
+    // GuideME
+    implementation "org.appliedenergistics:guideme:${guideme_version}"
+    // Patchouli
+    implementation "curse.maven:patchouli-306770:${patchouli_version}"
+    // Curios
+    implementation "curse.maven:curios-309927:${curios_version}"
+    // Jade
+    implementation "curse.maven:jade-324717:${jade_version}"
+    // Titanium
+    implementation "curse.maven:titanium-287342:${titanium_version}"
+    // Industrial Foregoing
+    implementation "curse.maven:industrial-foregoing-266515:${industrial_foregoing_version}"
+    // Industrial Foregoing Extra Upgrades
+    implementation "curse.maven:industrial-foregoing-extra-upgrades-1161049:${industrial_foregoing_extra_upgrades_version}"
+    // Botania
+    implementation "vazkii.botania:botania-neoforge-1.21.1:${botania_version}"
+    // Mekanism
+    implementation "mekanism:Mekanism:${mekanism_version}"
+    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"
+    implementation "mekanism:Mekanism:${mekanism_version}:generators"
+    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"
+
+    runtimeOnly "curse.maven:iglee-library-541199:7000755"
+    implementation "curse.maven:evolved-mekanism-1230085:7599592"
+}

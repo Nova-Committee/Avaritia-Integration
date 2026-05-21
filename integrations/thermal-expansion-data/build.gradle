@@ -1,0 +1,9 @@
+ext.ai_mod_id = 'avaritia_integration_thermal_expansion_data'
+ext.ai_mod_name = 'Avaritia Integration Thermal Expansion Data'
+ext.ai_mod_description = 'Avaritia Integration data module for Thermal Expansion.'
+ext.ai_run_directory = 'integrations/thermal-expansion-data'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation project(':core')
+}

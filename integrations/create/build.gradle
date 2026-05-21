@@ -1,0 +1,10 @@
+ext.ai_mod_id = 'avaritia_integration_create'
+ext.ai_mod_name = 'Avaritia Integration Create'
+ext.ai_mod_description = 'Avaritia Integration module for Create.'
+ext.ai_run_directory = 'integrations/create'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation project(':core')
+    implementation "curse.maven:create-328085:${create_version}"
+}

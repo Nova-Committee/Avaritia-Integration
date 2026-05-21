@@ -1,0 +1,13 @@
+ext.ai_mod_id = 'avaritia_integration_mekanism'
+ext.ai_mod_name = 'Avaritia Integration Mekanism'
+ext.ai_mod_description = 'Avaritia Integration module for Mekanism.'
+ext.ai_run_directory = 'integrations/mekanism'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation project(':core')
+    implementation "mekanism:Mekanism:${mekanism_version}"
+    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"
+    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"
+    implementation "curse.maven:evolved-mekanism-1230085:7599592"
+}

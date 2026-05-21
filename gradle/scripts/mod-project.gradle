@@ -1,0 +1,187 @@
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'jacoco'
+apply plugin: 'net.neoforged.moddev'
+apply plugin: 'com.diffplug.spotless'
+apply plugin: 'io.freefair.lombok'
+
+def moduleModId = providers.provider { project.ext.ai_mod_id as String }
+def moduleName = providers.provider { project.ext.ai_mod_name as String }
+def moduleDescription = providers.provider { project.ext.ai_mod_description as String }
+def runDirectoryName = providers.provider { project.ext.ai_run_directory as String }
+def archiveName = providers.provider { project.ext.has('ai_archive_name') ? project.ext.ai_archive_name as String : moduleModId.get() }
+def dependencyBlocks = providers.provider { project.ext.has('ai_dependency_blocks') ? project.ext.ai_dependency_blocks as String : '' }
+def isAggregate = providers.provider { project.ext.has('ai_aggregate') && project.ext.ai_aggregate as boolean }
+
+base {
+    archivesName = archiveName.get()
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+spotless {
+    java {
+        target 'src/**/*.java'
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    groovyGradle {
+        target '*.gradle', 'gradle/**/*.gradle'
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    format 'misc', {
+        target '*.md', 'src/**/*.json', 'src/**/*.toml'
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+lombok {
+    version = '1.18.38'
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+            ideName = isAggregate.get() ? 'All Client' : "${moduleName.get()} Client"
+            gameDirectory.set(rootProject.file("run/${runDirectoryName.get()}/client"))
+            systemProperty 'neoforge.enabledGameTestNamespaces', moduleModId.get()
+        }
+
+        server {
+            server()
+            ideName = isAggregate.get() ? 'All Server' : "${moduleName.get()} Server"
+            gameDirectory.set(rootProject.file("run/${runDirectoryName.get()}/server"))
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', moduleModId.get()
+        }
+
+        data {
+            data()
+            ideName = "${moduleName.get()} Data"
+            gameDirectory.set(rootProject.file("run/${runDirectoryName.get()}/data"))
+            programArguments.addAll '--mod', moduleModId.get(), '--all',
+                    '--output', file('src/generated/resources/').getAbsolutePath(),
+                    '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        if (isAggregate.get()) {
+            gameTestServer {
+                type = 'gameTestServer'
+                ideName = 'Game Tests Server'
+                gameDirectory.set(rootProject.file('run/all/gametest/server'))
+                systemProperty 'neoforge.enabledGameTestNamespaces', moduleModId.get()
+                environment 'TEST', 'true'
+            }
+
+            gameTestClient {
+                client()
+                ideName = 'Game Tests Client'
+                gameDirectory.set(rootProject.file('run/all/gametest/client'))
+                systemProperty 'neoforge.enabledGameTestNamespaces', moduleModId.get()
+                environment 'TEST', 'true'
+            }
+        }
+
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${moduleModId.get()}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+tasks.matching { it.name.startsWith('prepare') }.configureEach {
+    doFirst {
+        mkdir rootProject.file("run/${runDirectoryName.get()}/client")
+        mkdir rootProject.file("run/${runDirectoryName.get()}/server")
+        mkdir rootProject.file("run/${runDirectoryName.get()}/data")
+        if (isAggregate.get()) {
+            mkdir rootProject.file('run/all/gametest/client')
+            mkdir rootProject.file('run/all/gametest/server')
+        }
+    }
+}
+
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : moduleModId.get(),
+            mod_name               : moduleName.get(),
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : moduleDescription.get(),
+            dependency_blocks      : dependencyBlocks.get()
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.withType(Jar).configureEach {
+    manifest.attributes([
+            'Specification-Title'     : moduleName.get(),
+            'Specification-Version'   : mod_version,
+            'Specification-Vendor'    : mod_authors,
+            'Implementation-Title'    : archiveName.get(),
+            'Implementation-Version'  : project.version,
+            'Implementation-Vendor'   : mod_authors
+    ])
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "file://${rootProject.projectDir}/repo"
+        }
+    }
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

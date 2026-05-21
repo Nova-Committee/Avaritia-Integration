@@ -1,0 +1,11 @@
+ext.ai_mod_id = 'avaritia_integration_industrialforegoing'
+ext.ai_mod_name = 'Avaritia Integration Industrial Foregoing'
+ext.ai_mod_description = 'Avaritia Integration module for Industrial Foregoing.'
+ext.ai_run_directory = 'integrations/industrialforegoing'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation project(':core')
+    implementation "curse.maven:titanium-287342:${titanium_version}"
+    implementation "curse.maven:industrial-foregoing-266515:${industrial_foregoing_version}"
+}

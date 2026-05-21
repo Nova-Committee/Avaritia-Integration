@@ -1,0 +1,10 @@
+ext.ai_mod_id = 'avaritia_integration_enderio'
+ext.ai_mod_name = 'Avaritia Integration Ender IO'
+ext.ai_mod_description = 'Avaritia Integration module for Ender IO.'
+ext.ai_run_directory = 'integrations/enderio'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation project(':core')
+    implementation "curse.maven:ender-io-64578:${ender_io_version}"
+}
