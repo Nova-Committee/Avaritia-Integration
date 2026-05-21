@@ -1,7 +1,6 @@
-package committee.nova.mods.avaritia_integration.integrations;
+package committee.nova.mods.avaritia_integration.integrations.botania;
 
 import committee.nova.mods.avaritia_integration.api.load.IntegrationRuntime;
-import committee.nova.mods.avaritia_integration.integrations.botania.BotaniaModule;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;

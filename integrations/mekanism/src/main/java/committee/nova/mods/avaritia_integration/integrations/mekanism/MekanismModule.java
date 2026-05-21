@@ -1,9 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.integrations.mekanism.client.gui.machine.GuiMIFactory;
-import committee.nova.mods.avaritia_integration.integrations.mekanism.client.gui.machine.GuiNeutronCollector;
-import committee.nova.mods.avaritia_integration.integrations.mekanism.client.gui.machine.GuiSingularityCompressor;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.client.MekanismClient;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.network.to_server.MekIntegrationPacketGuiInteract;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationBlocks;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationChemicals;
@@ -20,12 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-
-import mekanism.client.ClientRegistrationUtil;
 
 @ModuleEntry(id = MekanismModule.MOD_ID, target = @ModMeta(MekanismModule.MOD_ID))
 public final class MekanismModule implements Module {
@@ -55,15 +49,7 @@ public final class MekanismModule implements Module {
 
     @Override
     public void registerClientEvent(IEventBus modBus, IEventBus gameBus) {
-        modBus.addListener(EventPriority.LOW, this::registerScreen);
-    }
-
-    private void registerScreen(RegisterMenuScreensEvent event) {
-        ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.NEUTRON_COLLECTOR,
-                GuiNeutronCollector::new);
-        ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.SINGULARITY_COMPRESSOR,
-                GuiSingularityCompressor::new);
-        ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.FACTORY, GuiMIFactory::new);
+        MekanismClient.register(modBus);
     }
 
     @Override

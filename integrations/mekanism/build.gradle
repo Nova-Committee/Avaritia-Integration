@@ -10,5 +10,6 @@ dependencies {
     implementation forge.mekanism
     runtimeOnly variantOf(forge.mekanism) { classifier('additions') }
     runtimeOnly variantOf(forge.mekanism) { classifier('tools') }
+    runtimeOnly forge.igleeLibrary
     implementation forge.evolvedMekanism
 }
