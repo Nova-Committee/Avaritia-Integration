@@ -1,5 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.ae2;
 
+import committee.nova.mods.avaritia_integration.api.load.IntegrationRule;
 import committee.nova.mods.avaritia_integration.integrations.ae2.client.AE2ClientPlugin;
 import committee.nova.mods.avaritia_integration.integrations.ae2.me.AEUniversalCellHandler;
 import committee.nova.mods.avaritia_integration.integrations.ae2.me.biginteger.AEBigIntegerCellHandler;
@@ -20,6 +21,11 @@ import appeng.core.definitions.AEItems;
 public final class AE2Module implements Module {
 
     public static final String MOD_ID = "ae2";
+
+    @Override
+    public IntegrationRule defaultLoadRule() {
+        return Module.rule(Module.dependency(MOD_ID));
+    }
 
     @Override
     public void init(IEventBus registryBus) {

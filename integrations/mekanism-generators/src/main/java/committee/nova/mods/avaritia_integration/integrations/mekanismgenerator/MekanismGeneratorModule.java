@@ -21,6 +21,11 @@ public class MekanismGeneratorModule implements Module {
     public static final String MOD_ID = "mekanismgenerators";
 
     @Override
+    public committee.nova.mods.avaritia_integration.api.load.IntegrationRule defaultLoadRule() {
+        return Module.rule(Module.dependency("mekanism"), Module.dependency(MOD_ID));
+    }
+
+    @Override
     public void init(IEventBus registryBus) {
         GenIntegrationItems.ITEMS.register(registryBus);
         GenIntegrationBlocks.BLOCKS.register(registryBus);

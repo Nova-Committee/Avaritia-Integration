@@ -14,6 +14,11 @@ public final class CreateModule implements Module {
     public static final String MOD_ID = "create";
 
     @Override
+    public committee.nova.mods.avaritia_integration.api.load.IntegrationRule defaultLoadRule() {
+        return Module.rule(Module.dependency(MOD_ID));
+    }
+
+    @Override
     public void init(IEventBus registryBus) {
         CreateIntegrationItems.REGISTRY.register(registryBus);
     }

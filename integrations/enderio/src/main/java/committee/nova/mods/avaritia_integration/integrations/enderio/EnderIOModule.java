@@ -14,6 +14,11 @@ public final class EnderIOModule implements Module {
     public static final String MOD_ID = "enderio";
 
     @Override
+    public committee.nova.mods.avaritia_integration.api.load.IntegrationRule defaultLoadRule() {
+        return Module.rule(Module.dependency(MOD_ID));
+    }
+
+    @Override
     public void init(IEventBus registryBus) {
         EnderIOIntegrationItems.REGISTRY.register(registryBus);
     }

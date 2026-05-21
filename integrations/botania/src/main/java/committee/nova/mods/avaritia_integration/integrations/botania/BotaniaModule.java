@@ -37,6 +37,11 @@ public final class BotaniaModule implements Module {
     public static final String MOD_ID = "botania";
 
     @Override
+    public committee.nova.mods.avaritia_integration.api.load.IntegrationRule defaultLoadRule() {
+        return Module.rule(Module.dependency(MOD_ID));
+    }
+
+    @Override
     public void init(IEventBus registryBus) {
         BotaniaIntegrationBlocks.REGISTRY.register(registryBus);
         BotaniaIntegrationBlockEntities.REGISTRY.register(registryBus);

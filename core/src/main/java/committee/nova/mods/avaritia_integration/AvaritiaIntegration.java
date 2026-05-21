@@ -1,7 +1,6 @@
 package committee.nova.mods.avaritia_integration;
 
 import committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi;
-import committee.nova.mods.avaritia_integration.init.data.AIDataGen;
 import committee.nova.mods.avaritia_integration.init.registry.AIBlocks;
 import committee.nova.mods.avaritia_integration.init.registry.AICreativeTabs;
 import committee.nova.mods.avaritia_integration.init.registry.AIFluidTypes;
@@ -37,7 +36,6 @@ public class AvaritiaIntegration {
         AIFluidTypes.REGISTRY.register(bus);
         AIFluids.REGISTRY.register(bus);
         IntegrationLoadApi.reload();
-        bus.addListener(AIDataGen::gatherData);
     }
 
     public static ResourceLocation rl(String name) {

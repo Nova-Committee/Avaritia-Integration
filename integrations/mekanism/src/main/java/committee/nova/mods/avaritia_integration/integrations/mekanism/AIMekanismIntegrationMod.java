@@ -1,5 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism;
 
+import committee.nova.mods.avaritia_integration.api.load.IntegrationDataPackRegistrar;
 import committee.nova.mods.avaritia_integration.api.load.IntegrationRuntime;
 
 import net.neoforged.bus.api.IEventBus;
@@ -12,6 +13,7 @@ public final class AIMekanismIntegrationMod {
     public static final String MOD_ID = "avaritia_integration_mekanism";
 
     public AIMekanismIntegrationMod(IEventBus bus, ModContainer modContainer) {
+        IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration Mekanism Data");
         IntegrationRuntime.load(MOD_ID, bus, MekanismModule::new);
     }
 }

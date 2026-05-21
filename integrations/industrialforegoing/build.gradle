@@ -2,6 +2,8 @@ ext.ai_mod_id = 'avaritia_integration_industrialforegoing'
 ext.ai_mod_name = 'Avaritia Integration Industrial Foregoing'
 ext.ai_mod_description = 'Avaritia Integration module for Industrial Foregoing.'
 ext.ai_run_directory = 'integrations/industrialforegoing'
+ext.ai_data_output_root = 'src/generated/resources/integration_packs/server_data'
+ext.ai_data_existing_root = 'src/main/resources/integration_packs/server_data'
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {

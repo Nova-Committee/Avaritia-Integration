@@ -16,6 +16,8 @@ def runDirectoryName = providers.provider { project.ext.ai_run_directory as Stri
 def archiveName = providers.provider { project.ext.has('ai_archive_name') ? project.ext.ai_archive_name as String : moduleModId.get() }
 def dependencyBlocks = providers.provider { project.ext.has('ai_dependency_blocks') ? project.ext.ai_dependency_blocks as String : '' }
 def isAggregate = providers.provider { project.ext.has('ai_aggregate') && project.ext.ai_aggregate as boolean }
+def dataOutputRoot = providers.provider { project.ext.has('ai_data_output_root') ? project.ext.ai_data_output_root as String : 'src/generated/resources' }
+def dataExistingRoot = providers.provider { project.ext.has('ai_data_existing_root') ? project.ext.ai_data_existing_root as String : 'src/main/resources' }
 
 base {
     archivesName = archiveName.get()
@@ -67,8 +69,8 @@ neoForge {
             ideName = "${moduleName.get()} Data"
             gameDirectory.set(rootProject.file("run/${runDirectoryName.get()}/data"))
             programArguments.addAll '--mod', moduleModId.get(), '--all',
-                    '--output', file('src/generated/resources/').getAbsolutePath(),
-                    '--existing', file('src/main/resources/').getAbsolutePath()
+                    '--output', file(dataOutputRoot.get()).getAbsolutePath(),
+                    '--existing', file(dataExistingRoot.get()).getAbsolutePath()
         }
 
         if (isAggregate.get()) {

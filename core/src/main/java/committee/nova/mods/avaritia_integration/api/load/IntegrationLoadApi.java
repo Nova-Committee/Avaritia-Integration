@@ -35,6 +35,8 @@ public final class IntegrationLoadApi {
             .resolve("integration")
             .resolve("load_rules.json");
 
+    private static final Map<String, IntegrationRule> REGISTERED_DEFAULT_RULES = new LinkedHashMap<>();
+    private static boolean generatedRulesMode;
     private static Map<String, IntegrationRule> rules;
     private static String loadError;
 
@@ -99,6 +101,23 @@ public final class IntegrationLoadApi {
         rules = loadRules();
     }
 
+    public static synchronized void registerDefaultRule(String integrationModId, IntegrationRule rule) {
+        if (integrationModId == null || integrationModId.isBlank() || rule == null) {
+            return;
+        }
+        REGISTERED_DEFAULT_RULES.put(integrationModId, rule);
+        if (Files.notExists(CONFIG_PATH) || generatedRulesMode) {
+            generatedRulesMode = true;
+            rules = snapshotDefaultRules();
+            try {
+                saveDefaultRules(rules);
+            } catch (IOException e) {
+                loadError = "Failed to save integration rules to " + CONFIG_PATH + ": " + e.getMessage();
+                AvaritiaIntegration.LOGGER.error(loadError, e);
+            }
+        }
+    }
+
     private static synchronized Map<String, IntegrationRule> getRules() {
         if (rules == null) rules = loadRules();
         return rules;
@@ -108,10 +127,10 @@ public final class IntegrationLoadApi {
         loadError = null;
         try {
             if (Files.notExists(CONFIG_PATH)) {
-                Map<String, IntegrationRule> defaultRules = createDefaultRules();
-                saveDefaultRules(defaultRules);
-                return defaultRules;
+                generatedRulesMode = true;
+                return snapshotDefaultRules();
             }
+            generatedRulesMode = false;
             try (Reader reader = Files.newBufferedReader(CONFIG_PATH, StandardCharsets.UTF_8)) {
                 Map<String, IntegrationRule> loadedRules = GSON.fromJson(reader, RULES_TYPE);
                 if (loadedRules == null) return Map.of();
@@ -124,37 +143,15 @@ public final class IntegrationLoadApi {
         }
     }
 
+    private static Map<String, IntegrationRule> snapshotDefaultRules() {
+        return Collections.unmodifiableMap(new LinkedHashMap<>(REGISTERED_DEFAULT_RULES));
+    }
+
     private static void saveDefaultRules(Map<String, IntegrationRule> defaultRules) throws IOException {
         Files.createDirectories(CONFIG_PATH.getParent());
         try (Writer writer = Files.newBufferedWriter(CONFIG_PATH, StandardCharsets.UTF_8)) {
             GSON.toJson(defaultRules, RULES_TYPE, writer);
         }
-    }
-
-    private static Map<String, IntegrationRule> createDefaultRules() {
-        Map<String, IntegrationRule> defaultRules = new LinkedHashMap<>();
-        defaultRules.put("avaritia_integration_ae2", rule(dependency("ae2")));
-        defaultRules.put("avaritia_integration_botania", rule(dependency("botania")));
-        defaultRules.put("avaritia_integration_create", rule(dependency("create")));
-        defaultRules.put("avaritia_integration_enderio", rule(dependency("enderio")));
-        defaultRules.put("avaritia_integration_industrialforegoing", rule(dependency("industrialforegoing")));
-        defaultRules.put("avaritia_integration_ifeu", rule(dependency("ifeu")));
-        defaultRules.put("avaritia_integration_mekanism", rule(dependency("mekanism")));
-        defaultRules.put("avaritia_integration_mekanism_generators", rule(dependency("mekanism"),
-                dependency("mekanismgenerators")));
-        defaultRules.put("avaritia_integration_pneumaticcraft", rule(dependency("pneumaticcraft")));
-        defaultRules.put("avaritia_integration_refinedstorage", rule(dependency("refinedstorage")));
-        defaultRules.put("avaritia_integration_tconstruct_data", rule(dependency("tconstruct")));
-        defaultRules.put("avaritia_integration_thermal_expansion_data", rule(dependency("thermal_expansion")));
-        return Collections.unmodifiableMap(defaultRules);
-    }
-
-    private static IntegrationRule rule(DependencyRule... dependencies) {
-        return new IntegrationRule(java.util.List.of(dependencies));
-    }
-
-    private static DependencyRule dependency(String modid) {
-        return new DependencyRule(modid, "", "");
     }
 
     private static LoadDecision validateDependencyRule(String integrationModId, DependencyRule dependency) {

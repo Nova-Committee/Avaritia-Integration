@@ -24,6 +24,11 @@ public final class IndustrialForegoingModule implements Module {
     public static final String MOD_ID = "industrialforegoing";
 
     @Override
+    public committee.nova.mods.avaritia_integration.api.load.IntegrationRule defaultLoadRule() {
+        return Module.rule(Module.dependency(MOD_ID));
+    }
+
+    @Override
     public void init(IEventBus registryBus) {
         IndustrialForegoingIntegrationItems.ITEMS.register(registryBus);
         IndustrialForegoingIntegrationBlocks.BLOCKS.register(registryBus);

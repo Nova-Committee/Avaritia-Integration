@@ -20,12 +20,13 @@ public final class IntegrationRuntime {
     private IntegrationRuntime() {}
 
     public static boolean load(String integrationModId, IEventBus modBus, Supplier<? extends Module> moduleFactory) {
+        Module module = moduleFactory.get();
+        IntegrationLoadApi.registerDefaultRule(integrationModId, module.defaultLoadRule());
         LoadDecision decision = IntegrationLoadApi.explain(integrationModId);
         if (!decision.shouldLoad()) {
             AvaritiaIntegration.LOGGER.info("Skip integration {}: {}", integrationModId, decision.message());
             return false;
         }
-        Module module = moduleFactory.get();
         try {
             module.init(modBus);
             module.registerEvent(modBus, NeoForge.EVENT_BUS);

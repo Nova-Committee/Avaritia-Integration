@@ -1,7 +1,12 @@
 package committee.nova.mods.avaritia_integration.module;
 
+import committee.nova.mods.avaritia_integration.api.load.DependencyRule;
+import committee.nova.mods.avaritia_integration.api.load.IntegrationRule;
+
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
+
+import java.util.List;
 
 /**
  * Base module interface
@@ -25,4 +30,16 @@ public interface Module {
 
     default void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
                                          CreativeModeTab.Output output) {}
+
+    default IntegrationRule defaultLoadRule() {
+        return new IntegrationRule(List.of());
+    }
+
+    static IntegrationRule rule(DependencyRule... dependencies) {
+        return new IntegrationRule(List.of(dependencies));
+    }
+
+    static DependencyRule dependency(String modid) {
+        return new DependencyRule(modid, "", "");
+    }
 }
