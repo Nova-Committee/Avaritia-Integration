@@ -7,5 +7,5 @@ apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 dependencies {
     implementation project(':core')
     implementation project(':integrations:industrialforegoing')
-    implementation "curse.maven:industrial-foregoing-extra-upgrades-1161049:${industrial_foregoing_extra_upgrades_version}"
+    implementation forge.industrialForegoingExtraUpgrades
 }

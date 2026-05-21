@@ -7,9 +7,7 @@ import net.neoforged.fml.ModList;
 
 public class MekIntegrationEnumUtils {
 
-    private MekIntegrationEnumUtils() {
-
-    }
+    private MekIntegrationEnumUtils() {}
 
     /**
      * Cached value of {@link MekIntegrationFactoryType#values()}. DO NOT MODIFY THIS LIST.
@@ -25,7 +23,8 @@ public class MekIntegrationEnumUtils {
         // Compatible wit Emek
         // 需要判断是否加载模组
         if (ModList.get().isLoaded("evolvedmekanism")) {
-            EM_TIERS = new FactoryTier[] { EMFactoryTier.OVERCLOCKED, EMFactoryTier.QUANTUM, EMFactoryTier.DENSE, EMFactoryTier.MULTIVERSAL, EMFactoryTier.CREATIVE };
+            EM_TIERS = new FactoryTier[] { EMFactoryTier.OVERCLOCKED, EMFactoryTier.QUANTUM, EMFactoryTier.DENSE,
+                    EMFactoryTier.MULTIVERSAL, EMFactoryTier.CREATIVE };
         }
     }
 }

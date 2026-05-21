@@ -1,6 +1,6 @@
 {
-  "parent": "botania:block/shapes/cross",
-  "textures": {
-    "cross": "avaritia_integration:item/botania/soarleander"
-  }
+	"parent": "botania:block/shapes/cross",
+	"textures": {
+		"cross": "avaritia_integration:item/botania/soarleander"
+	}
 }

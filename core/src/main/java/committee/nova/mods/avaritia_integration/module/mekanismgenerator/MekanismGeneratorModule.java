@@ -48,17 +48,27 @@ public class MekanismGeneratorModule implements Module {
     }
 
     private void clientSetupEvent(FMLClientSetupEvent event) {
-        ClientRegistration.addCustomModel(GenIntegrationBlocks.NEUTRON_ADVANCED_SOLAR_GENERATOR, (orig, evt) -> new TransformedBakedModel<Void>(orig,
-                QuadTransformation.translate(0, 1, 0)));
-        ClientRegistration.addCustomModel(GenIntegrationBlocks.INFINITY_ADVANCED_SOLAR_GENERATOR, (orig, evt) -> new TransformedBakedModel<Void>(orig,
-                QuadTransformation.translate(0, 1, 0)));
+        ClientRegistration.addCustomModel(GenIntegrationBlocks.NEUTRON_ADVANCED_SOLAR_GENERATOR,
+                (orig, evt) -> new TransformedBakedModel<Void>(orig,
+                        QuadTransformation.translate(0, 1, 0)));
+        ClientRegistration.addCustomModel(GenIntegrationBlocks.INFINITY_ADVANCED_SOLAR_GENERATOR,
+                (orig, evt) -> new TransformedBakedModel<Void>(orig,
+                        QuadTransformation.translate(0, 1, 0)));
     }
 
     private void registerScreen(RegisterMenuScreensEvent event) {
-        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.INFINITY_SOLAR_GENERATOR, (MekanismTileContainer<InfinitySolarGeneratorBlockEntity> container, Inventory inv, Component title) -> new GuiSolarGenerator<>(container, inv, title));
-        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.NEUTRON_SOLAR_GENERATOR, (MekanismTileContainer<NeutronSolarGeneratorBlockEntity> container, Inventory inv, Component title) -> new GuiSolarGenerator<>(container, inv, title));
-        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.INFINITY_ADVANCED_SOLAR_GENERATOR, (MekanismTileContainer<InfinityAdvancedSolarGeneratorBlockEntity> container, Inventory inv, Component title) -> new GuiSolarGenerator<>(container, inv, title));
-        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR, (MekanismTileContainer<NeutronAdvancedSolarGeneratorBlockEntity> container, Inventory inv, Component title) -> new GuiSolarGenerator<>(container, inv, title));
+        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.INFINITY_SOLAR_GENERATOR,
+                (MekanismTileContainer<InfinitySolarGeneratorBlockEntity> container, Inventory inv,
+                 Component title) -> new GuiSolarGenerator<>(container, inv, title));
+        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.NEUTRON_SOLAR_GENERATOR,
+                (MekanismTileContainer<NeutronSolarGeneratorBlockEntity> container, Inventory inv,
+                 Component title) -> new GuiSolarGenerator<>(container, inv, title));
+        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.INFINITY_ADVANCED_SOLAR_GENERATOR,
+                (MekanismTileContainer<InfinityAdvancedSolarGeneratorBlockEntity> container, Inventory inv,
+                 Component title) -> new GuiSolarGenerator<>(container, inv, title));
+        ClientRegistrationUtil.registerScreen(event, GenIntegrationContainerTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR,
+                (MekanismTileContainer<NeutronAdvancedSolarGeneratorBlockEntity> container, Inventory inv,
+                 Component title) -> new GuiSolarGenerator<>(container, inv, title));
     }
 
     @Override

@@ -21,12 +21,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class GenIntegrationBlockTypes {
 
-    private GenIntegrationBlockTypes() {
-    }
+    private GenIntegrationBlockTypes() {}
 
     // Infinity Solar Generator
     public static final Generator<InfinitySolarGeneratorBlockEntity> INFINITY_SOLAR_GENERATOR = GeneratorBuilder
-            .createGenerator(() -> GenIntegrationBlockEntityTypes.INFINITY_SOLAR_GENERATOR, GeneratorsLang.DESCRIPTION_SOLAR_GENERATOR)
+            .createGenerator(() -> GenIntegrationBlockEntityTypes.INFINITY_SOLAR_GENERATOR,
+                    GeneratorsLang.DESCRIPTION_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.INFINITY_SOLAR_GENERATOR)
             .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.solarGenerator)
             .withCustomShape(BlockShapes.SOLAR_GENERATOR)
@@ -38,7 +38,8 @@ public class GenIntegrationBlockTypes {
 
     // Neutron Solar Generator
     public static final Generator<NeutronSolarGeneratorBlockEntity> NEUTRON_SOLAR_GENERATOR = GeneratorBuilder
-            .createGenerator(() -> GenIntegrationBlockEntityTypes.NEUTRON_SOLAR_GENERATOR, GeneratorsLang.DESCRIPTION_SOLAR_GENERATOR)
+            .createGenerator(() -> GenIntegrationBlockEntityTypes.NEUTRON_SOLAR_GENERATOR,
+                    GeneratorsLang.DESCRIPTION_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.NEUTRON_SOLAR_GENERATOR)
             .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.solarGenerator)
             .withCustomShape(BlockShapes.SOLAR_GENERATOR)
@@ -50,15 +51,18 @@ public class GenIntegrationBlockTypes {
 
     // Infinity Advanced Solar Generator
     public static final Generator<InfinityAdvancedSolarGeneratorBlockEntity> INFINITY_ADVANCED_SOLAR_GENERATOR = GeneratorBuilder
-            .createGenerator(() -> GenIntegrationBlockEntityTypes.INFINITY_ADVANCED_SOLAR_GENERATOR, GeneratorsLang.DESCRIPTION_ADVANCED_SOLAR_GENERATOR)
+            .createGenerator(() -> GenIntegrationBlockEntityTypes.INFINITY_ADVANCED_SOLAR_GENERATOR,
+                    GeneratorsLang.DESCRIPTION_ADVANCED_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.INFINITY_ADVANCED_SOLAR_GENERATOR)
             .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.advancedSolarGenerator)
             .withCustomShape(BlockShapes.ADVANCED_SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .with(AttributeUpgradeSupport.MUFFLING_ONLY)
             .withBounding(new HandleBoundingBlock() {
+
                 @Override
-                public <DATA> boolean handle(Level level, BlockPos pos, BlockState state, DATA data, TriBooleanFunction<Level, BlockPos, DATA> consumer) {
+                public <DATA> boolean handle(Level level, BlockPos pos, BlockState state, DATA data,
+                                             TriBooleanFunction<Level, BlockPos, DATA> consumer) {
                     MutableBlockPos mutable = new MutableBlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
                     if (!consumer.accept(level, mutable, data)) {
                         return false;
@@ -80,15 +84,18 @@ public class GenIntegrationBlockTypes {
 
     // Neutron Advanced Solar Generator
     public static final Generator<NeutronAdvancedSolarGeneratorBlockEntity> NEUTRON_ADVANCED_SOLAR_GENERATOR = GeneratorBuilder
-            .createGenerator(() -> GenIntegrationBlockEntityTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR, GeneratorsLang.DESCRIPTION_ADVANCED_SOLAR_GENERATOR)
+            .createGenerator(() -> GenIntegrationBlockEntityTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR,
+                    GeneratorsLang.DESCRIPTION_ADVANCED_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR)
             .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.advancedSolarGenerator)
             .withCustomShape(BlockShapes.ADVANCED_SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .with(AttributeUpgradeSupport.MUFFLING_ONLY)
             .withBounding(new HandleBoundingBlock() {
+
                 @Override
-                public <DATA> boolean handle(Level level, BlockPos pos, BlockState state, DATA data, TriBooleanFunction<Level, BlockPos, DATA> consumer) {
+                public <DATA> boolean handle(Level level, BlockPos pos, BlockState state, DATA data,
+                                             TriBooleanFunction<Level, BlockPos, DATA> consumer) {
                     MutableBlockPos mutable = new MutableBlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
                     if (!consumer.accept(level, mutable, data)) {
                         return false;

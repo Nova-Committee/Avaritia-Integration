@@ -11,20 +11,25 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.function.UnaryOperator;
 
-public class BlockMekIntegrationFactoryMachine<TILE extends TileEntityMekanism, MACHINE extends MekIntegrationFactoryMachine<TILE>> extends BlockTile<TILE, MACHINE> {
+public class BlockMekIntegrationFactoryMachine<TILE extends TileEntityMekanism,
+        MACHINE extends MekIntegrationFactoryMachine<TILE>> extends BlockTile<TILE, MACHINE> {
 
     public BlockMekIntegrationFactoryMachine(MACHINE machine, UnaryOperator<Properties> propertiesModifier) {
         super(machine, propertiesModifier);
     }
 
-    public static class BlockMekIntegrationFactoryMachineModel<TILE extends TileEntityMekanism, MACHINE extends MekIntegrationFactoryMachine<TILE>> extends BlockMekIntegrationFactoryMachine<TILE, MACHINE> implements IStateFluidLoggable {
+    public static class BlockMekIntegrationFactoryMachineModel<TILE extends TileEntityMekanism,
+            MACHINE extends MekIntegrationFactoryMachine<TILE>> extends BlockMekIntegrationFactoryMachine<TILE, MACHINE>
+                                                              implements IStateFluidLoggable {
 
-        public BlockMekIntegrationFactoryMachineModel(MACHINE machineType, UnaryOperator<BlockBehaviour.Properties> propertiesModifier) {
+        public BlockMekIntegrationFactoryMachineModel(MACHINE machineType,
+                                                      UnaryOperator<BlockBehaviour.Properties> propertiesModifier) {
             super(machineType, propertiesModifier);
         }
     }
 
-    public static class BlockMekIntegrationFactory<TILE extends TileEntityMIFactory<?>> extends BlockMekIntegrationFactoryMachineModel<TILE, MekIntegrationFactory<TILE>> {
+    public static class BlockMekIntegrationFactory<TILE extends TileEntityMIFactory<?>> extends
+                                                  BlockMekIntegrationFactoryMachineModel<TILE, MekIntegrationFactory<TILE>> {
 
         public BlockMekIntegrationFactory(MekIntegrationFactory<TILE> factoryType) {
             super(factoryType, properties -> properties.mapColor(BlockResourceInfo.STEEL.getMapColor()));

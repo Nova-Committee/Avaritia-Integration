@@ -13,6 +13,7 @@ import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaI
 import committee.nova.mods.avaritia_integration.module.botania.render.AlphaSparkRender;
 import committee.nova.mods.avaritia_integration.module.botania.render.InfinityManaPoolBlockEntityRender;
 import committee.nova.mods.avaritia_integration.module.botania.render.InfinityTinyPotatoBlockEntityRender;
+
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+
 import vazkii.botania.api.BotaniaForgeCapabilities;
 import vazkii.botania.api.BotaniaForgeClientCapabilities;
 import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
@@ -31,6 +33,7 @@ import vazkii.botania.client.render.block_entity.SpecialFlowerBlockEntityRendere
 
 @ModuleEntry(id = BotaniaModule.MOD_ID, target = @ModMeta(BotaniaModule.MOD_ID))
 public final class BotaniaModule implements Module {
+
     public static final String MOD_ID = "botania";
 
     @Override
@@ -43,8 +46,10 @@ public final class BotaniaModule implements Module {
 
     @Override
     public void process() {
-        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaIntegrationBlocks.ASGARD_DANDELION.getId(), BotaniaIntegrationBlocks.POTTED_ASGARD_DANDELION);
-        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaIntegrationBlocks.SOARLEANDER.getId(), BotaniaIntegrationBlocks.POTTED_SOARLEANDER);
+        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaIntegrationBlocks.ASGARD_DANDELION.getId(),
+                BotaniaIntegrationBlocks.POTTED_ASGARD_DANDELION);
+        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BotaniaIntegrationBlocks.SOARLEANDER.getId(),
+                BotaniaIntegrationBlocks.POTTED_SOARLEANDER);
     }
 
     @Override
@@ -59,34 +64,35 @@ public final class BotaniaModule implements Module {
         });
     }
 
-
     public static void registerCapabilities(RegisterCapabilitiesEvent e) {
         e.registerBlockEntity(
                 BotaniaForgeCapabilities.MANA_RECEIVER,
                 BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
-                (be, direction) -> be
-        );
+                (be, direction) -> be);
         e.registerBlockEntity(
                 BotaniaForgeCapabilities.WANDABLE,
                 BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
-                (be, direction) -> be
-        );
+                (be, direction) -> be);
         e.registerBlockEntity(
                 BotaniaForgeCapabilities.SPARK_ATTACHABLE,
                 BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
-                (be, direction) -> be
-        );
+                (be, direction) -> be);
     }
 
     @Override
     public void processClient() {
         EntityRenderers.register(BotaniaIntegrationEntities.ALPHA_SPARK_ENTITIES.get(), AlphaSparkRender::new);
-        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(), SpecialFlowerBlockEntityRenderer::new);
-        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.SOARLEANDER.get(), SpecialFlowerBlockEntityRenderer::new);
-        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_TINY_POTATO.get(), InfinityTinyPotatoBlockEntityRender::new);
-        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), InfinityManaPoolBlockEntityRender::new);
+        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(),
+                SpecialFlowerBlockEntityRenderer::new);
+        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.SOARLEANDER.get(),
+                SpecialFlowerBlockEntityRenderer::new);
+        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_TINY_POTATO.get(),
+                InfinityTinyPotatoBlockEntityRender::new);
+        BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
+                InfinityManaPoolBlockEntityRender::new);
         ItemBlockRenderTypes.setRenderLayer(BotaniaIntegrationBlocks.ASGARD_DANDELION.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BotaniaIntegrationBlocks.ASGARD_DANDELION_FLOATING.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BotaniaIntegrationBlocks.ASGARD_DANDELION_FLOATING.get(),
+                RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BotaniaIntegrationBlocks.SOARLEANDER.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BotaniaIntegrationBlocks.SOARLEANDER_FLOATING.get(), RenderType.cutout());
     }
@@ -101,30 +107,27 @@ public final class BotaniaModule implements Module {
         e.registerBlockEntity(
                 BotaniaForgeClientCapabilities.BLOCK_WAND_HUD,
                 BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(),
-                (be, unused) -> new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud<>(be)
-        );
+                (be, unused) -> new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud<>(be));
         e.registerBlockEntity(
                 BotaniaForgeClientCapabilities.BLOCK_WAND_HUD,
                 BotaniaIntegrationBlockEntities.SOARLEANDER.get(),
-                (be, unused) -> new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud<>(be)
-        );
+                (be, unused) -> new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud<>(be));
         e.registerBlockEntity(
                 BotaniaForgeClientCapabilities.BLOCK_WAND_HUD,
                 BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
-                (be, unused) -> new InfinityManaPoolBlockEntity.WandHud(be)
-        );
+                (be, unused) -> new InfinityManaPoolBlockEntity.WandHud(be));
     }
 
     private static void registerEntityClientCapabilities(RegisterCapabilitiesEvent e) {
         e.registerEntity(
                 BotaniaForgeClientCapabilities.ENTITY_WAND_HUD,
                 BotaniaIntegrationEntities.ALPHA_SPARK_ENTITIES.get(),
-                (entity, unused) -> new AlphaSparkEntity.WandHud(entity)
-        );
+                (entity, unused) -> new AlphaSparkEntity.WandHud(entity));
     }
 
     @Override
-    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
+    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
+                                        CreativeModeTab.Output output) {
         output.accept(BotaniaIntegrationBlocks.ASGARD_DANDELION.get());
         output.accept(BotaniaIntegrationBlocks.ASGARD_DANDELION_FLOATING.get());
 

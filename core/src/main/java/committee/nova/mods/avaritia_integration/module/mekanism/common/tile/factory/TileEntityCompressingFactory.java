@@ -26,14 +26,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public class TileEntityCompressingFactory extends TileEntityItemToItemMIFactory<ItemStackToItemStackRecipe> implements ItemRecipeLookupHandler<ItemStackToItemStackRecipe> {
+public class TileEntityCompressingFactory extends TileEntityItemToItemMIFactory<ItemStackToItemStackRecipe>
+                                          implements ItemRecipeLookupHandler<ItemStackToItemStackRecipe> {
 
     private static final List<RecipeError> TRACKED_ERROR_TYPES = List.of(
             RecipeError.NOT_ENOUGH_ENERGY,
             RecipeError.NOT_ENOUGH_INPUT,
             RecipeError.NOT_ENOUGH_OUTPUT_SPACE,
-            RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT
-    );
+            RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT);
     private static final Set<RecipeError> GLOBAL_ERROR_TYPES = Set.of(RecipeError.NOT_ENOUGH_ENERGY);
 
     public TileEntityCompressingFactory(Holder<Block> blockProvider, BlockPos pos, BlockState state) {
@@ -44,14 +44,18 @@ public class TileEntityCompressingFactory extends TileEntityItemToItemMIFactory<
     }
 
     @Override
-    protected boolean isCachedRecipeValid(@Nullable CachedRecipe<ItemStackToItemStackRecipe> cached, @NotNull ItemStack stack) {
+    protected boolean isCachedRecipeValid(@Nullable CachedRecipe<ItemStackToItemStackRecipe> cached,
+                                          @NotNull ItemStack stack) {
         return cached != null && cached.getRecipe().getInput().testType(stack);
     }
 
     @Override
-    protected @Nullable ItemStackToItemStackRecipe findRecipe(int process, @NotNull ItemStack fallbackInput, @NotNull IInventorySlot outputSlots) {
+    protected @Nullable ItemStackToItemStackRecipe findRecipe(int process, @NotNull ItemStack fallbackInput,
+                                                              @NotNull IInventorySlot outputSlots) {
         ItemStack output = outputSlots.getStack();
-        return getRecipeType().getInputCache().findTypeBasedRecipe(level, fallbackInput, output, (recipe, input, currentOutput) -> InventoryUtils.areItemsStackable(recipe.getOutput(input), currentOutput));
+        return getRecipeType().getInputCache().findTypeBasedRecipe(level, fallbackInput, output,
+                (recipe, input, currentOutput) -> InventoryUtils.areItemsStackable(recipe.getOutput(input),
+                        currentOutput));
     }
 
     @Override
@@ -65,9 +69,8 @@ public class TileEntityCompressingFactory extends TileEntityItemToItemMIFactory<
     }
 
     @Override
-    protected void addGasTanks(ChemicalTankHelper builder, IContentsListener listener, IContentsListener updateSortingListener) {
-
-    }
+    protected void addGasTanks(ChemicalTankHelper builder, IContentsListener listener,
+                               IContentsListener updateSortingListener) {}
 
     @Override
     public @NotNull IMekanismRecipeTypeProvider<?, ItemStackToItemStackRecipe, InputRecipeCache.SingleItem<ItemStackToItemStackRecipe>> getRecipeType() {
@@ -80,8 +83,11 @@ public class TileEntityCompressingFactory extends TileEntityItemToItemMIFactory<
     }
 
     @Override
-    public @NotNull CachedRecipe<ItemStackToItemStackRecipe> createNewCachedRecipe(@NotNull ItemStackToItemStackRecipe recipe, int cacheIndex) {
-        return OneInputCachedRecipe.itemToItem(recipe, recheckAllRecipeErrors[cacheIndex], itemInputHandlers[cacheIndex], itemOutputHandlers[cacheIndex])
+    public @NotNull CachedRecipe<ItemStackToItemStackRecipe> createNewCachedRecipe(@NotNull ItemStackToItemStackRecipe recipe,
+                                                                                   int cacheIndex) {
+        return OneInputCachedRecipe
+                .itemToItem(recipe, recheckAllRecipeErrors[cacheIndex], itemInputHandlers[cacheIndex],
+                        itemOutputHandlers[cacheIndex])
                 .setErrorsChanged(errors -> errorTracker.onErrorsChanged(errors, cacheIndex))
                 .setCanHolderFunction(this::canFunction)
                 .setActive(active -> setActiveState(active, cacheIndex))

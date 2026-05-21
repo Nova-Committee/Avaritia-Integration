@@ -1,10 +1,12 @@
 package committee.nova.mods.avaritia_integration.module.botania.entity;
 
 import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlockEntities;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+
 import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.block_entity.GeneratingFlowerBlockEntity;
@@ -16,6 +18,7 @@ import vazkii.botania.api.mana.ManaReceiver;
 import java.awt.*;
 
 public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
+
     private static final int RANGE = 8;
 
     public AsgardDandelionBlockEntity(BlockPos pos, BlockState state) {
@@ -87,7 +90,8 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
             double x = this.getBlockPos().getX() + offset.x;
             double y = this.getBlockPos().getY() + offset.y;
             double z = this.getBlockPos().getZ() + offset.z;
-            BotaniaAPI.instance().sparkleFX(this.level, x + 0.3 + Math.random() * 0.5, y + 0.5 + Math.random() * 0.5, z + 0.3 + Math.random() * 0.5, red, green, blue, (float) Math.random(), 5);
+            BotaniaAPI.instance().sparkleFX(this.level, x + 0.3 + Math.random() * 0.5, y + 0.5 + Math.random() * 0.5,
+                    z + 0.3 + Math.random() * 0.5, red, green, blue, (float) Math.random(), 5);
         }
     }
 

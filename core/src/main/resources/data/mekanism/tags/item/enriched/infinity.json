@@ -1,6 +1,4 @@
 {
-  "replace": false,
-  "values": [
-    "avaritia_integration:enriched_infinity"
-  ]
+	"replace": false,
+	"values": ["avaritia_integration:enriched_infinity"]
 }

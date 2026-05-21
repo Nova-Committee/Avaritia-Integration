@@ -16,8 +16,10 @@ public class UsageConfig extends BaseMekanismConfig {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.comment("Machine Energy Usage Config. This config is synced from server to client.").push("usage");
 
-        neutronCollector = CachedLongValue.wrap(this, builder.comment("Energy per operation tick (Joules).").defineInRange("neutronCollector", 50L, 0L, Long.MAX_VALUE));
-        singularityCompressor = CachedLongValue.wrap(this, builder.comment("Energy per operation tick (Joules).").defineInRange("singularityCompressor", 100L, 0L, Long.MAX_VALUE));
+        neutronCollector = CachedLongValue.wrap(this, builder.comment("Energy per operation tick (Joules).")
+                .defineInRange("neutronCollector", 50L, 0L, Long.MAX_VALUE));
+        singularityCompressor = CachedLongValue.wrap(this, builder.comment("Energy per operation tick (Joules).")
+                .defineInRange("singularityCompressor", 100L, 0L, Long.MAX_VALUE));
 
         builder.pop();
         configSpec = builder.build();

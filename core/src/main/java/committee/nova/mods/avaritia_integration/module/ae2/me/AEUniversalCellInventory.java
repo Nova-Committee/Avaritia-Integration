@@ -258,11 +258,11 @@ public class AEUniversalCellInventory implements StorageCell {
         // 新开类型：需满足“有类型名额”
         if (openingNewType) {
             if (storage.size() >= totalTypesEff) {
-                return handleOverflowVoidOnInsert(what, amount, /*inserted*/ 0);
+                return handleOverflowVoidOnInsert(what, amount, /* inserted */ 0);
             }
             // 若 freeBytes==0 但 apb 桶存在碎片，allowedUnits 仍可能>0（允许借碎片完成首字节）
             if (allowedUnits <= 0) {
-                return handleOverflowVoidOnInsert(what, amount, /*inserted*/ 0);
+                return handleOverflowVoidOnInsert(what, amount, /* inserted */ 0);
             }
         }
 
@@ -272,14 +272,14 @@ public class AEUniversalCellInventory implements StorageCell {
             long canGrowBy = Math.max(0, maxPerTypeCap - current);
             allowedUnits = Math.min(allowedUnits, canGrowBy);
             if (allowedUnits <= 0) {
-                return handleOverflowVoidOnInsert(what, amount, /*inserted*/ 0);
+                return handleOverflowVoidOnInsert(what, amount, /* inserted */ 0);
             }
         }
 
         // 这次实际能塞多少
         final long toInsert = Math.min(amount, allowedUnits);
         if (toInsert <= 0) {
-            return handleOverflowVoidOnInsert(what, amount, /*inserted*/ 0);
+            return handleOverflowVoidOnInsert(what, amount, /* inserted */ 0);
         }
 
         if (mode == Actionable.MODULATE) {
@@ -303,7 +303,7 @@ public class AEUniversalCellInventory implements StorageCell {
             // 客户端状态 + 标脏
             markChanged();
         }
-        return handleOverflowVoidOnInsert(what, amount, /*inserted*/ toInsert);
+        return handleOverflowVoidOnInsert(what, amount, /* inserted */ toInsert);
     }
 
     /**
@@ -368,7 +368,6 @@ public class AEUniversalCellInventory implements StorageCell {
         }
     }
 
-
     @Override
     public Component getDescription() {
         return this.itemStack.getHoverName();
@@ -417,8 +416,7 @@ public class AEUniversalCellInventory implements StorageCell {
     /**
      * 递归盘保护：若 what 是“另一个存储盘”且该盘声明不能嵌入，则拒收。
      */
-    private boolean canNestStorageCells(AEKey what
-    ) {
+    private boolean canNestStorageCells(AEKey what) {
         if (what instanceof AEItemKey itemKey) {
             ItemStack s = itemKey.toStack();
             StorageCell nested = StorageCells.getCellInventory(s, null);

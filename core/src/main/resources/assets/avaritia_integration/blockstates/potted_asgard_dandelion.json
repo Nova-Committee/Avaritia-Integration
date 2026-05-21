@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "avaritia_integration:block/botania/potted_asgard_dandelion"
-    }
-  }
+	"variants": {
+		"": {
+			"model": "avaritia_integration:block/botania/potted_asgard_dandelion"
+		}
+	}
 }

@@ -24,13 +24,16 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public class AddonInfo {
+
     private final int tier;
     private final String materialName;
     private final Supplier<Item> gear;
     private final Supplier<Fluid> fluid;
     private final int amount;
     private final int processingTime;
-    private AddonInfo(int tier, Supplier<Item> gear, Supplier<Fluid> fluid, int amount, int processingTime, String materialName){
+
+    private AddonInfo(int tier, Supplier<Item> gear, Supplier<Fluid> fluid, int amount, int processingTime,
+                      String materialName) {
         this.tier = tier;
         this.materialName = materialName;
         this.gear = gear;
@@ -39,80 +42,89 @@ public class AddonInfo {
         this.processingTime = processingTime;
     }
 
-    public static AddonInfo create(int tier, Supplier<Item> gear, Supplier<Fluid> fluid, int amount, int processingTime, String materialName){
-        return new AddonInfo(tier,gear,fluid,amount,processingTime,materialName);
+    public static AddonInfo create(int tier, Supplier<Item> gear, Supplier<Fluid> fluid, int amount, int processingTime,
+                                   String materialName) {
+        return new AddonInfo(tier, gear, fluid, amount, processingTime, materialName);
     }
 
-    public void registry(HashMap<String, Supplier<? extends AddonItem>> map, DeferredRegister<Item> register){
+    public void registry(HashMap<String, Supplier<? extends AddonItem>> map, DeferredRegister<Item> register) {
         String speed = getId(AugmentTypes.SPEED);
         String efficiency = getId(AugmentTypes.EFFICIENCY);
         String processing = getId(ProcessingAddonItem.PROCESSING);
-        map.put(speed,register.register(speed,() -> new ModSpeedAddonItem(tier, Component.translatable(getDescription())){
-            @Override
-            public void registerRecipe(RecipeOutput consumer) {
-                dissolutionChamberRecipe(this.getDefaultInstance(),List.of(
-                        tagValue(Tags.Items.DUSTS_REDSTONE),
-                        tagValue(Tags.Items.DUSTS_REDSTONE),
-                        tagValue(Tags.Items.GLASS_PANES),
-                        tagValue(Tags.Items.GLASS_PANES),
-                        itemValue(gear.get().getDefaultInstance()),
-                        itemValue(gear.get().getDefaultInstance()),
-                        itemValue(Items.SUGAR.getDefaultInstance()),
-                        itemValue(Items.SUGAR.getDefaultInstance())
-                ), new FluidStack(fluid.get(),amount),processingTime,consumer);
-            }
-        }));
-        map.put(efficiency,register.register(efficiency,() -> new ModEfficiencyAddonItem(tier, Component.translatable(getDescription())){
-            @Override
-            public void registerRecipe(RecipeOutput consumer) {
-                dissolutionChamberRecipe(this.getDefaultInstance(),List.of(
-                        tagValue(Tags.Items.DUSTS_REDSTONE),
-                        tagValue(Tags.Items.DUSTS_REDSTONE),
-                        tagValue(Tags.Items.GLASS_PANES),
-                        tagValue(Tags.Items.GLASS_PANES),
-                        itemValue(gear.get().getDefaultInstance()),
-                        itemValue(gear.get().getDefaultInstance()),
-                        tagValue(Tags.Items.RODS_BLAZE),
-                        tagValue(Tags.Items.RODS_BLAZE)
-                ), new FluidStack(fluid.get(),amount),processingTime,consumer);
-            }
-        }));
-        map.put(processing,register.register(processing,() -> new ModProcessingAddonItem(tier, Component.translatable(getDescription())){
-            @Override
-            public void registerRecipe(RecipeOutput consumer) {
-                dissolutionChamberRecipe(this.getDefaultInstance(),List.of(
-                        tagValue(Tags.Items.DUSTS_REDSTONE),
-                        tagValue(Tags.Items.DUSTS_REDSTONE),
-                        tagValue(Tags.Items.GLASS_PANES),
-                        tagValue(Tags.Items.GLASS_PANES),
-                        itemValue(gear.get().getDefaultInstance()),
-                        itemValue(gear.get().getDefaultInstance()),
-                        itemValue(Items.CRAFTING_TABLE.getDefaultInstance()),
-                        itemValue(Items.FURNACE.getDefaultInstance())
-                ), new FluidStack(fluid.get(),amount),processingTime,consumer);
-            }
-        }));
+        map.put(speed,
+                register.register(speed, () -> new ModSpeedAddonItem(tier, Component.translatable(getDescription())) {
+
+                    @Override
+                    public void registerRecipe(RecipeOutput consumer) {
+                        dissolutionChamberRecipe(this.getDefaultInstance(), List.of(
+                                tagValue(Tags.Items.DUSTS_REDSTONE),
+                                tagValue(Tags.Items.DUSTS_REDSTONE),
+                                tagValue(Tags.Items.GLASS_PANES),
+                                tagValue(Tags.Items.GLASS_PANES),
+                                itemValue(gear.get().getDefaultInstance()),
+                                itemValue(gear.get().getDefaultInstance()),
+                                itemValue(Items.SUGAR.getDefaultInstance()),
+                                itemValue(Items.SUGAR.getDefaultInstance())), new FluidStack(fluid.get(), amount),
+                                processingTime, consumer);
+                    }
+                }));
+        map.put(efficiency, register.register(efficiency,
+                () -> new ModEfficiencyAddonItem(tier, Component.translatable(getDescription())) {
+
+                    @Override
+                    public void registerRecipe(RecipeOutput consumer) {
+                        dissolutionChamberRecipe(this.getDefaultInstance(), List.of(
+                                tagValue(Tags.Items.DUSTS_REDSTONE),
+                                tagValue(Tags.Items.DUSTS_REDSTONE),
+                                tagValue(Tags.Items.GLASS_PANES),
+                                tagValue(Tags.Items.GLASS_PANES),
+                                itemValue(gear.get().getDefaultInstance()),
+                                itemValue(gear.get().getDefaultInstance()),
+                                tagValue(Tags.Items.RODS_BLAZE),
+                                tagValue(Tags.Items.RODS_BLAZE)), new FluidStack(fluid.get(), amount), processingTime,
+                                consumer);
+                    }
+                }));
+        map.put(processing, register.register(processing,
+                () -> new ModProcessingAddonItem(tier, Component.translatable(getDescription())) {
+
+                    @Override
+                    public void registerRecipe(RecipeOutput consumer) {
+                        dissolutionChamberRecipe(this.getDefaultInstance(), List.of(
+                                tagValue(Tags.Items.DUSTS_REDSTONE),
+                                tagValue(Tags.Items.DUSTS_REDSTONE),
+                                tagValue(Tags.Items.GLASS_PANES),
+                                tagValue(Tags.Items.GLASS_PANES),
+                                itemValue(gear.get().getDefaultInstance()),
+                                itemValue(gear.get().getDefaultInstance()),
+                                itemValue(Items.CRAFTING_TABLE.getDefaultInstance()),
+                                itemValue(Items.FURNACE.getDefaultInstance())), new FluidStack(fluid.get(), amount),
+                                processingTime, consumer);
+                    }
+                }));
     }
 
-    public String getId(IAugmentType type){
+    public String getId(IAugmentType type) {
         return type.getType().toLowerCase() + "_addon_" + materialName.toLowerCase();
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return "addon." + AvaritiaIntegration.MOD_ID + "." + materialName.toLowerCase();
     }
 
-
-    private static void dissolutionChamberRecipe(ItemStack result, List<Ingredient> inputs, FluidStack inputFluid, int processingTime, RecipeOutput output){
-        var recipe = new DissolutionChamberRecipe(inputs, inputFluid, processingTime, Optional.of(result), Optional.empty());
-        DissolutionChamberRecipe.createRecipe(output, BuiltInRegistries.ITEM.getKey(result.getItem()).getPath(),recipe);
+    private static void dissolutionChamberRecipe(ItemStack result, List<Ingredient> inputs, FluidStack inputFluid,
+                                                 int processingTime, RecipeOutput output) {
+        var recipe = new DissolutionChamberRecipe(inputs, inputFluid, processingTime, Optional.of(result),
+                Optional.empty());
+        DissolutionChamberRecipe.createRecipe(output, BuiltInRegistries.ITEM.getKey(result.getItem()).getPath(),
+                recipe);
     }
 
-    private static Ingredient tagValue(TagKey<Item> tagKey){
+    private static Ingredient tagValue(TagKey<Item> tagKey) {
         return Ingredient.of(tagKey);
     }
 
-    private static Ingredient itemValue(ItemStack stack){
+    private static Ingredient itemValue(ItemStack stack) {
         return Ingredient.of(stack);
     }
 }

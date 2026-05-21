@@ -20,15 +20,15 @@ import mekanism.common.tier.FactoryTier;
 
 public class MekIntegrationBlockTypes {
 
-    private MekIntegrationBlockTypes() {
+    private MekIntegrationBlockTypes() {}
 
-    }
-
-    private static final Table<FactoryTier, MekIntegrationFactoryType, MekIntegrationFactory<?>> FACTORIES = HashBasedTable.create();
+    private static final Table<FactoryTier, MekIntegrationFactoryType, MekIntegrationFactory<?>> FACTORIES = HashBasedTable
+            .create();
 
     // Neutron Collector
     public static final MekIntegrationFactoryMachine<TileEntityNeutronCollector> NEUTRON_COLLECTOR = MekIntegrationMachineBuilder
-            .createMekIntegrationFactoryMachine(() -> MekIntegrationTileEntityTypes.NEUTRON_COLLECTOR, MekIntegrationLang.DESCRIPTION_NEUTRON_COLLECTING, MekIntegrationFactoryType.NEUTRON_COLLECTING)
+            .createMekIntegrationFactoryMachine(() -> MekIntegrationTileEntityTypes.NEUTRON_COLLECTOR,
+                    MekIntegrationLang.DESCRIPTION_NEUTRON_COLLECTING, MekIntegrationFactoryType.NEUTRON_COLLECTING)
             .withGui(() -> MekIntegrationContainerTypes.NEUTRON_COLLECTOR)
             .withSound(MekanismSounds.CHEMICAL_CRYSTALLIZER)
             .withEnergyConfig(MekanismConfig.usage.chemicalCrystallizer, MekanismConfig.storage.chemicalCrystallizer)
@@ -38,7 +38,9 @@ public class MekIntegrationBlockTypes {
 
     // Neutron Compressor
     public static final MekIntegrationFactoryMachine<TileEntitySingularityCompressor> SINGULARITY_COMPRESSOR = MekIntegrationMachineBuilder
-            .createMekIntegrationFactoryMachine(() -> MekIntegrationTileEntityTypes.SINGULARITY_COMPRESSOR, MekIntegrationLang.DESCRIPTION_SINGULARITY_COMPRESSING, MekIntegrationFactoryType.SINGULARITY_COMPRESSING)
+            .createMekIntegrationFactoryMachine(() -> MekIntegrationTileEntityTypes.SINGULARITY_COMPRESSOR,
+                    MekIntegrationLang.DESCRIPTION_SINGULARITY_COMPRESSING,
+                    MekIntegrationFactoryType.SINGULARITY_COMPRESSING)
             .withGui(() -> MekIntegrationContainerTypes.SINGULARITY_COMPRESSOR)
             .withSound(MekanismSounds.CHEMICAL_CRYSTALLIZER)
             .withEnergyConfig(MekanismConfig.usage.chemicalCrystallizer, MekanismConfig.storage.chemicalCrystallizer)
@@ -49,7 +51,11 @@ public class MekIntegrationBlockTypes {
     static {
         for (FactoryTier tier : MekIntegrationUtils.getFactoryTier()) {
             for (MekIntegrationFactoryType type : MekIntegrationEnumUtils.FACTORY_TYPES) {
-                FACTORIES.put(tier, type, MekIntegrationFactoryBuilder.createMekIntegrationFactory(() -> MekIntegrationTileEntityTypes.getFactoryTile(tier, type), type, tier).build());
+                FACTORIES.put(tier, type,
+                        MekIntegrationFactoryBuilder
+                                .createMekIntegrationFactory(
+                                        () -> MekIntegrationTileEntityTypes.getFactoryTile(tier, type), type, tier)
+                                .build());
             }
         }
     }

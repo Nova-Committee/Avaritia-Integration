@@ -1,16 +1,16 @@
 {
-  "conditions": [
-    {
-      "modid": "tconstruct",
-      "type": "forge:mod_loaded"
-    }
-  ],
-  "type": "tconstruct:melting",
-  "ingredient": { "item": "avaritia:star_fuel_block" },
-  "result": {
-    "fluid": "avaritia_integration:molten_star",
-    "amount": 900
-  },
-  "temperature": 3000,
-  "time": 325
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:melting",
+	"ingredient": { "item": "avaritia:star_fuel_block" },
+	"result": {
+		"fluid": "avaritia_integration:molten_star",
+		"amount": 900
+	},
+	"temperature": 3000,
+	"time": 325
 }

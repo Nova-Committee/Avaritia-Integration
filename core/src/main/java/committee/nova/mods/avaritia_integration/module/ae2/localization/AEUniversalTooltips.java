@@ -16,6 +16,7 @@ import static appeng.core.localization.Tooltips.ofUnformattedNumberWithRatioColo
  * 在原有的bytesUsed和typesUsed添加了无限字节的字符支持
  */
 public class AEUniversalTooltips {
+
     public static Component bytesUsed(long bytes, long max) {
         if (max <= 0) {
             // 无限：当前用量按比例着色时取 0（更偏绿），上限显示为绿色“∞”
@@ -26,9 +27,7 @@ public class AEUniversalTooltips {
                             of(" "),
                             of(GuiText.Of),
                             of(" "),
-                            inf
-                    )
-            );
+                            inf));
         }
 
         return of(GuiText.BytesUsed,
@@ -37,13 +36,12 @@ public class AEUniversalTooltips {
                         of(" "),
                         of(GuiText.Of),
                         of(" "),
-                        ofUnformattedNumber(max)
-                )
-        );
+                        ofUnformattedNumber(max)));
     }
 
     public static Component bytesUsed(BigInteger bytes, long max) {
-        MutableComponent bytesString = Component.literal(bytes.toString()).withStyle(GREEN).withStyle(colorFromRatio(0.0, false));
+        MutableComponent bytesString = Component.literal(bytes.toString()).withStyle(GREEN)
+                .withStyle(colorFromRatio(0.0, false));
 
         if (max <= 0) {
             MutableComponent inf = Component.literal("∞").withStyle(GREEN);
@@ -53,9 +51,7 @@ public class AEUniversalTooltips {
                             of(" "),
                             of(GuiText.Of),
                             of(" "),
-                            inf
-                    )
-            );
+                            inf));
         }
 
         return of(GuiText.BytesUsed,
@@ -64,9 +60,7 @@ public class AEUniversalTooltips {
                         of(" "),
                         of(GuiText.Of),
                         of(" "),
-                        ofUnformattedNumber(max)
-                )
-        );
+                        ofUnformattedNumber(max)));
     }
 
     public static Component typesUsed(long types, long max) {
@@ -80,8 +74,7 @@ public class AEUniversalTooltips {
                     of(" "),
                     inf,
                     of(" "),
-                    of(GuiText.Types)
-            );
+                    of(GuiText.Types));
         }
 
         return of(
@@ -91,7 +84,6 @@ public class AEUniversalTooltips {
                 of(" "),
                 ofUnformattedNumber(max),
                 of(" "),
-                of(GuiText.Types)
-        );
+                of(GuiText.Types));
     }
 }

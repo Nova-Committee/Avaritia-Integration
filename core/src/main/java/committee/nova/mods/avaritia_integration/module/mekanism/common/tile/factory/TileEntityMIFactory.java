@@ -67,7 +67,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 
-public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> extends TileEntityConfigurableMachine implements IRecipeLookupHandler<RECIPE> {
+public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> extends TileEntityConfigurableMachine
+                                         implements IRecipeLookupHandler<RECIPE> {
 
     /**
      * How many ticks it takes, by default, to run an operation.
@@ -104,16 +105,20 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
 
     protected final List<IInventorySlot> outputItemSlots;
 
-    @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class, methodNames = "getEnergyItem", docPlaceholder = "energy slot")
+    @WrappingComputerMethod(wrapper = SpecialComputerMethodWrapper.ComputerIInventorySlotWrapper.class,
+                            methodNames = "getEnergyItem",
+                            docPlaceholder = "energy slot")
     EnergyInventorySlot energySlot;
 
     protected IInputHandler<@NotNull ItemStack>[] itemInputHandlers;
     protected IOutputHandler<@NotNull ItemStack>[] itemOutputHandlers;
     protected IInputHandler<ChemicalStack>[] gasInputHandlers;
 
-    public TileEntityMIFactory(Holder<Block> blockProvider, BlockPos pos, BlockState state, List<RecipeError> errorTypes, Set<RecipeError> globalErrorTypes) {
+    public TileEntityMIFactory(Holder<Block> blockProvider, BlockPos pos, BlockState state,
+                               List<RecipeError> errorTypes, Set<RecipeError> globalErrorTypes) {
         super(blockProvider, pos, state);
-        type = Objects.requireNonNull(Attribute.get(getBlockHolder(), AttributeMekIntegrationFactoryType.class)).getMekIntegrationFactoryType();
+        type = Objects.requireNonNull(Attribute.get(getBlockHolder(), AttributeMekIntegrationFactoryType.class))
+                .getMekIntegrationFactoryType();
         outputItemSlots = new ArrayList<>();
 
         configComponent.setupInputConfig(TransmissionType.ENERGY, energyContainer);
@@ -122,20 +127,22 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
         activeStates = new boolean[tier.processes];
         recheckAllRecipeErrors = new BooleanSupplier[tier.processes];
         for (int i = 0; i < recheckAllRecipeErrors.length; i++) {
-            //Note: We store one per slot so that we can recheck the different slots at different times to reduce the load on the server
+            // Note: We store one per slot so that we can recheck the different slots at different times to reduce the
+            // load on the server
             recheckAllRecipeErrors[i] = TileEntityRecipeMachine.shouldRecheckAllErrors(this);
         }
         errorTracker = new ErrorTracker(errorTypes, globalErrorTypes, tier.processes);
     }
 
     /**
-     * Used for slots/contents pertaining to the inventory checks to mark sorting as being needed again and recipes as needing to be rechecked. This combines with the
+     * Used for slots/contents pertaining to the inventory checks to mark sorting as being needed again and recipes as
+     * needing to be rechecked. This combines with the
      * passed in listener to allow for abstracting the comparator type checks up to the base level.
      */
     protected IContentsListener markAllMonitorsChanged(IContentsListener listener) {
         return () -> {
             listener.onContentsChanged();
-            //Note: Updating sorting is handled by the onChange calls
+            // Note: Updating sorting is handled by the onChange calls
             for (FactoryRecipeCacheLookupMonitor<RECIPE> cacheLookupMonitor : recipeCacheLookupMonitors) {
                 cacheLookupMonitor.onChange();
             }
@@ -178,22 +185,26 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
         InventorySlotHelper builder = InventorySlotHelper.forSideWithConfig(this);
         addSlots(builder, listener, () -> {
             listener.onContentsChanged();
-            //Mark sorting as being needed again
+            // Mark sorting as being needed again
             sortingNeeded = true;
         });
-        //Add the energy slot after adding the other slots so that it has the lowest priority in shift clicking
-        //Note: We can just pass ourselves as the listener instead of the listener that updates sorting as well,
+        // Add the energy slot after adding the other slots so that it has the lowest priority in shift clicking
+        // Note: We can just pass ourselves as the listener instead of the listener that updates sorting as well,
         // as changes to it won't change anything about the sorting of the recipe
-        builder.addSlot(energySlot = EnergyInventorySlot.fillOrConvert(energyContainer, this::getLevel, listener, 7, 13));
+        builder.addSlot(
+                energySlot = EnergyInventorySlot.fillOrConvert(energyContainer, this::getLevel, listener, 7, 13));
         return builder.build();
     }
 
-    protected abstract void addSlots(InventorySlotHelper builder, IContentsListener listener, IContentsListener updateSortingListener);
+    protected abstract void addSlots(InventorySlotHelper builder, IContentsListener listener,
+                                     IContentsListener updateSortingListener);
 
-    protected abstract void addGasTanks(ChemicalTankHelper builder, IContentsListener listener, IContentsListener updateSortingListener);
+    protected abstract void addGasTanks(ChemicalTankHelper builder, IContentsListener listener,
+                                        IContentsListener updateSortingListener);
 
     public int getXPos(int index) {
-        int baseX = tier == FactoryTier.BASIC ? 55 : tier == FactoryTier.ADVANCED ? 35 : tier == FactoryTier.ELITE ? 29 : 27;
+        int baseX = tier == FactoryTier.BASIC ? 55 :
+                tier == FactoryTier.ADVANCED ? 35 : tier == FactoryTier.ELITE ? 29 : 27;
         int baseXMult = tier == FactoryTier.BASIC ? 38 : tier == FactoryTier.ADVANCED ? 26 : 19;
         return baseX + (index * baseXMult);
     }
@@ -213,7 +224,7 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
         energySlot.fillContainerOrConvert();
 
         if (sortingNeeded && isSorting()) {
-            //If sorting is needed, and we have sorting enabled mark
+            // If sorting is needed, and we have sorting enabled mark
             // sorting as no longer needed and sort the inventory
             sortingNeeded = false;
             // Note: If sorting happens, sorting will be marked as needed once more
@@ -225,23 +236,24 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
             // with other items.
             needSortingInventory();
         } else if (!sortingNeeded && CommonWorldTickHandler.flushTagAndRecipeCaches) {
-            //Otherwise, if sorting isn't currently needed and the recipe cache is invalid
+            // Otherwise, if sorting isn't currently needed and the recipe cache is invalid
             // Mark sorting as being needed again for the next check as recipes may
             // have changed so our current sort may be incorrect
             sortingNeeded = true;
         }
 
-        //Copy this so that if it changes we still have the original amount. Don't bother making it a constant though as this way
+        // Copy this so that if it changes we still have the original amount. Don't bother making it a constant though
+        // as this way
         // we can then use minusEqual instead of subtract to remove an extra copy call
         long prev = energyContainer.getEnergy();
         for (int i = 0; i < recipeCacheLookupMonitors.length; i++) {
             if (!recipeCacheLookupMonitors[i].updateAndProcess()) {
-                //If we don't have a recipe in that slot make sure that our active state for that position is false
+                // If we don't have a recipe in that slot make sure that our active state for that position is false
                 activeStates[i] = false;
             }
         }
 
-        //Update the active state based on the current active state of each recipe
+        // Update the active state based on the current active state of each recipe
         boolean isActive = false;
         for (boolean state : activeStates) {
             if (state) {
@@ -250,18 +262,16 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
             }
         }
         setActive(isActive);
-        //If none of the recipes are actively processing don't bother with any subtraction
+        // If none of the recipes are actively processing don't bother with any subtraction
         lastUsage = isActive ? prev - energyContainer.getEnergy() : 0L;
         return sendUpdatePacket;
     }
 
-    protected void needSortingInventory() {
-
-    }
+    protected void needSortingInventory() {}
 
     @Nullable
     protected CachedRecipe<RECIPE> getCachedRecipe(int cacheIndex) {
-        //TODO: Sanitize that cacheIndex is in bounds?
+        // TODO: Sanitize that cacheIndex is in bounds?
         return recipeCacheLookupMonitors[cacheIndex].getCachedRecipe(cacheIndex);
     }
 
@@ -361,16 +371,18 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
     @Override
     public boolean isConfigurationDataCompatible(Block blockType) {
         if (super.isConfigurationDataCompatible(blockType)) {
-            //Check exact match first
+            // Check exact match first
             return true;
         }
-        //Then check other factory tiers
+        // Then check other factory tiers
         for (FactoryTier factoryTier : EnumUtils.FACTORY_TIERS) {
-            if (factoryTier != tier && MekIntegrationBlocks.getMekIntegrationFactory(factoryTier, type).value() == blockType) {
+            if (factoryTier != tier &&
+                    MekIntegrationBlocks.getMekIntegrationFactory(factoryTier, type).value() == blockType) {
                 return true;
             }
         }
-        //And finally check if it is the non factory version (it will be missing sorting data, but we can gracefully ignore that)
+        // And finally check if it is the non factory version (it will be missing sorting data, but we can gracefully
+        // ignore that)
         return type.getBaseBlock().value() == blockType;
     }
 
@@ -412,10 +424,12 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
         }
     }
 
-    //Methods relating to IComputerTile
+    // Methods relating to IComputerTile
     protected void validateValidProcess(int process) throws ComputerException {
         if (process < 0 || process >= progress.length) {
-            throw new ComputerException("Process: '%d' is out of bounds, as this factory only has '%d' processes (zero indexed).", process, progress.length);
+            throw new ComputerException(
+                    "Process: '%d' is out of bounds, as this factory only has '%d' processes (zero indexed).", process,
+                    progress.length);
         }
     }
 
@@ -433,19 +447,19 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
         validateValidProcess(process);
         return getProgress(process);
     }
-    //End methods IComputerTile
+    // End methods IComputerTile
 
     protected static class ErrorTracker {
 
         private final List<RecipeError> errorTypes;
         private final IntSet globalTypes;
 
-        //TODO: See if we can get it so we only have to sync a single version of global types?
+        // TODO: See if we can get it so we only have to sync a single version of global types?
         private final boolean[][] trackedErrors;
         private final int processes;
 
         public ErrorTracker(List<RecipeError> errorTypes, Set<RecipeError> globalErrorTypes, int processes) {
-            //Copy the list if it is mutable to ensure it doesn't get changed, otherwise just use the list
+            // Copy the list if it is mutable to ensure it doesn't get changed, otherwise just use the list
             this.errorTypes = List.copyOf(errorTypes);
             globalTypes = new IntArraySet(globalErrorTypes.size());
             for (int i = 0; i < this.errorTypes.size(); i++) {
@@ -478,12 +492,13 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
                 int errorIndex = errorTypes.indexOf(error);
                 if (errorIndex >= 0) {
                     if (globalTypes.contains(errorIndex)) {
-                        return () -> Arrays.stream(trackedErrors).anyMatch(processTrackedErrors -> processTrackedErrors[errorIndex]);
+                        return () -> Arrays.stream(trackedErrors)
+                                .anyMatch(processTrackedErrors -> processTrackedErrors[errorIndex]);
                     }
                     return () -> trackedErrors[processIndex][errorIndex];
                 }
             }
-            //Something went wrong
+            // Something went wrong
             return () -> false;
         }
     }

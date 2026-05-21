@@ -1,27 +1,27 @@
 {
-  "block_effects": [
-    {
-      "type": "tconstruct:mob_effect_cloud",
-      "effects": [
-        {
-          "effect": "minecraft:slowness",
-          "level": 4,
-          "time": 120
-        }
-      ]
-    }
-  ],
-  "entity_effects": [
-    {
-      "type": "tconstruct:mob_effect",
-      "action": "add",
-      "effect": "minecraft:slowness",
-      "level": 4,
-      "time": 120
-    }
-  ],
-  "fluid": {
-    "amount": 10,
-    "tag": "tconstruct:molten_neutron"
-  }
+	"block_effects": [
+		{
+			"type": "tconstruct:mob_effect_cloud",
+			"effects": [
+				{
+					"effect": "minecraft:slowness",
+					"level": 4,
+					"time": 120
+				}
+			]
+		}
+	],
+	"entity_effects": [
+		{
+			"type": "tconstruct:mob_effect",
+			"action": "add",
+			"effect": "minecraft:slowness",
+			"level": 4,
+			"time": 120
+		}
+	],
+	"fluid": {
+		"amount": 10,
+		"tag": "tconstruct:molten_neutron"
+	}
 }

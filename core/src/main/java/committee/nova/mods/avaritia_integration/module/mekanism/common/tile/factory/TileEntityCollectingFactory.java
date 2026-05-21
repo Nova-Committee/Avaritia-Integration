@@ -25,14 +25,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public class TileEntityCollectingFactory extends TileEntityChemicalToItemMIFactory<ChemicalStackToItemStackRecipe> implements ChemicalRecipeLookupHandler<ChemicalStackToItemStackRecipe> {
+public class TileEntityCollectingFactory extends TileEntityChemicalToItemMIFactory<ChemicalStackToItemStackRecipe>
+                                         implements ChemicalRecipeLookupHandler<ChemicalStackToItemStackRecipe> {
 
     private static final List<RecipeError> TRACKED_ERROR_TYPES = List.of(
             RecipeError.NOT_ENOUGH_ENERGY,
             RecipeError.NOT_ENOUGH_INPUT,
             RecipeError.NOT_ENOUGH_OUTPUT_SPACE,
-            RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT
-    );
+            RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT);
     private static final Set<RecipeError> GLOBAL_ERROR_TYPES = Set.of(RecipeError.NOT_ENOUGH_ENERGY);
 
     public TileEntityCollectingFactory(Holder<Block> blockProvider, BlockPos pos, BlockState state) {
@@ -43,14 +43,18 @@ public class TileEntityCollectingFactory extends TileEntityChemicalToItemMIFacto
     }
 
     @Override
-    protected boolean isCachedRecipeValid(@Nullable CachedRecipe<ChemicalStackToItemStackRecipe> cached, @NotNull ChemicalStack stack) {
+    protected boolean isCachedRecipeValid(@Nullable CachedRecipe<ChemicalStackToItemStackRecipe> cached,
+                                          @NotNull ChemicalStack stack) {
         return cached != null && cached.getRecipe().getInput().testType(stack);
     }
 
     @Override
-    protected @Nullable ChemicalStackToItemStackRecipe findRecipe(int process, @NotNull ChemicalStack fallbackInput, @NotNull IInventorySlot outputSlots) {
+    protected @Nullable ChemicalStackToItemStackRecipe findRecipe(int process, @NotNull ChemicalStack fallbackInput,
+                                                                  @NotNull IInventorySlot outputSlots) {
         ItemStack output = outputSlots.getStack();
-        return getRecipeType().getInputCache().findTypeBasedRecipe(level, fallbackInput, output, (recipe, input, currentOutput) -> InventoryUtils.areItemsStackable(recipe.getOutput(input), currentOutput));
+        return getRecipeType().getInputCache().findTypeBasedRecipe(level, fallbackInput, output,
+                (recipe, input, currentOutput) -> InventoryUtils.areItemsStackable(recipe.getOutput(input),
+                        currentOutput));
     }
 
     @Override
@@ -79,8 +83,11 @@ public class TileEntityCollectingFactory extends TileEntityChemicalToItemMIFacto
     }
 
     @Override
-    public @NotNull CachedRecipe<ChemicalStackToItemStackRecipe> createNewCachedRecipe(@NotNull ChemicalStackToItemStackRecipe recipe, int cacheIndex) {
-        return ChemicalToItemCachedRecipe.chemicalToItem(recipe, recheckAllRecipeErrors[cacheIndex], gasInputHandlers[cacheIndex], itemOutputHandlers[cacheIndex])
+    public @NotNull CachedRecipe<ChemicalStackToItemStackRecipe> createNewCachedRecipe(@NotNull ChemicalStackToItemStackRecipe recipe,
+                                                                                       int cacheIndex) {
+        return ChemicalToItemCachedRecipe
+                .chemicalToItem(recipe, recheckAllRecipeErrors[cacheIndex], gasInputHandlers[cacheIndex],
+                        itemOutputHandlers[cacheIndex])
                 .setErrorsChanged(errors -> errorTracker.onErrorsChanged(errors, cacheIndex))
                 .setCanHolderFunction(this::canFunction)
                 .setActive(active -> setActiveState(active, cacheIndex))

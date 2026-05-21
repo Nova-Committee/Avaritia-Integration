@@ -1,6 +1,6 @@
 {
-  "parent": "neoforge:item/bucket_drip",
-  "flip_gas": false,
-  "fluid": "avaritia_integration:void_matter",
-  "loader": "neoforge:fluid_container"
+	"parent": "neoforge:item/bucket_drip",
+	"flip_gas": false,
+	"fluid": "avaritia_integration:void_matter",
+	"loader": "neoforge:fluid_container"
 }

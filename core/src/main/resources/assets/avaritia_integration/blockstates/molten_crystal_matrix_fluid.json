@@ -1,3 +1,5 @@
 {
-  "variants": { "": { "model": "avaritia_integration:block/molten_crystal_matrix_fluid" }}
+	"variants": {
+		"": { "model": "avaritia_integration:block/molten_crystal_matrix_fluid" }
+	}
 }

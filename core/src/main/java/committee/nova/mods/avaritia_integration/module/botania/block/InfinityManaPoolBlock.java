@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.module.botania.block;
 
 import committee.nova.mods.avaritia_integration.module.botania.entity.InfinityManaPoolBlockEntity;
 import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlockEntities;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -33,6 +34,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
 import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.internal.Colored;
 import vazkii.botania.api.internal.OptionallyColored;
@@ -49,16 +51,18 @@ import java.util.Optional;
  * 改自{@link vazkii.botania.common.block.mana.ManaPoolBlock}
  */
 public class InfinityManaPoolBlock extends BotaniaWaterloggedBlock implements EntityBlock, OptionallyColored {
+
     public static final int MAX_MANA = Integer.MAX_VALUE;
 
     private static final VoxelShape NORMAL_SHAPE_INTERACT = box(0, 0, 0, 16, 8, 16);
     private static final VoxelShape NORMAL_SHAPE_CUTOUT = box(2, 2, 2, 14, 16, 14);
-    private static final VoxelShape NORMAL_SHAPE = Shapes.join(NORMAL_SHAPE_INTERACT, NORMAL_SHAPE_CUTOUT, BooleanOp.ONLY_FIRST);
+    private static final VoxelShape NORMAL_SHAPE = Shapes.join(NORMAL_SHAPE_INTERACT, NORMAL_SHAPE_CUTOUT,
+            BooleanOp.ONLY_FIRST);
 
-    public record ShapeVariant(VoxelShape interactionShape, VoxelShape cutoutShape, VoxelShape collisionShape) {
-    }
+    public record ShapeVariant(VoxelShape interactionShape, VoxelShape cutoutShape, VoxelShape collisionShape) {}
 
-    public static final ShapeVariant NORMAL_SHAPE_VARIANT = new ShapeVariant(NORMAL_SHAPE_INTERACT, NORMAL_SHAPE_CUTOUT, NORMAL_SHAPE);
+    public static final ShapeVariant NORMAL_SHAPE_VARIANT = new ShapeVariant(NORMAL_SHAPE_INTERACT, NORMAL_SHAPE_CUTOUT,
+            NORMAL_SHAPE);
 
     public final boolean creative = false;
     public final boolean fabulous = false;
@@ -113,7 +117,8 @@ public class InfinityManaPoolBlock extends BotaniaWaterloggedBlock implements En
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip,
+                                TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
         if (creative) {
             for (int i = 0; i < 2; i++) {
@@ -134,9 +139,8 @@ public class InfinityManaPoolBlock extends BotaniaWaterloggedBlock implements En
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         // Sometimes the pool's collision box is too thin for bursts shot straight up.
-        return context instanceof EntityCollisionContext ecc && ecc.getEntity() instanceof ManaBurstEntity
-                ? getInteractionShape(state, world, pos)
-                : super.getCollisionShape(state, world, pos, context);
+        return context instanceof EntityCollisionContext ecc && ecc.getEntity() instanceof ManaBurstEntity ?
+                getInteractionShape(state, world, pos) : super.getCollisionShape(state, world, pos, context);
     }
 
     @Override
@@ -171,9 +175,9 @@ public class InfinityManaPoolBlock extends BotaniaWaterloggedBlock implements En
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() instanceof InfinityManaPoolBlock oldBlock
-                && newState.getBlock() instanceof InfinityManaPoolBlock newBlock
-                && InfinityManaPoolBlock.getUndyedBlock(oldBlock) == InfinityManaPoolBlock.getUndyedBlock(newBlock)) {
+        if (state.getBlock() instanceof InfinityManaPoolBlock oldBlock &&
+                newState.getBlock() instanceof InfinityManaPoolBlock newBlock &&
+                InfinityManaPoolBlock.getUndyedBlock(oldBlock) == InfinityManaPoolBlock.getUndyedBlock(newBlock)) {
             // don't delete block entity if it's the same pool type
             return;
         }
@@ -187,13 +191,16 @@ public class InfinityManaPoolBlock extends BotaniaWaterloggedBlock implements En
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), level.isClientSide ? InfinityManaPoolBlockEntity::clientTick : InfinityManaPoolBlockEntity::serverTick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
+                                                                  BlockEntityType<T> type) {
+        return createTickerHelper(type, BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
+                level.isClientSide ? InfinityManaPoolBlockEntity::clientTick : InfinityManaPoolBlockEntity::serverTick);
     }
 
     @Override
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-        if (entity instanceof ItemEntity item && world.getBlockEntity(pos) instanceof InfinityManaPoolBlockEntity pool) {
+        if (entity instanceof ItemEntity item &&
+                world.getBlockEntity(pos) instanceof InfinityManaPoolBlockEntity pool) {
             pool.collideEntityItem(item);
         }
     }
@@ -214,9 +221,8 @@ public class InfinityManaPoolBlock extends BotaniaWaterloggedBlock implements En
 
     @Override
     public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
-        return world.getBlockEntity(pos) instanceof InfinityManaPoolBlockEntity pool
-                ? InfinityManaPoolBlockEntity.calculateComparatorLevel(pool.getCurrentMana(), pool.getMaxMana())
-                : 0;
+        return world.getBlockEntity(pos) instanceof InfinityManaPoolBlockEntity pool ?
+                InfinityManaPoolBlockEntity.calculateComparatorLevel(pool.getCurrentMana(), pool.getMaxMana()) : 0;
     }
 
     @Override

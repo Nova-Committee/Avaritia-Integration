@@ -11,21 +11,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 
-public class NeutronCollectorRecipeSerializer<RECIPE extends ChemicalStackToItemStackRecipe> implements RecipeSerializer<RECIPE> {
+public class NeutronCollectorRecipeSerializer<RECIPE extends ChemicalStackToItemStackRecipe>
+                                             implements RecipeSerializer<RECIPE> {
 
     private final MapCodec<RECIPE> codec;
     private final StreamCodec<RegistryFriendlyByteBuf, RECIPE> streamCodec;
 
     public NeutronCollectorRecipeSerializer(IFactory<RECIPE> factory) {
         this.codec = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                ChemicalStackIngredient.CODEC.fieldOf(SerializationConstants.INPUT).forGetter(ChemicalStackToItemStackRecipe::getInput),
-                ItemStack.CODEC.fieldOf(SerializationConstants.OUTPUT).forGetter(ChemicalStackToItemStackRecipe::getOutputRaw)
-        ).apply(instance, factory::create));
+                ChemicalStackIngredient.CODEC.fieldOf(SerializationConstants.INPUT)
+                        .forGetter(ChemicalStackToItemStackRecipe::getInput),
+                ItemStack.CODEC.fieldOf(SerializationConstants.OUTPUT)
+                        .forGetter(ChemicalStackToItemStackRecipe::getOutputRaw))
+                .apply(instance, factory::create));
         this.streamCodec = StreamCodec.composite(
                 ChemicalStackIngredient.STREAM_CODEC, ChemicalStackToItemStackRecipe::getInput,
                 ItemStack.STREAM_CODEC, ChemicalStackToItemStackRecipe::getOutputRaw,
-                factory::create
-        );
+                factory::create);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class NeutronCollectorRecipeSerializer<RECIPE extends ChemicalStackToItem
 
     @FunctionalInterface
     public interface IFactory<RECIPE extends ChemicalStackToItemStackRecipe> {
+
         RECIPE create(ChemicalStackIngredient input, ItemStack output);
     }
 }

@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="690" src="web/logo.png" alt="title">  
+    <img width="690" src="web/logo.png" alt="title">
 </p>
 <hr>
 <p align="center">
@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Nova-Committee/avaritia-integration/blob/forge/1.20.1/README.md">English</a> | 
+    <a href="https://github.com/Nova-Committee/avaritia-integration/blob/forge/1.20.1/README.md">English</a> |
     <a href="https://github.com/Nova-Committee/avaritia-integration/blob/forge/1.20.1/README_CN.md">简体中文</a>
 </p>
 

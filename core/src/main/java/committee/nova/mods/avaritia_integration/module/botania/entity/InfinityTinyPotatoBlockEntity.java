@@ -54,19 +54,32 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-
 public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameable {
-    private static final ResourceLocation BIRTHDAY_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath("botania", "challenge/tiny_potato_birthday");
+
+    private static final ResourceLocation BIRTHDAY_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath("botania",
+            "challenge/tiny_potato_birthday");
     private static final boolean IS_BIRTHDAY = isTinyPotatoBirthday();
     private static final String TAG_NAME = "name";
     private static final int JUMP_EVENT = 0;
-    private static final Map<String, String> GENDER = new HashMap(Map.ofEntries(Map.entry("girlstater", "daughter"), Map.entry("lesbiabtater", "daughter"), Map.entry("lesbiamtater", "daughter"), Map.entry("lesbiantater", "daughter"), Map.entry("lesbitater", "daughter"), Map.entry("lessbientater", "daughter"), Map.entry("agendertater", "child"), Map.entry("enbytater", "child"), Map.entry("nbtater", "child"), Map.entry("nonbinarytater", "child"), Map.entry("robotater", "child"), Map.entry("wiretater", "child"), Map.entry("eutrotater", "child"), Map.entry("bob", "child"), Map.entry("snences", "child"), Map.entry("genderfluidtater", "child"), Map.entry("taterfluid", "child"), Map.entry("eggtater", "child"), Map.entry("tategg", "child"), Map.entry("transtater", "child"), Map.entry("manytater", "children"), Map.entry("pluraltater", "children"), Map.entry("snorps", "children"), Map.entry("systater", "children"), Map.entry("systemtater", "children"), Map.entry("tomater", "tomato")));
+    private static final Map<String, String> GENDER = new HashMap(Map.ofEntries(Map.entry("girlstater", "daughter"),
+            Map.entry("lesbiabtater", "daughter"), Map.entry("lesbiamtater", "daughter"),
+            Map.entry("lesbiantater", "daughter"), Map.entry("lesbitater", "daughter"),
+            Map.entry("lessbientater", "daughter"), Map.entry("agendertater", "child"), Map.entry("enbytater", "child"),
+            Map.entry("nbtater", "child"), Map.entry("nonbinarytater", "child"), Map.entry("robotater", "child"),
+            Map.entry("wiretater", "child"), Map.entry("eutrotater", "child"), Map.entry("bob", "child"),
+            Map.entry("snences", "child"), Map.entry("genderfluidtater", "child"), Map.entry("taterfluid", "child"),
+            Map.entry("eggtater", "child"), Map.entry("tategg", "child"), Map.entry("transtater", "child"),
+            Map.entry("manytater", "children"), Map.entry("pluraltater", "children"), Map.entry("snorps", "children"),
+            Map.entry("systater", "children"), Map.entry("systemtater", "children"), Map.entry("tomater", "tomato")));
     public int jumpTicks = 0;
     public Component name = Component.literal("");
     private int nextDoIt = 0;
     private int birthdayTick = 0;
-    private static final List<Block> ALL_CANDLE_CAKES = List.of(Blocks.WHITE_CANDLE_CAKE, Blocks.ORANGE_CANDLE_CAKE, Blocks.MAGENTA_CANDLE_CAKE, Blocks.LIGHT_BLUE_CANDLE_CAKE, Blocks.YELLOW_CANDLE_CAKE, Blocks.LIME_CANDLE_CAKE, Blocks.PINK_CANDLE_CAKE, Blocks.GRAY_CANDLE_CAKE, Blocks.LIGHT_GRAY_CANDLE_CAKE, Blocks.CYAN_CANDLE_CAKE, Blocks.PURPLE_CANDLE_CAKE, Blocks.BLUE_CANDLE_CAKE, Blocks.BROWN_CANDLE_CAKE, Blocks.GREEN_CANDLE_CAKE, Blocks.RED_CANDLE_CAKE, Blocks.BLACK_CANDLE_CAKE, Blocks.CANDLE_CAKE);
-
+    private static final List<Block> ALL_CANDLE_CAKES = List.of(Blocks.WHITE_CANDLE_CAKE, Blocks.ORANGE_CANDLE_CAKE,
+            Blocks.MAGENTA_CANDLE_CAKE, Blocks.LIGHT_BLUE_CANDLE_CAKE, Blocks.YELLOW_CANDLE_CAKE,
+            Blocks.LIME_CANDLE_CAKE, Blocks.PINK_CANDLE_CAKE, Blocks.GRAY_CANDLE_CAKE, Blocks.LIGHT_GRAY_CANDLE_CAKE,
+            Blocks.CYAN_CANDLE_CAKE, Blocks.PURPLE_CANDLE_CAKE, Blocks.BLUE_CANDLE_CAKE, Blocks.BROWN_CANDLE_CAKE,
+            Blocks.GREEN_CANDLE_CAKE, Blocks.RED_CANDLE_CAKE, Blocks.BLACK_CANDLE_CAKE, Blocks.CANDLE_CAKE);
 
     public InfinityTinyPotatoBlockEntity(BlockPos pos, BlockState state) {
         super(BotaniaIntegrationBlockEntities.INFINITY_TINY_POTATO.get(), pos, state);
@@ -84,7 +97,8 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
                 this.level.playSound(null, this.worldPosition, BotaniaSounds.doit, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
             player.awardStat(BotaniaStats.TINY_POTATOES_PETTED);
-            PlayerHelper.grantCriterion((ServerPlayer) player, ResourceLocation.fromNamespaceAndPath("botania", "main/tiny_potato_pet"), "code_triggered");
+            PlayerHelper.grantCriterion((ServerPlayer) player,
+                    ResourceLocation.fromNamespaceAndPath("botania", "main/tiny_potato_pet"), "code_triggered");
         }
     }
 
@@ -102,8 +116,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
         int lv = 1;
         AABB bb = new AABB(
                 Vec3.atLowerCornerOf(pos.offset(-radius, -2, -radius)),
-                Vec3.atLowerCornerOf(pos.offset(radius, 2, radius))
-        );
+                Vec3.atLowerCornerOf(pos.offset(radius, 2, radius)));
         List<LivingEntity> entityList = world.getEntitiesOfClass(LivingEntity.class, bb);
         for (LivingEntity living : entityList) {
             double sq = living.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
@@ -122,7 +135,6 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
         if (this.jumpTicks == 0) {
             this.level.blockEvent(this.getBlockPos(), this.getBlockState().getBlock(), 0, 20);
         }
-
     }
 
     @Override
@@ -150,7 +162,6 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
                 self.tickBirthday();
             }
         }
-
     }
 
     private void tickBirthday() {
@@ -159,14 +170,17 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
         if (this.level.hasChunkAt(facingPos)) {
             BlockState facingState = this.level.getBlockState(facingPos);
             DyeColor cakeColor = getLitCakeColor(facingState, this.level.getRandom());
-            List<Player> players = PlayerHelper.getRealPlayersIn(this.level, VecHelper.boxForRange(Vec3.atCenterOf(this.getBlockPos()), 8.0));
+            List<Player> players = PlayerHelper.getRealPlayersIn(this.level,
+                    VecHelper.boxForRange(Vec3.atCenterOf(this.getBlockPos()), 8.0));
             if (cakeColor != null && !players.isEmpty()) {
                 ++this.birthdayTick;
                 List<Integer> messageTimes = List.of(100, 170, 240, 310, 380);
                 int messageIndex = messageTimes.indexOf(this.birthdayTick);
                 if (messageIndex != -1) {
-                    Object[] args = messageIndex == 1 ? new Object[]{getTinyPotatoAge()} : new int[][]{new int[]{0}};
-                    MutableComponent message = Component.literal("<").append(this.getDisplayName()).append("> ").append(Component.translatable("botania.tater_birthday." + messageIndex, args));
+                    Object[] args = messageIndex == 1 ? new Object[] { getTinyPotatoAge() } :
+                            new int[][] { new int[] { 0 } };
+                    MutableComponent message = Component.literal("<").append(this.getDisplayName()).append("> ")
+                            .append(Component.translatable("botania.tater_birthday." + messageIndex, args));
                     Iterator var10 = players.iterator();
 
                     while (var10.hasNext()) {
@@ -181,7 +195,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
                 if (messageIndex == messageTimes.size() - 1) {
                     FireworkExplosion explosion = new FireworkExplosion(
                             FireworkExplosion.Shape.LARGE_BALL,
-                            new IntArrayList(new int[]{
+                            new IntArrayList(new int[] {
                                     cakeColor.getFireworkColor(),
                                     13787301,
                                     14987213,
@@ -190,17 +204,17 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
                             }),
                             new IntArrayList(),
                             true,
-                            true
-                    );
+                            true);
                     ItemStack rocket = new ItemStack(Items.FIREWORK_ROCKET);
                     rocket.set(DataComponents.FIREWORKS, new Fireworks(
                             0,
-                            List.of(explosion)
-                    ));
-                    this.level.addFreshEntity(new FireworkRocketEntity(this.level, (double) facingPos.getX() + 0.5, (double) facingPos.getY() + 0.5, (double) facingPos.getZ() + 0.5, rocket));
+                            List.of(explosion)));
+                    this.level.addFreshEntity(new FireworkRocketEntity(this.level, (double) facingPos.getX() + 0.5,
+                            (double) facingPos.getY() + 0.5, (double) facingPos.getZ() + 0.5, rocket));
                     this.level.removeBlock(facingPos, false);
                     this.level.levelEvent(2001, facingPos, Block.getId(facingState));
-                    this.level.playSound(null, this.getBlockPos(), SoundEvents.GENERIC_EAT, SoundSource.BLOCKS, 1.0F, 0.5F + (float) Math.random() * 0.5F);
+                    this.level.playSound(null, this.getBlockPos(), SoundEvents.GENERIC_EAT, SoundSource.BLOCKS, 1.0F,
+                            0.5F + (float) Math.random() * 0.5F);
                     Iterator var12 = players.iterator();
 
                     while (var12.hasNext()) {
@@ -210,7 +224,6 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
                 }
             }
         }
-
     }
 
     @Override
@@ -219,9 +232,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
         if (this.level != null && !this.level.isClientSide) {
             VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
         }
-
     }
-
 
     @Override
     public @NotNull Component getName() {

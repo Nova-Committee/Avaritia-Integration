@@ -1,5 +1,14 @@
 {
-  "avaritia_integration:crystaluix":  ["avaritia:item/resource/crystal/diamond_lattice", "tconstruct:gui/modifiers/book"],
-  "avaritia_integration:star_dash":  ["avaritia:item/resource/fuel/star_fuel", "tconstruct:gui/modifiers/book"],
-  "avaritia_integration:superheat":  ["avaritia:item/resource/blaze/blaze_cube", "tconstruct:gui/modifiers/book"]
+	"avaritia_integration:crystaluix": [
+		"avaritia:item/resource/crystal/diamond_lattice",
+		"tconstruct:gui/modifiers/book"
+	],
+	"avaritia_integration:star_dash": [
+		"avaritia:item/resource/fuel/star_fuel",
+		"tconstruct:gui/modifiers/book"
+	],
+	"avaritia_integration:superheat": [
+		"avaritia:item/resource/blaze/blaze_cube",
+		"tconstruct:gui/modifiers/book"
+	]
 }

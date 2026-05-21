@@ -1,3 +1,3 @@
 {
-  "parent": "avaritia_integration:block/factory/neutron_collecting/advanced"
+	"parent": "avaritia_integration:block/factory/neutron_collecting/advanced"
 }

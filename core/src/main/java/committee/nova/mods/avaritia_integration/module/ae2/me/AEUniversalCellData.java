@@ -24,8 +24,10 @@ import java.util.UUID;
 
 /**
  * uuid -> {@link net.minecraft.world.level.saveddata.SavedData} 数据的管理类
- * <p>每个元件单独对应一个文件： data/ae_universal_cell_data/<uuid>.dat
- * <p>单文件损坏只影响单元件，降低风险。
+ * <p>
+ * 每个元件单独对应一个文件： data/ae_universal_cell_data/<uuid>.dat
+ * <p>
+ * 单文件损坏只影响单元件，降低风险。
  *
  * @author Frostbite
  */
@@ -84,15 +86,13 @@ public class AEUniversalCellData extends SavedData {
         this.pendingReadErrors = pendingReadErrors;
     }
 
-    public static final SavedData.Factory<AEUniversalCellData> FACTORY =
-            new SavedData.Factory<>(
-                    () -> {
-                        Object2LongOpenHashMap<AEKey> s = new Object2LongOpenHashMap<>();
-                        s.defaultReturnValue(0L);
-                        return new AEUniversalCellData(s, new ObjectArrayList<>());
-                    },
-                    AEUniversalCellData::load
-            );
+    public static final SavedData.Factory<AEUniversalCellData> FACTORY = new SavedData.Factory<>(
+            () -> {
+                Object2LongOpenHashMap<AEKey> s = new Object2LongOpenHashMap<>();
+                s.defaultReturnValue(0L);
+                return new AEUniversalCellData(s, new ObjectArrayList<>());
+            },
+            AEUniversalCellData::load);
 
     /**
      * 获取原始存储数据（fastutil 原生 Map，便于无装箱访问）
@@ -182,8 +182,8 @@ public class AEUniversalCellData extends SavedData {
                 entriesList.add(entry);
             } catch (Throwable ex) {
                 // 序列化失败：无法可靠得到要保存的信息 -> 打印并略过
-                System.err.println("[AEUniversalCellData] Failed to serialize entry: key=" + key
-                        + ", amount=" + amount + " ; cause=" + ex);
+                System.err.println("[AEUniversalCellData] Failed to serialize entry: key=" + key + ", amount=" +
+                        amount + " ; cause=" + ex);
             }
         }
         invTag.put(ENTRIES_TAG, entriesList);

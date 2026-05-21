@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 
 @Mod(AvaritiaIntegration.MOD_ID)
 public class AvaritiaIntegration {
+
     public static final String MOD_ID = "avaritia_integration";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static IEventBus MOD_EVENT_BUS;

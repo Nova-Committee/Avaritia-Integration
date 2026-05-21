@@ -1,15 +1,15 @@
 {
-  "conditions": [
-    {
-      "modid": "tconstruct",
-      "type": "forge:mod_loaded"
-    }
-  ],
-  "type": "tconstruct:material",
-  "ingredient": {
-    "item": "avaritia:neutron_pile"
-  },
-  "value": 1,
-  "needed": 81,
-  "material": "avaritia_integration:neutronium"
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:material",
+	"ingredient": {
+		"item": "avaritia:neutron_pile"
+	},
+	"value": 1,
+	"needed": 81,
+	"material": "avaritia_integration:neutronium"
 }

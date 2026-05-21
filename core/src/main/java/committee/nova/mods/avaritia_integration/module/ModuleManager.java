@@ -38,11 +38,13 @@ import java.util.Optional;
  *
  * @author IAFEnvoy
  */
-@EventBusSubscriber( modid = AvaritiaIntegration.MOD_ID)
+@EventBusSubscriber(modid = AvaritiaIntegration.MOD_ID)
 public final class ModuleManager {
+
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String DISABLE_CONFIG_PATH = "./config/avaritia/integration/disabled_modules.json";
-    private static final DisableConfig DISABLED_MODULES = ConfigLoader.load(DisableConfig.class, DISABLE_CONFIG_PATH, new DisableConfig());
+    private static final DisableConfig DISABLED_MODULES = ConfigLoader.load(DisableConfig.class, DISABLE_CONFIG_PATH,
+            new DisableConfig());
     private static final List<ModuleData> ALL_MODULES = ModList.get()
             .getAllScanData()
             .stream().flatMap(x -> x.getAnnotations().stream())
@@ -83,7 +85,8 @@ public final class ModuleManager {
         List<String> scanned = ALL_MODULES.stream().map(ModuleData::id).toList();
         ModuleManager.LOGGER.info("Scanned {} modules: {}", scanned.size(), String.join(", ", scanned));
         List<String> initializing = ENABLED_MODULES.keySet().stream().map(ModuleData::id).toList();
-        ModuleManager.LOGGER.info("Start initializing {} modules: {}", initializing.size(), String.join(", ", initializing));
+        ModuleManager.LOGGER.info("Start initializing {} modules: {}", initializing.size(),
+                String.join(", ", initializing));
         List<String> initialized = new LinkedList<>();
         for (Map.Entry<ModuleData, Module> entry : ENABLED_MODULES.entrySet()) {
             ModuleData data = entry.getKey();
@@ -101,7 +104,8 @@ public final class ModuleManager {
                 ModuleManager.LOGGER.error("Failed to setup module {}.", data.id, e);
             }
         }
-        ModuleManager.LOGGER.info("Successfully initialized {} modules: {}", initialized.size(), String.join(", ", initialized));
+        ModuleManager.LOGGER.info("Successfully initialized {} modules: {}", initialized.size(),
+                String.join(", ", initialized));
     }
 
     @ApiStatus.Internal
@@ -122,11 +126,13 @@ public final class ModuleManager {
                 ModuleManager.LOGGER.error("Failed to post module {}.", data.id, e);
             }
         }
-        ModuleManager.LOGGER.info("Successfully processed {} modules: {}", processed.size(), String.join(", ", processed));
+        ModuleManager.LOGGER.info("Successfully processed {} modules: {}", processed.size(),
+                String.join(", ", processed));
     }
 
     @ApiStatus.Internal
-    public static void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
+    public static void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
+                                               CreativeModeTab.Output output) {
         for (Map.Entry<ModuleData, Module> entry : ENABLED_MODULES.entrySet()) {
             ModuleData data = entry.getKey();
             try {
@@ -170,18 +176,24 @@ public final class ModuleManager {
     }
 
     public record ModuleData(String id, String className, List<DependencyData> dependencies) {
+
         @SuppressWarnings("unchecked")
         public static ModuleData parse(ModFileScanData.AnnotationData data) {
             String className = data.memberName();
             Map<String, Object> annotationData = data.annotationData();
             String id = annotationData.get("id").toString();
-            List<Map<String, Object>> target = (List<Map<String, Object>>) annotationData.getOrDefault("target", List.of());
-            return new ModuleData(id, className, target.stream().map(m -> getDependencyData(m.get("value").toString(), m.getOrDefault("minVersion", "").toString(), m.getOrDefault("maxVersion", "").toString())).toList());
+            List<Map<String, Object>> target = (List<Map<String, Object>>) annotationData.getOrDefault("target",
+                    List.of());
+            return new ModuleData(id, className, target
+                    .stream().map(m -> getDependencyData(m.get("value").toString(),
+                            m.getOrDefault("minVersion", "").toString(), m.getOrDefault("maxVersion", "").toString()))
+                    .toList());
         }
 
         public EnableState getEnableState() {
             if (DISABLED_MODULES.disabled().contains(this.id)) return EnableState.DISABLED;
-            return this.dependencies.stream().filter(x -> x.state != ErrorType.NONE).findAny().isEmpty() ? EnableState.ENABLED : EnableState.ERROR;
+            return this.dependencies.stream().filter(x -> x.state != ErrorType.NONE).findAny().isEmpty() ?
+                    EnableState.ENABLED : EnableState.ERROR;
         }
 
         public MutableComponent getTranslateKey() {
@@ -190,27 +202,34 @@ public final class ModuleManager {
 
         public Component getStateKey() {
             EnableState state = this.getEnableState();
-            return Component.translatable("screen.%s.state.%s".formatted(AvaritiaIntegration.MOD_ID, state.name().toLowerCase(Locale.ROOT))).withStyle(state.getColor());
+            return Component.translatable(
+                    "screen.%s.state.%s".formatted(AvaritiaIntegration.MOD_ID, state.name().toLowerCase(Locale.ROOT)))
+                    .withStyle(state.getColor());
         }
 
         public List<Component> getErrorTooltip() {
             EnableState state = this.getEnableState();
             if (!state.hasError()) return List.of();
-            return this.dependencies.stream().map(DependencyData::getErrorMessage).filter(Optional::isPresent).map(Optional::get).toList();
+            return this.dependencies.stream().map(DependencyData::getErrorMessage).filter(Optional::isPresent)
+                    .map(Optional::get).toList();
         }
     }
 
     public record DependencyData(String id, String minVersion, String maxVersion, ErrorType state) {
+
         public Optional<Component> getErrorMessage() {
             String version = getModVersion(this.id).map(Object::toString).orElse("???");
             return switch (this.state) {
                 case NONE -> Optional.empty();
-                case MISSING_MOD ->
-                        Optional.of(Component.translatable("screen.%s.message.missing_mod".formatted(AvaritiaIntegration.MOD_ID), this.formatVersionRange(), this.id));
-                case VERSION_TOO_HIGH ->
-                        Optional.of(Component.translatable("screen.%s.message.version_too_high".formatted(AvaritiaIntegration.MOD_ID), this.formatVersionRange(), this.id, version));
-                case VERSION_TOO_LOW ->
-                        Optional.of(Component.translatable("screen.%s.message.version_too_low".formatted(AvaritiaIntegration.MOD_ID), this.formatVersionRange(), this.id, version));
+                case MISSING_MOD -> Optional.of(
+                        Component.translatable("screen.%s.message.missing_mod".formatted(AvaritiaIntegration.MOD_ID),
+                                this.formatVersionRange(), this.id));
+                case VERSION_TOO_HIGH -> Optional.of(Component.translatable(
+                        "screen.%s.message.version_too_high".formatted(AvaritiaIntegration.MOD_ID),
+                        this.formatVersionRange(), this.id, version));
+                case VERSION_TOO_LOW -> Optional.of(Component.translatable(
+                        "screen.%s.message.version_too_low".formatted(AvaritiaIntegration.MOD_ID),
+                        this.formatVersionRange(), this.id, version));
             };
         }
 
@@ -222,14 +241,17 @@ public final class ModuleManager {
                     return Component.translatable("screen.avaritia_integration.message.version_lower", this.maxVersion);
             } else {
                 if (this.maxVersion.isEmpty())
-                    return Component.translatable("screen.avaritia_integration.message.version_higher", this.minVersion);
+                    return Component.translatable("screen.avaritia_integration.message.version_higher",
+                            this.minVersion);
                 else
-                    return Component.translatable("screen.avaritia_integration.message.version_between", this.minVersion, this.maxVersion);
+                    return Component.translatable("screen.avaritia_integration.message.version_between",
+                            this.minVersion, this.maxVersion);
             }
         }
     }
 
     public record DisableConfig(List<String> disabled) {
+
         public DisableConfig() {
             this(new LinkedList<>());
         }
@@ -240,9 +262,11 @@ public final class ModuleManager {
     }
 
     public enum EnableState {
+
         ENABLED(true, false, ChatFormatting.GREEN),
         DISABLED(false, false, ChatFormatting.YELLOW),
         ERROR(false, true, ChatFormatting.RED);
+
         private final boolean shouldLoad;
         private final boolean error;
         private final ChatFormatting color;
@@ -267,6 +291,9 @@ public final class ModuleManager {
     }
 
     public enum ErrorType {
-        NONE, MISSING_MOD, VERSION_TOO_HIGH, VERSION_TOO_LOW;
+        NONE,
+        MISSING_MOD,
+        VERSION_TOO_HIGH,
+        VERSION_TOO_LOW;
     }
 }

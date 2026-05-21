@@ -34,14 +34,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TileEntitySingularityCompressor extends TileEntityProgressMachine<ItemStackToItemStackRecipe> implements ItemRecipeLookupHandler<ItemStackToItemStackRecipe> {
+public class TileEntitySingularityCompressor extends TileEntityProgressMachine<ItemStackToItemStackRecipe>
+                                             implements ItemRecipeLookupHandler<ItemStackToItemStackRecipe> {
 
     private static final List<RecipeError> TRACKED_ERROR_TYPES = List.of(
             RecipeError.NOT_ENOUGH_ENERGY,
             RecipeError.NOT_ENOUGH_INPUT,
             RecipeError.NOT_ENOUGH_OUTPUT_SPACE,
-            RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT
-    );
+            RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT);
 
     private final IInputHandler<@NotNull ItemStack> inputHandler;
     private final IOutputHandler<@NotNull ItemStack> outputHandler;
@@ -64,18 +64,25 @@ public class TileEntitySingularityCompressor extends TileEntityProgressMachine<I
     }
 
     @Override
-    protected @Nullable IInventorySlotHolder getInitialInventory(IContentsListener listener, IContentsListener recipeCacheListener, IContentsListener recipeCacheUnpauseListener) {
+    protected @Nullable IInventorySlotHolder getInitialInventory(IContentsListener listener,
+                                                                 IContentsListener recipeCacheListener,
+                                                                 IContentsListener recipeCacheUnpauseListener) {
         InventorySlotHelper builder = InventorySlotHelper.forSideWithConfig(this);
         builder.addSlot(inputSlot = MIInputInventorySlot.at(this::containsRecipe, recipeCacheListener, 64, 17))
-                .tracksWarnings(slot -> slot.warning(WarningType.NO_MATCHING_RECIPE, getWarningCheck(RecipeError.NOT_ENOUGH_INPUT)));
+                .tracksWarnings(slot -> slot.warning(WarningType.NO_MATCHING_RECIPE,
+                        getWarningCheck(RecipeError.NOT_ENOUGH_INPUT)));
         builder.addSlot(outputSlot = OutputInventorySlot.at(listener, 116, 35))
-                .tracksWarnings(slot -> slot.warning(WarningType.NO_SPACE_IN_OUTPUT, getWarningCheck(RecipeError.NOT_ENOUGH_OUTPUT_SPACE)));
-        builder.addSlot(energySlot = EnergyInventorySlot.fillOrConvert(energyContainer, this::getLevel, listener, 64, 53));
+                .tracksWarnings(slot -> slot.warning(WarningType.NO_SPACE_IN_OUTPUT,
+                        getWarningCheck(RecipeError.NOT_ENOUGH_OUTPUT_SPACE)));
+        builder.addSlot(
+                energySlot = EnergyInventorySlot.fillOrConvert(energyContainer, this::getLevel, listener, 64, 53));
         return builder.build();
     }
 
     @Override
-    protected @Nullable IEnergyContainerHolder getInitialEnergyContainers(IContentsListener listener, IContentsListener recipeCacheListener, IContentsListener recipeCacheUnpauseListener) {
+    protected @Nullable IEnergyContainerHolder getInitialEnergyContainers(IContentsListener listener,
+                                                                          IContentsListener recipeCacheListener,
+                                                                          IContentsListener recipeCacheUnpauseListener) {
         EnergyContainerHelper builder = EnergyContainerHelper.forSideWithConfig(this);
         builder.addContainer(energyContainer = MachineEnergyContainer.input(this, listener));
         return builder.build();
@@ -105,7 +112,8 @@ public class TileEntitySingularityCompressor extends TileEntityProgressMachine<I
     }
 
     @Override
-    public @NotNull CachedRecipe<ItemStackToItemStackRecipe> createNewCachedRecipe(@NotNull ItemStackToItemStackRecipe recipe, int cacheIndex) {
+    public @NotNull CachedRecipe<ItemStackToItemStackRecipe> createNewCachedRecipe(@NotNull ItemStackToItemStackRecipe recipe,
+                                                                                   int cacheIndex) {
         return OneInputCachedRecipe.itemToItem(recipe, recheckAllRecipeErrors, inputHandler, outputHandler)
                 .setErrorsChanged(this::onErrorsChanged)
                 .setCanHolderFunction(this::canFunction)

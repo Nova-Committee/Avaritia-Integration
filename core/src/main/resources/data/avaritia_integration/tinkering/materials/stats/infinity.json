@@ -1,53 +1,53 @@
 {
-  "stats": {
-    "tconstruct:binding": {},
-    "tconstruct:maille": {},
-    "tconstruct:handle": {
-      "durability": 5,
-      "mining_speed": 5,
-      "melee_speed": 5,
-      "melee_damage": 5
-    },
-    "tconstruct:head": {
-      "durability": 9999,
-      "mining_speed": 511,
-      "mining_tier": "minecraft:netherite",
-      "melee_attack": 255
-    },
-    "tconstruct:limb": {
-      "durability": 9999,
-      "draw_speed": 10,
-      "velocity": 10,
-      "accuracy": 1
-    },
-    "tconstruct:grip": {
-      "durability": 5,
-      "accuracy": 1,
-      "melee_damage": 255
-    },
-    "tconstruct:plating_boots": {
-      "armor": 3,
-      "durability": 9998,
-      "knockback_resistance": 1
-    },
-    "tconstruct:plating_chestplate": {
-      "armor": 8,
-      "durability": 9998,
-      "knockback_resistance": 1
-    },
-    "tconstruct:plating_helmet": {
-      "armor": 3,
-      "durability": 9998,
-      "knockback_resistance": 1
-    },
-    "tconstruct:plating_leggings": {
-      "armor": 6,
-      "durability": 9998,
-      "knockback_resistance": 1
-    },
-    "tconstruct:plating_shield": {
-      "durability": 9998,
-      "knockback_resistance": 1
-    }
-  }
+	"stats": {
+		"tconstruct:binding": {},
+		"tconstruct:maille": {},
+		"tconstruct:handle": {
+			"durability": 5,
+			"mining_speed": 5,
+			"melee_speed": 5,
+			"melee_damage": 5
+		},
+		"tconstruct:head": {
+			"durability": 9999,
+			"mining_speed": 511,
+			"mining_tier": "minecraft:netherite",
+			"melee_attack": 255
+		},
+		"tconstruct:limb": {
+			"durability": 9999,
+			"draw_speed": 10,
+			"velocity": 10,
+			"accuracy": 1
+		},
+		"tconstruct:grip": {
+			"durability": 5,
+			"accuracy": 1,
+			"melee_damage": 255
+		},
+		"tconstruct:plating_boots": {
+			"armor": 3,
+			"durability": 9998,
+			"knockback_resistance": 1
+		},
+		"tconstruct:plating_chestplate": {
+			"armor": 8,
+			"durability": 9998,
+			"knockback_resistance": 1
+		},
+		"tconstruct:plating_helmet": {
+			"armor": 3,
+			"durability": 9998,
+			"knockback_resistance": 1
+		},
+		"tconstruct:plating_leggings": {
+			"armor": 6,
+			"durability": 9998,
+			"knockback_resistance": 1
+		},
+		"tconstruct:plating_shield": {
+			"durability": 9998,
+			"knockback_resistance": 1
+		}
+	}
 }

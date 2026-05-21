@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model":"avaritia_integration:block/botania/infinity_potato"
-    }
-  }
+	"variants": {
+		"": {
+			"model": "avaritia_integration:block/botania/infinity_potato"
+		}
+	}
 }

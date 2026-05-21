@@ -31,13 +31,12 @@ import java.util.function.Supplier;
 
 public class MekIntegrationBlocks {
 
-    private MekIntegrationBlocks() {
-
-    }
+    private MekIntegrationBlocks() {}
 
     public static final BlockDeferredRegister BLOCKS = new BlockDeferredRegister(AvaritiaIntegration.MOD_ID);
 
-    private static final Table<FactoryTier, MekIntegrationFactoryType, BlockRegistryObject<BlockMekIntegrationFactory<?>, ItemBlockMekIntegrationFactory>> FACTORIES = HashBasedTable.create();
+    private static final Table<FactoryTier, MekIntegrationFactoryType, BlockRegistryObject<BlockMekIntegrationFactory<?>, ItemBlockMekIntegrationFactory>> FACTORIES = HashBasedTable
+            .create();
 
     static {
         // factories
@@ -48,21 +47,32 @@ public class MekIntegrationBlocks {
         }
     }
 
-    public static final BlockRegistryObject<BlockTileModel<TileEntityNeutronCollector, Machine<TileEntityNeutronCollector>>, ItemBlockTooltip<BlockTileModel<TileEntityNeutronCollector, Machine<TileEntityNeutronCollector>>>> NEUTRON_COLLECTOR = BLOCKS.registerDetails("neutron_collector", () -> new BlockTileModel<>(MekIntegrationBlockTypes.NEUTRON_COLLECTOR, properties -> properties.mapColor(BlockResourceInfo.STEEL.getMapColor())));
-    public static final BlockRegistryObject<BlockTileModel<TileEntitySingularityCompressor, Machine<TileEntitySingularityCompressor>>, ItemBlockTooltip<BlockTileModel<TileEntitySingularityCompressor, Machine<TileEntitySingularityCompressor>>>> SINGULARITY_COMPRESSOR = BLOCKS.registerDetails("singularity_compressor", () -> new BlockTileModel<>(MekIntegrationBlockTypes.SINGULARITY_COMPRESSOR, properties -> properties.mapColor(BlockResourceInfo.STEEL.getMapColor())));
+    public static final BlockRegistryObject<BlockTileModel<TileEntityNeutronCollector, Machine<TileEntityNeutronCollector>>, ItemBlockTooltip<BlockTileModel<TileEntityNeutronCollector, Machine<TileEntityNeutronCollector>>>> NEUTRON_COLLECTOR = BLOCKS
+            .registerDetails("neutron_collector", () -> new BlockTileModel<>(MekIntegrationBlockTypes.NEUTRON_COLLECTOR,
+                    properties -> properties.mapColor(BlockResourceInfo.STEEL.getMapColor())));
+    public static final BlockRegistryObject<BlockTileModel<TileEntitySingularityCompressor, Machine<TileEntitySingularityCompressor>>, ItemBlockTooltip<BlockTileModel<TileEntitySingularityCompressor, Machine<TileEntitySingularityCompressor>>>> SINGULARITY_COMPRESSOR = BLOCKS
+            .registerDetails("singularity_compressor",
+                    () -> new BlockTileModel<>(MekIntegrationBlockTypes.SINGULARITY_COMPRESSOR,
+                            properties -> properties.mapColor(BlockResourceInfo.STEEL.getMapColor())));
 
-
-    private static <TILE extends TileEntityMIFactory<?>> BlockRegistryObject<BlockMekIntegrationFactory<?>, ItemBlockMekIntegrationFactory> registerFactory(MekIntegrationFactory<TILE> type) {
-        return registerTieredBlock(type, "_" + type.getMekIntegrationFactoryType().getRegistryNameComponent() + "_factory", () -> new BlockMekIntegrationFactory<>(type), ItemBlockMekIntegrationFactory::new);
+    private static <
+            TILE extends TileEntityMIFactory<?>> BlockRegistryObject<BlockMekIntegrationFactory<?>, ItemBlockMekIntegrationFactory> registerFactory(MekIntegrationFactory<TILE> type) {
+        return registerTieredBlock(type,
+                "_" + type.getMekIntegrationFactoryType().getRegistryNameComponent() + "_factory",
+                () -> new BlockMekIntegrationFactory<>(type), ItemBlockMekIntegrationFactory::new);
     }
 
-    private static <BLOCK extends Block, ITEM extends BlockItem> BlockRegistryObject<BLOCK, ITEM> registerTieredBlock(BlockType type, String suffix,
-                                                                                                                      Supplier<? extends BLOCK> blockSupplier, java.util.function.BiFunction<BLOCK, Item.Properties, ITEM> itemCreator) {
+    private static <BLOCK extends Block,
+            ITEM extends BlockItem> BlockRegistryObject<BLOCK, ITEM> registerTieredBlock(BlockType type, String suffix,
+                                                                                         Supplier<? extends BLOCK> blockSupplier,
+                                                                                         java.util.function.BiFunction<BLOCK, Item.Properties, ITEM> itemCreator) {
         return registerTieredBlock(type.get(AttributeTier.class).tier(), suffix, blockSupplier, itemCreator);
     }
 
-    private static <BLOCK extends Block, ITEM extends BlockItem> BlockRegistryObject<BLOCK, ITEM> registerTieredBlock(ITier tier, String suffix,
-                                                                                                                      Supplier<? extends BLOCK> blockSupplier, java.util.function.BiFunction<BLOCK, Item.Properties, ITEM> itemCreator) {
+    private static <BLOCK extends Block,
+            ITEM extends BlockItem> BlockRegistryObject<BLOCK, ITEM> registerTieredBlock(ITier tier, String suffix,
+                                                                                         Supplier<? extends BLOCK> blockSupplier,
+                                                                                         java.util.function.BiFunction<BLOCK, Item.Properties, ITEM> itemCreator) {
         return BLOCKS.register(tier.getBaseTier().getLowerName() + suffix, blockSupplier, itemCreator);
     }
 
@@ -74,7 +84,8 @@ public class MekIntegrationBlocks {
      *
      * @return factory with defined tier and recipe type
      */
-    public static BlockRegistryObject<BlockMekIntegrationFactory<?>, ItemBlockMekIntegrationFactory> getMekIntegrationFactory(@NotNull FactoryTier tier, @NotNull MekIntegrationFactoryType type) {
+    public static BlockRegistryObject<BlockMekIntegrationFactory<?>, ItemBlockMekIntegrationFactory> getMekIntegrationFactory(@NotNull FactoryTier tier,
+                                                                                                                              @NotNull MekIntegrationFactoryType type) {
         return FACTORIES.get(tier, type);
     }
 

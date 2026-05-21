@@ -9,25 +9,20 @@ import net.neoforged.bus.api.IEventBus;
  * @author IAFEnvoy
  */
 public interface Module {
-    default void init(IEventBus registryBus) {
-    }
 
-    default void process() {
-    }
+    default void init(IEventBus registryBus) {}
 
-    default void initClient() {
-    }
+    default void process() {}
 
-    default void processClient() {
-    }
+    default void initClient() {}
 
-    //TODO::Maybe auto bus?
-    default void registerEvent(IEventBus modBus, IEventBus gameBus) {
-    }
+    default void processClient() {}
 
-    default void registerClientEvent(IEventBus modBus, IEventBus gameBus) {
-    }
+    // TODO::Maybe auto bus?
+    default void registerEvent(IEventBus modBus, IEventBus gameBus) {}
 
-    default void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
-    }
+    default void registerClientEvent(IEventBus modBus, IEventBus gameBus) {}
+
+    default void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
+                                         CreativeModeTab.Output output) {}
 }

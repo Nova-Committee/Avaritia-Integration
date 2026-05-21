@@ -14,8 +14,11 @@ public class MekIntegrationRecipeSerializers {
 
     private MekIntegrationRecipeSerializers() {}
 
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, AvaritiaIntegration.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister
+            .create(Registries.RECIPE_SERIALIZER, AvaritiaIntegration.MOD_ID);
 
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BasicNeutronCollectorRecipe>> COLLECTOR = RECIPE_SERIALIZERS.register("collector", () -> new NeutronCollectorRecipeSerializer<>(BasicNeutronCollectorRecipe::new));
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BasicMekCompressorRecipe>> MEK_COMPRESSOR = RECIPE_SERIALIZERS.register("compressor", () -> MekanismRecipeSerializer.itemToItem(BasicMekCompressorRecipe::new));
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BasicNeutronCollectorRecipe>> COLLECTOR = RECIPE_SERIALIZERS
+            .register("collector", () -> new NeutronCollectorRecipeSerializer<>(BasicNeutronCollectorRecipe::new));
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BasicMekCompressorRecipe>> MEK_COMPRESSOR = RECIPE_SERIALIZERS
+            .register("compressor", () -> MekanismRecipeSerializer.itemToItem(BasicMekCompressorRecipe::new));
 }

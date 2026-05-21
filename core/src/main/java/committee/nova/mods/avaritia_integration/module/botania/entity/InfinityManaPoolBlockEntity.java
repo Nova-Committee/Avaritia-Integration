@@ -62,7 +62,8 @@ import java.util.List;
  * 改自{@link vazkii.botania.common.block.block_entity.mana.ManaPoolBlockEntity}
  */
 public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements ManaPool, KeyLocked, SparkAttachable,
-        ThrottledPacket, Wandable {
+                                         ThrottledPacket, Wandable {
+
     public static final int PARTICLE_COLOR = 0x00C6FF;
     public static final float PARTICLE_COLOR_BLUE = (PARTICLE_COLOR & 0xFF) / 255F;
     public static final float PARTICLE_COLOR_GREEN = (PARTICLE_COLOR >> 8 & 0xFF) / 255F;
@@ -142,7 +143,8 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
         }
 
         // Recipes with matching catalyst take priority above recipes with no catalyst specified
-        return !matchingCatRecipes.isEmpty() ? matchingCatRecipes.getFirst() : !matchingNonCatRecipes.isEmpty() ? matchingNonCatRecipes.getFirst() : null;
+        return !matchingCatRecipes.isEmpty() ? matchingCatRecipes.getFirst() :
+                !matchingNonCatRecipes.isEmpty() ? matchingNonCatRecipes.getFirst() : null;
     }
 
     public boolean collideEntityItem(ItemEntity item) {
@@ -169,9 +171,10 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
 
                 ItemStack output = recipe.value().getRecipeOutput(level.registryAccess(), stack);
                 EntityHelper.shrinkItem(item);
-                item.setOnGround(false); //Force entity collision update to run every tick if crafting is in progress
+                item.setOnGround(false); // Force entity collision update to run every tick if crafting is in progress
 
-                ItemEntity outputItem = new ItemEntity(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5, output);
+                ItemEntity outputItem = new ItemEntity(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5,
+                        worldPosition.getZ() + 0.5, output);
                 XplatAbstractions.INSTANCE.itemFlagsComponent(outputItem).manaInfusionSpawned = true;
                 if (item.getOwner() instanceof Player player) {
                     player.triggerRecipeCrafted(recipe, List.of(output));
@@ -208,8 +211,11 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
                         float red = (float) Math.random();
                         float green = (float) Math.random();
                         float blue = (float) Math.random();
-                        SparkleParticleData data = SparkleParticleData.sparkle((float) Math.random(), red, green, blue, 10);
-                        level.addParticle(data, worldPosition.getX() + 0.5 + Math.random() * 0.4 - 0.2, worldPosition.getY() + 0.75, worldPosition.getZ() + 0.5 + Math.random() * 0.4 - 0.2, 0, 0, 0);
+                        SparkleParticleData data = SparkleParticleData.sparkle((float) Math.random(), red, green, blue,
+                                10);
+                        level.addParticle(data, worldPosition.getX() + 0.5 + Math.random() * 0.4 - 0.2,
+                                worldPosition.getY() + 0.75, worldPosition.getZ() + 0.5 + Math.random() * 0.4 - 0.2, 0,
+                                0, 0);
                     }
                 }
 
@@ -238,7 +244,8 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
         }
     }
 
-    public static void clientTick(Level level, BlockPos worldPosition, BlockState state, InfinityManaPoolBlockEntity self) {
+    public static void clientTick(Level level, BlockPos worldPosition, BlockState state,
+                                  InfinityManaPoolBlockEntity self) {
         self.initManaCapAndNetwork();
         double particleChance = 1F - (double) self.getCurrentMana() / (double) self.getMaxMana() * 0.1;
         if (Math.random() > particleChance) {
@@ -277,8 +284,8 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
                     }
                 } else {
                     Vec3 itemPosRel = randomizeItemPos(itemPosRelBase);
-                    Vec3 poolPosRel =
-                            new Vec3(0.05 + 0.9 * Math.random(), 0.35 * relativeMana, 0.05 + 0.9 * Math.random());
+                    Vec3 poolPosRel = new Vec3(0.05 + 0.9 * Math.random(), 0.35 * relativeMana,
+                            0.05 + 0.9 * Math.random());
                     addManaFlowParticle(level, worldPosition, itemPosRel, poolPosRel);
                 }
             }
@@ -321,8 +328,8 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
                 worldPosition.getZ() + startPos.z, v0.x, v0.y, v0.z);
     }
 
-    public static void serverTick(Level level, BlockPos worldPosition, BlockState state, InfinityManaPoolBlockEntity self) {
-
+    public static void serverTick(Level level, BlockPos worldPosition, BlockState state,
+                                  InfinityManaPoolBlockEntity self) {
         self.initManaCapAndNetwork();
         boolean wasDoingTransfer = self.isDoingTransfer;
         self.isDoingTransfer = false;
@@ -346,7 +353,8 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
             var mana = XplatAbstractions.INSTANCE.findManaItem(stack);
             if (!stack.isEmpty() && mana != null) {
                 boolean isOutputting = self.isOutputtingPower();
-                if (isOutputting && mana.canReceiveManaFromPool(self) || !isOutputting && mana.canDrainManaToPool(self)) {
+                if (isOutputting && mana.canReceiveManaFromPool(self) ||
+                        !isOutputting && mana.canDrainManaToPool(self)) {
                     boolean didSomething = false;
 
                     int bellowCount = isOutputting ? getBellowCount(level, worldPosition, self) : 0;
@@ -358,7 +366,8 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
                                 didSomething = true;
                             }
 
-                            int manaVal = Math.min(transfRate, Math.min(self.getCurrentMana(), mana.getMaxMana() - mana.getMana()));
+                            int manaVal = Math.min(transfRate,
+                                    Math.min(self.getCurrentMana(), mana.getMaxMana() - mana.getMana()));
                             mana.addMana(manaVal);
                             self.receiveMana(-manaVal);
                         }
@@ -368,8 +377,10 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
                                 didSomething = true;
                             }
 
-                            int manaVal = Math.min(transfRate, Math.min(self.getMaxMana() - self.getCurrentMana(), mana.getMana()));
-                            if (manaVal == 0 && self.level.getBlockState(worldPosition.below()).is(BotaniaBlocks.manaVoid)) {
+                            int manaVal = Math.min(transfRate,
+                                    Math.min(self.getMaxMana() - self.getCurrentMana(), mana.getMana()));
+                            if (manaVal == 0 &&
+                                    self.level.getBlockState(worldPosition.below()).is(BotaniaBlocks.manaVoid)) {
                                 manaVal = Math.min(transfRate, mana.getMana());
                             }
                             mana.addMana(-manaVal);
@@ -478,6 +489,7 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
     }
 
     public static class WandHud implements WandHUD {
+
         private final InfinityManaPoolBlockEntity pool;
 
         public WandHud(InfinityManaPoolBlockEntity pool) {
@@ -496,14 +508,16 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
 
             RenderHelper.renderHUDBox(gui, centerX - width / 2, centerY + 8, centerX + width / 2, centerY + 48);
 
-            BotaniaAPIClient.instance().drawSimpleManaHUD(gui, window, font, 0x0095FF, pool.getCurrentMana(), pool.getMaxMana(), name);
+            BotaniaAPIClient.instance().drawSimpleManaHUD(gui, window, font, 0x0095FF, pool.getCurrentMana(),
+                    pool.getMaxMana(), name);
 
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
             int arrowU = pool.isOutputtingPower() ? 22 : 0;
             int arrowV = 38;
-            RenderHelper.drawTexturedModalRect(gui, HUDHandler.manaBar, centerX - 11, centerY + 30, arrowU, arrowV, 22, 15);
+            RenderHelper.drawTexturedModalRect(gui, HUDHandler.manaBar, centerX - 11, centerY + 30, arrowU, arrowV, 22,
+                    15);
             RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
             ItemStack tablet = new ItemStack(BotaniaItems.manaTablet);

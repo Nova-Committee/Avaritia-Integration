@@ -15,6 +15,7 @@ import org.joml.Vector3f;
 import java.util.function.Consumer;
 
 public class BaseFluidType extends FluidType {
+
     private final String texture;
     private final Vector3f fogColor;
 
@@ -29,6 +30,7 @@ public class BaseFluidType extends FluidType {
     public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new IClientFluidTypeExtensions() {
+
             @Override
             public int getTintColor() {
                 return 0xFFFFFFFF;
@@ -50,12 +52,15 @@ public class BaseFluidType extends FluidType {
             }
 
             @Override
-            public @NotNull Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, Vector3f fluidFogColor) {
+            public @NotNull Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level,
+                                                    int renderDistance, float darkenWorldAmount,
+                                                    Vector3f fluidFogColor) {
                 return fogColor;
             }
 
             @Override
-            public void modifyFogRender(Camera camera, FogRenderer.FogMode mode, float renderDistance, float partialTick, float nearDistance, float farDistance, FogShape shape) {
+            public void modifyFogRender(Camera camera, FogRenderer.FogMode mode, float renderDistance,
+                                        float partialTick, float nearDistance, float farDistance, FogShape shape) {
                 RenderSystem.setShaderFogStart(1f);
                 RenderSystem.setShaderFogEnd(6f);
             }

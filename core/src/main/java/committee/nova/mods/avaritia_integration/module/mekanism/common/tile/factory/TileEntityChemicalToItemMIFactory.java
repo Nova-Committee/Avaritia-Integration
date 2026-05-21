@@ -42,7 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismRecipe<?>> extends TileEntityMIFactory<RECIPE> {
+public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismRecipe<?>>
+                                                       extends TileEntityMIFactory<RECIPE> {
 
     private static final long MAX_CHEMICAL = 10_000;
 
@@ -53,7 +54,8 @@ public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismR
 
     public final List<IChemicalTank> inputGasTanks;
 
-    public TileEntityChemicalToItemMIFactory(Holder<Block> blockProvider, BlockPos pos, BlockState state, List<RecipeError> errorTypes, Set<RecipeError> globalErrorTypes) {
+    public TileEntityChemicalToItemMIFactory(Holder<Block> blockProvider, BlockPos pos, BlockState state,
+                                             List<RecipeError> errorTypes, Set<RecipeError> globalErrorTypes) {
         super(blockProvider, pos, state, errorTypes, globalErrorTypes);
         inputGasTanks = new ArrayList<>();
 
@@ -73,43 +75,54 @@ public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismR
         }
         ConfigInfo chemicalConfig = configComponent.getConfig(TransmissionType.CHEMICAL);
         if (chemicalConfig != null) {
-            chemicalConfig.addSlotInfo(DataType.INPUT, TileComponentConfig.createInfo(TransmissionType.CHEMICAL, true, false, inputGasTanks));
-            chemicalConfig.addSlotInfo(DataType.OUTPUT, TileComponentConfig.createInfo(TransmissionType.CHEMICAL, false, true, inputGasTanks));
-            chemicalConfig.addSlotInfo(DataType.INPUT_OUTPUT, TileComponentConfig.createInfo(TransmissionType.CHEMICAL, true, true, inputGasTanks));
+            chemicalConfig.addSlotInfo(DataType.INPUT,
+                    TileComponentConfig.createInfo(TransmissionType.CHEMICAL, true, false, inputGasTanks));
+            chemicalConfig.addSlotInfo(DataType.OUTPUT,
+                    TileComponentConfig.createInfo(TransmissionType.CHEMICAL, false, true, inputGasTanks));
+            chemicalConfig.addSlotInfo(DataType.INPUT_OUTPUT,
+                    TileComponentConfig.createInfo(TransmissionType.CHEMICAL, true, true, inputGasTanks));
             chemicalConfig.setCanEject(false);
         }
     }
 
     @Override
-    protected void addGasTanks(ChemicalTankHelper builder, IContentsListener listener, IContentsListener updateSortingListener) {
+    protected void addGasTanks(ChemicalTankHelper builder, IContentsListener listener,
+                               IContentsListener updateSortingListener) {
         inputTank = new IChemicalTank[tier.processes];
         gasInputHandlers = new IInputHandler[tier.processes];
         processInfoSlots = new GasToItemProcessInfo[tier.processes];
         for (int i = 0; i < tier.processes; i++) {
             int index = i;
-            inputTank[i] = BasicChemicalTank.createModern(MAX_CHEMICAL * tier.processes, (stack, automationType) ->
-                            automationType != AutomationType.EXTERNAL || (stack.has(ChemicalAttributes.Radiation.class) && IRadiationManager.INSTANCE.isRadiationEnabled()),
+            inputTank[i] = BasicChemicalTank.createModern(MAX_CHEMICAL * tier.processes,
+                    (stack, automationType) -> automationType != AutomationType.EXTERNAL ||
+                            (stack.has(ChemicalAttributes.Radiation.class) &&
+                                    IRadiationManager.INSTANCE.isRadiationEnabled()),
                     (stack, type) -> isValidInputChemical(stack.copyWithAmount(1)),
-                    stack -> isChemicalValidForTank(stack.copyWithAmount(1)) && inputProducesOutput(index, stack.copyWithAmount(1), outputSlot[index], false),
+                    stack -> isChemicalValidForTank(stack.copyWithAmount(1)) &&
+                            inputProducesOutput(index, stack.copyWithAmount(1), outputSlot[index], false),
                     ChemicalAttributeValidator.ALWAYS_ALLOW, recipeCacheLookupMonitors[index]);
             builder.addTank(inputTank[i]);
-            gasInputHandlers[i] = InputHelper.getInputHandler(inputTank[i], CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_INPUT);
+            gasInputHandlers[i] = InputHelper.getInputHandler(inputTank[i],
+                    CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_INPUT);
         }
     }
 
     @Override
-    protected void addSlots(InventorySlotHelper builder, IContentsListener listener, IContentsListener updateSortingListener) {
+    protected void addSlots(InventorySlotHelper builder, IContentsListener listener,
+                            IContentsListener updateSortingListener) {
         outputSlot = new OutputInventorySlot[tier.processes];
         itemOutputHandlers = new IOutputHandler[tier.processes];
         for (int i = 0; i < tier.processes; i++) {
             outputSlot[i] = OutputInventorySlot.at(recipeCacheLookupMonitors[i], getXPos(i), 70);
             int index = i;
-            builder.addSlot(outputSlot[i]).tracksWarnings(slot -> slot.warning(WarningType.NO_SPACE_IN_OUTPUT, getWarningCheck(RecipeError.NOT_ENOUGH_OUTPUT_SPACE, index)));
+            builder.addSlot(outputSlot[i]).tracksWarnings(slot -> slot.warning(WarningType.NO_SPACE_IN_OUTPUT,
+                    getWarningCheck(RecipeError.NOT_ENOUGH_OUTPUT_SPACE, index)));
             itemOutputHandlers[i] = OutputHelper.getOutputHandler(outputSlot[i], RecipeError.NOT_ENOUGH_OUTPUT_SPACE);
         }
     }
 
-    public boolean inputProducesOutput(int process, @NotNull ChemicalStack fallbackInput, @NotNull IInventorySlot outputTank, boolean updateCache) {
+    public boolean inputProducesOutput(int process, @NotNull ChemicalStack fallbackInput,
+                                       @NotNull IInventorySlot outputTank, boolean updateCache) {
         return outputTank.isEmpty() || getRecipeForInput(process, fallbackInput, outputTank, updateCache) != null;
     }
 
@@ -117,7 +130,8 @@ public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismR
     protected abstract boolean isCachedRecipeValid(@Nullable CachedRecipe<RECIPE> cached, @NotNull ChemicalStack stack);
 
     @Nullable
-    protected RECIPE getRecipeForInput(int process, @NotNull ChemicalStack fallbackInput, @NotNull IInventorySlot outputTank, boolean updateCache) {
+    protected RECIPE getRecipeForInput(int process, @NotNull ChemicalStack fallbackInput,
+                                       @NotNull IInventorySlot outputTank, boolean updateCache) {
         if (!CommonWorldTickHandler.flushTagAndRecipeCaches) {
             // If our recipe caches are valid, grab our cached recipe and see if it is still valid
             CachedRecipe<RECIPE> cached = getCachedRecipe(process);
@@ -141,7 +155,8 @@ public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismR
     }
 
     @Nullable
-    protected abstract RECIPE findRecipe(int process, @NotNull ChemicalStack fallbackInput, @NotNull IInventorySlot outputSlots);
+    protected abstract RECIPE findRecipe(int process, @NotNull ChemicalStack fallbackInput,
+                                         @NotNull IInventorySlot outputSlots);
 
     public abstract boolean isChemicalValidForTank(@NotNull ChemicalStack stack);
 
@@ -176,6 +191,6 @@ public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismR
         }
     }
 
-    public record GasToItemProcessInfo(int process, @NotNull IChemicalTank inputTank, @NotNull IInventorySlot outputSlot) {
-    }
+    public record GasToItemProcessInfo(int process, @NotNull IChemicalTank inputTank,
+                                       @NotNull IInventorySlot outputSlot) {}
 }

@@ -12,6 +12,7 @@ public final class MekIntegrationTags {
     private MekIntegrationTags() {}
 
     public static final class Items {
+
         public static final TagKey<Item> ALLOYS = mekanismItem("alloys");
         public static final TagKey<Item> ALLOYS_INFINITY = mekanismItem("alloys/infinity");
         public static final TagKey<Item> ALLOYS_NEUTRON = mekanismItem("alloys/neutron");
@@ -23,6 +24,7 @@ public final class MekIntegrationTags {
     }
 
     public static final class Chemicals {
+
         public static final TagKey<Chemical> INFINITY = mekanismChemical("infinity");
         public static final TagKey<Chemical> NEUTRON = mekanismChemical("neutron");
 
@@ -34,6 +36,7 @@ public final class MekIntegrationTags {
     }
 
     private static TagKey<Chemical> mekanismChemical(String path) {
-        return TagKey.create(MekanismAPI.CHEMICAL_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath(MekanismAPI.MEKANISM_MODID, path));
+        return TagKey.create(MekanismAPI.CHEMICAL_REGISTRY_NAME,
+                ResourceLocation.fromNamespaceAndPath(MekanismAPI.MEKANISM_MODID, path));
     }
 }

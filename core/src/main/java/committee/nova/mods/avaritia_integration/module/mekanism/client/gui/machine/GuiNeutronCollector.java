@@ -16,9 +16,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
-public class GuiNeutronCollector extends GuiConfigurableTile<TileEntityNeutronCollector, MekanismTileContainer<TileEntityNeutronCollector>> {
+public class GuiNeutronCollector extends
+                                 GuiConfigurableTile<TileEntityNeutronCollector, MekanismTileContainer<TileEntityNeutronCollector>> {
 
-    public GuiNeutronCollector(MekanismTileContainer<TileEntityNeutronCollector> container, Inventory inv, Component title) {
+    public GuiNeutronCollector(MekanismTileContainer<TileEntityNeutronCollector> container, Inventory inv,
+                               Component title) {
         super(container, inv, title);
         inventoryLabelY += 2;
         dynamicSlots = true;
@@ -30,10 +32,12 @@ public class GuiNeutronCollector extends GuiConfigurableTile<TileEntityNeutronCo
         addRenderableWidget(new GuiVerticalPowerBar(this, tile.getEnergyContainer(), 164, 15))
                 .warning(WarningType.NOT_ENOUGH_ENERGY, tile.getWarningCheck(RecipeError.NOT_ENOUGH_ENERGY));
         addRenderableWidget(new GuiEnergyTab(this, tile.getEnergyContainer(), tile::getActive));
-        addRenderableWidget(new GuiChemicalGauge(() -> tile.gasTank, () -> tile.getChemicalTanks(null), GaugeType.STANDARD, this, 26, 13))
+        addRenderableWidget(new GuiChemicalGauge(() -> tile.gasTank, () -> tile.getChemicalTanks(null),
+                GaugeType.STANDARD, this, 26, 13))
                 .warning(WarningType.NO_MATCHING_RECIPE, tile.getWarningCheck(RecipeError.NOT_ENOUGH_INPUT));
         addRenderableWidget(new GuiProgress(tile::getScaledProgress, ProgressType.LARGE_RIGHT, this, 64, 40))
-                .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT, tile.getWarningCheck(RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT));
+                .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT,
+                        tile.getWarningCheck(RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT));
     }
 
     @Override

@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "avaritia_integration:item/items/infinity_me_storage_cell",
-    "layer1": "avaritia_integration:item/items/storage_cell_led"
-  }
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "avaritia_integration:item/items/infinity_me_storage_cell",
+		"layer1": "avaritia_integration:item/items/storage_cell_led"
+	}
 }

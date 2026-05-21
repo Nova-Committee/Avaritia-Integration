@@ -1,6 +1,4 @@
 {
-  "replace": false,
-  "values": [
-    "avaritia:star_fuel_block"
-  ]
+	"replace": false,
+	"values": ["avaritia:star_fuel_block"]
 }

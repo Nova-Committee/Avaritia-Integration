@@ -42,6 +42,7 @@ import java.util.Optional;
  * @author Frostbite
  */
 public class AEUniversalCellItem extends Item implements IAEUniversalCell, ICellWorkbenchItem {
+
     private final double idleDrain;
     private final int totalBytes;
     private final int totalTypes;
@@ -53,7 +54,6 @@ public class AEUniversalCellItem extends Item implements IAEUniversalCell, ICell
         this.totalTypes = totalTypes;
     }
 
-
     public static int getColor(ItemStack stack, int tintIndex) {
         if (tintIndex != 1) return 0xFFFFFF; // 白
         CellState state = IAEUniversalCell.getCellState(stack);
@@ -61,7 +61,8 @@ public class AEUniversalCellItem extends Item implements IAEUniversalCell, ICell
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines,
+                                TooltipFlag tooltipFlag) {
         if (Platform.isClient()) {
             long used = IAEUniversalCell.getUsedBytes(stack);
             lines.add(AEUniversalTooltips.bytesUsed(used, getTotalBytes()));
@@ -141,7 +142,8 @@ public class AEUniversalCellItem extends Item implements IAEUniversalCell, ICell
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player,
+                                                           @NotNull InteractionHand hand) {
         this.disassembleDrive(player.getItemInHand(hand), level, player);
         return new InteractionResultHolder<>(InteractionResult.sidedSuccess(level.isClientSide()),
                 player.getItemInHand(hand));
@@ -181,8 +183,7 @@ public class AEUniversalCellItem extends Item implements IAEUniversalCell, ICell
 
     @Override
     public @NotNull InteractionResult onItemUseFirst(@NotNull ItemStack stack, UseOnContext context) {
-        return this.disassembleDrive(stack, context.getLevel(), context.getPlayer())
-                ? InteractionResult.sidedSuccess(context.getLevel().isClientSide())
-                : InteractionResult.PASS;
+        return this.disassembleDrive(stack, context.getLevel(), context.getPlayer()) ?
+                InteractionResult.sidedSuccess(context.getLevel().isClientSide()) : InteractionResult.PASS;
     }
 }

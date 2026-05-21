@@ -29,15 +29,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class AIRecipes extends RecipeProvider implements IConditionBuilder {
 
-
     public AIRecipes(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }
 
     @Override
     protected void buildRecipes(RecipeOutput consumer) {
-
-        //Ender IO
+        // Ender IO
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EnderIOIntegrationItems.INFINITY_GRINDING_BALL.get())
                 .pattern(" a ")
@@ -53,7 +51,7 @@ public class AIRecipes extends RecipeProvider implements IConditionBuilder {
                 .define('a', ModItems.neutron_ingot.get())
                 .unlockedBy("has_item", has(ModItems.neutron_ingot.get())).save(consumer);
 
-        //AE2
+        // AE2
 
         ModShapedRecipeBuilder.shaped(RecipeCategory.MISC, AE2IntegrationItems.INFINITY_ME_STORAGE_COMPONENT.get())
                 .pattern("  rrrrr  ")
@@ -92,15 +90,27 @@ public class AIRecipes extends RecipeProvider implements IConditionBuilder {
                 .define('q', AE2IntegrationItems.INFINITY_ME_STORAGE_CELL.get())
                 .unlockedBy("has_item", has(ModItems.neutron_ingot.get())).save(consumer);
 
-        BuiltInRegistries.ITEM.stream().filter(item -> BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(AvaritiaIntegration.MOD_ID)).forEach(item -> {
-            if(item instanceof IRecipeProvider provider){
-                provider.registerRecipe(consumer);
-            }
-        });
+        BuiltInRegistries.ITEM.stream()
+                .filter(item -> BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(AvaritiaIntegration.MOD_ID))
+                .forEach(item -> {
+                    if (item instanceof IRecipeProvider provider) {
+                        provider.registerRecipe(consumer);
+                    }
+                });
 
-        var elderlyMedullaRecipe = new LaserDrillFluidRecipe(SizedFluidIngredient.of(IndustrialForegoingIntegrationFluids.ELDERLY_MEDULLA.getSourceFluid().get(),50),7, Optional.of(EntityData.of(EntityType.ELDER_GUARDIAN)), new LaserDrillRarity(new LaserDrillRarity.BiomeRarity(new ArrayList<>(), new ArrayList<>()), new LaserDrillRarity.DimensionRarity(new ArrayList<>(),new ArrayList<>()),-64, 256, 8));
-        var voidMatterRecipe = new LaserDrillFluidRecipe(SizedFluidIngredient.of(IndustrialForegoingIntegrationFluids.VOID_MATTER.getSourceFluid().get(),20),15, Optional.empty(), new LaserDrillRarity(new LaserDrillRarity.BiomeRarity(LaserDrillRarity.BiomeRarity.END, new ArrayList<>()), new LaserDrillRarity.DimensionRarity(new ArrayList<>(),new ArrayList<>()),-32, 64, 8));
-        LaserDrillFluidRecipe.createRecipe(consumer,"elderly_medulla","industrialforegoing",elderlyMedullaRecipe);
-        LaserDrillFluidRecipe.createRecipe(consumer,"void_matter","industrialforegoing",voidMatterRecipe);
+        var elderlyMedullaRecipe = new LaserDrillFluidRecipe(
+                SizedFluidIngredient.of(IndustrialForegoingIntegrationFluids.ELDERLY_MEDULLA.getSourceFluid().get(),
+                        50),
+                7, Optional.of(EntityData.of(EntityType.ELDER_GUARDIAN)),
+                new LaserDrillRarity(new LaserDrillRarity.BiomeRarity(new ArrayList<>(), new ArrayList<>()),
+                        new LaserDrillRarity.DimensionRarity(new ArrayList<>(), new ArrayList<>()), -64, 256, 8));
+        var voidMatterRecipe = new LaserDrillFluidRecipe(
+                SizedFluidIngredient.of(IndustrialForegoingIntegrationFluids.VOID_MATTER.getSourceFluid().get(), 20),
+                15, Optional.empty(),
+                new LaserDrillRarity(
+                        new LaserDrillRarity.BiomeRarity(LaserDrillRarity.BiomeRarity.END, new ArrayList<>()),
+                        new LaserDrillRarity.DimensionRarity(new ArrayList<>(), new ArrayList<>()), -32, 64, 8));
+        LaserDrillFluidRecipe.createRecipe(consumer, "elderly_medulla", "industrialforegoing", elderlyMedullaRecipe);
+        LaserDrillFluidRecipe.createRecipe(consumer, "void_matter", "industrialforegoing", voidMatterRecipe);
     }
 }

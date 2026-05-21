@@ -6,8 +6,8 @@ apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {
     implementation project(':core')
-    implementation "mekanism:Mekanism:${mekanism_version}"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"
-    implementation "curse.maven:evolved-mekanism-1230085:7599592"
+    implementation forge.mekanism
+    runtimeOnly variantOf(forge.mekanism) { classifier('additions') }
+    runtimeOnly variantOf(forge.mekanism) { classifier('tools') }
+    implementation forge.evolvedMekanism
 }

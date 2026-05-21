@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.module.botania.block;
 
 import committee.nova.mods.avaritia_integration.module.botania.entity.AsgardDandelionBlockEntity;
 import committee.nova.mods.avaritia_integration.module.botania.registry.BotaniaIntegrationBlockEntities;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import vazkii.botania.api.block_entity.SpecialFlowerBlockEntity;
@@ -19,7 +21,9 @@ import vazkii.botania.common.block.flower.SpecialFlowerBlock;
 import java.util.function.Supplier;
 
 public class AsgardDandelionBlock extends SpecialFlowerBlock {
-    public AsgardDandelionBlock(Holder<MobEffect> stewEffect, int stewDuration, Properties props, Supplier<BlockEntityType<? extends SpecialFlowerBlockEntity>> blockEntityType) {
+
+    public AsgardDandelionBlock(Holder<MobEffect> stewEffect, int stewDuration, Properties props,
+                                Supplier<BlockEntityType<? extends SpecialFlowerBlockEntity>> blockEntityType) {
         super(stewEffect, stewDuration, props, blockEntityType);
     }
 
@@ -29,7 +33,9 @@ public class AsgardDandelionBlock extends SpecialFlowerBlock {
     }
 
     @Override
-    public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return BotaniaBlock.createTickerHelper(type, BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(), AsgardDandelionBlockEntity::commonTick);
+    public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state,
+                                                                            BlockEntityType<T> type) {
+        return BotaniaBlock.createTickerHelper(type, BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(),
+                AsgardDandelionBlockEntity::commonTick);
     }
 }

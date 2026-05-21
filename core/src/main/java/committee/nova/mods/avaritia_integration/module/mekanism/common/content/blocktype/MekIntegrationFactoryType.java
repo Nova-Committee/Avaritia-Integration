@@ -3,6 +3,7 @@ package committee.nova.mods.avaritia_integration.module.mekanism.common.content.
 import committee.nova.mods.avaritia_integration.module.mekanism.common.MekIntegrationLang;
 import committee.nova.mods.avaritia_integration.module.mekanism.common.registries.MekIntegrationBlockTypes;
 import committee.nova.mods.avaritia_integration.module.mekanism.common.registries.MekIntegrationBlocks;
+
 import mekanism.api.annotations.NothingNullByDefault;
 import mekanism.api.text.IHasTranslationKey;
 import mekanism.common.MekanismLang;
@@ -13,15 +14,20 @@ import java.util.function.Supplier;
 
 @NothingNullByDefault
 public enum MekIntegrationFactoryType implements IHasTranslationKey {
-    NEUTRON_COLLECTING("neutron_collecting", MekIntegrationLang.NEUTRON_COLLECTING, () -> MekIntegrationBlockTypes.NEUTRON_COLLECTOR, () -> MekIntegrationBlocks.NEUTRON_COLLECTOR),
-    SINGULARITY_COMPRESSING("singularity_compressing", MekIntegrationLang.NEUTRON_COMPRESSING, () -> MekIntegrationBlockTypes.SINGULARITY_COMPRESSOR, () -> MekIntegrationBlocks.SINGULARITY_COMPRESSOR);
+
+    NEUTRON_COLLECTING("neutron_collecting", MekIntegrationLang.NEUTRON_COLLECTING,
+            () -> MekIntegrationBlockTypes.NEUTRON_COLLECTOR, () -> MekIntegrationBlocks.NEUTRON_COLLECTOR),
+    SINGULARITY_COMPRESSING("singularity_compressing", MekIntegrationLang.NEUTRON_COMPRESSING,
+            () -> MekIntegrationBlockTypes.SINGULARITY_COMPRESSOR, () -> MekIntegrationBlocks.SINGULARITY_COMPRESSOR);
 
     private final String registryNameComponent;
     private final MekanismLang langEntry;
     private final Supplier<MekIntegrationFactoryMachine<?>> baseMachine;
     private final Supplier<BlockRegistryObject<?, ?>> baseBlock;
 
-    MekIntegrationFactoryType(String registryNameComponent, MekanismLang langEntry, Supplier<MekIntegrationFactoryMachine<?>> baseMachine, Supplier<BlockRegistryObject<?, ?>> baseBlock) {
+    MekIntegrationFactoryType(String registryNameComponent, MekanismLang langEntry,
+                              Supplier<MekIntegrationFactoryMachine<?>> baseMachine,
+                              Supplier<BlockRegistryObject<?, ?>> baseBlock) {
         this.registryNameComponent = registryNameComponent;
         this.langEntry = langEntry;
         this.baseMachine = baseMachine;

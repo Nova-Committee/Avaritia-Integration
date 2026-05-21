@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.module.mekanismgenerator.common.blockentity;
 
 import committee.nova.mods.avaritia_integration.module.mekanismgenerator.common.registries.GenIntegrationBlocks;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 

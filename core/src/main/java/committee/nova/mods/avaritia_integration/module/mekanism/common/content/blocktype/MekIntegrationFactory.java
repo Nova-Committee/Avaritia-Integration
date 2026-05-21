@@ -33,7 +33,8 @@ public class MekIntegrationFactory<TILE extends TileEntityMIFactory<?>> extends 
 
     private final MekIntegrationFactoryMachine<?> origMachine;
 
-    public MekIntegrationFactory(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar, Supplier<ContainerTypeRegistryObject<? extends MekanismContainer>> containerRegistrar,
+    public MekIntegrationFactory(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar,
+                                 Supplier<ContainerTypeRegistryObject<? extends MekanismContainer>> containerRegistrar,
                                  MekIntegrationFactoryMachine<?> origMachine, FactoryTier tier) {
         super(tileEntityRegistrar, MekanismLang.DESCRIPTION_FACTORY, origMachine.getMekIntegrationFactoryType());
         this.origMachine = origMachine;
@@ -41,43 +42,49 @@ public class MekIntegrationFactory<TILE extends TileEntityMIFactory<?>> extends 
         add(new AttributeGui(containerRegistrar, null), new AttributeTier<>(tier));
 
         if (tier.ordinal() < MekIntegrationUtils.getFactoryTier().length - 1) {
-            add(new AttributeUpgradeable(() -> MekIntegrationBlocks.getMekIntegrationFactory(EnumUtils.FACTORY_TIERS[tier.ordinal() + 1], origMachine.getMekIntegrationFactoryType())));
+            add(new AttributeUpgradeable(() -> MekIntegrationBlocks.getMekIntegrationFactory(
+                    EnumUtils.FACTORY_TIERS[tier.ordinal() + 1], origMachine.getMekIntegrationFactoryType())));
         }
     }
 
     private void setMachineData(FactoryTier tier) {
-        setFrom(origMachine, AttributeSound.class, AttributeMekIntegrationFactoryType.class, AttributeUpgradeSupport.class);
+        setFrom(origMachine, AttributeSound.class, AttributeMekIntegrationFactoryType.class,
+                AttributeUpgradeSupport.class);
         AttributeEnergy origEnergy = origMachine.get(AttributeEnergy.class);
-        add(new AttributeEnergy(origEnergy::getUsage, () -> MathUtils.multiplyClamped(Math.max(origEnergy.getConfigStorage() / 2, origEnergy.getUsage()), tier.processes)));
+        add(new AttributeEnergy(origEnergy::getUsage, () -> MathUtils
+                .multiplyClamped(Math.max(origEnergy.getConfigStorage() / 2, origEnergy.getUsage()), tier.processes)));
     }
 
-    public static class MekIntegrationFactoryBuilder<FACTORY extends MekIntegrationFactory<TILE>, TILE extends TileEntityMIFactory<?>, T extends MekIntegrationMachineBuilder<FACTORY, TILE, T>>
-            extends BlockTileBuilder<FACTORY, TILE, T> {
+    public static class MekIntegrationFactoryBuilder<FACTORY extends MekIntegrationFactory<TILE>,
+            TILE extends TileEntityMIFactory<?>, T extends MekIntegrationMachineBuilder<FACTORY, TILE, T>>
+                                                    extends BlockTileBuilder<FACTORY, TILE, T> {
 
         protected MekIntegrationFactoryBuilder(FACTORY holder) {
             super(holder);
         }
 
         @SuppressWarnings("unchecked")
-        public static <TILE extends TileEntityMIFactory<?>> MekIntegrationFactoryBuilder<MekIntegrationFactory<TILE>, TILE, ?> createMekIntegrationFactory(Supplier<?> tileEntityRegistrar, MekIntegrationFactoryType type,
-                                                                                                                                                           FactoryTier tier) {
+        public static <
+                TILE extends TileEntityMIFactory<?>> MekIntegrationFactoryBuilder<MekIntegrationFactory<TILE>, TILE, ?> createMekIntegrationFactory(Supplier<?> tileEntityRegistrar,
+                                                                                                                                                    MekIntegrationFactoryType type,
+                                                                                                                                                    FactoryTier tier) {
             // this is dirty but unfortunately necessary for things to play right
-            MekIntegrationFactoryBuilder<MekIntegrationFactory<TILE>, TILE, ?> builder = new MekIntegrationFactoryBuilder<>(new MekIntegrationFactory<>((Supplier<TileEntityTypeRegistryObject<TILE>>) tileEntityRegistrar,
-                    () -> MekIntegrationContainerTypes.FACTORY, type.getBaseMachine(), tier));
-            //Note, we can't just return the builder here as then it gets all confused about object types, so we just
+            MekIntegrationFactoryBuilder<MekIntegrationFactory<TILE>, TILE, ?> builder = new MekIntegrationFactoryBuilder<>(
+                    new MekIntegrationFactory<>((Supplier<TileEntityTypeRegistryObject<TILE>>) tileEntityRegistrar,
+                            () -> MekIntegrationContainerTypes.FACTORY, type.getBaseMachine(), tier));
+            // Note, we can't just return the builder here as then it gets all confused about object types, so we just
             // assign the value here, and then return the builder itself as it is the same object
             builder.withComputerSupport(tier, type.getRegistryNameComponentCapitalized() + "Factory");
             builder.withCustomShape(getShape(type));
             builder.with(switch (type) {
-                case NEUTRON_COLLECTING ->
-                        AttributeSideConfig.create(TransmissionType.ITEM, TransmissionType.CHEMICAL, TransmissionType.ENERGY);
+                case NEUTRON_COLLECTING -> AttributeSideConfig.create(TransmissionType.ITEM, TransmissionType.CHEMICAL,
+                        TransmissionType.ENERGY);
                 case SINGULARITY_COMPRESSING -> AttributeSideConfig.ELECTRIC_MACHINE;
             });
             builder.replace(new AttributeParticleFX().addDense(ParticleTypes.SMOKE, 5, rand -> new Pos3D(
                     rand.nextFloat() * 0.7F - 0.3F,
                     rand.nextFloat() * 0.1F + 0.7F,
-                    rand.nextFloat() * 0.7F - 0.3F
-            )));
+                    rand.nextFloat() * 0.7F - 0.3F)));
             return builder;
         }
 

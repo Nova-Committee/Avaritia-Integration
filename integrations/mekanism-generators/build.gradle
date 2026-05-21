@@ -7,6 +7,6 @@ apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 dependencies {
     implementation project(':core')
     implementation project(':integrations:mekanism')
-    implementation "mekanism:Mekanism:${mekanism_version}"
-    implementation "mekanism:Mekanism:${mekanism_version}:generators"
+    implementation forge.mekanism
+    implementation variantOf(forge.mekanism) { classifier('generators') }
 }

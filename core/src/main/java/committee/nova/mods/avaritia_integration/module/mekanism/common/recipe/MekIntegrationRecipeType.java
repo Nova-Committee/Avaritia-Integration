@@ -10,8 +10,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 
 public class MekIntegrationRecipeType {
 
-    private MekIntegrationRecipeType() {
-    }
+    private MekIntegrationRecipeType() {}
 
     public static RecipeTypeRegistryObject<SingleChemicalRecipeInput, ChemicalStackToItemStackRecipe, SingleChemical<ChemicalStackToItemStackRecipe>> COLLECTING;
 

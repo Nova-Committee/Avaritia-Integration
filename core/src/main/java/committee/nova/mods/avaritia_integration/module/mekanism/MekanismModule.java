@@ -27,6 +27,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 @ModuleEntry(id = MekanismModule.MOD_ID, target = @ModMeta(MekanismModule.MOD_ID))
 public final class MekanismModule implements Module {
+
     public static final String MOD_ID = "mekanism";
 
     public static ResourceLocation rl(String path) {
@@ -46,7 +47,8 @@ public final class MekanismModule implements Module {
 
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
         event.registrar(AvaritiaIntegration.MOD_ID)
-                .playToServer(MekIntegrationPacketGuiInteract.TYPE, MekIntegrationPacketGuiInteract.STREAM_CODEC, MekIntegrationPacketGuiInteract::handle);
+                .playToServer(MekIntegrationPacketGuiInteract.TYPE, MekIntegrationPacketGuiInteract.STREAM_CODEC,
+                        MekIntegrationPacketGuiInteract::handle);
     }
 
     @Override
@@ -55,8 +57,10 @@ public final class MekanismModule implements Module {
     }
 
     private void registerScreen(RegisterMenuScreensEvent event) {
-        ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.NEUTRON_COLLECTOR, GuiNeutronCollector::new);
-        ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.SINGULARITY_COMPRESSOR, GuiSingularityCompressor::new);
+        ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.NEUTRON_COLLECTOR,
+                GuiNeutronCollector::new);
+        ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.SINGULARITY_COMPRESSOR,
+                GuiSingularityCompressor::new);
         ClientRegistrationUtil.registerScreen(event, MekIntegrationContainerTypes.FACTORY, GuiMIFactory::new);
     }
 

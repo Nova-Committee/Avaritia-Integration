@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.module.mekanism.common.registries;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.common.registration.impl.ChemicalDeferredRegister;

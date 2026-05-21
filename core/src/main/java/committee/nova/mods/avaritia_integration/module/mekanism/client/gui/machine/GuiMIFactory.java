@@ -24,7 +24,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.LongSupplier;
 
-public class GuiMIFactory extends GuiConfigurableTile<TileEntityMIFactory<?>, MekanismTileContainer<TileEntityMIFactory<?>>> {
+public class GuiMIFactory extends
+                          GuiConfigurableTile<TileEntityMIFactory<?>, MekanismTileContainer<TileEntityMIFactory<?>>> {
 
     public GuiMIFactory(MekanismTileContainer<TileEntityMIFactory<?>> container, Inventory inv, Component title) {
         super(container, inv, title);
@@ -56,22 +57,28 @@ public class GuiMIFactory extends GuiConfigurableTile<TileEntityMIFactory<?>, Me
         if (tile instanceof TileEntityItemToItemMIFactory<?>) {
             addRenderableWidget(new GuiMISortingTab(this, tile));
         }
-        addRenderableWidget(new GuiVerticalPowerBar(this, tile.getEnergyContainer(), imageWidth - 12, 16, tile instanceof TileEntityChemicalToItemMIFactory ? 65 : 52))
-                .warning(WarningType.NOT_ENOUGH_ENERGY, tile.getWarningCheck(CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_ENERGY, 0));
+        addRenderableWidget(new GuiVerticalPowerBar(this, tile.getEnergyContainer(), imageWidth - 12, 16,
+                tile instanceof TileEntityChemicalToItemMIFactory ? 65 : 52))
+                .warning(WarningType.NOT_ENOUGH_ENERGY,
+                        tile.getWarningCheck(CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_ENERGY, 0));
         addRenderableWidget(new GuiEnergyTab(this, tile.getEnergyContainer(), (LongSupplier) tile::getLastUsage));
 
         if (tile instanceof TileEntityChemicalToItemMIFactory<?> factory) {
             for (int i = 0; i < tile.tier.processes; i++) {
                 int index = i;
-                addRenderableWidget(new GuiChemicalGauge(() -> factory.inputGasTanks.get(index), () -> factory.getChemicalTanks(null), GaugeType.SMALL, this, factory.getXPos(index) - 1, 13))
-                        .warning(WarningType.NO_MATCHING_RECIPE, factory.getWarningCheck(CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_INPUT, index));
+                addRenderableWidget(new GuiChemicalGauge(() -> factory.inputGasTanks.get(index),
+                        () -> factory.getChemicalTanks(null), GaugeType.SMALL, this, factory.getXPos(index) - 1, 13))
+                        .warning(WarningType.NO_MATCHING_RECIPE, factory
+                                .getWarningCheck(CachedRecipe.OperationTracker.RecipeError.NOT_ENOUGH_INPUT, index));
             }
         }
 
         for (int i = 0; i < tile.tier.processes; i++) {
             int cacheIndex = i;
-            addRenderableWidget(new GuiProgress(() -> tile.getScaledProgress(1, cacheIndex), ProgressType.DOWN, this, 4 + tile.getXPos(i), getProgressYPos()))
-                    .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT, tile.getWarningCheck(CachedRecipe.OperationTracker.RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT, cacheIndex));
+            addRenderableWidget(new GuiProgress(() -> tile.getScaledProgress(1, cacheIndex), ProgressType.DOWN, this,
+                    4 + tile.getXPos(i), getProgressYPos()))
+                    .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT, tile.getWarningCheck(
+                            CachedRecipe.OperationTracker.RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT, cacheIndex));
         }
     }
 

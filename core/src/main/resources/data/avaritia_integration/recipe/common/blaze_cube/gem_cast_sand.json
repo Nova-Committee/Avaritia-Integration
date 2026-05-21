@@ -1,17 +1,17 @@
 {
-  "conditions": [
-    {
-      "modid": "tconstruct",
-      "type": "forge:mod_loaded"
-    }
-  ],
-  "type": "tconstruct:casting_table",
-  "cast": { "tag": "tconstruct:casts/single_use/gem" },
-  "cast_consumed": true,
-  "fluid": {
-    "fluid": "avaritia_integration:molten_blaze",
-    "amount": 100
-  },
-  "result": "avaritia:blaze_cube",
-  "cooling_time": 80
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:casting_table",
+	"cast": { "tag": "tconstruct:casts/single_use/gem" },
+	"cast_consumed": true,
+	"fluid": {
+		"fluid": "avaritia_integration:molten_blaze",
+		"amount": 100
+	},
+	"result": "avaritia:blaze_cube",
+	"cooling_time": 80
 }

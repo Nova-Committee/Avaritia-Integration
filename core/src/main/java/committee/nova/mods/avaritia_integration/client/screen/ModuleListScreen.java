@@ -2,17 +2,21 @@ package committee.nova.mods.avaritia_integration.client.screen;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.module.ModuleManager;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-//TODO:未完成,显示有问题
+
+// TODO:未完成,显示有问题
 @ApiStatus.Internal
 public class ModuleListScreen extends Screen {
+
     private final Screen parent;
     private ModuleListWidget widget;
     private Button enableButton;
@@ -30,16 +34,20 @@ public class ModuleListScreen extends Screen {
         if (this.initialized) this.widget.updateSize(40, this.width - 40, 64, this.height - 32);
         else {
             this.initialized = true;
-            this.widget = new ModuleListWidget(this,this.minecraft, 40, this.width - 40, 64, this.height - 32);
+            this.widget = new ModuleListWidget(this, this.minecraft, 40, this.width - 40, 64, this.height - 32);
             this.widget.update();
         }
         this.addWidget(this.widget);
-        this.addRenderableWidget(Button.builder(Component.translatable("screen.%s.module.back".formatted(AvaritiaIntegration.MOD_ID)), button -> this.onClose()).bounds(40, 40, 100, 20).build());
-        this.enableButton = this.addRenderableWidget(Button.builder(Component.translatable("screen.%s.module.enable".formatted(AvaritiaIntegration.MOD_ID)), button -> {
-            ModuleListWidget.ModuleEntry entry = this.widget.getSelected();
-            if (entry != null) ModuleManager.switchEnableState(entry.getData());
-            this.updateEnableButton();
-        }).bounds(150, 40, 100, 20).build());
+        this.addRenderableWidget(
+                Button.builder(Component.translatable("screen.%s.module.back".formatted(AvaritiaIntegration.MOD_ID)),
+                        button -> this.onClose()).bounds(40, 40, 100, 20).build());
+        this.enableButton = this.addRenderableWidget(
+                Button.builder(Component.translatable("screen.%s.module.enable".formatted(AvaritiaIntegration.MOD_ID)),
+                        button -> {
+                            ModuleListWidget.ModuleEntry entry = this.widget.getSelected();
+                            if (entry != null) ModuleManager.switchEnableState(entry.getData());
+                            this.updateEnableButton();
+                        }).bounds(150, 40, 100, 20).build());
         this.enableButton.active = this.widget.getSelected() != null;
     }
 
@@ -47,7 +55,9 @@ public class ModuleListScreen extends Screen {
         ModuleListWidget.ModuleEntry entry = this.widget.getSelected();
         if (entry != null) {
             this.enableButton.active = true;
-            this.enableButton.setMessage(Component.translatable("screen.%s.module.%s".formatted(AvaritiaIntegration.MOD_ID, entry.getData().getEnableState() != ModuleManager.EnableState.DISABLED ? "disable" : "enable")));
+            this.enableButton.setMessage(Component.translatable("screen.%s.module.%s".formatted(
+                    AvaritiaIntegration.MOD_ID,
+                    entry.getData().getEnableState() != ModuleManager.EnableState.DISABLED ? "disable" : "enable")));
         } else this.enableButton.active = false;
     }
 
@@ -60,7 +70,8 @@ public class ModuleListScreen extends Screen {
         if (!this.tooltips.isEmpty())
             context.renderComponentTooltip(this.minecraft.font, this.tooltips, mouseX, mouseY);
         context.drawCenteredString(this.font, this.title, this.width / 2, 20, 16777215);
-        context.drawCenteredString(this.font, Component.translatable("screen.avaritia_integration.module.warning"), this.width / 2, 30, 16777215);
+        context.drawCenteredString(this.font, Component.translatable("screen.avaritia_integration.module.warning"),
+                this.width / 2, 30, 16777215);
         super.render(context, mouseX, mouseY, delta);
     }
 

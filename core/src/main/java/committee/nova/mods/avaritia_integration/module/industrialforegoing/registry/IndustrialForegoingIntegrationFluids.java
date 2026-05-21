@@ -11,16 +11,16 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class IndustrialForegoingIntegrationFluids {
 
-    public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(Registries.FLUID, AvaritiaIntegration.MOD_ID);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID,
+            AvaritiaIntegration.MOD_ID);
 
-    public static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, AvaritiaIntegration.MOD_ID);
+    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister
+            .create(NeoForgeRegistries.FLUID_TYPES, AvaritiaIntegration.MOD_ID);
 
     public static final IFBaseFluidInstance ELDERLY_MEDULLA = register("elderly_medulla");
     public static final IFBaseFluidInstance VOID_MATTER = register("void_matter");
 
-    private static IFBaseFluidInstance register(String name){
+    private static IFBaseFluidInstance register(String name) {
         return new IFBaseFluidInstance(
                 IndustrialForegoingIntegrationItems.ITEMS,
                 IndustrialForegoingIntegrationBlocks.BLOCKS,
@@ -29,8 +29,6 @@ public class IndustrialForegoingIntegrationFluids {
                 FluidType.Properties.create().density(1000),
                 new ClientFluidTypeExtensions(
                         AvaritiaIntegration.rl("block/fluids/" + name + "_still"),
-                        AvaritiaIntegration.rl("block/fluids/" + name + "_flow")
-                )
-        );
+                        AvaritiaIntegration.rl("block/fluids/" + name + "_flow")));
     }
 }

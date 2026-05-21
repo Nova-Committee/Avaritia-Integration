@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import java.util.regex.Pattern;
 
 public class InfinityTinyPotatoBlockEntityRender implements BlockEntityRenderer<InfinityTinyPotatoBlockEntity> {
+
     public static final String DEFAULT = "default";
     private static final Pattern ESCAPED = Pattern.compile("[^a-z0-9/._-]");
     private final BlockRenderDispatcher blockRenderDispatcher;
@@ -38,7 +39,8 @@ public class InfinityTinyPotatoBlockEntityRender implements BlockEntityRenderer<
     }
 
     @Override
-    public void render(@Nonnull InfinityTinyPotatoBlockEntity potato, float partialTicks, PoseStack ms, @Nonnull MultiBufferSource buffers, int light, int overlay) {
+    public void render(@Nonnull InfinityTinyPotatoBlockEntity potato, float partialTicks, PoseStack ms,
+                       @Nonnull MultiBufferSource buffers, int light, int overlay) {
         ms.pushPose();
 
         // 基础数据
@@ -86,8 +88,8 @@ public class InfinityTinyPotatoBlockEntityRender implements BlockEntityRenderer<
         HitResult pos = mc.hitResult;
         String name = potato.name.getString();
 
-        if (Minecraft.renderNames() && !name.isEmpty() && pos != null && pos.getType() == Type.BLOCK
-                && potato.getBlockPos().equals(((BlockHitResult) pos).getBlockPos())) {
+        if (Minecraft.renderNames() && !name.isEmpty() && pos != null && pos.getType() == Type.BLOCK &&
+                potato.getBlockPos().equals(((BlockHitResult) pos).getBlockPos())) {
 
             ms.pushPose();
             ms.translate(0.0F, -0.6F, 0.0F);

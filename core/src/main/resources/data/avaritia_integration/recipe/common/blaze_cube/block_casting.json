@@ -1,15 +1,15 @@
 {
-  "conditions": [
-    {
-      "modid": "tconstruct",
-      "type": "forge:mod_loaded"
-    }
-  ],
-  "type": "tconstruct:casting_basin",
-  "fluid": {
-    "fluid": "avaritia_integration:molten_blaze",
-    "amount": 900
-  },
-  "result": "avaritia:blaze_cube_block",
-  "cooling_time": 241
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:casting_basin",
+	"fluid": {
+		"fluid": "avaritia_integration:molten_blaze",
+		"amount": 900
+	},
+	"result": "avaritia:blaze_cube_block",
+	"cooling_time": 241
 }

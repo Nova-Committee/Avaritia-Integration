@@ -1,0 +1,39 @@
+[versions]
+reAvaritia = "7695278"
+jei = "7420587"
+refinedStorage = "7610477"
+create = "7408951"
+pneumaticcraftRepressurized = "7696994"
+enderIo = "7700961"
+appliedEnergistics = "19.2.17"
+guideme = "21.1.15"
+patchouli = "6842247"
+curios = "6529130"
+jade = "7545219"
+titanium = "7662843"
+industrialForegoing = "7600395"
+industrialForegoingExtraUpgrades = "7738486"
+botania = "452-SNAPSHOT"
+mekanism = "1.21.1-10.7.19.85"
+igleeLibrary = "7000755"
+evolvedMekanism = "7599592"
+
+[libraries]
+reAvaritia = { module = "curse.maven:re-avaritia-623969", version.ref = "reAvaritia" }
+jei = { module = "curse.maven:jei-238222", version.ref = "jei" }
+refinedStorage = { module = "curse.maven:refined-storage-243076", version.ref = "refinedStorage" }
+create = { module = "curse.maven:create-328085", version.ref = "create" }
+pneumaticcraftRepressurized = { module = "curse.maven:pneumaticcraft-repressurized-281849", version.ref = "pneumaticcraftRepressurized" }
+enderIo = { module = "curse.maven:ender-io-64578", version.ref = "enderIo" }
+appliedEnergistics = { module = "org.appliedenergistics:appliedenergistics2", version.ref = "appliedEnergistics" }
+guideme = { module = "org.appliedenergistics:guideme", version.ref = "guideme" }
+patchouli = { module = "curse.maven:patchouli-306770", version.ref = "patchouli" }
+curios = { module = "curse.maven:curios-309927", version.ref = "curios" }
+jade = { module = "curse.maven:jade-324717", version.ref = "jade" }
+titanium = { module = "curse.maven:titanium-287342", version.ref = "titanium" }
+industrialForegoing = { module = "curse.maven:industrial-foregoing-266515", version.ref = "industrialForegoing" }
+industrialForegoingExtraUpgrades = { module = "curse.maven:industrial-foregoing-extra-upgrades-1161049", version.ref = "industrialForegoingExtraUpgrades" }
+botania = { module = "vazkii.botania:botania-neoforge-1.21.1", version.ref = "botania" }
+mekanism = { module = "mekanism:Mekanism", version.ref = "mekanism" }
+igleeLibrary = { module = "curse.maven:iglee-library-541199", version.ref = "igleeLibrary" }
+evolvedMekanism = { module = "curse.maven:evolved-mekanism-1230085", version.ref = "evolvedMekanism" }

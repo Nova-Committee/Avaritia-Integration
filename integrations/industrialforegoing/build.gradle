@@ -6,6 +6,6 @@ apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {
     implementation project(':core')
-    implementation "curse.maven:titanium-287342:${titanium_version}"
-    implementation "curse.maven:industrial-foregoing-266515:${industrial_foregoing_version}"
+    implementation forge.titanium
+    implementation forge.industrialForegoing
 }

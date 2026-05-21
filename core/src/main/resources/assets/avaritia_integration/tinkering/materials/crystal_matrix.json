@@ -1,55 +1,52 @@
 {
-  "fallbacks": [
-    "crystal",
-    "rock"
-  ],
-  "color": "9af3ee",
-  "luminosity": 7,
-  "generator": {
-    "transformer": {
-      "type": "tconstruct:recolor_sprite",
-      "color_mapping": {
-        "type": "tconstruct:grey_to_color",
-        "palette": [
-          {
-            "grey": 0,
-            "color": "FF000000"
-          },
-          {
-            "grey": 63,
-            "color": "FF1b5c58"
-          },
-          {
-            "grey": 102,
-            "color": "FF387f7b"
-          },
-          {
-            "grey": 140,
-            "color": "FF59aaa5"
-          },
-          {
-            "grey": 178,
-            "color": "FF67bbb6"
-          },
-          {
-            "grey": 216,
-            "color": "FF80d8d3"
-          },
-          {
-            "grey": 255,
-            "color": "FF9af3ee"
-          }
-        ]
-      }
-    },
-    "supported_stats": [
-      "tconstruct:head",
-      "tconstruct:handle",
-      "tconstruct:extra",
-      "tconstruct:repair_kit",
-      "tconstruct:limb",
-      "tconstruct:grip"
-    ],
-    "ignoreMaterial_stats": false
-  }
+	"fallbacks": ["crystal", "rock"],
+	"color": "9af3ee",
+	"luminosity": 7,
+	"generator": {
+		"transformer": {
+			"type": "tconstruct:recolor_sprite",
+			"color_mapping": {
+				"type": "tconstruct:grey_to_color",
+				"palette": [
+					{
+						"grey": 0,
+						"color": "FF000000"
+					},
+					{
+						"grey": 63,
+						"color": "FF1b5c58"
+					},
+					{
+						"grey": 102,
+						"color": "FF387f7b"
+					},
+					{
+						"grey": 140,
+						"color": "FF59aaa5"
+					},
+					{
+						"grey": 178,
+						"color": "FF67bbb6"
+					},
+					{
+						"grey": 216,
+						"color": "FF80d8d3"
+					},
+					{
+						"grey": 255,
+						"color": "FF9af3ee"
+					}
+				]
+			}
+		},
+		"supported_stats": [
+			"tconstruct:head",
+			"tconstruct:handle",
+			"tconstruct:extra",
+			"tconstruct:repair_kit",
+			"tconstruct:limb",
+			"tconstruct:grip"
+		],
+		"ignoreMaterial_stats": false
+	}
 }

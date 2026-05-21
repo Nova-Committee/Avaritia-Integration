@@ -1,55 +1,52 @@
 {
-  "fallbacks": [
-    "bone",
-    "rock"
-  ],
-  "color": "CD4418",
-  "luminosity": 6,
-  "generator": {
-    "transformer": {
-      "type": "tconstruct:recolor_sprite",
-      "color_mapping": {
-        "type": "tconstruct:grey_to_color",
-        "palette": [
-          {
-            "grey": 0,
-            "color": "FF000000"
-          },
-          {
-            "grey": 63,
-            "color": "FFf88131"
-          },
-          {
-            "grey": 102,
-            "color": "FFff8838"
-          },
-          {
-            "grey": 140,
-            "color": "FFffa938"
-          },
-          {
-            "grey": 178,
-            "color": "FFfdc045"
-          },
-          {
-            "grey": 216,
-            "color": "FFffeb6b"
-          },
-          {
-            "grey": 255,
-            "color": "FFfffca6"
-          }
-        ]
-      }
-    },
-    "supported_stats": [
-      "tconstruct:head",
-      "tconstruct:handle",
-      "tconstruct:extra",
-      "tconstruct:repair_kit",
-      "tconstruct:limb",
-      "tconstruct:grip"
-    ],
-    "ignoreMaterial_stats": false
-  }
+	"fallbacks": ["bone", "rock"],
+	"color": "CD4418",
+	"luminosity": 6,
+	"generator": {
+		"transformer": {
+			"type": "tconstruct:recolor_sprite",
+			"color_mapping": {
+				"type": "tconstruct:grey_to_color",
+				"palette": [
+					{
+						"grey": 0,
+						"color": "FF000000"
+					},
+					{
+						"grey": 63,
+						"color": "FFf88131"
+					},
+					{
+						"grey": 102,
+						"color": "FFff8838"
+					},
+					{
+						"grey": 140,
+						"color": "FFffa938"
+					},
+					{
+						"grey": 178,
+						"color": "FFfdc045"
+					},
+					{
+						"grey": 216,
+						"color": "FFffeb6b"
+					},
+					{
+						"grey": 255,
+						"color": "FFfffca6"
+					}
+				]
+			}
+		},
+		"supported_stats": [
+			"tconstruct:head",
+			"tconstruct:handle",
+			"tconstruct:extra",
+			"tconstruct:repair_kit",
+			"tconstruct:limb",
+			"tconstruct:grip"
+		],
+		"ignoreMaterial_stats": false
+	}
 }

@@ -1,5 +1,3 @@
 {
-  "default": [
-    { "name": "avaritia_integration:condensing"}
-  ]
+	"default": [{ "name": "avaritia_integration:condensing" }]
 }

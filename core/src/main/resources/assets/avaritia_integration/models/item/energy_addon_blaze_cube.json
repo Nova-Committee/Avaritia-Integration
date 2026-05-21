@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "avaritia_integration:item/ifeu/energy_addon_blaze_cube"
-  }
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "avaritia_integration:item/ifeu/energy_addon_blaze_cube"
+	}
 }

@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.module.mekanism.common.block.attribute;
 
 import committee.nova.mods.avaritia_integration.module.mekanism.common.content.blocktype.MekIntegrationFactoryType;
+
 import mekanism.common.block.attribute.Attribute;
 import org.jetbrains.annotations.NotNull;
 

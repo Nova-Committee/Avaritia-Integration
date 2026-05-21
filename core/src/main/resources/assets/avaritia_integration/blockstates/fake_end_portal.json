@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "block/end_portal"
-    }
-  }
+	"variants": {
+		"": {
+			"model": "block/end_portal"
+		}
+	}
 }

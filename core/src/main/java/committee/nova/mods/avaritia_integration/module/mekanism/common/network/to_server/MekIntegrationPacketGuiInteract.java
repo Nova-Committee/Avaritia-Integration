@@ -22,14 +22,15 @@ import java.util.function.IntFunction;
 
 public class MekIntegrationPacketGuiInteract implements IMekanismPacket {
 
-    public static final CustomPacketPayload.Type<MekIntegrationPacketGuiInteract> TYPE = new CustomPacketPayload.Type<>(AvaritiaIntegration.rl("mek_integration_gui_interact"));
-    public static final StreamCodec<RegistryFriendlyByteBuf, MekIntegrationPacketGuiInteract> STREAM_CODEC = StreamCodec.composite(
-            Type.STREAM_CODEC, packet -> packet.interactionType,
-            MekIntegrationGuiInteraction.STREAM_CODEC, packet -> packet.interaction,
-            BlockPos.STREAM_CODEC, packet -> packet.tilePosition,
-            ByteBufCodecs.VAR_INT, packet -> packet.extra,
-            MekIntegrationPacketGuiInteract::new
-    );
+    public static final CustomPacketPayload.Type<MekIntegrationPacketGuiInteract> TYPE = new CustomPacketPayload.Type<>(
+            AvaritiaIntegration.rl("mek_integration_gui_interact"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, MekIntegrationPacketGuiInteract> STREAM_CODEC = StreamCodec
+            .composite(
+                    Type.STREAM_CODEC, packet -> packet.interactionType,
+                    MekIntegrationGuiInteraction.STREAM_CODEC, packet -> packet.interaction,
+                    BlockPos.STREAM_CODEC, packet -> packet.tilePosition,
+                    ByteBufCodecs.VAR_INT, packet -> packet.extra,
+                    MekIntegrationPacketGuiInteract::new);
 
     private final Type interactionType;
 
@@ -49,7 +50,8 @@ public class MekIntegrationPacketGuiInteract implements IMekanismPacket {
         this(Type.INT, interaction, tilePosition, extra);
     }
 
-    private MekIntegrationPacketGuiInteract(Type interactionType, MekIntegrationGuiInteraction interaction, BlockPos tilePosition, int extra) {
+    private MekIntegrationPacketGuiInteract(Type interactionType, MekIntegrationGuiInteraction interaction,
+                                            BlockPos tilePosition, int extra) {
         this.interactionType = interactionType;
         this.interaction = interaction;
         this.tilePosition = tilePosition;
@@ -72,14 +74,17 @@ public class MekIntegrationPacketGuiInteract implements IMekanismPacket {
     }
 
     public enum MekIntegrationGuiInteraction {
+
         AUTO_SORT_BUTTON((tile, player, extra) -> {
             if (tile instanceof TileEntityMIFactory<?> factory) {
                 factory.toggleSorting();
             }
         });
 
-        public static final IntFunction<MekIntegrationGuiInteraction> BY_ID = ByIdMap.continuous(MekIntegrationGuiInteraction::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
-        public static final StreamCodec<ByteBuf, MekIntegrationGuiInteraction> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, MekIntegrationGuiInteraction::ordinal);
+        public static final IntFunction<MekIntegrationGuiInteraction> BY_ID = ByIdMap
+                .continuous(MekIntegrationGuiInteraction::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
+        public static final StreamCodec<ByteBuf, MekIntegrationGuiInteraction> STREAM_CODEC = ByteBufCodecs
+                .idMapper(BY_ID, MekIntegrationGuiInteraction::ordinal);
 
         private final TriConsumer<TileEntityMekanism, Player, Integer> consumerForTile;
 
@@ -93,9 +98,11 @@ public class MekIntegrationPacketGuiInteract implements IMekanismPacket {
     }
 
     private enum Type {
+
         INT;
 
-        public static final IntFunction<Type> BY_ID = ByIdMap.continuous(Type::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
+        public static final IntFunction<Type> BY_ID = ByIdMap.continuous(Type::ordinal, values(),
+                ByIdMap.OutOfBoundsStrategy.WRAP);
         public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Type::ordinal);
     }
 }

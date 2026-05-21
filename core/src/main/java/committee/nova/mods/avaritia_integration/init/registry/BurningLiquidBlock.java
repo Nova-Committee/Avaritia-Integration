@@ -11,11 +11,14 @@ import net.minecraft.world.level.material.FlowingFluid;
 import java.util.function.Supplier;
 
 public class BurningLiquidBlock extends LiquidBlock {
+
     /** Burn time in seconds. Lava uses 15 */
     private final int burnTime;
     /** Damage from being in the fluid, lava uses 4 */
     private final float damage;
-    public BurningLiquidBlock(Supplier<? extends FlowingFluid> supplier, Properties properties, int burnTime, float damage) {
+
+    public BurningLiquidBlock(Supplier<? extends FlowingFluid> supplier, Properties properties, int burnTime,
+                              float damage) {
         super(supplier.get(), properties);
         this.burnTime = burnTime;
         this.damage = damage;
@@ -32,4 +35,3 @@ public class BurningLiquidBlock extends LiquidBlock {
         }
     }
 }
-

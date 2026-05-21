@@ -4,8 +4,8 @@ import net.neoforged.fml.common.Mod;
 
 @Mod(AIMekanismGeneratorsIntegrationMod.MOD_ID)
 public final class AIMekanismGeneratorsIntegrationMod {
+
     public static final String MOD_ID = "avaritia_integration_mekanism_generators";
 
-    public AIMekanismGeneratorsIntegrationMod() {
-    }
+    public AIMekanismGeneratorsIntegrationMod() {}
 }

@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.module.mekanism.common.content.
 
 import committee.nova.mods.avaritia_integration.module.mekanism.common.block.attribute.AttributeMekIntegrationFactoryType;
 import committee.nova.mods.avaritia_integration.module.mekanism.common.registries.MekIntegrationBlocks;
+
 import mekanism.common.MekanismLang;
 import mekanism.common.block.attribute.AttributeUpgradeable;
 import mekanism.common.content.blocktype.Machine;
@@ -14,28 +15,36 @@ import java.util.function.Supplier;
 
 public class MekIntegrationFactoryMachine<TILE extends TileEntityMekanism> extends Machine<TILE> {
 
-    public MekIntegrationFactoryMachine(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar, MekanismLang description, MekIntegrationFactoryType factoryType) {
+    public MekIntegrationFactoryMachine(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar,
+                                        MekanismLang description, MekIntegrationFactoryType factoryType) {
         super(tileEntityRegistrar, description);
-        add(new AttributeMekIntegrationFactoryType(factoryType), new AttributeUpgradeable(() -> MekIntegrationBlocks.getMekIntegrationFactory(FactoryTier.BASIC, getMekIntegrationFactoryType())));
+        add(new AttributeMekIntegrationFactoryType(factoryType), new AttributeUpgradeable(() -> MekIntegrationBlocks
+                .getMekIntegrationFactory(FactoryTier.BASIC, getMekIntegrationFactoryType())));
     }
 
     public MekIntegrationFactoryType getMekIntegrationFactoryType() {
         return Objects.requireNonNull(get(AttributeMekIntegrationFactoryType.class)).getMekIntegrationFactoryType();
     }
 
-    public static class MekIntegrationMachineBuilder<MACHINE extends Machine<TILE>, TILE extends TileEntityMekanism, T extends MekIntegrationMachineBuilder<MACHINE, TILE, T>> extends BlockTileBuilder<MACHINE, TILE, T> {
+    public static class MekIntegrationMachineBuilder<MACHINE extends Machine<TILE>, TILE extends TileEntityMekanism,
+            T extends MekIntegrationMachineBuilder<MACHINE, TILE, T>> extends BlockTileBuilder<MACHINE, TILE, T> {
 
         protected MekIntegrationMachineBuilder(MACHINE holder) {
             super(holder);
         }
 
-        public static <TILE extends TileEntityMekanism> MekIntegrationMachineBuilder<Machine<TILE>, TILE, ?> createMekIntegrationMachine(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar, MekanismLang description) {
+        public static <
+                TILE extends TileEntityMekanism> MekIntegrationMachineBuilder<Machine<TILE>, TILE, ?> createMekIntegrationMachine(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar,
+                                                                                                                                  MekanismLang description) {
             return new MekIntegrationMachineBuilder<>(new Machine<>(tileEntityRegistrar, description));
         }
 
-        public static <TILE extends TileEntityMekanism> MekIntegrationMachineBuilder<MekIntegrationFactoryMachine<TILE>, TILE, ?> createMekIntegrationFactoryMachine(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar,
-                                                                                                                                   MekanismLang description, MekIntegrationFactoryType factoryType) {
-            return new MekIntegrationMachineBuilder<>(new MekIntegrationFactoryMachine<>(tileEntityRegistrar, description, factoryType));
+        public static <
+                TILE extends TileEntityMekanism> MekIntegrationMachineBuilder<MekIntegrationFactoryMachine<TILE>, TILE, ?> createMekIntegrationFactoryMachine(Supplier<TileEntityTypeRegistryObject<TILE>> tileEntityRegistrar,
+                                                                                                                                                              MekanismLang description,
+                                                                                                                                                              MekIntegrationFactoryType factoryType) {
+            return new MekIntegrationMachineBuilder<>(
+                    new MekIntegrationFactoryMachine<>(tileEntityRegistrar, description, factoryType));
         }
     }
 }

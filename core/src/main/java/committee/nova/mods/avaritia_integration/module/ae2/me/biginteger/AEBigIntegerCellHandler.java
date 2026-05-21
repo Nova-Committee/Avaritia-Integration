@@ -8,10 +8,10 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class AEBigIntegerCellHandler implements ICellHandler {
+
     public static final AEBigIntegerCellHandler INSTANCE = new AEBigIntegerCellHandler();
 
-    private AEBigIntegerCellHandler() {
-    }
+    private AEBigIntegerCellHandler() {}
 
     @Override
     public boolean isCell(ItemStack itemStack) {

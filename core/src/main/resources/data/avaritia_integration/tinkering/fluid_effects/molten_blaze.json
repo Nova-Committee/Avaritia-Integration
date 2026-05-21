@@ -1,35 +1,35 @@
 {
-  "block_effects": [
-    {
-      "type": "tconstruct:melt_block",
-      "min_amount": 90,
-      "temperature": 3000
-    }
-  ],
-  "entity_effects": [
-    {
-      "type": "tconstruct:conditional",
-      "effect": {
-        "type": "tconstruct:damage",
-        "damage": 6.0,
-        "damage_type": {
-          "melee": "tconstruct:fluid_fire_melee",
-          "ranged": "tconstruct:fluid_fire_ranged"
-        }
-      },
-      "target": {
-        "type": "mantle:inverted",
-        "inverted_type": "mantle:fire_immune"
-      }
-    },
-    {
-      "type": "tconstruct:fire",
-      "action": "add",
-      "time": 10
-    }
-  ],
-  "fluid": {
-    "amount": 50,
-    "tag": "tconstruct:molten_blaze"
-  }
+	"block_effects": [
+		{
+			"type": "tconstruct:melt_block",
+			"min_amount": 90,
+			"temperature": 3000
+		}
+	],
+	"entity_effects": [
+		{
+			"type": "tconstruct:conditional",
+			"effect": {
+				"type": "tconstruct:damage",
+				"damage": 6.0,
+				"damage_type": {
+					"melee": "tconstruct:fluid_fire_melee",
+					"ranged": "tconstruct:fluid_fire_ranged"
+				}
+			},
+			"target": {
+				"type": "mantle:inverted",
+				"inverted_type": "mantle:fire_immune"
+			}
+		},
+		{
+			"type": "tconstruct:fire",
+			"action": "add",
+			"time": 10
+		}
+	],
+	"fluid": {
+		"amount": 50,
+		"tag": "tconstruct:molten_blaze"
+	}
 }

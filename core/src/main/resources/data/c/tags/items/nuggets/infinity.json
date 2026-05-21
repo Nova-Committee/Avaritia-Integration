@@ -1,6 +1,4 @@
 {
-  "replace": false,
-  "values": [
-    "avaritia:infinity_nugget"
-  ]
+	"replace": false,
+	"values": ["avaritia:infinity_nugget"]
 }

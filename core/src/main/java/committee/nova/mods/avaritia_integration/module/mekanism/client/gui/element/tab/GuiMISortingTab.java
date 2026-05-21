@@ -25,7 +25,8 @@ public class GuiMISortingTab extends GuiInsetElement<TileEntityMIFactory<?>> {
     @Override
     public void drawBackground(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.drawBackground(guiGraphics, mouseX, mouseY, partialTicks);
-        drawScrollingString(guiGraphics, OnOff.of(dataSource.isSorting()).getTextComponent(), 0, 24, TextAlignment.CENTER, titleTextColor(), 3, false);
+        drawScrollingString(guiGraphics, OnOff.of(dataSource.isSorting()).getTextComponent(), 0, 24,
+                TextAlignment.CENTER, titleTextColor(), 3, false);
     }
 
     @Override
@@ -35,6 +36,7 @@ public class GuiMISortingTab extends GuiInsetElement<TileEntityMIFactory<?>> {
 
     @Override
     public void onClick(double mouseX, double mouseY, int button) {
-        PacketUtils.sendToServer(new MekIntegrationPacketGuiInteract(MekIntegrationGuiInteraction.AUTO_SORT_BUTTON, dataSource));
+        PacketUtils.sendToServer(
+                new MekIntegrationPacketGuiInteract(MekIntegrationGuiInteraction.AUTO_SORT_BUTTON, dataSource));
     }
 }

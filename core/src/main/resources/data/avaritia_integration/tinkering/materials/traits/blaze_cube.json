@@ -1,5 +1,3 @@
 {
-  "default": [
-    { "name": "avaritia_integration:blaze_crown"}
-  ]
+	"default": [{ "name": "avaritia_integration:blaze_crown" }]
 }

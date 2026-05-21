@@ -1,16 +1,16 @@
 {
-  "conditions": [
-    {
-      "modid": "tconstruct",
-      "type": "forge:mod_loaded"
-    }
-  ],
-  "type": "tconstruct:melting",
-  "ingredient": { "item": "avaritia:infinity" },
-  "result": {
-    "fluid": "avaritia_integration:molten_infinity",
-    "amount": 810
-  },
-  "temperature": 12000,
-  "time": 741
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:melting",
+	"ingredient": { "item": "avaritia:infinity" },
+	"result": {
+		"fluid": "avaritia_integration:molten_infinity",
+		"amount": 810
+	},
+	"temperature": 12000,
+	"time": 741
 }

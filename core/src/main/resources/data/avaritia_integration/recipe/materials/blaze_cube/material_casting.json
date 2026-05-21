@@ -1,15 +1,15 @@
 {
-  "conditions": [
-    {
-      "modid": "tconstruct",
-      "type": "forge:mod_loaded"
-    }
-  ],
-  "type": "tconstruct:material_fluid",
-  "fluid": {
-    "fluid": "avaritia_integration:molten_blaze",
-    "amount": 100
-  },
-  "temperature": 1500,
-  "output": "avaritia_integration:blaze_cube"
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:material_fluid",
+	"fluid": {
+		"fluid": "avaritia_integration:molten_blaze",
+		"amount": 100
+	},
+	"temperature": 1500,
+	"output": "avaritia_integration:blaze_cube"
 }

@@ -40,6 +40,7 @@ import java.util.Optional;
  * BigInteger版元件物品的承载类，仅用于创造元件
  */
 public class AEBigIntegerCellItem extends Item implements IAEBigIntegerCell, ICellWorkbenchItem {
+
     private final double idleDrain;
 
     public AEBigIntegerCellItem(Item.Properties pProperties, double idleDrain) {
@@ -121,7 +122,8 @@ public class AEBigIntegerCellItem extends Item implements IAEBigIntegerCell, ICe
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player,
+                                                           @NotNull InteractionHand hand) {
         this.disassembleDrive(player.getItemInHand(hand), level, player);
         return new InteractionResultHolder<>(InteractionResult.sidedSuccess(level.isClientSide()),
                 player.getItemInHand(hand));
@@ -161,8 +163,7 @@ public class AEBigIntegerCellItem extends Item implements IAEBigIntegerCell, ICe
 
     @Override
     public @NotNull InteractionResult onItemUseFirst(@NotNull ItemStack stack, UseOnContext context) {
-        return this.disassembleDrive(stack, context.getLevel(), context.getPlayer())
-                ? InteractionResult.sidedSuccess(context.getLevel().isClientSide())
-                : InteractionResult.PASS;
+        return this.disassembleDrive(stack, context.getLevel(), context.getPlayer()) ?
+                InteractionResult.sidedSuccess(context.getLevel().isClientSide()) : InteractionResult.PASS;
     }
 }

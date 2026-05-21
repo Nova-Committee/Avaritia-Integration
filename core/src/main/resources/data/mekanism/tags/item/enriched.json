@@ -1,7 +1,4 @@
 {
-  "replace": false,
-  "values": [
-    "#mekanism:enriched/infinity",
-    "#mekanism:enriched/neutron"
-  ]
+	"replace": false,
+	"values": ["#mekanism:enriched/infinity", "#mekanism:enriched/neutron"]
 }

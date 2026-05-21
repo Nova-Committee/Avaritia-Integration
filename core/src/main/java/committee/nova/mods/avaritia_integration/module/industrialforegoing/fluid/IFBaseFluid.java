@@ -16,12 +16,14 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.fluids.FluidType;
+
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class IFBaseFluid extends FlowingFluid {
+
     private final IFBaseFluidInstance baseFluidInstance;
 
     public IFBaseFluid(IFBaseFluidInstance baseFluidInstance) {
@@ -68,7 +70,8 @@ public class IFBaseFluid extends FlowingFluid {
     }
 
     @ParametersAreNonnullByDefault
-    protected boolean canBeReplacedWith(FluidState fluidState, BlockGetter level, BlockPos blockPos, Fluid fluid, Direction direction) {
+    protected boolean canBeReplacedWith(FluidState fluidState, BlockGetter level, BlockPos blockPos, Fluid fluid,
+                                        Direction direction) {
         return direction == Direction.DOWN && !fluidState.is(FluidTags.WATER);
     }
 
@@ -82,7 +85,8 @@ public class IFBaseFluid extends FlowingFluid {
 
     @Nonnull
     protected BlockState createLegacyBlock(@Nonnull FluidState state) {
-        return this.baseFluidInstance.getBlockFluid().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
+        return this.baseFluidInstance.getBlockFluid().defaultBlockState().setValue(LiquidBlock.LEVEL,
+                getLegacyLevel(state));
     }
 
     public boolean isSource(@Nonnull FluidState state) {
@@ -94,7 +98,8 @@ public class IFBaseFluid extends FlowingFluid {
     }
 
     public boolean isSame(@NotNull Fluid fluidIn) {
-        return fluidIn == this.baseFluidInstance.getFlowingFluid().get() || fluidIn == this.baseFluidInstance.getSourceFluid().get();
+        return fluidIn == this.baseFluidInstance.getFlowingFluid().get() ||
+                fluidIn == this.baseFluidInstance.getSourceFluid().get();
     }
 
     public @NotNull FluidType getFluidType() {

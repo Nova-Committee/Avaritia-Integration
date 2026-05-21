@@ -16,13 +16,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ModuleEntry {
+
     /*
-    The id of this module
+     * The id of this module
      */
     String id();
 
     /*
-    When should this module load
+     * When should this module load
      */
     ModMeta[] target() default {};
 }

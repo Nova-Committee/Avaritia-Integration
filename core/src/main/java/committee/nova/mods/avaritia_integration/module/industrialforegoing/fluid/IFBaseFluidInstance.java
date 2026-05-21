@@ -16,6 +16,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -31,24 +32,23 @@ public class IFBaseFluidInstance {
     private final String fluidName;
 
     public IFBaseFluidInstance(
-            DeferredRegister<Item> itemRegister,
-            DeferredRegister<Block> blockRegister,
-            DeferredRegister<Fluid> fluidRegister,
-            DeferredRegister<FluidType> fluidTypeRegister,
-            String name,
-            FluidType.Properties fluidTypeProperties,
-            IClientFluidTypeExtensions renderProperties
-    ) {
+                               DeferredRegister<Item> itemRegister,
+                               DeferredRegister<Block> blockRegister,
+                               DeferredRegister<Fluid> fluidRegister,
+                               DeferredRegister<FluidType> fluidTypeRegister,
+                               String name,
+                               FluidType.Properties fluidTypeProperties,
+                               IClientFluidTypeExtensions renderProperties) {
         this.fluidName = name;
 
-        this.fluidType = fluidTypeRegister.register(name, () ->
-                new FluidType(fluidTypeProperties) {
-                    @Override
-                    @SuppressWarnings("removal")
-                    public void initializeClient(@NotNull Consumer<IClientFluidTypeExtensions> consumer) {
-                        consumer.accept(renderProperties);
-                    }
-                });
+        this.fluidType = fluidTypeRegister.register(name, () -> new FluidType(fluidTypeProperties) {
+
+            @Override
+            @SuppressWarnings("removal")
+            public void initializeClient(@NotNull Consumer<IClientFluidTypeExtensions> consumer) {
+                consumer.accept(renderProperties);
+            }
+        });
 
         this.sourceFluid = fluidRegister.register(name + "_source",
                 () -> new Source(this));
@@ -65,29 +65,25 @@ public class IFBaseFluidInstance {
                                 .strength(100f)
                                 .pushReaction(PushReaction.DESTROY)
                                 .liquid().sound(SoundType.EMPTY)
-                                .noLootTable()
-                ));
+                                .noLootTable()));
 
         this.bucketFluid = itemRegister.register(name + "_bucket",
                 () -> new BucketItem(
                         sourceFluid.get(),
-                        new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)
-                ));
-
+                        new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     }
 
-    public DeferredHolder<FluidType,FluidType> getFluidType() {
+    public DeferredHolder<FluidType, FluidType> getFluidType() {
         return fluidType;
     }
 
-    public DeferredHolder<Fluid,Fluid> getFlowingFluid() {
+    public DeferredHolder<Fluid, Fluid> getFlowingFluid() {
         return flowingFluid;
     }
 
-    public DeferredHolder<Fluid,Fluid> getSourceFluid() {
+    public DeferredHolder<Fluid, Fluid> getSourceFluid() {
         return sourceFluid;
     }
-
 
     public Item getBucketFluid() {
         return bucketFluid.get();
@@ -101,8 +97,8 @@ public class IFBaseFluidInstance {
         return fluidName;
     }
 
-
     public static class Source extends IFBaseFluid {
+
         public Source(IFBaseFluidInstance instance) {
             super(instance);
         }
@@ -118,19 +114,17 @@ public class IFBaseFluidInstance {
         }
     }
 
-
     public static class Flowing extends IFBaseFluid {
 
         public Flowing(IFBaseFluidInstance instance) {
             super(instance);
             this.registerDefaultState(
-                    this.getStateDefinition().any().setValue(LEVEL, 7)
-            );
+                    this.getStateDefinition().any().setValue(LEVEL, 7));
         }
 
         @Override
         protected void createFluidStateDefinition(
-                StateDefinition.Builder<Fluid, FluidState> builder) {
+                                                  StateDefinition.Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
             builder.add(LEVEL);
         }

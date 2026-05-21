@@ -1,15 +1,15 @@
 {
-  "conditions": [
-    {
-      "modid": "tconstruct",
-      "type": "forge:mod_loaded"
-    }
-  ],
-  "type": "tconstruct:material_melting",
-  "input": "avaritia_integration:neutron",
-  "temperature": 8000,
-  "result": {
-    "fluid": "avaritia_integration:molten_neutron",
-    "amount": 90
-  }
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:material_melting",
+	"input": "avaritia_integration:neutron",
+	"temperature": 8000,
+	"result": {
+		"fluid": "avaritia_integration:molten_neutron",
+		"amount": 90
+	}
 }

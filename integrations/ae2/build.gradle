@@ -6,6 +6,6 @@ apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {
     implementation project(':core')
-    implementation "org.appliedenergistics:appliedenergistics2:${applied_energistics_version}"
-    implementation "org.appliedenergistics:guideme:${guideme_version}"
+    implementation forge.appliedEnergistics
+    implementation forge.guideme
 }

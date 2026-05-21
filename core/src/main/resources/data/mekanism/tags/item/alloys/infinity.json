@@ -1,6 +1,4 @@
 {
-  "replace": false,
-  "values": [
-    "avaritia_integration:alloy_infinity"
-  ]
+	"replace": false,
+	"values": ["avaritia_integration:alloy_infinity"]
 }

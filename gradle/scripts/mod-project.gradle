@@ -7,6 +7,8 @@ apply plugin: 'net.neoforged.moddev'
 apply plugin: 'com.diffplug.spotless'
 apply plugin: 'io.freefair.lombok'
 
+apply from: rootProject.file('gradle/scripts/spotless.gradle')
+
 def moduleModId = providers.provider { project.ext.ai_mod_id as String }
 def moduleName = providers.provider { project.ext.ai_mod_name as String }
 def moduleDescription = providers.provider { project.ext.ai_mod_description as String }
@@ -32,35 +34,16 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-spotless {
-    java {
-        target 'src/**/*.java'
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-    groovyGradle {
-        target '*.gradle', 'gradle/**/*.gradle'
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-    format 'misc', {
-        target '*.md', 'src/**/*.json', 'src/**/*.toml'
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-}
-
 lombok {
-    version = '1.18.38'
+    version = libs.versions.lombokCore.get()
 }
 
 neoForge {
-    version = project.neo_version
+    version = libs.versions.neoForge.get()
 
     parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
+        mappingsVersion = libs.versions.parchment.get()
+        minecraftVersion = libs.versions.minecraft.get()
     }
 
     runs {
@@ -133,11 +116,11 @@ tasks.matching { it.name.startsWith('prepare') }.configureEach {
 
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
     var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            loader_version_range   : loader_version_range,
+            minecraft_version      : libs.versions.minecraft.get(),
+            minecraft_version_range: libs.versions.minecraftRange.get(),
+            neo_version            : libs.versions.neoForge.get(),
+            neo_version_range      : libs.versions.neoForgeRange.get(),
+            loader_version_range   : libs.versions.loaderRange.get(),
             mod_id                 : moduleModId.get(),
             mod_name               : moduleName.get(),
             mod_license            : mod_license,

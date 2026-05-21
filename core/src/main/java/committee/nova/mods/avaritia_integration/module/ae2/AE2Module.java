@@ -16,6 +16,7 @@ import net.neoforged.bus.api.IEventBus;
 
 @ModuleEntry(id = AE2Module.MOD_ID, target = @ModMeta(AE2Module.MOD_ID))
 public final class AE2Module implements Module {
+
     public static final String MOD_ID = "ae2";
 
     @Override
@@ -51,7 +52,8 @@ public final class AE2Module implements Module {
     }
 
     @Override
-    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
+    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
+                                        CreativeModeTab.Output output) {
         output.accept(AE2IntegrationItems.INFINITY_ME_STORAGE_COMPONENT);
         output.accept(AE2IntegrationItems.INFINITY_ME_STORAGE_CELL);
         output.accept(AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG);

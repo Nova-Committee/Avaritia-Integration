@@ -46,12 +46,12 @@ public class InfinityManaPoolBlockEntityRender implements BlockEntityRenderer<In
         this.blockRenderDispatcher = ctx.getBlockRenderDispatcher();
         this.waterSprite = Objects.requireNonNull(
                 Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-                        .apply(botaniaRL("block/mana_water"))
-        );
+                        .apply(botaniaRL("block/mana_water")));
     }
 
     @Override
-    public void render(@Nullable InfinityManaPoolBlockEntity pool, float partialTick, PoseStack ms, MultiBufferSource buffers, int light, int overlay) {
+    public void render(@Nullable InfinityManaPoolBlockEntity pool, float partialTick, PoseStack ms,
+                       MultiBufferSource buffers, int light, int overlay) {
         ms.pushPose();
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -109,7 +109,8 @@ public class InfinityManaPoolBlockEntityRender implements BlockEntityRenderer<In
                 var overlayIcon = minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(overlaySpriteId);
                 ms.pushPose();
 
-                float alpha = (float) ((Mth.sin((ClientTickHandler.getEntityTicksInGame() + partialTick) / 20.0f) + 1) * 0.3 + 0.2);
+                float alpha = (float) ((Mth.sin((ClientTickHandler.getEntityTicksInGame() + partialTick) / 20.0f) + 1) *
+                        0.3 + 0.2);
 
                 ms.translate(0, poolBottom, 0);
                 ms.mulPose(VecHelper.rotateX(90F));
@@ -118,8 +119,7 @@ public class InfinityManaPoolBlockEntityRender implements BlockEntityRenderer<In
                 RenderHelper.renderIconCropped(
                         ms, buffer,
                         uvStartX, uvStartY, uvEndX, uvEndY,
-                        overlayIcon, 0xFFFFFF, alpha, light
-                );
+                        overlayIcon, 0xFFFFFF, alpha, light);
 
                 ms.popPose();
             }
@@ -145,5 +145,4 @@ public class InfinityManaPoolBlockEntityRender implements BlockEntityRenderer<In
         cartMaxMana = -1;
         cartBlock = null;
     }
-
 }

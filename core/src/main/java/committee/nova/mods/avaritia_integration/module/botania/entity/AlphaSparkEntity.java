@@ -61,9 +61,11 @@ import java.util.WeakHashMap;
  * @author cnlimiter
  */
 public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
+
     private static final int TRANSFER_RATE = 100000;
     private static final String TAG_UPGRADE = "upgrade";
-    private static final EntityDataAccessor<Integer> UPGRADE = SynchedEntityData.defineId(AlphaSparkEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> UPGRADE = SynchedEntityData.defineId(AlphaSparkEntity.class,
+            EntityDataSerializers.INT);
 
     private final Set<ManaSpark> outgoingTransfers = Collections.newSetFromMap(new WeakHashMap<>());
 
@@ -118,7 +120,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
                 AABB aabb = VecHelper.boxForRange(
                         this.position().with(Direction.Axis.Y, getY() + (getBbHeight() / 2.0)),
                         SparkHelper.SPARK_SCAN_RANGE);
-                List<Player> players = level().getEntitiesOfClass(Player.class, aabb, EntitySelector.ENTITY_STILL_ALIVE);
+                List<Player> players = level().getEntitiesOfClass(Player.class, aabb,
+                        EntitySelector.ENTITY_STILL_ALIVE);
 
                 Map<Player, Map<ManaItem, Integer>> receivingPlayers = new HashMap<>();
 
@@ -149,7 +152,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
                                 receivingStacks = receivingPlayers.get(player);
                             }
 
-                            int recv = Math.min(receiver.getCurrentMana(), Math.min(TRANSFER_RATE, manaItem.getMaxMana() - manaItem.getMana()));
+                            int recv = Math.min(receiver.getCurrentMana(),
+                                    Math.min(TRANSFER_RATE, manaItem.getMaxMana() - manaItem.getMana()));
                             if (recv > 0) {
                                 receivingStacks.put(manaItem, recv);
                                 if (add) {
@@ -181,7 +185,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
                     updateTransfers();
                 }
                 if (!transfersTowardsSelfToRegister.isEmpty()) {
-                    transfersTowardsSelfToRegister.remove(transfersTowardsSelfToRegister.size() - 1).registerTransfer(this);
+                    transfersTowardsSelfToRegister.remove(transfersTowardsSelfToRegister.size() - 1)
+                            .registerTransfer(this);
                 }
             }
             // Recessive does not need to be handled because recessive sparks get notified in all relevant cases
@@ -209,7 +214,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
                     count--;
                     SparkAttachable attached = spark.getAttachedTile();
                     var attachedReceiver = spark.getAttachedManaReceiver();
-                    if (attached == null || attachedReceiver == null || attachedReceiver.isFull() || spark.areIncomingTransfersDone()) {
+                    if (attached == null || attachedReceiver == null || attachedReceiver.isFull() ||
+                            spark.areIncomingTransfersDone()) {
                         shouldFilterTransfers = true;
                         continue;
                     }
@@ -243,23 +249,24 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
         transfersTowardsSelfToRegister.clear();
         switch (getUpgrade()) {
             case RECESSIVE -> {
-                var otherSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+                var otherSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(),
+                        getNetwork());
                 Collections.shuffle(otherSparks);
                 for (var otherSpark : otherSparks) {
                     SparkUpgradeType otherUpgrade = otherSpark.getUpgrade();
-                    if (otherSpark != this
-                            && otherUpgrade != SparkUpgradeType.DOMINANT
-                            && otherUpgrade != SparkUpgradeType.RECESSIVE
-                            && otherUpgrade != SparkUpgradeType.ISOLATED) {
+                    if (otherSpark != this && otherUpgrade != SparkUpgradeType.DOMINANT &&
+                            otherUpgrade != SparkUpgradeType.RECESSIVE && otherUpgrade != SparkUpgradeType.ISOLATED) {
                         outgoingTransfers.add(otherSpark);
                     }
                 }
             }
             case DOMINANT -> {
-                List<ManaSpark> validSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+                List<ManaSpark> validSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2),
+                        getZ(), getNetwork());
                 for (var spark : validSparks) {
                     SparkUpgradeType otherUpgrade = spark.getUpgrade();
-                    if (spark != this && otherUpgrade == SparkUpgradeType.NONE && spark.getAttachedManaReceiver() instanceof ManaPool) {
+                    if (spark != this && otherUpgrade == SparkUpgradeType.NONE &&
+                            spark.getAttachedManaReceiver() instanceof ManaPool) {
                         transfersTowardsSelfToRegister.add(spark);
                     }
                 }
@@ -270,8 +277,9 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
     }
 
     private void particlesTowards(Entity e) {
-        XplatAbstractions.INSTANCE.sendToTracking(this, new BotaniaEffectPacket(EffectType.SPARK_MANA_FLOW, getX(), getY(), getZ(),
-                getId(), e.getId(), getNetwork().getTextureDiffuseColor()));
+        XplatAbstractions.INSTANCE.sendToTracking(this,
+                new BotaniaEffectPacket(EffectType.SPARK_MANA_FLOW, getX(), getY(), getZ(),
+                        getId(), e.getId(), getNetwork().getTextureDiffuseColor()));
     }
 
     public static void particleBeam(Player player, Entity e1, Entity e2) {
@@ -367,7 +375,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
     @Nullable
     @Override
     public SparkAttachable getAttachedTile() {
-        return XplatAbstractions.INSTANCE.findSparkAttachable(level(), getAttachPos(), level().getBlockState(getAttachPos()), level().getBlockEntity(getAttachPos()), Direction.UP);
+        return XplatAbstractions.INSTANCE.findSparkAttachable(level(), getAttachPos(),
+                level().getBlockState(getAttachPos()), level().getBlockEntity(getAttachPos()), Direction.UP);
     }
 
     @Nullable
@@ -384,15 +393,12 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
             SparkUpgradeType supgr = spark.getUpgrade();
             ManaReceiver arecv = spark.getAttachedManaReceiver();
 
-            if (spark == this
-                    || !((Entity) spark).isAlive()
-                    || spark.areIncomingTransfersDone()
-                    || getNetwork() != spark.getNetwork()
-                    || arecv == null
-                    || arecv.isFull()
-                    || !(upgr == SparkUpgradeType.NONE && supgr == SparkUpgradeType.DOMINANT
-                    || upgr == SparkUpgradeType.RECESSIVE && (supgr == SparkUpgradeType.NONE || supgr == SparkUpgradeType.DISPERSIVE)
-                    || !(arecv instanceof ManaPool))) {
+            if (spark == this || !((Entity) spark).isAlive() || spark.areIncomingTransfersDone() ||
+                    getNetwork() != spark.getNetwork() || arecv == null || arecv.isFull() ||
+                    !(upgr == SparkUpgradeType.NONE && supgr == SparkUpgradeType.DOMINANT ||
+                            upgr == SparkUpgradeType.RECESSIVE &&
+                                    (supgr == SparkUpgradeType.NONE || supgr == SparkUpgradeType.DISPERSIVE) ||
+                            !(arecv instanceof ManaPool))) {
                 iter.remove();
             }
         }
@@ -455,6 +461,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
     }
 
     public record WandHud(AlphaSparkEntity entity) implements WandHUD {
+
         @Override
         public void renderHUD(GuiGraphics gui, Window window, Font font, float partialTick) {
             ItemStack sparkStack = new ItemStack(entity.getSparkItem());
@@ -467,8 +474,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
             int width = 4 + Collections.max(Arrays.asList(
                     font.width(networkColorName),
                     RenderHelper.itemWithNameWidth(sparkStack, font),
-                    RenderHelper.itemWithNameWidth(augmentStack, font)
-            ));
+                    RenderHelper.itemWithNameWidth(augmentStack, font)));
             int height = augmentStack.isEmpty() ? 30 : 50;
             int networkColorTextStart = font.width(networkColorName) / 2;
 
@@ -479,7 +485,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 
             RenderHelper.renderItemWithNameCentered(gui, window, font, sparkStack, centerY + 10, textColor);
             RenderHelper.renderItemWithNameCentered(gui, window, font, augmentStack, centerY + 28, textColor);
-            gui.drawString(font, networkColorName, centerX - networkColorTextStart, centerY + (augmentStack.isEmpty() ? 28 : 46), textColor);
+            gui.drawString(font, networkColorName, centerX - networkColorTextStart,
+                    centerY + (augmentStack.isEmpty() ? 28 : 46), textColor);
         }
     }
 }

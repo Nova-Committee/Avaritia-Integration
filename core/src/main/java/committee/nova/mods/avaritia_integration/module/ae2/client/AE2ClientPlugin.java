@@ -1,9 +1,9 @@
 package committee.nova.mods.avaritia_integration.module.ae2.client;
 
-
 import net.neoforged.bus.api.IEventBus;
 
 public class AE2ClientPlugin {
+
     public static void register() {
         AE2StorageModels.registerStorageModels();
     }

@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "avaritia_integration:item/industrialforegoing/efficiency_addon_neutron"
-  }
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "avaritia_integration:item/industrialforegoing/efficiency_addon_neutron"
+	}
 }

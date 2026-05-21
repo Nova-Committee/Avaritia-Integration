@@ -7,8 +7,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class MekIntegrationBlockShapes {
 
-    private MekIntegrationBlockShapes() {
-    }
+    private MekIntegrationBlockShapes() {}
 
     private static VoxelShape box(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         return Block.box(minX, minY, minZ, maxX, maxY, maxZ);
@@ -39,7 +38,6 @@ public class MekIntegrationBlockShapes {
                 box(12, 2, 12, 14, 7, 14),
                 box(2, 2, 12, 4, 7, 14),
                 box(4, 3, 4, 12, 7, 12),
-                box(5, 3, 5, 11, 7, 11)
-        ), SOLAR_GENERATOR);
+                box(5, 3, 5, 11, 7, 11)), SOLAR_GENERATOR);
     }
 }

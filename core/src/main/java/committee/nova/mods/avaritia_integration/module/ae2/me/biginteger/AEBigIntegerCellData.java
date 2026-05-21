@@ -30,6 +30,7 @@ import java.util.UUID;
  * @author Frostbite
  */
 public class AEBigIntegerCellData extends SavedData {
+
     /**
      * 主容器子标签
      */
@@ -83,15 +84,13 @@ public class AEBigIntegerCellData extends SavedData {
         this.pendingReadErrors = pendingReadErrors;
     }
 
-    public static final SavedData.Factory<AEBigIntegerCellData> FACTORY =
-            new SavedData.Factory<>(
-                    () -> {
-                        Object2ObjectOpenHashMap<AEKey, BigInteger> s = new Object2ObjectOpenHashMap<>();
-                        s.defaultReturnValue(BigInteger.ZERO);
-                        return new AEBigIntegerCellData(s, new ObjectArrayList<>());
-                    },
-                    AEBigIntegerCellData::load
-            );
+    public static final SavedData.Factory<AEBigIntegerCellData> FACTORY = new SavedData.Factory<>(
+            () -> {
+                Object2ObjectOpenHashMap<AEKey, BigInteger> s = new Object2ObjectOpenHashMap<>();
+                s.defaultReturnValue(BigInteger.ZERO);
+                return new AEBigIntegerCellData(s, new ObjectArrayList<>());
+            },
+            AEBigIntegerCellData::load);
 
     /**
      * 获取原始存储数据
@@ -181,8 +180,8 @@ public class AEBigIntegerCellData extends SavedData {
                 entriesList.add(entry);
             } catch (Throwable ex) {
                 // 序列化失败：无法可靠得到要保存的信息 -> 打印并略过
-                System.err.println("[AEUniversalCellData] Failed to serialize entry: key=" + key
-                        + ", amount=" + amount + " ; cause=" + ex);
+                System.err.println("[AEUniversalCellData] Failed to serialize entry: key=" + key + ", amount=" +
+                        amount + " ; cause=" + ex);
             }
         }
         invTag.put(ENTRIES_TAG, entriesList);
@@ -296,5 +295,4 @@ public class AEBigIntegerCellData extends SavedData {
             map.put(key, now);
         }
     }
-
 }

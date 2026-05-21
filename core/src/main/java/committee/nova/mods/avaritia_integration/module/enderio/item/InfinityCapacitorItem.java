@@ -25,5 +25,4 @@ public class InfinityCapacitorItem extends Item {
             return super.onItemUseFirst(stack, context);
         }
     }
-
 }

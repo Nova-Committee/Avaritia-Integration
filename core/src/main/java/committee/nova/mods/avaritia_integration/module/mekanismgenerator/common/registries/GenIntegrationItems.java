@@ -7,9 +7,7 @@ import net.minecraft.world.item.Item;
 
 public class GenIntegrationItems {
 
-    private GenIntegrationItems() {
-
-    }
+    private GenIntegrationItems() {}
 
     public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(AvaritiaIntegration.MOD_ID);
 

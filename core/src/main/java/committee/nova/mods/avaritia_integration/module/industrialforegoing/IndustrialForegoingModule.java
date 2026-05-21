@@ -18,7 +18,9 @@ import net.neoforged.bus.api.IEventBus;
 
 @ModuleEntry(id = IndustrialForegoingModule.MOD_ID, target = @ModMeta(IndustrialForegoingModule.MOD_ID))
 public final class IndustrialForegoingModule implements Module {
+
     public static final String MOD_ID = "industrialforegoing";
+
     @Override
     public void init(IEventBus registryBus) {
         IndustrialForegoingIntegrationItems.ITEMS.register(registryBus);
@@ -28,19 +30,22 @@ public final class IndustrialForegoingModule implements Module {
     }
 
     @Override
-    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
-        IndustrialForegoingIntegrationItems.ADDONS.forEach((materialName, obj) ->{
-            if(obj.get() instanceof ModSpeedAddonItem speedAddonItem){
+    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
+                                        CreativeModeTab.Output output) {
+        IndustrialForegoingIntegrationItems.ADDONS.forEach((materialName, obj) -> {
+            if (obj.get() instanceof ModSpeedAddonItem speedAddonItem) {
                 ItemStack stack = new ItemStack(speedAddonItem);
-                AugmentWrapper.setType(stack, AugmentTypes.SPEED, (float)(1 + speedAddonItem.getTier()));
+                AugmentWrapper.setType(stack, AugmentTypes.SPEED, (float) (1 + speedAddonItem.getTier()));
                 output.accept(stack);
-            }else if(obj.get() instanceof ModProcessingAddonItem processingAddonItem){
+            } else if (obj.get() instanceof ModProcessingAddonItem processingAddonItem) {
                 ItemStack stack = new ItemStack(processingAddonItem);
-                AugmentWrapper.setType(stack, ProcessingAddonItem.PROCESSING, (float)(1 + processingAddonItem.getTier()));
+                AugmentWrapper.setType(stack, ProcessingAddonItem.PROCESSING,
+                        (float) (1 + processingAddonItem.getTier()));
                 output.accept(stack);
-            }else if(obj.get() instanceof ModEfficiencyAddonItem efficiencyAddonItem){
+            } else if (obj.get() instanceof ModEfficiencyAddonItem efficiencyAddonItem) {
                 ItemStack stack = new ItemStack(efficiencyAddonItem);
-                AugmentWrapper.setType(stack, AugmentTypes.EFFICIENCY, 1.0F - (float)efficiencyAddonItem.getTier() * 0.1F);
+                AugmentWrapper.setType(stack, AugmentTypes.EFFICIENCY,
+                        1.0F - (float) efficiencyAddonItem.getTier() * 0.1F);
                 output.accept(stack);
             }
         });

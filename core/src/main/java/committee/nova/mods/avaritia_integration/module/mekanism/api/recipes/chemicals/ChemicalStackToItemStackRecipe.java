@@ -16,7 +16,8 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 @NothingNullByDefault
-public abstract class ChemicalStackToItemStackRecipe extends MekanismRecipe<SingleChemicalRecipeInput> implements Predicate<ChemicalStack> {
+public abstract class ChemicalStackToItemStackRecipe extends MekanismRecipe<SingleChemicalRecipeInput>
+                                                     implements Predicate<ChemicalStack> {
 
     private final ChemicalStackIngredient input;
     private final ItemStack output;

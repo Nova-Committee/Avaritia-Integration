@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "avaritia_integration:item/industrialforegoing/processing_addon_crystal_matrix"
-  }
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "avaritia_integration:item/industrialforegoing/processing_addon_crystal_matrix"
+	}
 }

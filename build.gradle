@@ -1,8 +1,10 @@
 plugins {
-    id 'net.neoforged.moddev' version '2.0.140' apply false
-    id 'com.diffplug.spotless' version '8.1.0' apply false
-    id 'io.freefair.lombok' version '8.14' apply false
+    alias(libs.plugins.modDevGradle) apply false
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.lombok) apply false
 }
+
+apply from: rootProject.file('gradle/scripts/spotless.gradle')
 
 allprojects {
     group = mod_group_id

@@ -10,6 +10,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
  */
 @EventBusSubscriber
 public class EntityHandler {
+
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
         if (event.getEntity() instanceof Chicken) {

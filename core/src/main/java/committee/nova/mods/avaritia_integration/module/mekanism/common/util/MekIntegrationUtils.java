@@ -20,8 +20,10 @@ public class MekIntegrationUtils {
         // Compatible wit Emek
         if (ModList.get().isLoaded("evolvedmekanism")) {
             FactoryTier[] mergedTiers;
-            mergedTiers = Arrays.copyOf(EnumUtils.FACTORY_TIERS, EnumUtils.FACTORY_TIERS.length + MekIntegrationEnumUtils.EM_TIERS.length);
-            System.arraycopy(MekIntegrationEnumUtils.EM_TIERS, 0, mergedTiers, EnumUtils.FACTORY_TIERS.length, MekIntegrationEnumUtils.EM_TIERS.length);
+            mergedTiers = Arrays.copyOf(EnumUtils.FACTORY_TIERS,
+                    EnumUtils.FACTORY_TIERS.length + MekIntegrationEnumUtils.EM_TIERS.length);
+            System.arraycopy(MekIntegrationEnumUtils.EM_TIERS, 0, mergedTiers, EnumUtils.FACTORY_TIERS.length,
+                    MekIntegrationEnumUtils.EM_TIERS.length);
             return EnumUtils.FACTORY_TIERS;
         } else {
             return EnumUtils.FACTORY_TIERS;

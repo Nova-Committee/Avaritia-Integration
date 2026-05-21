@@ -15,9 +15,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
-public class GuiSingularityCompressor extends GuiConfigurableTile<TileEntitySingularityCompressor, MekanismTileContainer<TileEntitySingularityCompressor>> {
+public class GuiSingularityCompressor extends
+                                      GuiConfigurableTile<TileEntitySingularityCompressor, MekanismTileContainer<TileEntitySingularityCompressor>> {
 
-    public GuiSingularityCompressor(MekanismTileContainer<TileEntitySingularityCompressor> container, Inventory inv, Component title) {
+    public GuiSingularityCompressor(MekanismTileContainer<TileEntitySingularityCompressor> container, Inventory inv,
+                                    Component title) {
         super(container, inv, title);
         dynamicSlots = true;
     }
@@ -30,7 +32,8 @@ public class GuiSingularityCompressor extends GuiConfigurableTile<TileEntitySing
                 .warning(WarningType.NOT_ENOUGH_ENERGY, tile.getWarningCheck(RecipeError.NOT_ENOUGH_ENERGY));
         addRenderableWidget(new GuiEnergyTab(this, tile.getEnergyContainer(), tile::getActive));
         addRenderableWidget(new GuiProgress(tile::getScaledProgress, ProgressType.BAR, this, 86, 38))
-                .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT, tile.getWarningCheck(RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT));
+                .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT,
+                        tile.getWarningCheck(RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT));
     }
 
     @Override

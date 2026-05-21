@@ -7,41 +7,41 @@ apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {
     // Avaritia
-    implementation "curse.maven:re-avaritia-623969:${avaritia_version}"
+    implementation forge.reAvaritia
     // JEI
-    implementation "curse.maven:jei-238222:${jei_version}"
+    implementation forge.jei
     // Refined Storage
-    implementation "curse.maven:refined-storage-243076:${refined_Storage_version}"
+    implementation forge.refinedStorage
     // Create
-    implementation "curse.maven:create-328085:${create_version}"
+    implementation forge.create
     // PneumaticCraft: Repressurized
-    implementation "curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_version}"
+    implementation forge.pneumaticcraftRepressurized
     // Ender IO
-    implementation "curse.maven:ender-io-64578:${ender_io_version}"
+    implementation forge.enderIo
     // Applied Energistics
-    implementation "org.appliedenergistics:appliedenergistics2:${applied_energistics_version}"
+    implementation forge.appliedEnergistics
     // GuideME
-    implementation "org.appliedenergistics:guideme:${guideme_version}"
+    implementation forge.guideme
     // Patchouli
-    implementation "curse.maven:patchouli-306770:${patchouli_version}"
+    implementation forge.patchouli
     // Curios
-    implementation "curse.maven:curios-309927:${curios_version}"
+    implementation forge.curios
     // Jade
-    implementation "curse.maven:jade-324717:${jade_version}"
+    implementation forge.jade
     // Titanium
-    implementation "curse.maven:titanium-287342:${titanium_version}"
+    implementation forge.titanium
     // Industrial Foregoing
-    implementation "curse.maven:industrial-foregoing-266515:${industrial_foregoing_version}"
+    implementation forge.industrialForegoing
     // Industrial Foregoing Extra Upgrades
-    implementation "curse.maven:industrial-foregoing-extra-upgrades-1161049:${industrial_foregoing_extra_upgrades_version}"
+    implementation forge.industrialForegoingExtraUpgrades
     // Botania
-    implementation "vazkii.botania:botania-neoforge-1.21.1:${botania_version}"
+    implementation forge.botania
     // Mekanism
-    implementation "mekanism:Mekanism:${mekanism_version}"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"
-    implementation "mekanism:Mekanism:${mekanism_version}:generators"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"
+    implementation forge.mekanism
+    runtimeOnly variantOf(forge.mekanism) { classifier('additions') }
+    implementation variantOf(forge.mekanism) { classifier('generators') }
+    runtimeOnly variantOf(forge.mekanism) { classifier('tools') }
 
-    runtimeOnly "curse.maven:iglee-library-541199:7000755"
-    implementation "curse.maven:evolved-mekanism-1230085:7599592"
+    runtimeOnly forge.igleeLibrary
+    implementation forge.evolvedMekanism
 }

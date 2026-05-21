@@ -1,6 +1,4 @@
 {
-  "replace": false,
-  "values": [
-    "avaritia:crystal_matrix"
-  ]
+	"replace": false,
+	"values": ["avaritia:crystal_matrix"]
 }

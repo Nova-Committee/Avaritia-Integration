@@ -13,10 +13,10 @@ import org.jetbrains.annotations.Nullable;
  * @author Frostbite
  */
 public class AEUniversalCellHandler implements ICellHandler {
+
     public static final AEUniversalCellHandler INSTANCE = new AEUniversalCellHandler();
 
-    private AEUniversalCellHandler() {
-    }
+    private AEUniversalCellHandler() {}
 
     @Override
     public boolean isCell(ItemStack itemStack) {

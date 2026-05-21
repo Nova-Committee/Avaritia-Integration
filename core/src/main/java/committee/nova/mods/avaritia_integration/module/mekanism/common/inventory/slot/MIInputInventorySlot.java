@@ -19,19 +19,25 @@ public class MIInputInventorySlot extends BasicInventorySlot {
         return at(ConstantPredicates.alwaysTrue(), listener, x, y);
     }
 
-    public static MIInputInventorySlot at(Predicate<@NotNull ItemStack> isItemValid, @Nullable IContentsListener listener, int x, int y) {
+    public static MIInputInventorySlot at(Predicate<@NotNull ItemStack> isItemValid,
+                                          @Nullable IContentsListener listener, int x, int y) {
         return at(ConstantPredicates.alwaysTrue(), isItemValid, listener, x, y);
     }
 
-    public static MIInputInventorySlot at(Predicate<@NotNull ItemStack> insertPredicate, Predicate<@NotNull ItemStack> isItemValid, @Nullable IContentsListener listener,
+    public static MIInputInventorySlot at(Predicate<@NotNull ItemStack> insertPredicate,
+                                          Predicate<@NotNull ItemStack> isItemValid,
+                                          @Nullable IContentsListener listener,
                                           int x, int y) {
         Objects.requireNonNull(insertPredicate, "Insertion check cannot be null");
         Objects.requireNonNull(isItemValid, "Item validity check cannot be null");
         return new MIInputInventorySlot(insertPredicate, isItemValid, listener, x, y);
     }
 
-    protected MIInputInventorySlot(Predicate<@NotNull ItemStack> insertPredicate, Predicate<@NotNull ItemStack> isItemValid, @Nullable IContentsListener listener, int x, int y) {
-        super(ConstantPredicates.notExternal(), (stack, automationType) -> insertPredicate.test(stack), isItemValid, listener, x, y);
+    protected MIInputInventorySlot(Predicate<@NotNull ItemStack> insertPredicate,
+                                   Predicate<@NotNull ItemStack> isItemValid, @Nullable IContentsListener listener,
+                                   int x, int y) {
+        super(ConstantPredicates.notExternal(), (stack, automationType) -> insertPredicate.test(stack), isItemValid,
+                listener, x, y);
         setSlotType(ContainerSlotType.INPUT);
     }
 

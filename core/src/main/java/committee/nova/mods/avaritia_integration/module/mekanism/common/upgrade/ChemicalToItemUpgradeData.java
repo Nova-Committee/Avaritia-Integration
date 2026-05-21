@@ -25,16 +25,22 @@ public class ChemicalToItemUpgradeData implements IUpgradeData {
     public final List<IChemicalTank> inputTanks;
     public final CompoundTag components;
 
-    public ChemicalToItemUpgradeData(HolderLookup.Provider provider, boolean redstone, IRedstoneControl.RedstoneControl controlType,
-                                     IEnergyContainer energyContainer, int operatingTicks, EnergyInventorySlot energySlot,
-                                     IChemicalTank inputTank, IInventorySlot outputSlot, List<ITileComponent> components) {
-        this(provider, redstone, controlType, energyContainer, new int[]{operatingTicks}, energySlot, Collections.singletonList(inputTank),
+    public ChemicalToItemUpgradeData(HolderLookup.Provider provider, boolean redstone,
+                                     IRedstoneControl.RedstoneControl controlType,
+                                     IEnergyContainer energyContainer, int operatingTicks,
+                                     EnergyInventorySlot energySlot,
+                                     IChemicalTank inputTank, IInventorySlot outputSlot,
+                                     List<ITileComponent> components) {
+        this(provider, redstone, controlType, energyContainer, new int[] { operatingTicks }, energySlot,
+                Collections.singletonList(inputTank),
                 Collections.singletonList(outputSlot), false, components);
     }
 
-    public ChemicalToItemUpgradeData(HolderLookup.Provider provider, boolean redstone, IRedstoneControl.RedstoneControl controlType,
+    public ChemicalToItemUpgradeData(HolderLookup.Provider provider, boolean redstone,
+                                     IRedstoneControl.RedstoneControl controlType,
                                      IEnergyContainer energyContainer, int[] progress, EnergyInventorySlot energySlot,
-                                     List<IChemicalTank> inputTanks, List<IInventorySlot> outputSlots, boolean sorting, List<ITileComponent> components) {
+                                     List<IChemicalTank> inputTanks, List<IInventorySlot> outputSlots, boolean sorting,
+                                     List<ITileComponent> components) {
         this.redstone = redstone;
         this.controlType = controlType;
         this.energyContainer = energyContainer;

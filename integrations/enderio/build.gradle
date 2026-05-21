@@ -6,5 +6,5 @@ apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {
     implementation project(':core')
-    implementation "curse.maven:ender-io-64578:${ender_io_version}"
+    implementation forge.enderIo
 }

@@ -1,5 +1,3 @@
 {
-  "default": [
-    { "name": "avaritia_integration:crystalshine"}
-  ]
+	"default": [{ "name": "avaritia_integration:crystalshine" }]
 }

@@ -1,7 +1,4 @@
 {
-  "replace": false,
-  "values": [
-    "#c:nuggets/infinity",
-    "#c:nuggets/neutron"
-  ]
+	"replace": false,
+	"values": ["#c:nuggets/infinity", "#c:nuggets/neutron"]
 }

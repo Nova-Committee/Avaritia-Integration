@@ -20,7 +20,8 @@ import java.util.List;
 public class ItemBlockMekIntegrationFactory extends ItemBlockTooltip<BlockMekIntegrationFactory<?>> {
 
     private static AttachedSideConfig getSideConfig(BlockMekIntegrationFactory<?> block) {
-        return switch (Attribute.getOrThrow(block.builtInRegistryHolder(), AttributeMekIntegrationFactoryType.class).getMekIntegrationFactoryType()) {
+        return switch (Attribute.getOrThrow(block.builtInRegistryHolder(), AttributeMekIntegrationFactoryType.class)
+                .getMekIntegrationFactoryType()) {
             case NEUTRON_COLLECTING -> AttachedSideConfig.ELECTRIC_MACHINE;
             case SINGULARITY_COMPRESSING -> AttachedSideConfig.ADVANCED_MACHINE;
         };
@@ -30,8 +31,7 @@ public class ItemBlockMekIntegrationFactory extends ItemBlockTooltip<BlockMekInt
         super(block, true, properties
                 .component(MekanismDataComponents.SORTING, false)
                 .component(MekanismDataComponents.EJECTOR, AttachedEjector.DEFAULT)
-                .component(MekanismDataComponents.SIDE_CONFIG, getSideConfig(block))
-        );
+                .component(MekanismDataComponents.SIDE_CONFIG, getSideConfig(block)));
     }
 
     public FactoryTier getTier() {
@@ -39,11 +39,14 @@ public class ItemBlockMekIntegrationFactory extends ItemBlockTooltip<BlockMekInt
     }
 
     @Override
-    protected void addTypeDetails(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        //Should always be present but validate it just in case
-        AttributeMekIntegrationFactoryType factoryType = Attribute.get(getBlock(), AttributeMekIntegrationFactoryType.class);
+    protected void addTypeDetails(@NotNull ItemStack stack, @NotNull TooltipContext context,
+                                  @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+        // Should always be present but validate it just in case
+        AttributeMekIntegrationFactoryType factoryType = Attribute.get(getBlock(),
+                AttributeMekIntegrationFactoryType.class);
         if (factoryType != null) {
-            tooltip.add(MekanismLang.FACTORY_TYPE.translateColored(EnumColor.INDIGO, EnumColor.GRAY, factoryType.getMekIntegrationFactoryType()));
+            tooltip.add(MekanismLang.FACTORY_TYPE.translateColored(EnumColor.INDIGO, EnumColor.GRAY,
+                    factoryType.getMekIntegrationFactoryType()));
         }
         super.addTypeDetails(stack, context, tooltip, flag);
     }

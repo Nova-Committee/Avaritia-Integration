@@ -23,18 +23,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Function;
 
 @Mixin(value = MekanismRecipeType.class, remap = false)
-public abstract class MixinMekanismRecipeType<VANILLA_INPUT extends RecipeInput, RECIPE extends MekanismRecipe<VANILLA_INPUT>, INPUT_CACHE extends IInputRecipeCache>
-        implements RecipeType<RECIPE>, IMekanismRecipeTypeProvider<VANILLA_INPUT, RECIPE, INPUT_CACHE> {
+public abstract class MixinMekanismRecipeType<VANILLA_INPUT extends RecipeInput,
+        RECIPE extends MekanismRecipe<VANILLA_INPUT>, INPUT_CACHE extends IInputRecipeCache>
+                                             implements RecipeType<RECIPE>,
+                                             IMekanismRecipeTypeProvider<VANILLA_INPUT, RECIPE, INPUT_CACHE> {
 
     @Shadow
-    private static <VANILLA_INPUT extends RecipeInput, RECIPE extends MekanismRecipe<VANILLA_INPUT>, INPUT_CACHE extends IInputRecipeCache>
-    RecipeTypeRegistryObject<VANILLA_INPUT, RECIPE, INPUT_CACHE> register(ResourceLocation name, Function<MekanismRecipeType<VANILLA_INPUT, RECIPE, INPUT_CACHE>, INPUT_CACHE> inputCacheCreator) {
+    private static <VANILLA_INPUT extends RecipeInput, RECIPE extends MekanismRecipe<VANILLA_INPUT>,
+            INPUT_CACHE extends IInputRecipeCache> RecipeTypeRegistryObject<VANILLA_INPUT, RECIPE, INPUT_CACHE> register(ResourceLocation name,
+                                                                                                                         Function<MekanismRecipeType<VANILLA_INPUT, RECIPE, INPUT_CACHE>, INPUT_CACHE> inputCacheCreator) {
         return null;
     }
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void avaritia_integration$registerMekanismRecipes(CallbackInfo ci) {
-        MekIntegrationRecipeType.COLLECTING = register(Mekanism.rl("collector"), recipeType -> new SingleChemical<>(recipeType, ChemicalStackToItemStackRecipe::getInput));
-        MekIntegrationRecipeType.MEK_COMPRESSING = register(Mekanism.rl("compressor"), recipeType -> new SingleItem<>(recipeType, ItemStackToItemStackRecipe::getInput));
+        MekIntegrationRecipeType.COLLECTING = register(Mekanism.rl("collector"),
+                recipeType -> new SingleChemical<>(recipeType, ChemicalStackToItemStackRecipe::getInput));
+        MekIntegrationRecipeType.MEK_COMPRESSING = register(Mekanism.rl("compressor"),
+                recipeType -> new SingleItem<>(recipeType, ItemStackToItemStackRecipe::getInput));
     }
 }

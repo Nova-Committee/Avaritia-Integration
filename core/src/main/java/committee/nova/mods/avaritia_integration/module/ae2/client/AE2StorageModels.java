@@ -8,7 +8,9 @@ import net.minecraft.util.FastColor;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 public class AE2StorageModels {
-    private static final ResourceLocation MODEL_CELL_CREATIVE = ResourceLocation.parse("ae2:block/drive/cells/creative_cell");
+
+    private static final ResourceLocation MODEL_CELL_CREATIVE = ResourceLocation
+            .parse("ae2:block/drive/cells/creative_cell");
 
     public static void registerStorageModels() {
         StorageCellModels.registerModel(AE2IntegrationItems.INFINITY_ME_STORAGE_CELL, MODEL_CELL_CREATIVE);
@@ -18,7 +20,6 @@ public class AE2StorageModels {
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         event.register((itemStack, idx) -> FastColor.ARGB32.opaque(AEUniversalCellItem.getColor(itemStack, idx)),
                 AE2IntegrationItems.INFINITY_ME_STORAGE_CELL,
-                AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG
-        );
+                AE2IntegrationItems.INFINITY_ME_STORAGE_CELL_BIG);
     }
 }

@@ -18,12 +18,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.LongSupplier;
 
-public class AdvancedSolarGeneratorBlockEntity extends TileEntitySolarGenerator implements IBoundingBlock, IEvaporationSolar {
+public class AdvancedSolarGeneratorBlockEntity extends TileEntitySolarGenerator
+                                               implements IBoundingBlock, IEvaporationSolar {
 
-    private static final RelativeSide[] ENERGY_SIDES = {RelativeSide.FRONT, RelativeSide.BOTTOM};
+    private static final RelativeSide[] ENERGY_SIDES = { RelativeSide.FRONT, RelativeSide.BOTTOM };
     private final SolarCheck[] solarChecks = new SolarCheck[8];
 
-    protected AdvancedSolarGeneratorBlockEntity(Holder<Block> blockProvider, BlockPos pos, BlockState state, @NotNull LongSupplier maxOutput) {
+    protected AdvancedSolarGeneratorBlockEntity(Holder<Block> blockProvider, BlockPos pos, BlockState state,
+                                                @NotNull LongSupplier maxOutput) {
         super(blockProvider, pos, state, maxOutput);
     }
 
@@ -63,11 +65,11 @@ public class AdvancedSolarGeneratorBlockEntity extends TileEntitySolarGenerator 
     @Override
     protected boolean checkCanSeeSun() {
         if (solarCheck == null) {
-            //Note: We assume if solarCheck is null then solarChecks will be filled with null, and if it isn't
+            // Note: We assume if solarCheck is null then solarChecks will be filled with null, and if it isn't
             // then it won't be as they get initialized at the same time
             return false;
         }
-        //Allow attempting to recheck each position, and mark that we can see the sun if at least one position can
+        // Allow attempting to recheck each position, and mark that we can see the sun if at least one position can
         solarCheck.recheckCanSeeSun();
         byte count = solarCheck.canSeeSun() ? (byte) 1 : 0;
         for (SolarCheck check : solarChecks) {
@@ -76,7 +78,7 @@ public class AdvancedSolarGeneratorBlockEntity extends TileEntitySolarGenerator 
                 count++;
             }
         }
-        //Mark that our solar generator can "see" the sun if at least five of the nine positions
+        // Mark that our solar generator can "see" the sun if at least five of the nine positions
         // are able to see the sun
         return count > 4;
     }
@@ -84,12 +86,12 @@ public class AdvancedSolarGeneratorBlockEntity extends TileEntitySolarGenerator 
     @Override
     public long getProduction() {
         if (level == null || solarCheck == null) {
-            //Note: We assume if solarCheck is null then solarChecks will be filled with null, and if it isn't
+            // Note: We assume if solarCheck is null then solarChecks will be filled with null, and if it isn't
             // then it won't be as they get initialized at the same time
             return 0;
         }
         float brightness = getBrightnessMultiplier(level);
-        //Calculate the generation multiplier of all the solar panels together
+        // Calculate the generation multiplier of all the solar panels together
         // any part that can't see the sun will contribute zero to the multiplier,
         // and then we take the average across all to see how much to multiply by
         float generationMultiplier = solarCheck.getGenerationMultiplier();
@@ -97,7 +99,7 @@ public class AdvancedSolarGeneratorBlockEntity extends TileEntitySolarGenerator 
             generationMultiplier += check.getGenerationMultiplier();
         }
         generationMultiplier /= solarChecks.length + 1;
-        //Production is a function of the peak possible output in this biome and sun's current brightness
+        // Production is a function of the peak possible output in this biome and sun's current brightness
         return MathUtils.clampToLong(getConfiguredMax() * (brightness * generationMultiplier));
     }
 
@@ -108,34 +110,37 @@ public class AdvancedSolarGeneratorBlockEntity extends TileEntitySolarGenerator 
 
         public AdvancedSolarCheck(Level world, BlockPos pos) {
             super(world, pos);
-            //Recheck between every 10-30 ticks, to not end up checking each position each tick
-            recheckFrequency = Mth.nextInt(world.random, MekanismUtils.TICKS_PER_HALF_SECOND, MekanismUtils.TICKS_PER_HALF_SECOND + SharedConstants.TICKS_PER_SECOND);
+            // Recheck between every 10-30 ticks, to not end up checking each position each tick
+            recheckFrequency = Mth.nextInt(world.random, MekanismUtils.TICKS_PER_HALF_SECOND,
+                    MekanismUtils.TICKS_PER_HALF_SECOND + SharedConstants.TICKS_PER_SECOND);
         }
 
         @Override
         public void recheckCanSeeSun() {
             if (!world.dimensionType().hasSkyLight() || world.getSkyDarken() >= 4) {
-                //Inline of most of WorldUtils#canSeeSun so that we can exit early if it is not day or there is no skylight
-                // We start with the basic dimension checks and always run those, as they are simple and quick checks, and
+                // Inline of most of WorldUtils#canSeeSun so that we can exit early if it is not day or there is no
+                // skylight
+                // We start with the basic dimension checks and always run those, as they are simple and quick checks,
+                // and
                 // we want to be able to stop quickly when it gets too dark
                 canSeeSun = false;
                 return;
             }
             long time = world.getGameTime();
             if (time < lastCheckedSun + recheckFrequency) {
-                //If we have checked for blocks above the solar panel in the past recheckFrequency
+                // If we have checked for blocks above the solar panel in the past recheckFrequency
                 // number of ticks, skip checking for now for performance reasons
                 return;
             }
             // otherwise, mark that we checked and actually check
             lastCheckedSun = time;
             if (world.getFluidState(pos).isEmpty()) {
-                //If the top isn't fluid logged we can just quickly check if the top can see the sun
+                // If the top isn't fluid logged we can just quickly check if the top can see the sun
                 canSeeSun = world.canSeeSky(pos);
             } else {
                 BlockPos above = pos.above();
                 if (world.canSeeSky(above)) {
-                    //If the spot above can see the sun, check to make sure we can see through the block there
+                    // If the spot above can see the sun, check to make sure we can see through the block there
                     BlockState state = world.getBlockState(above);
                     canSeeSun = !state.liquid() && state.getLightBlock(world, above) <= 0;
                 } else {
