@@ -1,7 +1,7 @@
 package committee.nova.mods.avaritia_integration.init.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.module.ModuleManager;
+import committee.nova.mods.avaritia_integration.api.load.IntegrationRuntime;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -22,7 +22,7 @@ public final class AICreativeTabs {
                     .icon(() -> AIItems.INFINITY_GEAR.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         AIItems.ITEMS.forEach(r -> output.accept(r.get()));
-                        ModuleManager.collectCreativeTabItems(parameters, output);
+                        IntegrationRuntime.collectCreativeTabItems(parameters, output);
                     })
                     .build());
 

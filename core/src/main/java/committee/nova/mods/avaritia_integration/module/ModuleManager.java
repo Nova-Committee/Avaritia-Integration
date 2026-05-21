@@ -8,10 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
@@ -40,7 +38,6 @@ import java.util.Optional;
  *
  * @author IAFEnvoy
  */
-@EventBusSubscriber(modid = AvaritiaIntegration.MOD_ID)
 public final class ModuleManager {
 
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -111,7 +108,6 @@ public final class ModuleManager {
     }
 
     @ApiStatus.Internal
-    @SubscribeEvent
     public static void postProcess(FMLCommonSetupEvent event) {
         List<String> processing = ENABLED_MODULES.keySet().stream().map(ModuleData::id).toList();
         ModuleManager.LOGGER.info("Start processing {} modules: {}", processing.size(), String.join(", ", processing));

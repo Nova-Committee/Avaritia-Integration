@@ -1,5 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.tconstruct;
 
+import committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi;
+
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -9,5 +11,7 @@ public final class AITConstructDataIntegrationMod {
 
     public static final String MOD_ID = "avaritia_integration_tconstruct_data";
 
-    public AITConstructDataIntegrationMod(IEventBus bus, ModContainer modContainer) {}
+    public AITConstructDataIntegrationMod(IEventBus bus, ModContainer modContainer) {
+        IntegrationLoadApi.shouldLoad(MOD_ID);
+    }
 }

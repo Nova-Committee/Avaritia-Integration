@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.client.screen;
 
-import committee.nova.mods.avaritia_integration.module.ModuleManager;
+import committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi;
+import committee.nova.mods.avaritia_integration.api.load.LoadDecision;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,6 +10,8 @@ import net.minecraft.network.chat.Component;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 @ApiStatus.Internal
 public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.ModuleEntry> {
@@ -25,7 +28,7 @@ public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.Modul
 
     public void update() {
         this.clearEntries();
-        ModuleManager.getAllModules().forEach(x -> this.addEntry(new ModuleEntry(this.screen, x)));
+        IntegrationLoadApi.explainAll().values().forEach(x -> this.addEntry(new ModuleEntry(this.screen, x)));
     }
 
     @Override
@@ -49,9 +52,9 @@ public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.Modul
 
         private final Minecraft client = Minecraft.getInstance();
         private final ModuleListScreen screen;
-        private final ModuleManager.ModuleData data;
+        private final LoadDecision data;
 
-        public ModuleEntry(ModuleListScreen screen, ModuleManager.ModuleData data) {
+        public ModuleEntry(ModuleListScreen screen, LoadDecision data) {
             this.screen = screen;
             this.data = data;
         }
@@ -59,9 +62,10 @@ public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.Modul
         @Override
         public void render(GuiGraphics context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX,
                            int mouseY, boolean hovered, float tickDelta) {
-            context.drawString(this.client.font, this.data.getTranslateKey(), x + 32 + 3, y + 1, 16777215, true);
-            context.drawString(this.client.font, this.data.getStateKey(), x + 32 + 3, y + 1 + 9, 16777215, true);
-            if (this.isMouseOver(mouseX, mouseY)) this.screen.setTooltips(this.data.getErrorTooltip());
+            context.drawString(this.client.font, this.data.integrationModId(), x + 32 + 3, y + 1, 16777215, true);
+            context.drawString(this.client.font, this.data.state().name(), x + 32 + 3, y + 1 + 9, 16777215, true);
+            if (this.isMouseOver(mouseX, mouseY))
+                this.screen.setTooltips(List.of(Component.literal(this.data.message())));
         }
 
         @Override
@@ -70,13 +74,13 @@ public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.Modul
             return false;
         }
 
-        public ModuleManager.ModuleData getData() {
+        public LoadDecision getData() {
             return this.data;
         }
 
         @Override
         public @NotNull Component getNarration() {
-            return Component.translatable(this.data.getTranslateKey().toString());
+            return Component.literal(this.data.integrationModId());
         }
     }
 }

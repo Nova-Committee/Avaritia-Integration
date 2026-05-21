@@ -1,7 +1,7 @@
 package committee.nova.mods.avaritia_integration.client.screen;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.module.ModuleManager;
+import committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -42,23 +42,17 @@ public class ModuleListScreen extends Screen {
                 Button.builder(Component.translatable("screen.%s.module.back".formatted(AvaritiaIntegration.MOD_ID)),
                         button -> this.onClose()).bounds(40, 40, 100, 20).build());
         this.enableButton = this.addRenderableWidget(
-                Button.builder(Component.translatable("screen.%s.module.enable".formatted(AvaritiaIntegration.MOD_ID)),
+                Button.builder(Component.literal("Reload"),
                         button -> {
-                            ModuleListWidget.ModuleEntry entry = this.widget.getSelected();
-                            if (entry != null) ModuleManager.switchEnableState(entry.getData());
+                            IntegrationLoadApi.reload();
+                            this.widget.update();
                             this.updateEnableButton();
                         }).bounds(150, 40, 100, 20).build());
-        this.enableButton.active = this.widget.getSelected() != null;
     }
 
     public void updateEnableButton() {
-        ModuleListWidget.ModuleEntry entry = this.widget.getSelected();
-        if (entry != null) {
-            this.enableButton.active = true;
-            this.enableButton.setMessage(Component.translatable("screen.%s.module.%s".formatted(
-                    AvaritiaIntegration.MOD_ID,
-                    entry.getData().getEnableState() != ModuleManager.EnableState.DISABLED ? "disable" : "enable")));
-        } else this.enableButton.active = false;
+        this.enableButton.active = true;
+        this.enableButton.setMessage(Component.literal("Reload"));
     }
 
     @Override

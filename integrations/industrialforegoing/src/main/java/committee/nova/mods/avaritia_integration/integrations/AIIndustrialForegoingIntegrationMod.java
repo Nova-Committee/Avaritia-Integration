@@ -1,5 +1,8 @@
 package committee.nova.mods.avaritia_integration.integrations;
 
+import committee.nova.mods.avaritia_integration.api.load.IntegrationRuntime;
+import committee.nova.mods.avaritia_integration.integrations.industrialforegoing.IndustrialForegoingModule;
+
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -9,5 +12,7 @@ public final class AIIndustrialForegoingIntegrationMod {
 
     public static final String MOD_ID = "avaritia_integration_industrialforegoing";
 
-    public AIIndustrialForegoingIntegrationMod(IEventBus bus, ModContainer modContainer) {}
+    public AIIndustrialForegoingIntegrationMod(IEventBus bus, ModContainer modContainer) {
+        IntegrationRuntime.load(MOD_ID, bus, IndustrialForegoingModule::new);
+    }
 }

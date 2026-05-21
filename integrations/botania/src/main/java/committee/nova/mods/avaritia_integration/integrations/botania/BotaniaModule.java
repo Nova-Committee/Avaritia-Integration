@@ -1,4 +1,4 @@
-package committee.nova.mods.avaritia_integration.integrations.botania.botania;
+package committee.nova.mods.avaritia_integration.integrations.botania;
 
 import committee.nova.mods.avaritia_integration.integrations.botania.botania.block.behavor.AlphaSparkBehavior;
 import committee.nova.mods.avaritia_integration.integrations.botania.botania.entity.AlphaSparkEntity;
