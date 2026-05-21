@@ -3,6 +3,7 @@ package committee.nova.mods.avaritia_integration.module.create.content.extreme_f
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.content.logistics.chute.AbstractChuteBlock;
 import com.simibubi.create.foundation.block.IBE;
+import committee.nova.mods.avaritia_integration.module.create.content.extreme_fan.compat.ChuteInteractingFanBlock;
 import committee.nova.mods.avaritia_integration.module.create.registry.CreateIntegrationBlockEntityTypes;
 import net.createmod.catnip.levelWrappers.WrappedLevel;
 import net.minecraft.core.BlockPos;
@@ -16,9 +17,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ExtremeEncasedFanBlock extends DirectionalKineticBlock implements IBE<ExtremeEncasedFanBlockEntity> {
+public class ExtremeEncasedFanBlock extends DirectionalKineticBlock implements IBE<ExtremeEncasedFanBlockEntity>, ChuteInteractingFanBlock {
     public ExtremeEncasedFanBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public Direction getChuteFanFacing(BlockState state) {
+        return state.getValue(FACING);
     }
 
     @Override

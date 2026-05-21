@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.damageTypes.CreateDamageSources;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import committee.nova.mods.avaritia_integration.module.create.content.extreme_crusher.compat.BeltCrusherControllerBlockEntity;
 import net.createmod.catnip.math.VecHelper;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
@@ -38,6 +39,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ExtremeCrushingWheelControllerBlockEntity extends SmartBlockEntity {
+public class ExtremeCrushingWheelControllerBlockEntity extends SmartBlockEntity implements BeltCrusherControllerBlockEntity {
     public Entity processingEntity;
     private UUID entityUUID;
     protected boolean searchForEntity;
@@ -352,6 +354,11 @@ public class ExtremeCrushingWheelControllerBlockEntity extends SmartBlockEntity 
         if (cap == ForgeCapabilities.ITEM_HANDLER)
             return handler.cast();
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public ItemStack insertFromBelt(ItemStack stack, boolean simulate) {
+        return ItemHandlerHelper.insertItemStacked(inventory, stack, simulate);
     }
 
     public void clear() {

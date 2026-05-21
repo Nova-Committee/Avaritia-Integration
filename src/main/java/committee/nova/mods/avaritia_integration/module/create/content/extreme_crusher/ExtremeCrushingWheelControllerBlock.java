@@ -5,6 +5,7 @@ import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import committee.nova.mods.avaritia_integration.module.create.content.extreme_crusher.compat.BeltCrusherControllerBlock;
 import committee.nova.mods.avaritia_integration.module.create.registry.CreateIntegrationBlockEntityTypes;
 import committee.nova.mods.avaritia_integration.module.create.registry.CreateIntegrationBlocks;
 import net.createmod.catnip.data.Iterate;
@@ -36,12 +37,17 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ExtremeCrushingWheelControllerBlock extends DirectionalBlock implements IBE<ExtremeCrushingWheelControllerBlockEntity> {
+public class ExtremeCrushingWheelControllerBlock extends DirectionalBlock implements IBE<ExtremeCrushingWheelControllerBlockEntity>, BeltCrusherControllerBlock {
     public ExtremeCrushingWheelControllerBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
 
     public static final BooleanProperty VALID = BooleanProperty.create("valid");
+
+    @Override
+    public Direction getMovementFacing(BlockState state) {
+        return state.getValue(FACING);
+    }
 
     @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
