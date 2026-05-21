@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "avaritia:extreme_smithing",
+  "addition": [
+    {
+      "item": "avaritia:infinity_nugget"
+    },
+    {
+      "item": "avaritia:enhancement_core"
+    },
+    {
+      "item": "avaritia:infinity_catalyst"
+    }
+  ],
+  "base": {
+    "item": "avaritia_integration:neutron_energy_tablet"
+  },
+  "result": {
+    "id": "avaritia_integration:infinity_energy_tablet"
+  },
+  "template": {
+    "item": "avaritia:upgrade_smithing_template"
+  }
+}

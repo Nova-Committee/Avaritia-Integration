@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:metallurgic_infusing",
+  "chemicalInput": {
+    "amount": 80,
+    "tag": "mekanism:neutron"
+  },
+  "itemInput": {
+    "ingredient": {
+      "tag": "mekanism:alloys/atomic"
+    }
+  },
+  "output": {
+    "id": "avaritia_integration:alloy_neutron"
+  }
+}

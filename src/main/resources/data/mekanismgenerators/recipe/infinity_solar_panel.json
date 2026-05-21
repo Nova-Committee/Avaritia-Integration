@@ -1,0 +1,40 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanismgenerators"
+    }
+  ],
+  "type": "avaritia:shaped_table",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "P": {
+      "item": "avaritia_integration:neutron_solar_panel"
+    },
+    "I": {
+      "tag": "mekanism:alloys/infinity"
+    },
+    "O": {
+      "tag": "c:ingots/osmium"
+    }
+  },
+  "pattern": [
+    "         ",
+    "         ",
+    "         ",
+    "GGGGGGGGG",
+    "IIIPPPIII",
+    "OOOOOOOOO",
+    "         ",
+    "         ",
+    "         "
+  ],
+  "result": {
+    "id": "avaritia_integration:infinity_solar_panel"
+  },
+  "show_notification": true,
+  "tier": 4
+}

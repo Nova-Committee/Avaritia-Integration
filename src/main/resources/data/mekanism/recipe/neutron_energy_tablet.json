@@ -1,0 +1,40 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "avaritia:shaped_table",
+  "category": "misc",
+  "key": {
+    "N": {
+      "tag": "c:ingots/neutronium"
+    },
+    "T": {
+      "item": "mekanism:energy_tablet"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "A": {
+      "tag": "mekanism:alloys/atomic"
+    }
+  },
+  "pattern": [
+    "NNNNTNNNN",
+    "N  GTG  N",
+    "N  GTG  N",
+    "A  GTG  A",
+    "A  GTG  A",
+    "A  GTG  A",
+    "N  GTG  N",
+    "N  GTG  N",
+    "NNNNTNNNN"
+  ],
+  "result": {
+    "id": "avaritia_integration:neutron_energy_tablet"
+  },
+  "show_notification": true,
+  "tier": 4
+}

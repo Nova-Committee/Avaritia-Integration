@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "avaritia_integration:block/neutron_advanced_solar_generator"
+    },
+    "facing=south": {
+      "model": "avaritia_integration:block/neutron_advanced_solar_generator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "avaritia_integration:block/neutron_advanced_solar_generator",
+      "y": -90
+    },
+    "facing=east": {
+      "model": "avaritia_integration:block/neutron_advanced_solar_generator",
+      "y": 90
+    }
+  }
+}

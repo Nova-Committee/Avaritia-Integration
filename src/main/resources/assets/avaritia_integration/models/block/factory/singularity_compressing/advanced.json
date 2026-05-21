@@ -1,0 +1,15 @@
+{
+  "loader": "neoforge:composite",
+  "parent": "block/block",
+  "textures": {
+    "particle": "avaritia_integration:block/factory/singularity_compressing/front"
+  },
+  "children": {
+    "base": {
+      "parent": "avaritia_integration:block/factory/singularity_compressing/base"
+    },
+    "front_led": {
+      "parent": "mekanism:block/factory/front_led/advanced"
+    }
+  }
+}

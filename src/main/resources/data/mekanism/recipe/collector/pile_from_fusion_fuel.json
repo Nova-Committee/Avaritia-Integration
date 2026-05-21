@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanismgenerators"
+    }
+  ],
+  "type": "avaritia_integration:collector",
+  "input": {
+    "amount": 10000,
+    "chemical": "mekanismgenerators:fusion_fuel"
+  },
+  "output": {
+    "count": 2,
+    "id": "avaritia:neutron_pile"
+  }
+}

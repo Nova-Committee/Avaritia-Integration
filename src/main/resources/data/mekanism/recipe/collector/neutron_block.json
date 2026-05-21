@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "avaritia_integration:collector",
+  "input": {
+    "amount": 1,
+    "chemical": "mekanism:antimatter"
+  },
+  "output": {
+    "id": "avaritia:neutron"
+  }
+}

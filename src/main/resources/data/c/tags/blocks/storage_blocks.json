@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:storage_blocks/blaze_cube",
+    "#c:storage_blocks/crystal_matrix",
+    "#c:storage_blocks/infinity",
+    "#c:storage_blocks/neutron",
+    "#c:storage_blocks/star_fuel"
+  ]
+}

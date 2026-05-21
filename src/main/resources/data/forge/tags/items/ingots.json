@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#forge:ingots/crystal_matrix",
-    "#forge:ingots/infinity",
-    "#forge:ingots/neutron"
-  ]
-}

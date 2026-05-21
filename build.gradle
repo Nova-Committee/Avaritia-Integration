@@ -82,6 +82,7 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven { url 'https://modmaven.dev/' }
 
 }
 
@@ -97,7 +98,6 @@ dependencies {
     implementation "curse.maven:create-328085:${create_version}"
     //PneumaticCraft: Repressurized
     implementation "curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_version}"
-
     //Ender IO
     implementation "curse.maven:ender-io-64578:${ender_io_version}"
     //Applied Energistics
@@ -118,6 +118,14 @@ dependencies {
     implementation "curse.maven:industrial-foregoing-extra-upgrades-1161049:${industrial_foregoing_extra_upgrades_version}"
     //Botania
     implementation "vazkii.botania:botania-neoforge-1.21.1:${botania_version}"
+    //Mekanism
+    implementation "mekanism:Mekanism:${mekanism_version}"
+    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"
+    implementation "mekanism:Mekanism:${mekanism_version}:generators"
+    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"
+
+    runtimeOnly "curse.maven:iglee-library-541199:7000755"
+    implementation "curse.maven:evolved-mekanism-1230085:7599592"
 
 }
 

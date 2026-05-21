@@ -1,0 +1,6 @@
+{
+  "parent": "avaritia_integration:block/neutron_collector",
+  "textures": {
+    "front": "avaritia_integration:block/neutron_collector/front_active"
+  }
+}

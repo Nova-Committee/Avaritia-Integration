@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanismgenerators"
+    }
+  ],
+  "type": "avaritia:extreme_smithing",
+  "addition": [
+    {
+      "item": "avaritia_integration:infinity_solar_generator"
+    },
+    {
+      "item": "avaritia:enhancement_core"
+    },
+    {
+      "item": "avaritia:infinity_catalyst"
+    }
+  ],
+  "base": {
+    "item": "avaritia_integration:neutron_advanced_solar_generator"
+  },
+  "result": {
+    "id": "avaritia_integration:infinity_advanced_solar_generator"
+  },
+  "template": {
+    "item": "avaritia:upgrade_smithing_template"
+  }
+}

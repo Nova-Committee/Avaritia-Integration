@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "tag": "c:circuits/ultimate"
+    },
+    "C": {
+      "item": "avaritia:neutron_compressor"
+    },
+    "R": {
+      "tag": "mekanism:alloys/atomic"
+    },
+    "X": {
+      "item": "mekanism:steel_casing"
+    },
+    "D": {
+      "tag": "avaritia:singularity"
+    }
+  },
+  "pattern": [
+    "RCR",
+    "BXB",
+    "RDR"
+  ],
+  "result": {
+    "id": "avaritia_integration:singularity_compressor"
+  }
+}

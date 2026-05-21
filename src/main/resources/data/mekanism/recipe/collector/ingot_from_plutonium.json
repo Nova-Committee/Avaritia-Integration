@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "avaritia_integration:collector",
+  "input": {
+    "amount": 1000,
+    "chemical": "mekanism:plutonium"
+  },
+  "output": {
+    "id": "avaritia:neutron_ingot"
+  }
+}

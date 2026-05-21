@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ingots/crystal_matrix",
+    "#c:ingots/infinity",
+    "#c:ingots/neutron"
+  ]
+}

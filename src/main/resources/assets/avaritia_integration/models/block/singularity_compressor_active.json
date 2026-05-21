@@ -1,0 +1,6 @@
+{
+  "parent": "avaritia_integration:block/singularity_compressor",
+  "textures": {
+    "front": "avaritia_integration:block/singularity_compressor/front_active"
+  }
+}

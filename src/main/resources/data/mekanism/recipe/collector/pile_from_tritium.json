@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanismgenerators"
+    }
+  ],
+  "type": "avaritia_integration:collector",
+  "input": {
+    "amount": 10000,
+    "chemical": "mekanismgenerators:tritium"
+  },
+  "output": {
+    "id": "avaritia:neutron_pile"
+  }
+}

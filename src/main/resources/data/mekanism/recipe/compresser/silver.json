@@ -1,0 +1,22 @@
+{
+  "conditions": [
+    {
+      "type": "c:not",
+      "value": {
+        "type": "c:tag_empty",
+        "tag": "c:ingots/silver"
+      }
+    }
+  ],
+  "type": "avaritia_integration:compressor",
+  "input": {
+    "ingredient": "#c:ingots/silver",
+    "count": 1000
+  },
+  "output": {
+    "id": "avaritia:singularity",
+    "components": {
+      "avaritia:singularity_id": "avaritia:silver"
+    }
+  }
+}

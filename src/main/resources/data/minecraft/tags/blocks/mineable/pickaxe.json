@@ -12,6 +12,86 @@
     {
       "id": "avaritia_integration:fake_end_portal_frame",
       "required": false
+    },
+    {
+      "id": "avaritia_integration:neutron_collector",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:basic_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:advanced_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:elite_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:ultimate_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:overclocked_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:quantum_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:dense_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:multiversal_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:creative_neutron_collecting_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:singularity_compressor",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:basic_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:advanced_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:elite_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:ultimate_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:overclocked_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:quantum_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:dense_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:multiversal_singularity_compressing_factory",
+      "required": false
+    },
+    {
+      "id": "avaritia_integration:creative_singularity_compressing_factory",
+      "required": false
     }
   ]
 }

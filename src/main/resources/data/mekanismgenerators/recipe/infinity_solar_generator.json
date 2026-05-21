@@ -1,0 +1,43 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanismgenerators"
+    }
+  ],
+  "type": "avaritia:shaped_table",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "avaritia_integration:infinity_solar_panel"
+    },
+    "A": {
+      "tag": "mekanism:alloys/infinity"
+    },
+    "D": {
+      "item": "avaritia:diamond_lattice"
+    },
+    "O": {
+      "tag": "c:ingots/osmium"
+    },
+    "T": {
+      "item": "avaritia_integration:infinity_energy_tablet"
+    }
+  },
+  "pattern": [
+    "         ",
+    "         ",
+    "         ",
+    "PPPPPPPPP",
+    "AAADDDAAA",
+    "OOOTTTOOO",
+    "         ",
+    "         ",
+    "         "
+  ],
+  "result": {
+    "id": "avaritia_integration:infinity_solar_generator"
+  },
+  "show_notification": true,
+  "tier": 4
+}

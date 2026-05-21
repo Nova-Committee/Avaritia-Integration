@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "mekanism:chemical_conversion",
+  "input": {
+    "ingredient": {
+      "tag": "c:dusts/infinity"
+    }
+  },
+  "output": {
+    "amount": 10,
+    "infuse_type": "avaritia_integration:infinity"
+  }
+}

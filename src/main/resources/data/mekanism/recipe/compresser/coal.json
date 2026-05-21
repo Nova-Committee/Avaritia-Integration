@@ -1,0 +1,13 @@
+{
+  "type": "avaritia_integration:compressor",
+  "input": {
+    "ingredient": "minecraft:coal",
+    "count": 1000
+  },
+  "output": {
+    "id": "avaritia:singularity",
+    "components": {
+      "avaritia:singularity_id": "avaritia:coal"
+    }
+  }
+}
