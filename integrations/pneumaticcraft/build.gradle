@@ -5,6 +5,7 @@ ext.ai_run_directory = 'integrations/pneumaticcraft'
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {
+    implementation forge.reAvaritia
     implementation project(':core')
     implementation forge.pneumaticcraftRepressurized
 }

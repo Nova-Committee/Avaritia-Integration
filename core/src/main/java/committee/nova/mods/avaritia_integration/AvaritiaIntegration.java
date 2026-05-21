@@ -1,6 +1,5 @@
 package committee.nova.mods.avaritia_integration;
 
-import com.mojang.logging.LogUtils;
 import committee.nova.mods.avaritia_integration.init.data.AIDataGen;
 import committee.nova.mods.avaritia_integration.init.registry.AIBlocks;
 import committee.nova.mods.avaritia_integration.init.registry.AICreativeTabs;
@@ -8,10 +7,13 @@ import committee.nova.mods.avaritia_integration.init.registry.AIFluidTypes;
 import committee.nova.mods.avaritia_integration.init.registry.AIFluids;
 import committee.nova.mods.avaritia_integration.init.registry.AIItems;
 import committee.nova.mods.avaritia_integration.module.ModuleManager;
+
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+
+import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 
 @Mod(AvaritiaIntegration.MOD_ID)

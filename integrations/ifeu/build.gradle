@@ -5,7 +5,10 @@ ext.ai_run_directory = 'integrations/ifeu'
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 dependencies {
+    implementation forge.reAvaritia
     implementation project(':core')
-    implementation project(':integrations:industrialforegoing')
+    implementation forge.titanium
+    implementation forge.industrialForegoing
     implementation forge.industrialForegoingExtraUpgrades
+    implementation project(':integrations:industrialforegoing')
 }

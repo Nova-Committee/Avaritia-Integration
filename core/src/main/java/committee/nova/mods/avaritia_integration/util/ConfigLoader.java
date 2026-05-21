@@ -1,8 +1,9 @@
 package committee.nova.mods.avaritia_integration.util;
 
+import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
