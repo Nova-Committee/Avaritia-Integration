@@ -1,4 +1,4 @@
-package committee.nova.mods.avaritia_integration.integrations.ifeu.rregistry;
+package committee.nova.mods.avaritia_integration.integrations.ifeu.registry;
 
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;

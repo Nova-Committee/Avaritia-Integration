@@ -1,6 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.ifeu.datagen;
 
-import committee.nova.mods.avaritia_integration.integrations.ifeu.rregistry.IFEUIntegrationItems;
+import committee.nova.mods.avaritia_integration.integrations.ifeu.registry.IFEUIntegrationItems;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

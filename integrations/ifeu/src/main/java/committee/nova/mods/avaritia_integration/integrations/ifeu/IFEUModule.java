@@ -1,6 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.ifeu;
 
-import committee.nova.mods.avaritia_integration.integrations.ifeu.rregistry.IFEUIntegrationItems;
+import committee.nova.mods.avaritia_integration.integrations.ifeu.registry.IFEUIntegrationItems;
 import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
 import committee.nova.mods.avaritia_integration.module.ModuleEntry;

@@ -1,0 +1,44 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "avaritia_integration:energy_addon_infinity"
+    }
+  ],
+  "type": "industrialforegoing:dissolution_chamber",
+  "input": [
+    {
+      "tag": "c:storage_blocks/redstone"
+    },
+    {
+      "tag": "c:storage_blocks/redstone"
+    },
+    {
+      "tag": "c:glass_panes/colorless"
+    },
+    {
+      "tag": "c:glass_panes/colorless"
+    },
+    {
+      "tag": "c:plastics"
+    },
+    {
+      "tag": "c:plastics"
+    },
+    {
+      "item": "avaritia_integration:infinity_gear"
+    },
+    {
+      "item": "avaritia_integration:infinity_gear"
+    }
+  ],
+  "inputFluid": {
+    "amount": 2000,
+    "fluid": "avaritia_integration:elderly_medulla_source"
+  },
+  "output": {
+    "count": 1,
+    "id": "avaritia_integration:energy_addon_infinity"
+  },
+  "processingTime": 400
+}
