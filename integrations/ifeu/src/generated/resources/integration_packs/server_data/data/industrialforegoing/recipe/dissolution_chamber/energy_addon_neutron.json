@@ -1,0 +1,44 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "avaritia_integration:energy_addon_neutron"
+    }
+  ],
+  "type": "industrialforegoing:dissolution_chamber",
+  "input": [
+    {
+      "tag": "c:storage_blocks/redstone"
+    },
+    {
+      "tag": "c:storage_blocks/redstone"
+    },
+    {
+      "tag": "c:glass_panes/colorless"
+    },
+    {
+      "tag": "c:glass_panes/colorless"
+    },
+    {
+      "tag": "c:plastics"
+    },
+    {
+      "tag": "c:plastics"
+    },
+    {
+      "item": "avaritia:neutron_gear"
+    },
+    {
+      "item": "avaritia:neutron_gear"
+    }
+  ],
+  "inputFluid": {
+    "amount": 1000,
+    "fluid": "avaritia_integration:void_matter_source"
+  },
+  "output": {
+    "count": 1,
+    "id": "avaritia_integration:energy_addon_neutron"
+  },
+  "processingTime": 300
+}

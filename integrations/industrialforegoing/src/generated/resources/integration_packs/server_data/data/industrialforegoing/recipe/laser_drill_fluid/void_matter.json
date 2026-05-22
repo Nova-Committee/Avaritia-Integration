@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "industrialforegoing"
+    }
+  ],
+  "type": "industrialforegoing:laser_drill_fluid",
+  "catalyst": {
+    "item": "industrialforegoing:black_laser_lens"
+  },
+  "output": {
+    "amount": 20,
+    "fluid": "avaritia_integration:void_matter_source"
+  },
+  "rarity": [
+    {
+      "biome_filter": {
+        "blacklist": [],
+        "whitelist": [
+          "minecraft:is_end"
+        ]
+      },
+      "depth_max": 64,
+      "depth_min": -32,
+      "dimension_filter": {
+        "blacklist": [],
+        "whitelist": []
+      },
+      "weight": 8
+    }
+  ]
+}
