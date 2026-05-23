@@ -12,10 +12,10 @@ lombok = "8.14"
 lombokCore = "1.18.38"
 
 [libraries]
-minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
-neoForge = { module = "net.neoforged:neoforge", version.ref = "neoForge" }
+minecraft       = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+neoForge        = { module = "net.neoforged:neoforge", version.ref = "neoForge" }
 
 [plugins]
-modDevGradle = { id = "net.neoforged.moddev", version.ref = "modDevGradle" }
-spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-lombok = { id = "io.freefair.lombok", version.ref = "lombok" }
+modDevGradle    = { id = "net.neoforged.moddev", version.ref = "modDevGradle" }
+spotless        = { id = "com.diffplug.spotless", version.ref = "spotless" }
+lombok          = { id = "io.freefair.lombok", version.ref = "lombok" }
