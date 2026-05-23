@@ -15,7 +15,8 @@ public final class AIRefinedStorageIntegrationMod implements ModModule {
     private static final String DEPENDENCY_MOD_ID = "refinedstorage";
 
     public AIRefinedStorageIntegrationMod(IEventBus bus, ModContainer modContainer) {
-        IntegrationRuntime.load(MOD_ID, this, bus, RefinedStorageModule::new);
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this))
+            IntegrationRuntime.load(MOD_ID, bus, new RefinedStorageModule());
     }
 
     @Override

@@ -18,7 +18,7 @@ public final class AIEnderIOIntegrationMod implements ModModule {
 
     public AIEnderIOIntegrationMod(IEventBus bus, ModContainer modContainer) {
         IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration Ender IO Data");
-        if (IntegrationRuntime.load(MOD_ID, this, bus, EnderIOModule::new)) {
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this) && IntegrationRuntime.load(MOD_ID, bus, new EnderIOModule())) {
             bus.addListener(EnderIODataGen::gatherData);
         }
     }

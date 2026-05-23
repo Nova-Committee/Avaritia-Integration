@@ -15,7 +15,8 @@ public final class AIPneumaticCraftIntegrationMod implements ModModule {
     private static final String DEPENDENCY_MOD_ID = "pneumaticcraft";
 
     public AIPneumaticCraftIntegrationMod(IEventBus bus, ModContainer modContainer) {
-        if (IntegrationRuntime.load(MOD_ID, this, bus, PneumaticCraftModule::new)) ModRun.init(bus);
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this) && IntegrationRuntime.load(MOD_ID, bus,
+                new PneumaticCraftModule())) ModRun.init(bus);
     }
 
     @Override

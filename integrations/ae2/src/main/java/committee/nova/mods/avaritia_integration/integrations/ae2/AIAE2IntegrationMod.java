@@ -18,7 +18,7 @@ public final class AIAE2IntegrationMod implements ModModule {
 
     public AIAE2IntegrationMod(IEventBus bus, ModContainer modContainer) {
         IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration AE2 Data");
-        if (IntegrationRuntime.load(MOD_ID, this, bus, AE2Module::new)) {
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this) && IntegrationRuntime.load(MOD_ID, bus, new AE2Module())) {
             ModRun.init(bus);
         }
     }

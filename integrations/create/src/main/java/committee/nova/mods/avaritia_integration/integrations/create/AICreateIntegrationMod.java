@@ -15,7 +15,7 @@ public final class AICreateIntegrationMod implements ModModule {
     private static final String DEPENDENCY_MOD_ID = "create";
 
     public AICreateIntegrationMod(IEventBus bus, ModContainer modContainer) {
-        IntegrationRuntime.load(MOD_ID, this, bus, CreateModule::new);
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this)) IntegrationRuntime.load(MOD_ID, bus, new CreateModule());
     }
 
     @Override

@@ -17,7 +17,7 @@ public final class AIBotaniaIntegrationMod implements ModModule {
 
     public AIBotaniaIntegrationMod(IEventBus bus, ModContainer modContainer) {
         IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration Botania Data");
-        IntegrationRuntime.load(MOD_ID, this, bus, BotaniaModule::new);
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this)) IntegrationRuntime.load(MOD_ID, bus, new BotaniaModule());
     }
 
     @Override

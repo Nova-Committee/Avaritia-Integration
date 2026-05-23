@@ -17,7 +17,7 @@ public final class AIMekanismIntegrationMod implements ModModule {
 
     public AIMekanismIntegrationMod(IEventBus bus, ModContainer modContainer) {
         IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration Mekanism Data");
-        IntegrationRuntime.load(MOD_ID, this, bus, MekanismModule::new);
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this)) IntegrationRuntime.load(MOD_ID, bus, new MekanismModule());
     }
 
     @Override

@@ -18,7 +18,7 @@ public final class AIIndustrialForegoingIntegrationMod implements ModModule {
 
     public AIIndustrialForegoingIntegrationMod(IEventBus bus, ModContainer modContainer) {
         IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration Industrial Foregoing Data");
-        if (IntegrationRuntime.load(MOD_ID, this, bus, IndustrialForegoingModule::new)) {
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this) && IntegrationRuntime.load(MOD_ID, bus, new IndustrialForegoingModule())) {
             bus.addListener(IndustrialForegoingDataGen::gatherData);
         }
     }

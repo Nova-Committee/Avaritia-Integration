@@ -12,24 +12,26 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public final class IntegrationRuntime {
 
     private static final Map<String, Module> LOADED_MODULES = new LinkedHashMap<>();
 
-    private IntegrationRuntime() {}
+    private IntegrationRuntime() {
+    }
 
-    public static boolean load(String integrationModId, ModModule modModule, IEventBus modBus,
-                               Supplier<? extends Module> moduleFactory) {
+    public static boolean shouldLoad(String integrationModId, ModModule modModule) {
         IntegrationLoadApi.registerDefaultRule(integrationModId, modModule.defaultLoadRule());
         LoadDecision decision = IntegrationLoadApi.explain(integrationModId);
         if (!decision.shouldLoad()) {
             AvaritiaIntegration.LOGGER.info("Skip integration {}: {}", integrationModId, decision.message());
             return false;
         }
+        return true;
+    }
+
+    public static boolean load(String integrationModId, IEventBus modBus, Module module) {
         try {
-            Module module = moduleFactory.get();
             module.init(modBus);
             module.registerEvent(modBus, NeoForge.EVENT_BUS);
             if (FMLEnvironment.dist.isClient()) {

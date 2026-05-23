@@ -18,7 +18,7 @@ public final class AIIFEUIntegrationMod implements ModModule {
 
     public AIIFEUIntegrationMod(IEventBus bus, ModContainer modContainer) {
         IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration IFEU Data");
-        if (IntegrationRuntime.load(MOD_ID, this, bus, IFEUModule::new)) {
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this) && IntegrationRuntime.load(MOD_ID, bus, new IFEUModule())) {
             bus.addListener(IFEUDataGen::gatherData);
         }
     }
