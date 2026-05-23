@@ -16,7 +16,8 @@ public final class AIPneumaticCraftIntegrationMod implements ModModule {
 
     public AIPneumaticCraftIntegrationMod(IEventBus bus, ModContainer modContainer) {
         if (IntegrationRuntime.shouldLoad(MOD_ID, this) && IntegrationRuntime.load(MOD_ID, bus,
-                new PneumaticCraftModule())) ModRun.init(bus);
+                new PneumaticCraftModule()))
+            ModRun.init(bus);
     }
 
     @Override

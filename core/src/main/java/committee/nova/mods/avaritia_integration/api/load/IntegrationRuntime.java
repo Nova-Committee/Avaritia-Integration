@@ -17,8 +17,7 @@ public final class IntegrationRuntime {
 
     private static final Map<String, Module> LOADED_MODULES = new LinkedHashMap<>();
 
-    private IntegrationRuntime() {
-    }
+    private IntegrationRuntime() {}
 
     public static boolean shouldLoad(String integrationModId, ModModule modModule) {
         IntegrationLoadApi.registerDefaultRule(integrationModId, modModule.defaultLoadRule());
