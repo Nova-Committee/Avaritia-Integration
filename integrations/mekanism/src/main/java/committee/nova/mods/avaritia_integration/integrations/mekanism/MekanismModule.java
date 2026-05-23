@@ -9,9 +9,7 @@ import committee.nova.mods.avaritia_integration.integrations.mekanism.common.reg
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationItems;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationRecipeSerializers;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationTileEntityTypes;
-import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
-import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +19,6 @@ import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-@ModuleEntry(id = MekanismModule.MOD_ID, target = @ModMeta(MekanismModule.MOD_ID))
 public final class MekanismModule implements Module {
 
     public static final String MOD_ID = "mekanism";

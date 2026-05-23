@@ -10,9 +10,7 @@ import committee.nova.mods.avaritia_integration.integrations.botania.botania.reg
 import committee.nova.mods.avaritia_integration.integrations.botania.botania.render.AlphaSparkRender;
 import committee.nova.mods.avaritia_integration.integrations.botania.botania.render.InfinityManaPoolBlockEntityRender;
 import committee.nova.mods.avaritia_integration.integrations.botania.botania.render.InfinityTinyPotatoBlockEntityRender;
-import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
-import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -31,7 +29,6 @@ import vazkii.botania.api.BotaniaForgeClientCapabilities;
 import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
 import vazkii.botania.client.render.block_entity.SpecialFlowerBlockEntityRenderer;
 
-@ModuleEntry(id = BotaniaModule.MOD_ID, target = @ModMeta(BotaniaModule.MOD_ID))
 public final class BotaniaModule implements Module {
 
     public static final String MOD_ID = "botania";

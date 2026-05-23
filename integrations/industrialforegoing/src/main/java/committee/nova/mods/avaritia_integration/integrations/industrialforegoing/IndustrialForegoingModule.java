@@ -6,9 +6,7 @@ import committee.nova.mods.avaritia_integration.integrations.industrialforegoing
 import committee.nova.mods.avaritia_integration.integrations.industrialforegoing.registry.IndustrialForegoingIntegrationBlocks;
 import committee.nova.mods.avaritia_integration.integrations.industrialforegoing.registry.IndustrialForegoingIntegrationFluids;
 import committee.nova.mods.avaritia_integration.integrations.industrialforegoing.registry.IndustrialForegoingIntegrationItems;
-import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
-import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +16,6 @@ import com.buuz135.industrial.item.addon.ProcessingAddonItem;
 import com.hrznstudio.titanium.api.augment.AugmentTypes;
 import com.hrznstudio.titanium.item.AugmentWrapper;
 
-@ModuleEntry(id = IndustrialForegoingModule.MOD_ID, target = @ModMeta(IndustrialForegoingModule.MOD_ID))
 public final class IndustrialForegoingModule implements Module {
 
     public static final String MOD_ID = "industrialforegoing";

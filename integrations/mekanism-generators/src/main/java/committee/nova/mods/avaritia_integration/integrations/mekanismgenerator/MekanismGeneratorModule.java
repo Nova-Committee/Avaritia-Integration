@@ -5,9 +5,7 @@ import committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.c
 import committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.common.registries.GenIntegrationBlocks;
 import committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.common.registries.GenIntegrationContainerTypes;
 import committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.common.registries.GenIntegrationItems;
-import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
-import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
@@ -15,7 +13,6 @@ import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 
-@ModuleEntry(id = MekanismGeneratorModule.MOD_ID, target = @ModMeta(MekanismGeneratorModule.MOD_ID))
 public class MekanismGeneratorModule implements Module {
 
     public static final String MOD_ID = "mekanismgenerators";

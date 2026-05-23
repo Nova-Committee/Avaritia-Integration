@@ -1,14 +1,11 @@
 package committee.nova.mods.avaritia_integration.integrations.enderio;
 
 import committee.nova.mods.avaritia_integration.integrations.enderio.registry.EnderIOIntegrationItems;
-import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
-import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 
-@ModuleEntry(id = EnderIOModule.MOD_ID, target = @ModMeta(EnderIOModule.MOD_ID))
 public final class EnderIOModule implements Module {
 
     public static final String MOD_ID = "enderio";

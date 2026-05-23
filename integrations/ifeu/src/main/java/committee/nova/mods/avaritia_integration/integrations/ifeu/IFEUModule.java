@@ -1,14 +1,11 @@
 package committee.nova.mods.avaritia_integration.integrations.ifeu;
 
 import committee.nova.mods.avaritia_integration.integrations.ifeu.registry.IFEUIntegrationItems;
-import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
-import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 
-@ModuleEntry(id = IFEUModule.MOD_ID, target = @ModMeta(IFEUModule.MOD_ID))
 public class IFEUModule implements Module {
 
     public static final String MOD_ID = "ifeu";
