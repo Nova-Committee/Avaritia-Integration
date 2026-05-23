@@ -31,11 +31,6 @@ public final class MekanismModule implements Module {
     }
 
     @Override
-    public committee.nova.mods.avaritia_integration.api.load.IntegrationRule defaultLoadRule() {
-        return Module.rule(Module.dependency(MOD_ID));
-    }
-
-    @Override
     public void init(IEventBus registryBus) {
         MekIntegrationItems.ITEMS.register(registryBus);
         MekIntegrationBlocks.BLOCKS.register(registryBus);

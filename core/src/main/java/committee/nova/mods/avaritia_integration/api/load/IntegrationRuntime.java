@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.api.load;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.module.ModModule;
 import committee.nova.mods.avaritia_integration.module.Module;
 
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,15 +20,16 @@ public final class IntegrationRuntime {
 
     private IntegrationRuntime() {}
 
-    public static boolean load(String integrationModId, IEventBus modBus, Supplier<? extends Module> moduleFactory) {
-        Module module = moduleFactory.get();
-        IntegrationLoadApi.registerDefaultRule(integrationModId, module.defaultLoadRule());
+    public static boolean load(String integrationModId, ModModule modModule, IEventBus modBus,
+                               Supplier<? extends Module> moduleFactory) {
+        IntegrationLoadApi.registerDefaultRule(integrationModId, modModule.defaultLoadRule());
         LoadDecision decision = IntegrationLoadApi.explain(integrationModId);
         if (!decision.shouldLoad()) {
             AvaritiaIntegration.LOGGER.info("Skip integration {}: {}", integrationModId, decision.message());
             return false;
         }
         try {
+            Module module = moduleFactory.get();
             module.init(modBus);
             module.registerEvent(modBus, NeoForge.EVENT_BUS);
             if (FMLEnvironment.dist.isClient()) {

@@ -1,14 +1,11 @@
 package committee.nova.mods.avaritia_integration.integrations.ae2;
 
-import committee.nova.mods.avaritia_integration.api.load.IntegrationRule;
 import committee.nova.mods.avaritia_integration.integrations.ae2.client.AE2ClientPlugin;
 import committee.nova.mods.avaritia_integration.integrations.ae2.me.AEUniversalCellHandler;
 import committee.nova.mods.avaritia_integration.integrations.ae2.me.biginteger.AEBigIntegerCellHandler;
 import committee.nova.mods.avaritia_integration.integrations.ae2.registry.AE2IntegrationDataComponents;
 import committee.nova.mods.avaritia_integration.integrations.ae2.registry.AE2IntegrationItems;
-import committee.nova.mods.avaritia_integration.module.ModMeta;
 import committee.nova.mods.avaritia_integration.module.Module;
-import committee.nova.mods.avaritia_integration.module.ModuleEntry;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
@@ -17,15 +14,7 @@ import appeng.api.storage.StorageCells;
 import appeng.api.upgrades.Upgrades;
 import appeng.core.definitions.AEItems;
 
-@ModuleEntry(id = AE2Module.MOD_ID, target = @ModMeta(AE2Module.MOD_ID))
 public final class AE2Module implements Module {
-
-    public static final String MOD_ID = "ae2";
-
-    @Override
-    public IntegrationRule defaultLoadRule() {
-        return Module.rule(Module.dependency(MOD_ID));
-    }
 
     @Override
     public void init(IEventBus registryBus) {

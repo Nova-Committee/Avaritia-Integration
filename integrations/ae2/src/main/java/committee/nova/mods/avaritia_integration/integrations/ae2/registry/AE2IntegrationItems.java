@@ -3,7 +3,7 @@ package committee.nova.mods.avaritia_integration.integrations.ae2.registry;
 import committee.nova.mods.avaritia.api.common.item.BaseItem;
 import committee.nova.mods.avaritia.init.registry.ModRarities;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import committee.nova.mods.avaritia_integration.integrations.ae2.AE2Module;
+import committee.nova.mods.avaritia_integration.integrations.ae2.AIAE2IntegrationMod;
 import committee.nova.mods.avaritia_integration.integrations.ae2.item.AEBigIntegerCellItem;
 import committee.nova.mods.avaritia_integration.integrations.ae2.item.InfiniteCellItem;
 
@@ -23,7 +23,7 @@ public final class AE2IntegrationItems {
 
     public static final DeferredItem<Item> INFINITY_ME_STORAGE_CELL = register("infinity_me_storage_cell",
             () -> {
-                if (ModList.get().isLoaded(AE2Module.MOD_ID))
+                if (ModList.get().isLoaded(AIAE2IntegrationMod.DEPENDENCY_MOD_ID))
                     return new InfiniteCellItem(new Item.Properties().stacksTo(1).rarity(ModRarities.EPIC), 8);
                 else
                     return new BaseItem(p -> p.rarity(ModRarities.EPIC));
@@ -31,7 +31,7 @@ public final class AE2IntegrationItems {
 
     public static final DeferredItem<Item> INFINITY_ME_STORAGE_CELL_BIG = register("infinity_me_storage_cell_big",
             () -> {
-                if (ModList.get().isLoaded(AE2Module.MOD_ID))
+                if (ModList.get().isLoaded(AIAE2IntegrationMod.DEPENDENCY_MOD_ID))
                     return new AEBigIntegerCellItem(new Item.Properties().stacksTo(1).rarity(ModRarities.EPIC), 64);
                 else
                     return new BaseItem(p -> p.rarity(ModRarities.EPIC));
