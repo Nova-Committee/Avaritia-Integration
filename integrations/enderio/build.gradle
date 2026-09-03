@@ -1,0 +1,13 @@
+ext.ai_mod_id = 'avaritia_integration_enderio'
+ext.ai_mod_name = 'Avaritia Integration Ender IO'
+ext.ai_mod_description = 'Avaritia Integration module for Ender IO.'
+ext.ai_run_directory = 'integrations/enderio'
+ext.ai_data_output_root = 'src/generated/resources/integration_packs/server_data'
+ext.ai_data_existing_root = 'src/main/resources/integration_packs/server_data'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    implementation forge.enderIo
+}

@@ -1,0 +1,10 @@
+ext.ai_mod_id = 'avaritia_integration_tconstruct_data'
+ext.ai_mod_name = 'Avaritia Integration Tinkers Construct Data'
+ext.ai_mod_description = 'Avaritia Integration data module for Tinkers Construct.'
+ext.ai_run_directory = 'integrations/tconstruct-data'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+}

@@ -1,0 +1,17 @@
+{
+	"values": {
+		"avaritia_integration:neutron_grinding_ball": {
+			"BonusMultiplier": 1.0,
+			"Durability": 40000,
+			"OutputMultiplier": 5.0,
+			"PowerUse": 0.1
+		},
+
+		"avaritia_integration:infinity_grinding_ball": {
+			"BonusMultiplier": 5.0,
+			"Durability": 2147483647,
+			"OutputMultiplier": 5.0,
+			"PowerUse": 0.01
+		}
+	}
+}

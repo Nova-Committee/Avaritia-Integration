@@ -1,0 +1,19 @@
+{
+	"entity_effects": [
+		{
+			"type": "tconstruct:conditional",
+			"effect": {
+				"type": "tconstruct:damage",
+				"damage": 40.0,
+				"damage_type": {
+					"melee": "avaritia:infinity",
+					"ranged": "avaritia:infinity"
+				}
+			}
+		}
+	],
+	"fluid": {
+		"amount": 10,
+		"tag": "tconstruct:molten_infinity"
+	}
+}

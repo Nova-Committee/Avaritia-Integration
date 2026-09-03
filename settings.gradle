@@ -9,3 +9,29 @@ pluginManagement {
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        forge {
+            from(files('gradle/forge.versions.toml'))
+        }
+    }
+}
+
+rootProject.name = mod_id
+
+include 'core'
+include 'all'
+
+include 'integrations:ae2'
+include 'integrations:botania'
+include 'integrations:create'
+include 'integrations:enderio'
+include 'integrations:industrialforegoing'
+include 'integrations:ifeu'
+include 'integrations:mekanism'
+include 'integrations:mekanism-generators'
+include 'integrations:pneumaticcraft'
+include 'integrations:refinedstorage'
+include 'integrations:thermal-expansion-data'
+include 'integrations:tconstruct-data'

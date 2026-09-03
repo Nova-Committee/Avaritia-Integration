@@ -1,0 +1,84 @@
+{
+	"fallbacks": ["metal"],
+	"color": "cccccc",
+	"luminosity": 12,
+	"generator": {
+		"transformer": {
+			"type": "tconstruct:frames",
+			"frames": [
+				{
+					"type": "tconstruct:grey_to_sprite",
+					"palette": [
+						{
+							"color": "FF000000",
+							"grey": 0
+						},
+						{
+							"grey": 63,
+							"path": "avaritia_integration:gen/infinity_dark"
+						},
+						{
+							"grey": 178,
+							"path": "avaritia_integration:gen/infinity_medium"
+						},
+						{
+							"grey": 255,
+							"path": "avaritia_integration:gen/infinity_light"
+						}
+					]
+				},
+				{
+					"type": "tconstruct:grey_to_sprite",
+					"palette": [
+						{
+							"color": "FF000000",
+							"grey": 0
+						},
+						{
+							"color": "FFb9b9b9",
+							"grey": 63
+						},
+						{
+							"color": "FFc5c5c5",
+							"grey": 102
+						},
+						{
+							"color": "FFcccccc",
+							"grey": 140
+						},
+						{
+							"color": "FFe4e4e4",
+							"grey": 178
+						},
+						{
+							"color": "FFf0f0f0",
+							"grey": 216
+						},
+						{
+							"color": "FFffffff",
+							"grey": 255
+						}
+					]
+				}
+			],
+			"meta": "avaritia:block/resource/infinity"
+		},
+		"supported_stats": [
+			"tconstruct:head",
+			"tconstruct:handle",
+			"tconstruct:extra",
+			"tconstruct:repair_kit",
+			"tconstruct:limb",
+			"tconstruct:grip",
+			"tconstruct:armor_plating",
+			"tconstruct:plating_boots",
+			"tconstruct:plating_leggings",
+			"tconstruct:plating_chestplate",
+			"tconstruct:plating_helmet",
+			"tconstruct:plating_shield",
+			"tconstruct:maille",
+			"tconstruct:armor_maille"
+		],
+		"ignoreMaterial_stats": false
+	}
+}

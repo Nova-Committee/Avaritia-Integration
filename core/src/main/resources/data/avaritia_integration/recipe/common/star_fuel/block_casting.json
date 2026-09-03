@@ -1,0 +1,15 @@
+{
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:casting_basin",
+	"fluid": {
+		"fluid": "avaritia_integration:molten_star",
+		"amount": 900
+	},
+	"result": "avaritia:star_fuel_block",
+	"cooling_time": 325
+}

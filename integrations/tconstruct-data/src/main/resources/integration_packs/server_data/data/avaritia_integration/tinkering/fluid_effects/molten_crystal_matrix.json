@@ -1,0 +1,12 @@
+{
+	"block_effects": [
+		{
+			"type": "tconstruct:break_block",
+			"hardness": 500.0
+		}
+	],
+	"fluid": {
+		"amount": 10,
+		"tag": "tconstruct:molten_crystal_matrix"
+	}
+}

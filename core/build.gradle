@@ -1,0 +1,47 @@
+ext.ai_mod_id = mod_id
+ext.ai_mod_name = mod_name
+ext.ai_mod_description = mod_description
+ext.ai_run_directory = 'core'
+
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    // Avaritia
+    implementation forge.reAvaritia
+//    // JEI
+//    implementation forge.jei
+//    // Refined Storage
+//    implementation forge.refinedStorage
+//    // Create
+//    implementation forge.create
+//    // PneumaticCraft: Repressurized
+//    implementation forge.pneumaticcraftRepressurized
+//    // Ender IO
+//    implementation forge.enderIo
+//    // Applied Energistics
+//    implementation forge.appliedEnergistics
+//    // GuideME
+//    implementation forge.guideme
+//    // Patchouli
+//    implementation forge.patchouli
+//    // Curios
+//    implementation forge.curios
+//    // Jade
+//    implementation forge.jade
+//    // Titanium
+//    implementation forge.titanium
+//    // Industrial Foregoing
+//    implementation forge.industrialForegoing
+//    // Industrial Foregoing Extra Upgrades
+//    implementation forge.industrialForegoingExtraUpgrades
+//    // Botania
+//    implementation forge.botania
+//    // Mekanism
+//    implementation forge.mekanism
+//    runtimeOnly variantOf(forge.mekanism) { classifier('additions') }
+//    implementation variantOf(forge.mekanism) { classifier('generators') }
+//    runtimeOnly variantOf(forge.mekanism) { classifier('tools') }
+//
+//    runtimeOnly forge.igleeLibrary
+//    implementation forge.evolvedMekanism
+}

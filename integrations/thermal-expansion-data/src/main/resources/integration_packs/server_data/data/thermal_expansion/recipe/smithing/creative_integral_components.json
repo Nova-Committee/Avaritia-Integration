@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:smithing_transform",
+	"forge:conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "thermal_expansion"
+		}
+	],
+	"addition": {
+		"item": "thermal:upgrade_augment_3"
+	},
+	"base": {
+		"item": "avaritia_integration:creative_augment_base"
+	},
+	"result": {
+		"item": "avaritia_integration:creative_integral_components"
+	},
+	"template": {
+		"item": "minecraft:netherite_upgrade_smithing_template"
+	}
+}

@@ -1,7 +1,0 @@
-{
-    "parent": "neoforge:item/bucket_drip",
-    "flip_gas": false,
-    "fluid": "avaritia_integration:molten_crystal_matrix",
-    "loader": "neoforge:fluid_container"
-}
-

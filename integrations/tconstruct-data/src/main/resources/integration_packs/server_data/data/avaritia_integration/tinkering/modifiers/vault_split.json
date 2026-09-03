@@ -1,0 +1,16 @@
+{
+	"level_display": "tconstruct:no_levels",
+	"modules": [
+		{
+			"type": "avaritia_integration:vault_split"
+		},
+		{
+			"type": "tconstruct:stat_boost",
+			"flat": 6.5,
+			"operation": "add",
+			"stat": "tconstruct:projectile_damage"
+		}
+	],
+	"priority": 45,
+	"tooltip_display": "always"
+}

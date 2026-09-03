@@ -1,0 +1,86 @@
+package committee.nova.mods.avaritia_integration.client.screen;
+
+import committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi;
+import committee.nova.mods.avaritia_integration.api.load.LoadDecision;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.network.chat.Component;
+
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+@ApiStatus.Internal
+public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.ModuleEntry> {
+
+    private final ModuleListScreen screen;
+
+    public ModuleListWidget(ModuleListScreen screen, Minecraft client, int left, int right, int top, int bottom) {
+        super(client, right - left, bottom - top, top, bottom);
+        this.screen = screen;
+        this.updateSize(left, right, top, bottom);
+    }
+
+    void updateSize(int left, int right, int top, int bottom) {}
+
+    public void update() {
+        this.clearEntries();
+        IntegrationLoadApi.explainAll().values().forEach(x -> this.addEntry(new ModuleEntry(this.screen, x)));
+    }
+
+    @Override
+    public int getRowWidth() {
+        return super.getRowWidth() + 30 * 2;
+    }
+
+    @Override
+    protected int getScrollbarPosition() {
+        return super.getScrollbarPosition() + 30 + 30;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        ModuleEntry entry = this.getSelected();
+        return entry != null && entry.keyPressed(keyCode, scanCode, modifiers) ||
+                super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    public static class ModuleEntry extends Entry<ModuleEntry> {
+
+        private final Minecraft client = Minecraft.getInstance();
+        private final ModuleListScreen screen;
+        private final LoadDecision data;
+
+        public ModuleEntry(ModuleListScreen screen, LoadDecision data) {
+            this.screen = screen;
+            this.data = data;
+        }
+
+        @Override
+        public void render(GuiGraphics context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX,
+                           int mouseY, boolean hovered, float tickDelta) {
+            context.drawString(this.client.font, this.data.integrationModId(), x + 32 + 3, y + 1, 16777215, true);
+            context.drawString(this.client.font, this.data.state().name(), x + 32 + 3, y + 1 + 9, 16777215, true);
+            if (this.isMouseOver(mouseX, mouseY))
+                this.screen.setTooltips(List.of(Component.literal(this.data.message())));
+        }
+
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            this.screen.select(this);
+            return false;
+        }
+
+        public LoadDecision getData() {
+            return this.data;
+        }
+
+        @Override
+        public @NotNull Component getNarration() {
+            return Component.literal(this.data.integrationModId());
+        }
+    }
+}

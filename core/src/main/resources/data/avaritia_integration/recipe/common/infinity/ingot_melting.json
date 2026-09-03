@@ -1,0 +1,16 @@
+{
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:melting",
+	"ingredient": { "item": "avaritia:infinity_ingot" },
+	"result": {
+		"fluid": "avaritia_integration:molten_infinity",
+		"amount": 90
+	},
+	"temperature": 12000,
+	"time": 247
+}

@@ -1,0 +1,124 @@
+ext.ai_mod_id = 'avaritia_integration_all'
+ext.ai_mod_name = 'Avaritia Integration All'
+ext.ai_mod_description = 'Aggregated Avaritia Integration distribution.'
+ext.ai_run_directory = 'all'
+ext.ai_archive_name = mod_id
+ext.ai_aggregate = true
+ext.ai_dependency_blocks = """[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_ae2"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_botania"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_create"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_enderio"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_industrialforegoing"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_ifeu"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_mekanism"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_mekanism_generators"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_pneumaticcraft"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_refinedstorage"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_thermal_expansion_data"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_tconstruct_data"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+"""
+
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    def embeddedProjects = [
+            ':core',
+            ':integrations:ae2',
+            ':integrations:botania',
+            ':integrations:create',
+            ':integrations:enderio',
+            ':integrations:industrialforegoing',
+            ':integrations:ifeu',
+            ':integrations:mekanism',
+            ':integrations:mekanism-generators',
+            ':integrations:pneumaticcraft',
+            ':integrations:refinedstorage',
+            ':integrations:thermal-expansion-data',
+            ':integrations:tconstruct-data'
+    ]
+
+    embeddedProjects.each { path ->
+        implementation project(path)
+        jarJar(project(path)) {
+            transitive = false
+        }
+    }
+}

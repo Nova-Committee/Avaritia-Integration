@@ -1,0 +1,13 @@
+ext.ai_mod_id = 'avaritia_integration_mekanism_generators'
+ext.ai_mod_name = 'Avaritia Integration Mekanism Generators'
+ext.ai_mod_description = 'Avaritia Integration module for Mekanism Generators.'
+ext.ai_run_directory = 'integrations/mekanism-generators'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    implementation project(':integrations:mekanism')
+    implementation forge.mekanism
+    implementation variantOf(forge.mekanism) { classifier('generators') }
+}

@@ -1,0 +1,17 @@
+{
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:casting_table",
+	"cast": { "tag": "tconstruct:casts/single_use/nugget" },
+	"cast_consumed": true,
+	"fluid": {
+		"fluid": "avaritia_integration:molten_infinity",
+		"amount": 10
+	},
+	"result": "avaritia:infinity_nugget",
+	"cooling_time": 82
+}

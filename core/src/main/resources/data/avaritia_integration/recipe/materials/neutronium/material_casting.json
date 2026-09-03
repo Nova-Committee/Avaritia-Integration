@@ -1,0 +1,15 @@
+{
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:material_fluid",
+	"fluid": {
+		"fluid": "avaritia_integration:molten_neutron",
+		"amount": 90
+	},
+	"temperature": 8000,
+	"output": "avaritia_integration:neutronium"
+}

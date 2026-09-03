@@ -1,0 +1,25 @@
+package committee.nova.mods.avaritia_integration.integrations.enderio;
+
+import committee.nova.mods.avaritia_integration.integrations.enderio.registry.EnderIOIntegrationItems;
+import committee.nova.mods.avaritia_integration.module.Module;
+
+import net.minecraft.world.item.CreativeModeTab;
+import net.neoforged.bus.api.IEventBus;
+
+public final class EnderIOModule implements Module {
+
+    public static final String MOD_ID = "enderio";
+
+    @Override
+    public void init(IEventBus registryBus) {
+        EnderIOIntegrationItems.REGISTRY.register(registryBus);
+    }
+
+    @Override
+    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
+                                        CreativeModeTab.Output output) {
+        output.accept(EnderIOIntegrationItems.INFINITY_CAPACITOR.get());
+        output.accept(EnderIOIntegrationItems.INFINITY_GRINDING_BALL.get());
+        output.accept(EnderIOIntegrationItems.NEUTRON_GRINDING_BALL.get());
+    }
+}

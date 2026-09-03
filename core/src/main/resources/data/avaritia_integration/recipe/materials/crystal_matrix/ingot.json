@@ -1,0 +1,15 @@
+{
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:material",
+	"ingredient": {
+		"item": "avaritia:crystal_matrix_ingot"
+	},
+	"value": 1,
+	"needed": 1,
+	"material": "avaritia_integration:crystal_matrix"
+}

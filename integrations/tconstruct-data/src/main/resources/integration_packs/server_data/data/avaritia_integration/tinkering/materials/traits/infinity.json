@@ -1,0 +1,36 @@
+{
+	"perStat": {
+		"tconstruct:ranged": [
+			{
+				"name": "avaritia_integration:infinitum"
+			},
+			{
+				"name": "avaritia_integration:vault_split"
+			}
+		],
+		"tconstruct:melee_harvest": [
+			{
+				"name": "avaritia_integration:infinitum"
+			},
+			{
+				"name": "avaritia_integration:rule_over"
+			}
+		],
+		"tconstruct:armor": [
+			{
+				"name": "avaritia_integration:infinitum"
+			},
+			{
+				"name": "avaritia_integration:eternity"
+			}
+		],
+		"tconstruct:plating_shield": [
+			{
+				"name": "avaritia_integration:infinitum"
+			},
+			{
+				"name": "avaritia_integration:eternity"
+			}
+		]
+	}
+}

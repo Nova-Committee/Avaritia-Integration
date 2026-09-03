@@ -1,0 +1,17 @@
+{
+	"conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"type": "tconstruct:casting_table",
+	"cast": { "tag": "tconstruct:casts/multi_use/gem" },
+	"cast_consumed": false,
+	"fluid": {
+		"fluid": "avaritia_integration:molten_star",
+		"amount": 90
+	},
+	"result": "avaritia:star_fuel",
+	"cooling_time": 108
+}

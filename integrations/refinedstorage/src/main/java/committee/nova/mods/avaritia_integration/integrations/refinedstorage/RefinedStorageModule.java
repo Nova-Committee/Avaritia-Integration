@@ -1,0 +1,23 @@
+package committee.nova.mods.avaritia_integration.integrations.refinedstorage;
+
+import committee.nova.mods.avaritia_integration.integrations.refinedstorage.registry.RefinedStorageIntegrationItems;
+import committee.nova.mods.avaritia_integration.module.Module;
+
+import net.minecraft.world.item.CreativeModeTab;
+import net.neoforged.bus.api.IEventBus;
+
+public final class RefinedStorageModule implements Module {
+
+    public static final String MOD_ID = "refinedstorage";
+
+    @Override
+    public void init(IEventBus registryBus) {
+        RefinedStorageIntegrationItems.REGISTRY.register(registryBus);
+    }
+
+    @Override
+    public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
+                                        CreativeModeTab.Output output) {
+        output.accept(RefinedStorageIntegrationItems.INFINITY_STORAGE_PART.get());
+    }
+}

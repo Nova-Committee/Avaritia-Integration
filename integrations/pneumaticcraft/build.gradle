@@ -1,0 +1,11 @@
+ext.ai_mod_id = 'avaritia_integration_pneumaticcraft'
+ext.ai_mod_name = 'Avaritia Integration PneumaticCraft'
+ext.ai_mod_description = 'Avaritia Integration module for PneumaticCraft: Repressurized.'
+ext.ai_run_directory = 'integrations/pneumaticcraft'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    implementation forge.pneumaticcraftRepressurized
+}

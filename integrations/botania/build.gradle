@@ -1,0 +1,11 @@
+ext.ai_mod_id = 'avaritia_integration_botania'
+ext.ai_mod_name = 'Avaritia Integration Botania'
+ext.ai_mod_description = 'Avaritia Integration module for Botania.'
+ext.ai_run_directory = 'integrations/botania'
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    implementation forge.botania
+}

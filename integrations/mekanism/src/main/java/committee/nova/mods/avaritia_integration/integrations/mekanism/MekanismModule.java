@@ -1,0 +1,61 @@
+package committee.nova.mods.avaritia_integration.integrations.mekanism;
+
+import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.client.MekanismClient;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.network.to_server.MekIntegrationPacketGuiInteract;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationBlocks;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationChemicals;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationContainerTypes;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationItems;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationRecipeSerializers;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationTileEntityTypes;
+import committee.nova.mods.avaritia_integration.module.Module;
+
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
+import net.minecraft.world.item.CreativeModeTab.Output;
+import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+
+public final class MekanismModule implements Module {
+
+    public static final String MOD_ID = "mekanism";
+
+    public static ResourceLocation rl(String path) {
+        return ResourceLocation.fromNamespaceAndPath(AvaritiaIntegration.MOD_ID, path);
+    }
+
+    @Override
+    public void init(IEventBus registryBus) {
+        MekIntegrationItems.ITEMS.register(registryBus);
+        MekIntegrationBlocks.BLOCKS.register(registryBus);
+        MekIntegrationContainerTypes.CONTAINER_TYPES.register(registryBus);
+        MekIntegrationTileEntityTypes.TILE_ENTITY_TYPES.register(registryBus);
+        MekIntegrationChemicals.CHEMICALS.register(registryBus);
+        MekIntegrationRecipeSerializers.RECIPE_SERIALIZERS.register(registryBus);
+        registryBus.addListener(this::registerPayloads);
+    }
+
+    private void registerPayloads(RegisterPayloadHandlersEvent event) {
+        event.registrar(AvaritiaIntegration.MOD_ID)
+                .playToServer(MekIntegrationPacketGuiInteract.TYPE, MekIntegrationPacketGuiInteract.STREAM_CODEC,
+                        MekIntegrationPacketGuiInteract::handle);
+    }
+
+    @Override
+    public void registerClientEvent(IEventBus modBus, IEventBus gameBus) {
+        MekanismClient.register(modBus);
+    }
+
+    @Override
+    public void collectCreativeTabItems(ItemDisplayParameters parameters, Output output) {
+        for (Holder<Item> itemHolder : MekIntegrationItems.ITEMS.getEntries()) {
+            output.accept(itemHolder.value());
+        }
+        for (Holder<Item> blockHolder : MekIntegrationBlocks.BLOCKS.getSecondaryEntries()) {
+            output.accept(blockHolder.value());
+        }
+    }
+}
