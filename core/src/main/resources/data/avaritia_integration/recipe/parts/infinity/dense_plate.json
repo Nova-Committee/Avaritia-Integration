@@ -6,11 +6,7 @@
 			"item": "avaritia_integration:infinity_plate"
 		}
 	},
-	"pattern": [
-		"PPP",
-		"PPP",
-		"PPP"
-	],
+	"pattern": ["PPP", "PPP", "PPP"],
 	"result": {
 		"count": 1,
 		"id": "avaritia_integration:infinity_dense_plate"

@@ -6,11 +6,7 @@
 			"item": "avaritia_integration:blaze_cube_nugget"
 		}
 	},
-	"pattern": [
-		"NNN",
-		"NNN",
-		"NNN"
-	],
+	"pattern": ["NNN", "NNN", "NNN"],
 	"result": {
 		"count": 1,
 		"id": "avaritia:blaze_cube"

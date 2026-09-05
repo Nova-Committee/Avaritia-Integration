@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia_integration:blaze_cube_plate"
-	]
+	"values": ["avaritia_integration:blaze_cube_plate"]
 }

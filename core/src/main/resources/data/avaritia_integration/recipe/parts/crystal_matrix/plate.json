@@ -6,9 +6,7 @@
 			"item": "avaritia:crystal_matrix_ingot"
 		}
 	},
-	"pattern": [
-		"II"
-	],
+	"pattern": ["II"],
 	"result": {
 		"count": 1,
 		"id": "avaritia_integration:crystal_matrix_plate"

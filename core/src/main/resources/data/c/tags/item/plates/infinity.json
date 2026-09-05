@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia_integration:infinity_plate"
-	]
+	"values": ["avaritia_integration:infinity_plate"]
 }

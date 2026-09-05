@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia_integration:infinity_rod"
-	]
+	"values": ["avaritia_integration:infinity_rod"]
 }

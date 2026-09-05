@@ -5,6 +5,7 @@ import mekanism.api.text.ILangEntry;
 
 @NothingNullByDefault
 public enum MekIntegrationLang implements ILangEntry {
+
     NEUTRON_COLLECTING("factory.avaritia_integration.neutron_collecting"),
     SINGULARITY_COMPRESSING("factory.avaritia_integration.singularity_compressing"),
     DESCRIPTION_NEUTRON_COLLECTING("description.avaritia_integration.neutron_collector"),

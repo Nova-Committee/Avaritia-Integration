@@ -317,8 +317,8 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
     }
 
     private int getBaseTicksRequired() {
-        return type == MekIntegrationFactoryType.SINGULARITY_COMPRESSING ? MekIntegrationEnergy.INFINITY_TICKS
-                : MekIntegrationEnergy.NEUTRON_TICKS;
+        return type == MekIntegrationFactoryType.SINGULARITY_COMPRESSING ? MekIntegrationEnergy.INFINITY_TICKS :
+                MekIntegrationEnergy.NEUTRON_TICKS;
     }
 
     @ComputerMethod(methodDescription = "Total number of ticks it takes currently for the recipe to complete")

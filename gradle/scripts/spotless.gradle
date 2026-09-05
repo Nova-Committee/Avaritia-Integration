@@ -39,7 +39,7 @@ spotless {
         target 'src/*/resources/**/*.json', 'src/*/resources/**/*.mcmeta'
         targetExclude 'src/generated/resources/**'
 
-        biome()
+        biome('1.2.0').downloadDir(layout.buildDirectory.dir('spotless-biome').get().asFile)
         trimTrailingWhitespace()
         leadingSpacesToTabs()
         endWithNewline()

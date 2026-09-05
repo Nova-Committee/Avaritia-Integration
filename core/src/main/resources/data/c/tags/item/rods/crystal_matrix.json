@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia_integration:crystal_matrix_rod"
-	]
+	"values": ["avaritia_integration:crystal_matrix_rod"]
 }

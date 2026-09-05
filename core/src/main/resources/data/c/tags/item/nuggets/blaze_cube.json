@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia_integration:blaze_cube_nugget"
-	]
+	"values": ["avaritia_integration:blaze_cube_nugget"]
 }

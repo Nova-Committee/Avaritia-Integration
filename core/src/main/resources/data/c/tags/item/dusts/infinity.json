@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia_integration:infinity_dust"
-	]
+	"values": ["avaritia_integration:infinity_dust"]
 }

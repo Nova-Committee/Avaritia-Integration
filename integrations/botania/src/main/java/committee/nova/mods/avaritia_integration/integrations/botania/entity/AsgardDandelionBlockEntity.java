@@ -111,6 +111,4 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
         float hue = (gameTime % 100) / 100.0f;
         return Color.HSBtoRGB(hue, 1.0f, 1.0f) & 0xFFFFFF;
     }
-
-
 }

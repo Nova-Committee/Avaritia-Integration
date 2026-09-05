@@ -6,9 +6,7 @@
 			"item": "avaritia_integration:blaze_cube_plate"
 		}
 	},
-	"pattern": [
-		"PP"
-	],
+	"pattern": ["PP"],
 	"result": {
 		"count": 1,
 		"id": "avaritia_integration:blaze_cube_double_plate"

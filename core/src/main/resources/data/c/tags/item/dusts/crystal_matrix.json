@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia_integration:crystal_matrix_dust"
-	]
+	"values": ["avaritia_integration:crystal_matrix_dust"]
 }

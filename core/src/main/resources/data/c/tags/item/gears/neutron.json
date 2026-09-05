@@ -1,6 +1,4 @@
 {
 	"replace": false,
-	"values": [
-		"avaritia:neutron_gear"
-	]
+	"values": ["avaritia:neutron_gear"]
 }

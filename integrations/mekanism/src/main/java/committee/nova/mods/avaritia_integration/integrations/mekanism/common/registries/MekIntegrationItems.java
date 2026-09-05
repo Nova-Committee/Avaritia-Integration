@@ -32,7 +32,8 @@ public class MekIntegrationItems {
             .register("neutron_energy_tablet", () -> new ItemEnergized(new Properties().rarity(Rarity.RARE)))
             .addAttachedContainerCapabilities(ContainerType.ENERGY, () -> EnergyContainersBuilder.builder()
                     .addBasic(ConstantPredicates.alwaysTrue(), ConstantPredicates.alwaysTrue(),
-                            () -> MekIntegrationEnergy.NEUTRON_TABLET_RATE, () -> MekIntegrationEnergy.NEUTRON_TABLET_MAX)
+                            () -> MekIntegrationEnergy.NEUTRON_TABLET_RATE,
+                            () -> MekIntegrationEnergy.NEUTRON_TABLET_MAX)
                     .build(), MekanismConfig.gear);
     public static final ItemRegistryObject<Item> INFINITY_CONTROL_CIRCUIT = ITEMS.register("infinity_control_circuit",
             Rarity.EPIC);
