@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"group": "botania:floating_flower",
+	"ingredients": [
+		{
+			"tag": "botania:floating_flowers"
+		},
+		{
+			"item": "avaritia_integration:asgard_dandelion"
+		}
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:asgard_dandelion_floating"
+	}
+}

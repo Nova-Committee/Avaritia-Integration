@@ -1,0 +1,41 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "pneumaticcraft"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"B": {
+			"item": "pneumaticcraft:compressed_iron_block"
+		},
+		"I": {
+			"item": "pneumaticcraft:ingot_iron_compressed"
+		},
+		"P": {
+			"item": "pneumaticcraft:printed_circuit_board"
+		},
+		"N": {
+			"item": "avaritia:infinity_ingot"
+		}
+	},
+	"pattern": [
+		"         ",
+		"  BBBBB  ",
+		" BIIIIIB ",
+		" BIPPPIB ",
+		" BIPNPIB ",
+		" BIPPPIB ",
+		" BIIIIIB ",
+		"  BBBBB  ",
+		"         "
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:creative_compressed_iron"
+	},
+	"show_notification": true,
+	"tier": 4
+}

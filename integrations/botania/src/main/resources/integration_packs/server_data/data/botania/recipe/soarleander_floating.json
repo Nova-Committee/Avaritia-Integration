@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"group": "botania:floating_flower",
+	"ingredients": [
+		{
+			"tag": "botania:floating_flowers"
+		},
+		{
+			"item": "avaritia_integration:soarleander"
+		}
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:soarleander_floating"
+	}
+}

@@ -1,8 +1,8 @@
 {
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:ingots/gold",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:ingots/gold"
 	},
 	"output": {
 		"id": "avaritia:singularity",

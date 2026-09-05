@@ -1,0 +1,38 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"N": {
+			"item": "avaritia:neutron_ingot"
+		},
+		"M": {
+			"item": "avaritia_integration:creative_mechanism"
+		},
+		"C": {
+			"item": "avaritia:infinity_catalyst"
+		}
+	},
+	"pattern": [
+		"         ",
+		"  NNNNN  ",
+		" NMMMMMN ",
+		" NM   MN ",
+		" NM C MN ",
+		" NM   MN ",
+		" NMMMMMN ",
+		"  NNNNN  ",
+		"         "
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:creative_compound"
+	},
+	"show_notification": true,
+	"tier": 4
+}

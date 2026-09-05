@@ -1,5 +1,16 @@
 {
-	"conditions": [
+	"type": "avaritia_integration:compressor",
+	"input": {
+		"count": 1000,
+		"tag": "c:ingots/aluminum"
+	},
+	"output": {
+		"id": "avaritia:singularity",
+		"components": {
+			"avaritia:singularity_id": "avaritia:aluminum"
+		}
+	},
+	"neoforge:conditions": [
 		{
 			"type": "neoforge:not",
 			"value": {
@@ -7,16 +18,5 @@
 				"tag": "c:ingots/aluminum"
 			}
 		}
-	],
-	"type": "avaritia_integration:compressor",
-	"input": {
-		"ingredient": "#c:ingots/aluminum",
-		"count": 1000
-	},
-	"output": {
-		"id": "avaritia:singularity",
-		"components": {
-			"avaritia:singularity_id": "avaritia:aluminum"
-		}
-	}
+	]
 }

@@ -1,8 +1,8 @@
 {
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:obsidian",
-		"count": 1000
+		"count": 1000,
+		"item": "minecraft:obsidian"
 	},
 	"output": {
 		"id": "avaritia:singularity",

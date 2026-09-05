@@ -1,8 +1,8 @@
 {
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:dusts/redstone",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:dusts/redstone"
 	},
 	"output": {
 		"id": "avaritia:singularity",

@@ -1,8 +1,8 @@
 {
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:gems/quartz",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:gems/quartz"
 	},
 	"output": {
 		"id": "avaritia:singularity",

@@ -1,0 +1,32 @@
+{
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"a": {
+			"item": "botania:tiny_potato"
+		},
+		"d": {
+			"item": "avaritia:diamond_lattice"
+		},
+		"s": {
+			"item": "avaritia:infinity_catalyst"
+		}
+	},
+	"pattern": [
+		"aaaaaaaaa",
+		"aaaaaaaaa",
+		"aaadadaaa",
+		"aaaaaaaaa",
+		"aadasadaa",
+		"aaadddaaa",
+		"aaaaaaaaa",
+		"aaaaaaaaa",
+		"aaaaaaaaa"
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:infinity_potato"
+	},
+	"show_notification": true,
+	"tier": 4
+}

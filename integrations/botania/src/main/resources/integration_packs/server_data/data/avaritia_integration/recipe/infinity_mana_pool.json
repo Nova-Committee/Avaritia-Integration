@@ -1,0 +1,32 @@
+{
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"I": {
+			"item": "avaritia:infinity_ingot"
+		},
+		"L": {
+			"item": "botania:livingrock"
+		},
+		"P": {
+			"item": "botania:fabulous_mana_pool"
+		}
+	},
+	"pattern": [
+		"         ",
+		" IIIIIII ",
+		" ILLLLLI ",
+		" IL   LI ",
+		" IL P LI ",
+		" IL   LI ",
+		" ILLLLLI ",
+		" IIIIIII ",
+		"         "
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:infinity_mana_pool"
+	},
+	"show_notification": true,
+	"tier": 4
+}

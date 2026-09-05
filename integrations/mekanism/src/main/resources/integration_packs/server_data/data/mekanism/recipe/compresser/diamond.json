@@ -1,8 +1,8 @@
 {
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:gems/diamond",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:gems/diamond"
 	},
 	"output": {
 		"id": "avaritia:singularity",

@@ -1,8 +1,8 @@
 {
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:dusts/glowstone",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:dusts/glowstone"
 	},
 	"output": {
 		"id": "avaritia:singularity",

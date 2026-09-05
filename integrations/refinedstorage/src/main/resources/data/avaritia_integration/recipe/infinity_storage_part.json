@@ -1,0 +1,38 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "refinedstorage"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"I": {
+			"item": "avaritia:infinity_ingot"
+		},
+		"6": {
+			"item": "refinedstorage:64k_storage_part"
+		},
+		"C": {
+			"item": "avaritia:infinity_catalyst"
+		}
+	},
+	"pattern": [
+		"         ",
+		"  IIIII  ",
+		" I66666I ",
+		" I6   6I ",
+		" I6 C 6I ",
+		" I6   6I ",
+		" I66666I ",
+		"  IIIII  ",
+		"         "
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:infinity_storage_part"
+	},
+	"show_notification": true,
+	"tier": 4
+}

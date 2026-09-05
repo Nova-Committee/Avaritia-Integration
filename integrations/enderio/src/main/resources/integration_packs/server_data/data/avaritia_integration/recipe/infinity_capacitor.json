@@ -1,0 +1,38 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "enderio"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"I": {
+			"item": "avaritia:infinity_ingot"
+		},
+		"O": {
+			"item": "enderio:octadic_capacitor"
+		},
+		"C": {
+			"item": "avaritia:infinity_catalyst"
+		}
+	},
+	"pattern": [
+		"         ",
+		"  IIIII  ",
+		" IOOOOIO ",
+		" IO   OI ",
+		" IO C OI ",
+		" IO   OI ",
+		" IOOOOIO ",
+		"  IIIII  ",
+		"         "
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:infinity_capacitor"
+	},
+	"show_notification": true,
+	"tier": 4
+}

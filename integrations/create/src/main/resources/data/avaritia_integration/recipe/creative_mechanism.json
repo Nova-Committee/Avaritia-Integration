@@ -1,0 +1,41 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"I": {
+			"item": "avaritia:infinity_ingot"
+		},
+		"C": {
+			"item": "create:cogwheel"
+		},
+		"P": {
+			"item": "create:precision_mechanism"
+		},
+		"M": {
+			"item": "create:brass_ingot"
+		}
+	},
+	"pattern": [
+		"         ",
+		"  IIIII  ",
+		" ICCCCCI ",
+		" ICPPPCI ",
+		" ICPMPCI ",
+		" ICPPPCI ",
+		" ICCCCCI ",
+		"  IIIII  ",
+		"         "
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:creative_mechanism"
+	},
+	"show_notification": true,
+	"tier": 4
+}

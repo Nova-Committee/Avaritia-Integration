@@ -1,0 +1,42 @@
+{
+	"type": "botania:petal_apothecary",
+	"ingredients": [
+		{
+			"tag": "botania:petals/red"
+		},
+		{
+			"tag": "botania:petals/red"
+		},
+		{
+			"tag": "botania:petals/black"
+		},
+		{
+			"tag": "botania:petals/black"
+		},
+		{
+			"item": "minecraft:wither_rose"
+		},
+		{
+			"item": "botania:rune_of_wrath"
+		},
+		{
+			"item": "botania:rune_of_fire"
+		},
+		{
+			"item": "botania:gaia_spirit"
+		},
+		{
+			"item": "avaritia:neutron_ingot"
+		},
+		{
+			"item": "avaritia:infinity_nugget"
+		}
+	],
+	"output": {
+		"count": 1,
+		"id": "avaritia_integration:soarleander"
+	},
+	"reagent": {
+		"tag": "botania:seed_apothecary_reagent"
+	}
+}

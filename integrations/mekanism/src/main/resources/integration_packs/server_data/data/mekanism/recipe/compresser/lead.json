@@ -1,22 +1,22 @@
 {
-	"conditions": [
-		{
-			"type": "c:not",
-			"value": {
-				"type": "c:tag_empty",
-				"tag": "c:ingots/lead"
-			}
-		}
-	],
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:ingots/lead",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:ingots/lead"
 	},
 	"output": {
 		"id": "avaritia:singularity",
 		"components": {
 			"avaritia:singularity_id": "avaritia:lead"
 		}
-	}
+	},
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:not",
+			"value": {
+				"type": "neoforge:tag_empty",
+				"tag": "c:ingots/lead"
+			}
+		}
+	]
 }

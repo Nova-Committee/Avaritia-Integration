@@ -1,8 +1,8 @@
 {
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:gems/emerald",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:gems/emerald"
 	},
 	"output": {
 		"id": "avaritia:singularity",

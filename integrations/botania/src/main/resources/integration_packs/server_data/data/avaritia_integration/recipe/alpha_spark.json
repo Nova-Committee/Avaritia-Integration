@@ -1,0 +1,23 @@
+{
+	"type": "avaritia:extreme_smithing",
+	"addition": [
+		{
+			"item": "avaritia:endest_pearl"
+		},
+		{
+			"item": "avaritia:enhancement_core"
+		},
+		{
+			"item": "avaritia:infinity_catalyst"
+		}
+	],
+	"base": {
+		"item": "botania:mana_spark"
+	},
+	"result": {
+		"id": "avaritia_integration:alpha_spark"
+	},
+	"template": {
+		"item": "avaritia:upgrade_smithing_template"
+	}
+}

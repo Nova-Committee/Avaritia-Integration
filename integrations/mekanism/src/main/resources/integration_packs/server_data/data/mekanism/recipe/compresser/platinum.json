@@ -1,22 +1,22 @@
 {
-	"conditions": [
-		{
-			"type": "c:not",
-			"value": {
-				"type": "c:tag_empty",
-				"tag": "c:ingots/platinum"
-			}
-		}
-	],
 	"type": "avaritia_integration:compressor",
 	"input": {
-		"ingredient": "#c:ingots/platinum",
-		"count": 1000
+		"count": 1000,
+		"tag": "c:ingots/platinum"
 	},
 	"output": {
 		"id": "avaritia:singularity",
 		"components": {
 			"avaritia:singularity_id": "avaritia:platinum"
 		}
-	}
+	},
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:not",
+			"value": {
+				"type": "neoforge:tag_empty",
+				"tag": "c:ingots/platinum"
+			}
+		}
+	]
 }
