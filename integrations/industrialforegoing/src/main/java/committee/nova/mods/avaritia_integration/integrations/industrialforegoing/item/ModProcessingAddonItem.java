@@ -21,9 +21,14 @@ public class ModProcessingAddonItem extends AddonItem {
     }
 
     @Override
+    protected void applyAugment(ItemStack stack) {
+        AugmentWrapper.setType(stack, ProcessingAddonItem.PROCESSING, (float) (1 + this.tier));
+    }
+
+    @Override
     public void onCraftedBy(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull Player playerIn) {
         super.onCraftedBy(stack, worldIn, playerIn);
-        AugmentWrapper.setType(stack, ProcessingAddonItem.PROCESSING, (float) (1 + this.tier));
+        applyAugment(stack);
     }
 
     @Override

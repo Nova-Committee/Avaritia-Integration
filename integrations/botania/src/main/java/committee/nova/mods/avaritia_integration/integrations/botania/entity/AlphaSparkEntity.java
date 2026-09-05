@@ -59,7 +59,7 @@ import vazkii.botania.common.entity.SparkBaseEntity;
 import java.util.*;
 
 public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
-	private static final int TRANSFER_RATE = 100000;
+	private static final int TRANSFER_RATE = AlphaSparkTransfers.TRANSFER_RATE;
 	private static final String TAG_UPGRADE = "upgrade";
 	private static final EntityDataAccessor<ItemStack> UPGRADE = SynchedEntityData.defineId(AlphaSparkEntity.class, EntityDataSerializers.ITEM_STACK);
 
@@ -190,7 +190,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 		checkReceiverFull();
 
 		if (!outgoingTransfers.isEmpty()) {
-			int manaTotal = Math.min(TRANSFER_RATE * outgoingTransfers.size(), receiver.getCurrentMana());
+			int manaTotal = AlphaSparkTransfers.transferBudget(outgoingTransfers.size(), receiver.getCurrentMana());
 			int count = outgoingTransfers.size();
 			int manaSpent = 0;
 
@@ -220,7 +220,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 			}
 		}
 		if (!inboundTransfers.isEmpty()) {
-			int manaNeeded = Math.min(TRANSFER_RATE * inboundTransfers.size(), tile.getAvailableSpaceForMana());
+			int manaNeeded = AlphaSparkTransfers.transferBudget(inboundTransfers.size(), tile.getAvailableSpaceForMana());
 			int count = inboundTransfers.size();
 			int manaRecieved = 0;
 

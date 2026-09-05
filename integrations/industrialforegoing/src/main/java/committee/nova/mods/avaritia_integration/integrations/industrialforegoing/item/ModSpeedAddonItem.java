@@ -21,9 +21,14 @@ public class ModSpeedAddonItem extends AddonItem {
     }
 
     @Override
+    protected void applyAugment(ItemStack stack) {
+        AugmentWrapper.setType(stack, AugmentTypes.SPEED, (float) (1 + this.tier));
+    }
+
+    @Override
     public void onCraftedBy(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull Player playerIn) {
         super.onCraftedBy(stack, worldIn, playerIn);
-        AugmentWrapper.setType(stack, AugmentTypes.SPEED, (float) (1 + this.tier));
+        applyAugment(stack);
     }
 
     @Override

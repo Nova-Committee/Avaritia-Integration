@@ -37,6 +37,11 @@
     "fluid": "avaritia_integration:elderly_medulla_source"
   },
   "output": {
+    "components": {
+      "titanium:augments": {
+        "Speed": 9.0
+      }
+    },
     "count": 1,
     "id": "avaritia_integration:speed_addon_crystal_matrix"
   },

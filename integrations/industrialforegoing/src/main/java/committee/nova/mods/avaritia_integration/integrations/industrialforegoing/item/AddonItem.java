@@ -37,6 +37,21 @@ public abstract class AddonItem extends Item implements IRecipeProvider {
     }
 
     @Override
+    public ItemStack getDefaultInstance() {
+        ItemStack stack = super.getDefaultInstance();
+        applyAugment(stack);
+        return stack;
+    }
+
+    protected abstract void applyAugment(ItemStack stack);
+
+    @Override
+    public void verifyComponentsAfterLoad(ItemStack stack) {
+        super.verifyComponentsAfterLoad(stack);
+        applyAugment(stack);
+    }
+
+    @Override
     public void registerRecipe(RecipeOutput recipeOutput) {}
 
     public @NotNull InteractionResult useOn(UseOnContext context) {

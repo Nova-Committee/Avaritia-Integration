@@ -37,6 +37,11 @@
     "fluid": "industrialforegoing:ether_gas"
   },
   "output": {
+    "components": {
+      "titanium:augments": {
+        "Speed": 5.0
+      }
+    },
     "count": 1,
     "id": "avaritia_integration:speed_addon_blaze_cube"
   },

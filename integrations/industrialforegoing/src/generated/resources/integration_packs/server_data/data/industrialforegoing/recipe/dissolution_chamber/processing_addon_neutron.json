@@ -37,6 +37,11 @@
     "fluid": "avaritia_integration:void_matter_source"
   },
   "output": {
+    "components": {
+      "titanium:augments": {
+        "Processing": 17.0
+      }
+    },
     "count": 1,
     "id": "avaritia_integration:processing_addon_neutron"
   },

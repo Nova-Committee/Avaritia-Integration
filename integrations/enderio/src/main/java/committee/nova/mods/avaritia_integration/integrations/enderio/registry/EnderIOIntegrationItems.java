@@ -20,7 +20,7 @@ public final class EnderIOIntegrationItems {
 
     public static final DeferredItem<Item> INFINITY_CAPACITOR = register("infinity_capacitor",
             () -> new InfinityCapacitorItem(new Item.Properties().rarity(ModRarities.EPIC)
-                    .component(EIODataComponents.CAPACITOR_DATA, CapacitorData.simple(9.999999046325684F))));
+                    .component(EIODataComponents.CAPACITOR_DATA, CapacitorData.simple(1000.0F))));
     public static final DeferredItem<Item> INFINITY_GRINDING_BALL = register("infinity_grinding_ball",
             () -> new BaseItem(pro -> pro.rarity(ModRarities.EPIC)));
     public static final DeferredItem<Item> NEUTRON_GRINDING_BALL = register("neutron_grinding_ball",

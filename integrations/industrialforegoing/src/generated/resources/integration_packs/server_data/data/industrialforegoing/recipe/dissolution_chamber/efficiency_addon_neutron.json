@@ -37,6 +37,11 @@
     "fluid": "avaritia_integration:void_matter_source"
   },
   "output": {
+    "components": {
+      "titanium:augments": {
+        "Efficiency": 0.05
+      }
+    },
     "count": 1,
     "id": "avaritia_integration:efficiency_addon_neutron"
   },

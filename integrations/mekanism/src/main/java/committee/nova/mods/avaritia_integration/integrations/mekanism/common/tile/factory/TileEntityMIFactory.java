@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism.common.tile.factory;
 
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.block.attribute.AttributeMekIntegrationFactoryType;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.config.MekIntegrationEnergy;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.content.blocktype.MekIntegrationFactoryType;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationBlocks;
 
@@ -72,11 +73,6 @@ import java.util.function.BooleanSupplier;
 public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> extends TileEntityConfigurableMachine
                                          implements IRecipeLookupHandler<RECIPE> {
 
-    /**
-     * How many ticks it takes, by default, to run an operation.
-     */
-    protected static final int BASE_TICKS_REQUIRED = 200;
-
     protected FactoryRecipeCacheLookupMonitor<RECIPE>[] recipeCacheLookupMonitors;
     protected BooleanSupplier[] recheckAllRecipeErrors;
     protected final ErrorTracker errorTracker;
@@ -92,7 +88,7 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
     /**
      * How many ticks it takes, with upgrades, to run an operation
      */
-    private int ticksRequired = 200;
+    private int ticksRequired = MekIntegrationEnergy.NEUTRON_TICKS;
     protected boolean sorting;
     private boolean sortingNeeded = true;
     private long lastUsage = 0L;
@@ -121,6 +117,7 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
         super(blockProvider, pos, state);
         type = Objects.requireNonNull(Attribute.get(getBlockHolder(), AttributeMekIntegrationFactoryType.class))
                 .getMekIntegrationFactoryType();
+        ticksRequired = getBaseTicksRequired();
         outputItemSlots = new ArrayList<>();
 
         configComponent.setupInputConfig(TransmissionType.ENERGY, energyContainer);
@@ -319,6 +316,11 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
         return lastUsage;
     }
 
+    private int getBaseTicksRequired() {
+        return type == MekIntegrationFactoryType.SINGULARITY_COMPRESSING ? MekIntegrationEnergy.INFINITY_TICKS
+                : MekIntegrationEnergy.NEUTRON_TICKS;
+    }
+
     @ComputerMethod(methodDescription = "Total number of ticks it takes currently for the recipe to complete")
     public int getTicksRequired() {
         return ticksRequired;
@@ -360,7 +362,7 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe<?>> exte
     public void recalculateUpgrades(Upgrade upgrade) {
         super.recalculateUpgrades(upgrade);
         if (upgrade == Upgrade.SPEED) {
-            ticksRequired = MekanismUtils.getTicks(this, BASE_TICKS_REQUIRED);
+            ticksRequired = MekanismUtils.getTicks(this, getBaseTicksRequired());
         }
     }
 

@@ -23,14 +23,14 @@ public class IndustrialForegoingIntegrationItems {
 
     private static HashMap<String, Supplier<? extends AddonItem>> registryAddons() {
         HashMap<String, Supplier<? extends AddonItem>> map = new HashMap<>();
-        AddonInfo.create(3, AIItems.BLAZE_CUBE_GEAR, () -> ModuleCore.ETHER.getSourceFluid().get(), 1000, 100,
+        AddonInfo.create(4, AIItems.BLAZE_CUBE_GEAR, () -> ModuleCore.ETHER.getSourceFluid().get(), 1000, 100,
                 "blaze_cube").registry(map, ITEMS);
-        AddonInfo.create(5, AIItems.CRYSTAL_MATRIX_GEAR,
+        AddonInfo.create(8, AIItems.CRYSTAL_MATRIX_GEAR,
                 IndustrialForegoingIntegrationFluids.ELDERLY_MEDULLA.getSourceFluid(), 1000, 200, "crystal_matrix")
                 .registry(map, ITEMS);
-        AddonInfo.create(8, ModItems.neutron_gear, IndustrialForegoingIntegrationFluids.VOID_MATTER.getSourceFluid(),
+        AddonInfo.create(16, ModItems.neutron_gear, IndustrialForegoingIntegrationFluids.VOID_MATTER.getSourceFluid(),
                 1000, 300, "neutron").registry(map, ITEMS);
-        AddonInfo.create(12, AIItems.INFINITY_GEAR, IndustrialForegoingIntegrationFluids.VOID_MATTER.getSourceFluid(),
+        AddonInfo.create(32, AIItems.INFINITY_GEAR, IndustrialForegoingIntegrationFluids.VOID_MATTER.getSourceFluid(),
                 2000, 400, "infinity").registry(map, ITEMS);
         return map;
     }

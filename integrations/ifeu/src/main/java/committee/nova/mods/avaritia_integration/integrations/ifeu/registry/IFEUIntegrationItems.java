@@ -31,7 +31,7 @@ public class IFEUIntegrationItems {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(AvaritiaIntegration.MOD_ID);
     public static DeferredHolder<Item, EnergyAddonItem> ENERGY_ADDON_BLAZE_CUBE = ITEMS
-            .register("energy_addon_blaze_cube", () -> new EnergyAddonItem(7, IFEUItems.TAB_ADDONS) {
+            .register("energy_addon_blaze_cube", () -> new EnergyAddonItem(8, IFEUItems.TAB_ADDONS) {
 
                 @Override
                 public void registerRecipe(RecipeOutput recipeOutput) {
@@ -48,7 +48,7 @@ public class IFEUIntegrationItems {
                 }
             });
     public static DeferredHolder<Item, EnergyAddonItem> ENERGY_ADDON_CRYSTAL_MATRIX = ITEMS
-            .register("energy_addon_crystal_matrix", () -> new EnergyAddonItem(8, IFEUItems.TAB_ADDONS) {
+            .register("energy_addon_crystal_matrix", () -> new EnergyAddonItem(16, IFEUItems.TAB_ADDONS) {
 
                 @Override
                 public void registerRecipe(RecipeOutput recipeOutput) {
@@ -66,7 +66,7 @@ public class IFEUIntegrationItems {
                 }
             });
     public static DeferredHolder<Item, EnergyAddonItem> ENERGY_ADDON_NEUTRON = ITEMS.register("energy_addon_neutron",
-            () -> new EnergyAddonItem(9, IFEUItems.TAB_ADDONS) {
+            () -> new EnergyAddonItem(32, IFEUItems.TAB_ADDONS) {
 
                 @Override
                 public void registerRecipe(RecipeOutput recipeOutput) {
@@ -84,7 +84,7 @@ public class IFEUIntegrationItems {
                 }
             });
     public static DeferredHolder<Item, EnergyAddonItem> ENERGY_ADDON_INFINITY = ITEMS.register("energy_addon_infinity",
-            () -> new EnergyAddonItem(10, IFEUItems.TAB_ADDONS) {
+            () -> new EnergyAddonItem(64, IFEUItems.TAB_ADDONS) {
 
                 @Override
                 public void registerRecipe(RecipeOutput recipeOutput) {

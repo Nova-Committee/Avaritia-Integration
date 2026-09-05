@@ -1,5 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.common.registries;
 
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.config.MekIntegrationEnergy;
 import committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.common.blockentity.InfinityAdvancedSolarGeneratorBlockEntity;
 import committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.common.blockentity.InfinitySolarGeneratorBlockEntity;
 import committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.common.blockentity.NeutronAdvancedSolarGeneratorBlockEntity;
@@ -15,7 +16,6 @@ import mekanism.common.block.attribute.AttributeHasBounding.TriBooleanFunction;
 import mekanism.common.block.attribute.AttributeUpgradeSupport;
 import mekanism.common.block.attribute.Attributes;
 import mekanism.generators.common.GeneratorsLang;
-import mekanism.generators.common.config.MekanismGeneratorsConfig;
 import mekanism.generators.common.content.blocktype.BlockShapes;
 import mekanism.generators.common.content.blocktype.Generator;
 import mekanism.generators.common.content.blocktype.Generator.GeneratorBuilder;
@@ -30,7 +30,7 @@ public class GenIntegrationBlockTypes {
             .createGenerator(() -> GenIntegrationBlockEntityTypes.INFINITY_SOLAR_GENERATOR,
                     GeneratorsLang.DESCRIPTION_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.INFINITY_SOLAR_GENERATOR)
-            .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.solarGenerator)
+            .withEnergyConfig(() -> MekIntegrationEnergy.INFINITY_SOLAR_STORAGE)
             .withCustomShape(BlockShapes.SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .with(AttributeUpgradeSupport.MUFFLING_ONLY)
@@ -43,7 +43,7 @@ public class GenIntegrationBlockTypes {
             .createGenerator(() -> GenIntegrationBlockEntityTypes.NEUTRON_SOLAR_GENERATOR,
                     GeneratorsLang.DESCRIPTION_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.NEUTRON_SOLAR_GENERATOR)
-            .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.solarGenerator)
+            .withEnergyConfig(() -> MekIntegrationEnergy.NEUTRON_SOLAR_STORAGE)
             .withCustomShape(BlockShapes.SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .with(AttributeUpgradeSupport.MUFFLING_ONLY)
@@ -56,7 +56,7 @@ public class GenIntegrationBlockTypes {
             .createGenerator(() -> GenIntegrationBlockEntityTypes.INFINITY_ADVANCED_SOLAR_GENERATOR,
                     GeneratorsLang.DESCRIPTION_ADVANCED_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.INFINITY_ADVANCED_SOLAR_GENERATOR)
-            .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.advancedSolarGenerator)
+            .withEnergyConfig(() -> MekIntegrationEnergy.INFINITY_SOLAR_STORAGE)
             .withCustomShape(BlockShapes.ADVANCED_SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .with(AttributeUpgradeSupport.MUFFLING_ONLY)
@@ -89,7 +89,7 @@ public class GenIntegrationBlockTypes {
             .createGenerator(() -> GenIntegrationBlockEntityTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR,
                     GeneratorsLang.DESCRIPTION_ADVANCED_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR)
-            .withEnergyConfig(MekanismGeneratorsConfig.storageConfig.advancedSolarGenerator)
+            .withEnergyConfig(() -> MekIntegrationEnergy.NEUTRON_SOLAR_STORAGE)
             .withCustomShape(BlockShapes.ADVANCED_SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .with(AttributeUpgradeSupport.MUFFLING_ONLY)

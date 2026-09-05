@@ -2,6 +2,7 @@ package committee.nova.mods.avaritia_integration.integrations.mekanism.common.ti
 
 import committee.nova.mods.avaritia_integration.integrations.mekanism.api.recipes.cache.ChemicalToItemCachedRecipe;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.api.recipes.chemicals.ChemicalStackToItemStackRecipe;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.config.MekIntegrationEnergy;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.recipe.MekIntegrationRecipeType;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationBlocks;
 
@@ -58,7 +59,7 @@ public class TileEntityNeutronCollector extends TileEntityProgressMachine<Chemic
             RecipeError.NOT_ENOUGH_OUTPUT_SPACE,
             RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT);
 
-    private static final long MAX_GAS = 10_000;
+    private static final long MAX_GAS = MekIntegrationEnergy.NEUTRON_CHEMICAL_TANK;
 
     public IChemicalTank gasTank;
 
@@ -72,7 +73,8 @@ public class TileEntityNeutronCollector extends TileEntityProgressMachine<Chemic
     EnergyInventorySlot energySlot;
 
     public TileEntityNeutronCollector(BlockPos pos, BlockState state) {
-        super(MekIntegrationBlocks.NEUTRON_COLLECTOR, pos, state, TRACKED_ERROR_TYPES, 200);
+        super(MekIntegrationBlocks.NEUTRON_COLLECTOR, pos, state, TRACKED_ERROR_TYPES,
+                MekIntegrationEnergy.NEUTRON_TICKS);
         configComponent.setupItemIOConfig(gasInputSlot, outputSlot, energySlot);
         configComponent.setupIOConfig(TransmissionType.CHEMICAL, gasTank, RelativeSide.RIGHT).setCanEject(false);
         configComponent.setupInputConfig(TransmissionType.ENERGY, energyContainer);

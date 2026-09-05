@@ -1,5 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism.common.tile.machine;
 
+import committee.nova.mods.avaritia_integration.integrations.mekanism.common.config.MekIntegrationEnergy;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.inventory.slot.MIInputInventorySlot;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.recipe.MekIntegrationRecipeType;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.registries.MekIntegrationBlocks;
@@ -54,7 +55,8 @@ public class TileEntitySingularityCompressor extends TileEntityProgressMachine<I
     EnergyInventorySlot energySlot;
 
     public TileEntitySingularityCompressor(BlockPos pos, BlockState state) {
-        super(MekIntegrationBlocks.SINGULARITY_COMPRESSOR, pos, state, TRACKED_ERROR_TYPES, 200);
+        super(MekIntegrationBlocks.SINGULARITY_COMPRESSOR, pos, state, TRACKED_ERROR_TYPES,
+                MekIntegrationEnergy.INFINITY_TICKS);
         configComponent.setupItemIOConfig(inputSlot, outputSlot, energySlot);
         configComponent.setupInputConfig(TransmissionType.ENERGY, energyContainer);
 
