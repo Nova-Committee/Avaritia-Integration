@@ -3,7 +3,7 @@
 	"package": "committee.nova.mods.avaritia_integration.integrations.mekanismgenerator.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"refmap": "avaritia_integration.refmap.json",
-	"mixins": ["MixinTileEntityGenerator"],
+	"mixins": ["MixinTileEntityGenerator", "MixinTileEntitySolarGenerator"],
 	"injectors": {
 		"defaultRequire": 1
 	},

@@ -4,33 +4,50 @@ import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.client.recipe_viewer.MekIntegrationRecipeViewerTypes;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.recipe.MekIntegrationRecipeType;
 
+import net.minecraft.resources.ResourceLocation;
+
 import mekanism.client.recipe_viewer.jei.CatalystRegistryHelper;
 import mekanism.client.recipe_viewer.jei.RecipeRegistryHelper;
 import mekanism.client.recipe_viewer.jei.machine.ItemStackToItemStackRecipeCategory;
 import mekanism.common.Mekanism;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import org.jetbrains.annotations.NotNull;
 
-public final class MekIntegrationJEI {
+@JeiPlugin
+public class MekIntegrationJEI implements IModPlugin {
 
-    private MekIntegrationJEI() {}
+    public MekIntegrationJEI() {
+        AvaritiaIntegration.LOGGER.info("MekIntegrationJEI constructed (JEI scan discovery)");
+    }
 
     private static boolean shouldLoad() {
         return !Mekanism.hooks.emi.isLoaded();
     }
 
-    public static void registerCompressor(IRecipeCategoryRegistration registry) {
+    @NotNull
+    @Override
+    public ResourceLocation getPluginUid() {
+        return ResourceLocation.fromNamespaceAndPath(AvaritiaIntegration.MOD_ID, "mekanism_jei");
+    }
+
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registry) {
         if (!shouldLoad()) {
             return;
         }
+        AvaritiaIntegration.LOGGER.info("MekIntegrationJEI.registerCategories");
         IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
         registry.addRecipeCategories(
                 new ItemStackToItemStackRecipeCategory(guiHelper, MekIntegrationRecipeViewerTypes.COMPRESSING));
     }
 
-    public static void registerCompressor(IRecipeRegistration registry) {
+    @Override
+    public void registerRecipes(IRecipeRegistration registry) {
         if (!shouldLoad()) {
             return;
         }
@@ -40,7 +57,8 @@ public final class MekIntegrationJEI {
                 MekIntegrationRecipeType.MEK_COMPRESSING.getRecipes().size());
     }
 
-    public static void registerCompressor(IRecipeCatalystRegistration registry) {
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
         if (!shouldLoad()) {
             return;
         }

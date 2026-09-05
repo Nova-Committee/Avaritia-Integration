@@ -68,29 +68,32 @@ public class BigIntegerEnergyContainer extends BasicEnergyContainer {
         return MekBigEnergy.toMekanismLong(maxBig.subtract(storedBig));
     }
 
-    @Override
-    public long insert(long amount, Action action, AutomationType automationType) {
-        if (amount <= 0L || !canInsert.test(automationType)) {
+    /**
+     * Production-only path for infinity generators. Do not use for item/cable transfer.
+     */
+    public BigInteger insertBig(BigInteger amount, Action action, AutomationType automationType) {
+        if (amount.signum() <= 0 || !canInsert.test(automationType)) {
             return amount;
         }
         BigInteger room = maxBig.subtract(storedBig);
         if (room.signum() <= 0) {
             return amount;
         }
-        BigInteger requested = automationType == AutomationType.INTERNAL ?
-                MekBigEnergy.infinitySupplyTick() : MekBigEnergy.fromMekanismLong(amount);
-        BigInteger toAdd = requested.min(room);
-        if (toAdd.signum() <= 0) {
-            return amount;
-        }
+        BigInteger toAdd = amount.min(room);
         if (action.execute()) {
             storedBig = storedBig.add(toAdd);
             onContentsChanged();
         }
-        if (automationType == AutomationType.INTERNAL) {
-            return 0L;
+        return amount.subtract(toAdd);
+    }
+
+    @Override
+    public long insert(long amount, Action action, AutomationType automationType) {
+        if (amount <= 0L || !canInsert.test(automationType)) {
+            return amount;
         }
-        return amount - MekBigEnergy.toMekanismLong(toAdd.min(MekBigEnergy.LONG_MAX));
+        BigInteger leftover = insertBig(MekBigEnergy.fromMekanismLong(amount), action, automationType);
+        return MekBigEnergy.toMekanismLong(leftover);
     }
 
     @Override

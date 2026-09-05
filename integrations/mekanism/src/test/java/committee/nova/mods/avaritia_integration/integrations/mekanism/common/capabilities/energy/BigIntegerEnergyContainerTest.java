@@ -13,9 +13,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BigIntegerEnergyContainerTest {
 
     @Test
-    void internalInsertStoresDoubleMaxPlusLongMax() {
+    void internalLongInsertHonorsAmount() {
         BigIntegerEnergyContainer container = BigIntegerEnergyContainer.output(MekBigEnergy.INFINITY_CAPACITY, null);
         assertEquals(0L, container.insert(1L, Action.EXECUTE, AutomationType.INTERNAL));
+        assertEquals(BigInteger.ONE, container.getStoredBig());
+        assertEquals(BigInteger.ZERO, container.getDoubleMaxOverflows());
+    }
+
+    @Test
+    void insertBigStoresDoubleMaxPlusLongMax() {
+        BigIntegerEnergyContainer container = BigIntegerEnergyContainer.output(MekBigEnergy.INFINITY_CAPACITY, null);
+        assertEquals(BigInteger.ZERO,
+                container.insertBig(MekBigEnergy.infinitySupplyTick(), Action.EXECUTE, AutomationType.INTERNAL));
         assertEquals(MekBigEnergy.INFINITY_CAPACITY, container.getStoredBig());
         assertEquals(BigInteger.ONE, container.getDoubleMaxOverflows());
         assertEquals(Long.MAX_VALUE, container.getEnergy());
@@ -25,7 +34,7 @@ class BigIntegerEnergyContainerTest {
     @Test
     void extractCapsAtLongMax() {
         BigIntegerEnergyContainer container = BigIntegerEnergyContainer.output(MekBigEnergy.INFINITY_CAPACITY, null);
-        container.insert(1L, Action.EXECUTE, AutomationType.INTERNAL);
+        container.insertBig(MekBigEnergy.infinitySupplyTick(), Action.EXECUTE, AutomationType.INTERNAL);
         assertEquals(Long.MAX_VALUE, container.extract(Long.MAX_VALUE, Action.EXECUTE, AutomationType.MANUAL));
         assertEquals(MekBigEnergy.DOUBLE_MAX, container.getStoredBig());
         assertEquals(BigInteger.ONE, container.getDoubleMaxOverflows());
