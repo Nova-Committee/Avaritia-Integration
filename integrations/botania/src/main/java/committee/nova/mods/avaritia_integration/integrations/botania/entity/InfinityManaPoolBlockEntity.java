@@ -74,7 +74,7 @@ public class InfinityManaPoolBlockEntity extends BlockEntity implements ManaPool
     public static final float PARTICLE_COLOR_BLUE = (PARTICLE_COLOR & 0xFF) / 255F;
     public static final float PARTICLE_COLOR_GREEN = (PARTICLE_COLOR >> 8 & 0xFF) / 255F;
     public static final float PARTICLE_COLOR_RED = (PARTICLE_COLOR >> 16 & 0xFF) / 255F;
-    public static final int TRANSFER_BASE_RATE = Integer.MAX_VALUE / 100;
+    public static final int TRANSFER_BASE_RATE = Integer.MAX_VALUE;
 
     private static final String TAG_MANA = "mana";
     private static final String TAG_MANA_CAP = "manaCap";
@@ -118,7 +118,7 @@ public class InfinityManaPoolBlockEntity extends BlockEntity implements ManaPool
     @Override
     public void receiveMana(int mana) {
         int old = this.mana;
-        this.mana = Math.max(0, Math.min(getCurrentMana() + mana, getMaxMana()));
+        this.mana = InfinityManaPoolMath.applyManaDelta(this.mana, mana, getMaxMana());
         if (old != this.mana) {
             setChanged();
             markForPotentialSync();
@@ -360,8 +360,7 @@ public class InfinityManaPoolBlockEntity extends BlockEntity implements ManaPool
                         !isOutputting && mana.canDrainManaToPool(self)) {
                     boolean didSomething = false;
 
-                    int bellowCount = isOutputting ? getBellowCount(level, worldPosition, self) : 0;
-                    int transfRate = TRANSFER_BASE_RATE * (bellowCount + 1);
+                    int transfRate = TRANSFER_BASE_RATE;
 
                     if (isOutputting) {
                         if (self.canSpare) {

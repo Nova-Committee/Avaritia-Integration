@@ -30,21 +30,25 @@ public final class BotaniaIntegrationBlocks {
 
     public static final DeferredBlock<Block> ASGARD_DANDELION = register("asgard_dandelion",
             () -> new AsgardDandelionBlock(MobEffects.HUNGER, 0, BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY),
-                    BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get));
+                    BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get),
+            new Item.Properties().rarity(ModRarities.COSMIC.getValue()));
     public static final DeferredBlock<Block> ASGARD_DANDELION_FLOATING = register("asgard_dandelion_floating",
             () -> new FloatingSpecialFlowerBlock(
                     BlockBehaviour.Properties.ofFullCopy(BotaniaBlocks.WHITE_FLOATING_FLOWER),
-                    BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get));
+                    BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get),
+            new Item.Properties().rarity(ModRarities.COSMIC.getValue()));
     public static final DeferredBlock<Block> POTTED_ASGARD_DANDELION = register("potted_asgard_dandelion", false,
             () -> flowerPot(ASGARD_DANDELION.get(), 15));
     public static final DeferredBlock<Block> SOARLEANDER = register("soarleander",
             () -> new SoarleanderBlock(MobEffects.WITHER, 1,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY).lightLevel(level -> 5),
-                    BotaniaIntegrationBlockEntities.SOARLEANDER::get));
+                    BotaniaIntegrationBlockEntities.SOARLEANDER::get),
+            new Item.Properties().rarity(ModRarities.EPIC));
     public static final DeferredBlock<Block> SOARLEANDER_FLOATING = register("soarleander_floating",
             () -> new FloatingSpecialFlowerBlock(
                     BlockBehaviour.Properties.ofFullCopy(BotaniaBlocks.WHITE_FLOATING_FLOWER).lightLevel(level -> 5),
-                    BotaniaIntegrationBlockEntities.SOARLEANDER::get));
+                    BotaniaIntegrationBlockEntities.SOARLEANDER::get),
+            new Item.Properties().rarity(ModRarities.EPIC));
     public static final DeferredBlock<Block> POTTED_SOARLEANDER = register("potted_soarleander", false,
             () -> flowerPot(SOARLEANDER.get(), 5));
     public static final DeferredBlock<Block> INFINITY_MANA_POOL = register("infinity_mana_pool",
@@ -52,7 +56,7 @@ public final class BotaniaIntegrationBlocks {
                     BlockBehaviour.Properties.ofFullCopy(BotaniaBlocks.LIVINGROCK).lightLevel(level -> 15)),
             new Item.Properties().rarity(ModRarities.COSMIC.getValue()));
     public static final DeferredBlock<Block> INFINITY_POTATO = register("infinity_potato",
-            InfinityTinyPotatoBlock::new);
+            InfinityTinyPotatoBlock::new, new Item.Properties().rarity(ModRarities.COSMIC.getValue()));
 
     private static <T extends Block> DeferredBlock<T> register(String id, Supplier<T> obj) {
         return register(id, obj, true, b -> new BlockItem(b, new Item.Properties()));

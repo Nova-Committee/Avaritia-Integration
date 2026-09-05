@@ -3,6 +3,9 @@ package committee.nova.mods.avaritia_integration.integrations.botania.botania.en
 public final class AlphaSparkTransfers {
 
     public static final int TRANSFER_RATE = Integer.MAX_VALUE;
+    /** Vanilla sparks scan 12 blocks. */
+    public static final int SCAN_RANGE = 32;
+    public static final int SCAN_RESCAN_INTERVAL = 20;
 
     private AlphaSparkTransfers() {}
 

@@ -43,7 +43,6 @@ import vazkii.botania.api.mana.ManaPool;
 import vazkii.botania.api.mana.ManaReceiver;
 import vazkii.botania.api.mana.spark.ManaSpark;
 import vazkii.botania.api.mana.spark.ManaSparkAttachable;
-import vazkii.botania.api.mana.spark.ManaSparkHelper;
 import vazkii.botania.client.core.helper.RenderHelper;
 import vazkii.botania.common.helper.ColorHelper;
 import vazkii.botania.common.helper.PlayerHelper;
@@ -70,6 +69,9 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 	private boolean shouldFilterTransfers = true;
 	private boolean receiverWasFull = true;
 	private boolean firstTick = true;
+	private int lastSparkScanTick = Integer.MIN_VALUE;
+	private DyeColor cachedScanNetwork;
+	private List<ManaSpark> cachedAround = List.of();
 
 	public AlphaSparkEntity(EntityType<AlphaSparkEntity> type, Level world) {
 		super(type, world);
@@ -96,8 +98,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 			return;
 		}
 
-		// When loaded, initialize transfers
-		if (firstTick) {
+		// When loaded, initialize transfers. Full AABB rescans are throttled.
+		if (firstTick || tickCount % AlphaSparkTransfers.SCAN_RESCAN_INTERVAL == 0) {
 			updateTransfers();
 		}
 
@@ -114,7 +116,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 		if (upgrade.is(BotaniaItems.SPARK_AUGMENT_DISPERSIVE)) {
 			AABB aabb = VecHelper.boxForRange(
 					this.position().with(Direction.Axis.Y, getY() + (getBbHeight() / 2.0)),
-					ManaSparkHelper.SPARK_SCAN_RANGE);
+					AlphaSparkTransfers.SCAN_RANGE);
 			List<Player> players = level().getEntitiesOfClass(Player.class, aabb, EntitySelector.ENTITY_STILL_ALIVE);
 
 			Map<Player, Map<ManaItem, Integer>> receivingPlayers = new HashMap<>();
@@ -176,8 +178,8 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 				notifyOthers(getNetwork());
 			}
 		} else if (upgrade.is(BotaniaItems.SPARK_AUGMENT_DOMINANT)) {
-			if (!receiver.isFull()) {
-				updateTransfers();
+			if (!receiver.isFull() && shouldFilterTransfers) {
+				filterTransfers();
 			}
 		}
 		// Recessive does not need to be handled because recessive sparks get notified in all relevant cases
@@ -265,6 +267,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 
 	@Override
 	public void updateTransfers() {
+		invalidateSparkCache();
 		inboundTransfers.clear();
 		outgoingTransfers.clear();
 		if (isRemoved()) {
@@ -272,7 +275,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 		}
 		ItemStack upgrade = getUpgrade();
 		if (upgrade.is(BotaniaItems.SPARK_AUGMENT_RECESSIVE)) {
-			var otherSparks = ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+			var otherSparks = new ArrayList<>(sparksAround(getNetwork()));
 			Collections.shuffle(otherSparks);
 			for (var otherSpark : otherSparks) {
 				ItemStack otherUpgrade = otherSpark.getUpgrade();
@@ -281,7 +284,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 				}
 			}
 		} else if (upgrade.is(BotaniaItems.SPARK_AUGMENT_DOMINANT)) {
-			List<ManaSpark> validSparks = ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+			List<ManaSpark> validSparks = new ArrayList<>(sparksAround(getNetwork()));
 			Collections.shuffle(validSparks);
 			for (var spark : validSparks) {
 				ItemStack otherUpgrade = spark.getUpgrade();
@@ -349,7 +352,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 							dropAndKill();
 						}
 					} else {
-						ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork())
+						sparksAround(getNetwork())
 								.forEach(spark -> particleBeam(player, this, spark.entity()));
 					}
 				}
@@ -470,9 +473,35 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 	}
 
 	private void notifyOthers(DyeColor network) {
-		for (var spark : ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), network)) {
+		invalidateSparkCache();
+		for (var spark : sparksAround(network)) {
 			spark.updateTransfers();
 		}
+	}
+
+	private void invalidateSparkCache() {
+		lastSparkScanTick = Integer.MIN_VALUE;
+	}
+
+	private List<ManaSpark> sparksAround(DyeColor network) {
+		if (lastSparkScanTick >= 0 && cachedScanNetwork == network
+				&& tickCount - lastSparkScanTick < AlphaSparkTransfers.SCAN_RESCAN_INTERVAL) {
+			return cachedAround;
+		}
+		double x = getX();
+		double y = getY() + (getBbHeight() / 2);
+		double z = getZ();
+		int range = AlphaSparkTransfers.SCAN_RANGE;
+		AABB box = new AABB(x - range, y - range, z - range, x + range, y + range, z + range);
+		List<ManaSpark> sparks = new ArrayList<>();
+		for (Entity entity : level().getEntitiesOfClass(Entity.class, box,
+				e -> e instanceof ManaSpark spark && spark != this && spark.getNetwork() == network)) {
+			sparks.add((ManaSpark) entity);
+		}
+		lastSparkScanTick = tickCount;
+		cachedScanNetwork = network;
+		cachedAround = List.copyOf(sparks);
+		return cachedAround;
 	}
 
 	@Override
@@ -483,6 +512,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 	@Override
 	public void setUpgrade(ItemStack upgrade) {
 		entityData.set(UPGRADE, upgrade);
+		invalidateSparkCache();
 		updateTransfers();
 		notifyOthers(getNetwork());
 	}
@@ -492,6 +522,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
 		// The previous network needs to filter this spark out
 		var previousNetwork = getNetwork();
 		super.setNetwork(color);
+		invalidateSparkCache();
 		updateTransfers();
 		notifyOthers(color);
 		notifyOthers(previousNetwork);
