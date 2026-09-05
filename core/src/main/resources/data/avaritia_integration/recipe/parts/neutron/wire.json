@@ -1,0 +1,13 @@
+{
+	"type": "avaritia:shapeless_table",
+	"ingredients": [
+		{
+			"item": "avaritia_integration:neutron_plate"
+		}
+	],
+	"result": {
+		"count": 3,
+		"id": "avaritia_integration:neutron_wire"
+	},
+	"tier": 4
+}

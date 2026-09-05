@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"#c:plates/infinity",
+		"#c:plates/neutron",
+		"#c:plates/crystal_matrix",
+		"#c:plates/blaze_cube"
+	]
+}

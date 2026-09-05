@@ -7,12 +7,11 @@
 	],
 	"type": "mekanism:chemical_conversion",
 	"input": {
-		"ingredient": {
-			"tag": "c:dusts/neutronium"
-		}
+		"count": 1,
+		"tag": "c:dusts/neutronium"
 	},
 	"output": {
 		"amount": 10,
-		"infuse_type": "avaritia_integration:neutron"
+		"id": "avaritia_integration:neutron"
 	}
 }

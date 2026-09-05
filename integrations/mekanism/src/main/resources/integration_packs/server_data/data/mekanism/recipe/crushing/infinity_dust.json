@@ -5,13 +5,13 @@
 			"modid": "mekanism"
 		}
 	],
-	"type": "mekanism:enriching",
+	"type": "mekanism:crushing",
 	"input": {
 		"count": 1,
-		"tag": "c:dusts/infinity"
+		"item": "avaritia:infinity_ingot"
 	},
 	"output": {
 		"count": 1,
-		"id": "avaritia_integration:enriched_infinity"
+		"id": "avaritia_integration:infinity_dust"
 	}
 }

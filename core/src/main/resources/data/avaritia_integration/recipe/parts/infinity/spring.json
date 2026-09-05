@@ -1,0 +1,13 @@
+{
+	"type": "avaritia:shapeless_table",
+	"ingredients": [
+		{
+			"item": "avaritia_integration:infinity_long_rod"
+		}
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:infinity_spring"
+	},
+	"tier": 4
+}

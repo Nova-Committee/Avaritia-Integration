@@ -7,12 +7,11 @@
 	],
 	"type": "mekanism:chemical_conversion",
 	"input": {
-		"ingredient": {
-			"tag": "c:dusts/infinity"
-		}
+		"count": 1,
+		"tag": "c:dusts/infinity"
 	},
 	"output": {
 		"amount": 10,
-		"infuse_type": "avaritia_integration:infinity"
+		"id": "avaritia_integration:infinity"
 	}
 }

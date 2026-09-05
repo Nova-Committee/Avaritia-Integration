@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"#c:rods/infinity",
+		"#c:rods/neutron",
+		"#c:rods/crystal_matrix",
+		"#c:rods/blaze_cube"
+	]
+}

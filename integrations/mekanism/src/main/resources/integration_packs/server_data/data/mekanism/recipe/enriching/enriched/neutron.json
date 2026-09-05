@@ -7,11 +7,11 @@
 	],
 	"type": "mekanism:enriching",
 	"input": {
-		"ingredient": {
-			"tag": "c:dusts/neutronium"
-		}
+		"count": 1,
+		"tag": "c:dusts/neutronium"
 	},
 	"output": {
+		"count": 1,
 		"id": "avaritia_integration:enriched_neutron"
 	}
 }

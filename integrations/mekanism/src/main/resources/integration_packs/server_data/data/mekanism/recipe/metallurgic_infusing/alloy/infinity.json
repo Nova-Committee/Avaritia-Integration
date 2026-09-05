@@ -6,16 +6,17 @@
 		}
 	],
 	"type": "mekanism:metallurgic_infusing",
-	"chemicalInput": {
+	"chemical_input": {
 		"amount": 40,
 		"tag": "mekanism:infinity"
 	},
-	"itemInput": {
-		"ingredient": {
-			"tag": "mekanism:alloys/neutron"
-		}
+	"item_input": {
+		"count": 1,
+		"tag": "mekanism:alloys/neutron"
 	},
 	"output": {
+		"count": 1,
 		"id": "avaritia_integration:alloy_infinity"
-	}
+	},
+	"per_tick_usage": false
 }

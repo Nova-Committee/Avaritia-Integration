@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"I": {
+			"item": "avaritia:blaze_cube"
+		}
+	},
+	"pattern": [
+		"II"
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:blaze_cube_plate"
+	}
+}

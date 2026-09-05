@@ -1,0 +1,13 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		{
+			"item": "avaritia_integration:crystal_matrix_bolt"
+		}
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:crystal_matrix_screw"
+	}
+}

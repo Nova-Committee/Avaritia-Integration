@@ -6,16 +6,17 @@
 		}
 	],
 	"type": "mekanism:metallurgic_infusing",
-	"chemicalInput": {
+	"chemical_input": {
 		"amount": 80,
 		"tag": "mekanism:neutron"
 	},
-	"itemInput": {
-		"ingredient": {
-			"tag": "mekanism:alloys/atomic"
-		}
+	"item_input": {
+		"count": 1,
+		"tag": "mekanism:alloys/atomic"
 	},
 	"output": {
+		"count": 1,
 		"id": "avaritia_integration:alloy_neutron"
-	}
+	},
+	"per_tick_usage": false
 }

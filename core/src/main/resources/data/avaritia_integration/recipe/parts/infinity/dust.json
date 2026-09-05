@@ -1,0 +1,13 @@
+{
+	"type": "avaritia:shapeless_table",
+	"ingredients": [
+		{
+			"item": "avaritia:infinity_ingot"
+		}
+	],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:infinity_dust"
+	},
+	"tier": 4
+}

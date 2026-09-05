@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"#c:gears/infinity",
+		"#c:gears/neutron",
+		"#c:gears/crystal_matrix",
+		"#c:gears/blaze_cube"
+	]
+}

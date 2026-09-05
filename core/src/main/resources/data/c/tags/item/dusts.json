@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"#c:dusts/infinity",
+		"#c:dusts/neutronium",
+		"#c:dusts/crystal_matrix",
+		"#c:dusts/blaze_cube"
+	]
+}
