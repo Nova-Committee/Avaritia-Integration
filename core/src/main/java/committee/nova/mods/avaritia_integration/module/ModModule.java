@@ -18,4 +18,8 @@ public interface ModModule {
     static DependencyRule dependency(String modid) {
         return new DependencyRule(modid, "", "");
     }
+
+    static DependencyRule dependency(String modid, String minVersion) {
+        return new DependencyRule(modid, minVersion, "");
+    }
 }

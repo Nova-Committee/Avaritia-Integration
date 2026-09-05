@@ -12,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
-import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -75,16 +74,9 @@ public final class IntegrationLoadApi {
                         "Missing dependency mod: " + dependencyModId);
             }
             ArtifactVersion actualVersion = optionalVersion.get();
-            String minVersion = dependency.normalizedMinVersion();
-            if (!minVersion.isEmpty() && actualVersion.compareTo(new DefaultArtifactVersion(minVersion)) < 0) {
-                return decision(integrationModId, LoadState.VERSION_TOO_LOW, dependencyModId, minVersion,
-                        dependency.normalizedMaxVersion(), actualVersion.toString(),
-                        "Dependency version is too low: " + dependencyModId);
-            }
-            String maxVersion = dependency.normalizedMaxVersion();
-            if (!maxVersion.isEmpty() && actualVersion.compareTo(new DefaultArtifactVersion(maxVersion)) > 0) {
-                return decision(integrationModId, LoadState.VERSION_TOO_HIGH, dependencyModId, minVersion,
-                        maxVersion, actualVersion.toString(), "Dependency version is too high: " + dependencyModId);
+            LoadDecision versionDecision = DependencyVersionGate.evaluate(integrationModId, dependency, actualVersion);
+            if (!versionDecision.shouldLoad()) {
+                return versionDecision;
             }
         }
         return decision(integrationModId, LoadState.LOADED, null, "", "", "???",

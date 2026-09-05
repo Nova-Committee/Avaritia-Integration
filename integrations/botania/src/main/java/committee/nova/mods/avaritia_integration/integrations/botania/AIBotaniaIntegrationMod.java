@@ -13,7 +13,8 @@ import net.neoforged.fml.common.Mod;
 public final class AIBotaniaIntegrationMod implements ModModule {
 
     public static final String MOD_ID = "avaritia_integration_botania";
-    private static final String DEPENDENCY_MOD_ID = "botania";
+    static final String DEPENDENCY_MOD_ID = "botania";
+    static final String MIN_DEPENDENCY_VERSION = "455-SNAPSHOT";
 
     public AIBotaniaIntegrationMod(IEventBus bus, ModContainer modContainer) {
         IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration Botania Data");
@@ -22,6 +23,10 @@ public final class AIBotaniaIntegrationMod implements ModModule {
 
     @Override
     public IntegrationRule defaultLoadRule() {
-        return ModModule.rule(ModModule.dependency(DEPENDENCY_MOD_ID));
+        return createDefaultLoadRule();
+    }
+
+    static IntegrationRule createDefaultLoadRule() {
+        return ModModule.rule(ModModule.dependency(DEPENDENCY_MOD_ID, MIN_DEPENDENCY_VERSION));
     }
 }
