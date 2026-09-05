@@ -2,7 +2,6 @@ ext.ai_mod_id = 'avaritia_integration_all'
 ext.ai_mod_name = 'Avaritia Integration All'
 ext.ai_mod_description = 'Aggregated Avaritia Integration distribution.'
 ext.ai_run_directory = 'all'
-ext.ai_archive_name = mod_id
 ext.ai_aggregate = true
 ext.ai_dependency_blocks = """[[dependencies."avaritia_integration_all"]]
 modId = "avaritia_integration"

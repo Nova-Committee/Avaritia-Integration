@@ -13,11 +13,26 @@ def moduleModId = providers.provider { project.ext.ai_mod_id as String }
 def moduleName = providers.provider { project.ext.ai_mod_name as String }
 def moduleDescription = providers.provider { project.ext.ai_mod_description as String }
 def runDirectoryName = providers.provider { project.ext.ai_run_directory as String }
-def archiveName = providers.provider { project.ext.has('ai_archive_name') ? project.ext.ai_archive_name as String : moduleModId.get() }
-def dependencyBlocks = providers.provider { project.ext.has('ai_dependency_blocks') ? project.ext.ai_dependency_blocks as String : '' }
 def isAggregate = providers.provider { project.ext.has('ai_aggregate') && project.ext.ai_aggregate as boolean }
 def dataOutputRoot = providers.provider { project.ext.has('ai_data_output_root') ? project.ext.ai_data_output_root as String : 'src/generated/resources' }
 def dataExistingRoot = providers.provider { project.ext.has('ai_data_existing_root') ? project.ext.ai_data_existing_root as String : 'src/main/resources' }
+def moduleSlug = providers.provider {
+    def id = moduleModId.get()
+    if (isAggregate.get()) {
+        return ''
+    }
+    if (id == mod_id) {
+        return 'core'
+    }
+    return id.replaceFirst(/^avaritia_integration_/, '').replace('_', '-')
+}
+def archiveName = providers.provider {
+    def slug = moduleSlug.get()
+    slug.isEmpty() ? "${mod_name}-${mod_loader}" : "${mod_name}-${slug}-${mod_loader}"
+}
+def dependencyBlocks = providers.provider { project.ext.has('ai_dependency_blocks') ? project.ext.ai_dependency_blocks as String : '' }
+
+version = "${libs.versions.minecraft.get()}-${mod_version}-${mod_version_tag}"
 
 base {
     archivesName = archiveName.get()
@@ -27,7 +42,6 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
     withSourcesJar()
 }
-
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
