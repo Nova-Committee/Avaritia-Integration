@@ -45,7 +45,7 @@ public class InfinityTinyPotatoBlock extends BotaniaWaterloggedBlock implements 
     private static final VoxelShape SHAPE = box(4.0, 0.0, 4.0, 12.0, 12.0, 12.0);
 
     public InfinityTinyPotatoBlock() {
-        super(Properties.ofFullCopy(BotaniaBlocks.tinyPotato));
+        super(Properties.ofFullCopy(BotaniaBlocks.TINY_POTATO));
         this.registerDefaultState(
                 this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH));
     }

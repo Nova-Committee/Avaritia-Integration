@@ -1,12 +1,24 @@
+/*
+ * This class is distributed as part of the Botania Mod.
+ * Get the Source Code in github:
+ * https://github.com/Vazkii/Botania
+ *
+ * Botania is Open Source and distributed under the
+ * Botania License: http://botaniamod.net/license.php
+ */
 package committee.nova.mods.avaritia_integration.integrations.botania.botania.entity;
 
 import committee.nova.mods.avaritia_integration.integrations.botania.botania.registry.BotaniaIntegrationEntities;
+import committee.nova.mods.avaritia_integration.integrations.botania.botania.registry.BotaniaIntegrationItems;
+
+import com.mojang.blaze3d.platform.Window;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -18,477 +30,509 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-import com.mojang.blaze3d.platform.Window;
 import org.jetbrains.annotations.Nullable;
+
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.block.WandHUD;
 import vazkii.botania.api.mana.ManaItem;
 import vazkii.botania.api.mana.ManaPool;
 import vazkii.botania.api.mana.ManaReceiver;
 import vazkii.botania.api.mana.spark.ManaSpark;
-import vazkii.botania.api.mana.spark.SparkAttachable;
-import vazkii.botania.api.mana.spark.SparkHelper;
-import vazkii.botania.api.mana.spark.SparkUpgradeType;
+import vazkii.botania.api.mana.spark.ManaSparkAttachable;
+import vazkii.botania.api.mana.spark.ManaSparkHelper;
 import vazkii.botania.client.core.helper.RenderHelper;
-import vazkii.botania.common.entity.SparkBaseEntity;
 import vazkii.botania.common.helper.ColorHelper;
 import vazkii.botania.common.helper.PlayerHelper;
 import vazkii.botania.common.helper.VecHelper;
 import vazkii.botania.common.item.BotaniaItems;
-import vazkii.botania.common.item.SparkAugmentItem;
 import vazkii.botania.common.item.WandOfTheForestItem;
-import vazkii.botania.network.EffectType;
-import vazkii.botania.network.clientbound.BotaniaEffectPacket;
+import vazkii.botania.common.lib.BotaniaTags;
+import vazkii.botania.network.clientbound.SparkManaFlowEffectPacket;
+import vazkii.botania.network.clientbound.SparkNetIndicatorEffectPacket;
 import vazkii.botania.xplat.XplatAbstractions;
+import vazkii.botania.common.entity.SparkBaseEntity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
+import java.util.*;
 
-/**
- * @author cnlimiter
- */
 public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
+	private static final int TRANSFER_RATE = 100000;
+	private static final String TAG_UPGRADE = "upgrade";
+	private static final EntityDataAccessor<ItemStack> UPGRADE = SynchedEntityData.defineId(AlphaSparkEntity.class, EntityDataSerializers.ITEM_STACK);
 
-    private static final int TRANSFER_RATE = 100000;
-    private static final String TAG_UPGRADE = "upgrade";
-    private static final EntityDataAccessor<Integer> UPGRADE = SynchedEntityData.defineId(AlphaSparkEntity.class,
-            EntityDataSerializers.INT);
+	private final Set<ManaSpark> outgoingTransfers = Collections.newSetFromMap(new WeakHashMap<>());
 
-    private final Set<ManaSpark> outgoingTransfers = Collections.newSetFromMap(new WeakHashMap<>());
+	private final ArrayList<ManaSpark> inboundTransfers = new ArrayList<>();
 
-    private final ArrayList<ManaSpark> transfersTowardsSelfToRegister = new ArrayList<>();
+	private boolean shouldFilterTransfers = true;
+	private boolean receiverWasFull = true;
+	private boolean firstTick = true;
 
-    private boolean shouldFilterTransfers = true;
-    private boolean receiverWasFull = true;
-    private boolean firstTick = true;
+	public AlphaSparkEntity(EntityType<AlphaSparkEntity> type, Level world) {
+		super(type, world);
+	}
 
-    public AlphaSparkEntity(EntityType<AlphaSparkEntity> type, Level world) {
-        super(type, world);
-    }
+	public AlphaSparkEntity(Level world) {
+		this(BotaniaIntegrationEntities.ALPHA_SPARK_ENTITIES.get(), world);
+	}
 
-    public AlphaSparkEntity(Level world) {
-        this(BotaniaIntegrationEntities.ALPHA_SPARK_ENTITIES.get(), world);
-    }
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(UPGRADE, ItemStack.EMPTY);
+	}
 
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(UPGRADE, 0);
-    }
+	@Override
+	public ItemStack getPickResult() {
+		return new ItemStack(getSparkItem());
+	}
 
-    @Override
-    public ItemStack getPickResult() {
-        return new ItemStack(getSparkItem());
-    }
+	@Override
+	public void tick() {
+		if (level().isClientSide()) {
+			return;
+		}
 
-    @Override
-    public void tick() {
-        if (level().isClientSide) {
-            return;
-        }
+		// When loaded, initialize transfers
+		if (firstTick) {
+			updateTransfers();
+		}
 
-        // When loaded, initialize transfers
-        if (firstTick) {
-            updateTransfers();
-        }
+		ManaSparkAttachable tile = getAttachedTile();
+		if (tile == null) {
+			dropAndKill();
+			return;
+		}
+		var receiver = getAttachedManaReceiver();
 
-        SparkAttachable tile = getAttachedTile();
-        if (tile == null) {
-            dropAndKill();
-            return;
-        }
-        var receiver = getAttachedManaReceiver();
+		ItemStack upgrade = getUpgrade();
+		Collection<ManaSpark> outgoingTransfers = getOutgoingTransfers();
 
-        SparkUpgradeType upgrade = getUpgrade();
-        Collection<ManaSpark> transfers = getOutgoingTransfers();
+		if (upgrade.is(BotaniaItems.SPARK_AUGMENT_DISPERSIVE)) {
+			AABB aabb = VecHelper.boxForRange(
+					this.position().with(Direction.Axis.Y, getY() + (getBbHeight() / 2.0)),
+					ManaSparkHelper.SPARK_SCAN_RANGE);
+			List<Player> players = level().getEntitiesOfClass(Player.class, aabb, EntitySelector.ENTITY_STILL_ALIVE);
 
-        switch (upgrade) {
-            case DISPERSIVE -> {
-                AABB aabb = VecHelper.boxForRange(
-                        this.position().with(Direction.Axis.Y, getY() + (getBbHeight() / 2.0)),
-                        SparkHelper.SPARK_SCAN_RANGE);
-                List<Player> players = level().getEntitiesOfClass(Player.class, aabb,
-                        EntitySelector.ENTITY_STILL_ALIVE);
+			Map<Player, Map<ManaItem, Integer>> receivingPlayers = new HashMap<>();
 
-                Map<Player, Map<ManaItem, Integer>> receivingPlayers = new HashMap<>();
+			ItemStack input = new ItemStack(getSparkItem());
+			for (Player player : players) {
+				List<ItemStack> stacks = new ArrayList<>();
+				stacks.addAll(player.getInventory().items);
+				stacks.addAll(player.getInventory().armor);
 
-                ItemStack input = new ItemStack(getSparkItem());
-                for (Player player : players) {
-                    List<ItemStack> stacks = new ArrayList<>();
-                    stacks.addAll(player.getInventory().items);
-                    stacks.addAll(player.getInventory().armor);
+				Container inv = BotaniaAPI.instance().getAccessoriesInventory(player);
+				for (int i = 0; i < inv.getContainerSize(); i++) {
+					stacks.add(inv.getItem(i));
+				}
 
-                    Container inv = BotaniaAPI.instance().getAccessoriesInventory(player);
-                    for (int i = 0; i < inv.getContainerSize(); i++) {
-                        stacks.add(inv.getItem(i));
-                    }
+				for (ItemStack stack : stacks) {
+					var manaItem = ManaItem.LOOKUP.find(stack);
+					if (stack.isEmpty() || manaItem == null) {
+						continue;
+					}
 
-                    for (ItemStack stack : stacks) {
-                        var manaItem = XplatAbstractions.INSTANCE.findManaItem(stack);
-                        if (stack.isEmpty() || manaItem == null) {
-                            continue;
-                        }
+					if (manaItem.acceptDispatchedManaFromItem(input)) {
+						Map<ManaItem, Integer> receivingStacks;
+						boolean add = false;
+						if (!receivingPlayers.containsKey(player)) {
+							add = true;
+							receivingStacks = new HashMap<>();
+						} else {
+							receivingStacks = receivingPlayers.get(player);
+						}
 
-                        if (manaItem.acceptDispatchedManaFromItem(input)) {
-                            Map<ManaItem, Integer> receivingStacks;
-                            boolean add = false;
-                            if (!receivingPlayers.containsKey(player)) {
-                                add = true;
-                                receivingStacks = new HashMap<>();
-                            } else {
-                                receivingStacks = receivingPlayers.get(player);
-                            }
+						int recv = Math.min(receiver.getCurrentMana(), Math.min(TRANSFER_RATE, manaItem.getMaxMana() - manaItem.getMana()));
+						if (recv > 0) {
+							receivingStacks.put(manaItem, recv);
+							if (add) {
+								receivingPlayers.put(player, receivingStacks);
+							}
+						}
+					}
+				}
+			}
 
-                            int recv = Math.min(receiver.getCurrentMana(),
-                                    Math.min(TRANSFER_RATE, manaItem.getMaxMana() - manaItem.getMana()));
-                            if (recv > 0) {
-                                receivingStacks.put(manaItem, recv);
-                                if (add) {
-                                    receivingPlayers.put(player, receivingStacks);
-                                }
-                            }
-                        }
-                    }
-                }
+			if (!receivingPlayers.isEmpty()) {
+				List<Player> keys = new ArrayList<>(receivingPlayers.keySet());
+				Collections.shuffle(keys);
+				Player player = keys.getFirst();
 
-                if (!receivingPlayers.isEmpty()) {
-                    List<Player> keys = new ArrayList<>(receivingPlayers.keySet());
-                    Collections.shuffle(keys);
-                    Player player = keys.iterator().next();
+				Map<ManaItem, Integer> items = receivingPlayers.get(player);
+				var e = items.entrySet().iterator().next();
+				ManaItem manaItem = e.getKey();
+				int cost = e.getValue();
+				int manaToPut = Math.min(receiver.getCurrentMana(), cost);
+				manaItem.addMana(manaToPut);
+				receiver.receiveMana(-manaToPut);
+				particlesTowards(player);
+			}
 
-                    Map<ManaItem, Integer> items = receivingPlayers.get(player);
-                    var e = items.entrySet().iterator().next();
-                    ManaItem manaItem = e.getKey();
-                    int cost = e.getValue();
-                    int manaToPut = Math.min(receiver.getCurrentMana(), cost);
-                    manaItem.addMana(manaToPut);
-                    receiver.receiveMana(-manaToPut);
-                    particlesTowards(player);
-                }
+			if (receiverWasFull && !receiver.isFull()) {
+				notifyOthers(getNetwork());
+			}
+		} else if (upgrade.is(BotaniaItems.SPARK_AUGMENT_DOMINANT)) {
+			if (!receiver.isFull()) {
+				updateTransfers();
+			}
+		}
+		// Recessive does not need to be handled because recessive sparks get notified in all relevant cases
+		else {
+			if (receiverWasFull && !receiver.isFull()) {
+				notifyOthers(getNetwork());
+			}
+		}
 
-            }
-            case DOMINANT -> {
-                if (receiverWasFull && !receiver.isFull()) {
-                    updateTransfers();
-                }
-                if (!transfersTowardsSelfToRegister.isEmpty()) {
-                    transfersTowardsSelfToRegister.remove(transfersTowardsSelfToRegister.size() - 1)
-                            .registerTransfer(this);
-                }
-            }
-            // Recessive does not need to be handled because recessive sparks get notified in all relevant cases
-            default -> {
-                if (receiverWasFull && !receiver.isFull()) {
-                    notifyOthers(getNetwork());
-                }
-            }
-        }
+		checkReceiverFull();
 
-        checkReceiverFull();
+		if (!outgoingTransfers.isEmpty()) {
+			int manaTotal = Math.min(TRANSFER_RATE * outgoingTransfers.size(), receiver.getCurrentMana());
+			int count = outgoingTransfers.size();
+			int manaSpent = 0;
 
-        if (!transfers.isEmpty()) {
-            int manaTotal = Math.min(TRANSFER_RATE * transfers.size(), receiver.getCurrentMana());
-            int count = transfers.size();
-            int manaSpent = 0;
+			if (manaTotal > 0) {
+				if (shouldFilterTransfers) {
+					filterTransfers();
+					shouldFilterTransfers = false;
+				}
 
-            if (manaTotal > 0) {
-                if (shouldFilterTransfers) {
-                    filterTransfers();
-                    shouldFilterTransfers = false;
-                }
+				for (ManaSpark spark : outgoingTransfers) {
+					count--;
+					ManaSparkAttachable attached = spark.getAttachedTile();
+					var attachedReceiver = spark.getAttachedManaReceiver();
+					if (attached == null || attachedReceiver == null || attachedReceiver.isFull() || spark.areIncomingTransfersDone()) {
+						shouldFilterTransfers = true;
+						continue;
+					}
 
-                for (ManaSpark spark : transfers) {
-                    count--;
-                    SparkAttachable attached = spark.getAttachedTile();
-                    var attachedReceiver = spark.getAttachedManaReceiver();
-                    if (attached == null || attachedReceiver == null || attachedReceiver.isFull() ||
-                            spark.areIncomingTransfersDone()) {
-                        shouldFilterTransfers = true;
-                        continue;
-                    }
+					int spend = Math.min(attached.getAvailableSpaceForMana(), (manaTotal - manaSpent) / (count + 1));
+					attachedReceiver.receiveMana(spend);
+					manaSpent += spend;
+					spark.checkReceiverFull();
 
-                    int spend = Math.min(attached.getAvailableSpaceForMana(), (manaTotal - manaSpent) / (count + 1));
-                    attachedReceiver.receiveMana(spend);
-                    manaSpent += spend;
-                    spark.checkReceiverFull();
+					particlesTowards(spark.entity());
+				}
+				receiver.receiveMana(-manaSpent);
+			}
+		}
+		if (!inboundTransfers.isEmpty()) {
+			int manaNeeded = Math.min(TRANSFER_RATE * inboundTransfers.size(), tile.getAvailableSpaceForMana());
+			int count = inboundTransfers.size();
+			int manaRecieved = 0;
 
-                    particlesTowards(spark.entity());
-                }
-                receiver.receiveMana(-manaSpent);
-            }
-        }
+			if (manaNeeded > 0) {
+				if (shouldFilterTransfers) {
+					filterTransfers();
+					shouldFilterTransfers = false;
+				}
 
-        firstTick = false;
-    }
+				inboundTransfers.sort(Comparator.comparingInt(s -> s.getAttachedManaReceiver().getCurrentMana()));
+				for (ManaSpark spark : inboundTransfers) {
+					count--;
+					ManaSparkAttachable attached = spark.getAttachedTile();
+					var attachedReceiver = spark.getAttachedManaReceiver();
+					if (attached == null || attachedReceiver == null) {
+						shouldFilterTransfers = true;
+						continue;
+					}
 
-    @Override
-    public void checkReceiverFull() {
-        var receiver = getAttachedManaReceiver();
-        if (receiver != null) {
-            receiverWasFull = receiver.isFull();
-        } else {
-            receiverWasFull = true;
-        }
-    }
+					int gained = Math.min(attachedReceiver.getCurrentMana(), (manaNeeded - manaRecieved) / (count + 1));
+					attachedReceiver.receiveMana(-gained);
+					manaRecieved += gained;
 
-    @Override
-    public void updateTransfers() {
-        transfersTowardsSelfToRegister.clear();
-        switch (getUpgrade()) {
-            case RECESSIVE -> {
-                var otherSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(),
-                        getNetwork());
-                Collections.shuffle(otherSparks);
-                for (var otherSpark : otherSparks) {
-                    SparkUpgradeType otherUpgrade = otherSpark.getUpgrade();
-                    if (otherSpark != this && otherUpgrade != SparkUpgradeType.DOMINANT &&
-                            otherUpgrade != SparkUpgradeType.RECESSIVE && otherUpgrade != SparkUpgradeType.ISOLATED) {
-                        outgoingTransfers.add(otherSpark);
-                    }
-                }
-            }
-            case DOMINANT -> {
-                List<ManaSpark> validSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2),
-                        getZ(), getNetwork());
-                for (var spark : validSparks) {
-                    SparkUpgradeType otherUpgrade = spark.getUpgrade();
-                    if (spark != this && otherUpgrade == SparkUpgradeType.NONE &&
-                            spark.getAttachedManaReceiver() instanceof ManaPool) {
-                        transfersTowardsSelfToRegister.add(spark);
-                    }
-                }
-                Collections.shuffle(transfersTowardsSelfToRegister);
-            }
-        }
-        filterTransfers();
-    }
+					particlesFrom(spark.entity());
+				}
+				receiver.receiveMana(manaRecieved);
+			}
+		}
 
-    private void particlesTowards(Entity e) {
-        XplatAbstractions.INSTANCE.sendToTracking(this,
-                new BotaniaEffectPacket(EffectType.SPARK_MANA_FLOW, getX(), getY(), getZ(),
-                        getId(), e.getId(), getNetwork().getTextureDiffuseColor()));
-    }
+		firstTick = false;
+	}
 
-    public static void particleBeam(Player player, Entity e1, Entity e2) {
-        if (e1 != null && e2 != null && !e1.level().isClientSide) {
-            XplatAbstractions.INSTANCE.sendToPlayer(player, new BotaniaEffectPacket(EffectType.SPARK_NET_INDICATOR,
-                    e1.getX(), e1.getY(), e1.getZ(),
-                    e1.getId(), e2.getId()));
-        }
-    }
+	@Override
+	public void checkReceiverFull() {
+		var receiver = getAttachedManaReceiver();
+		if (receiver != null) {
+			receiverWasFull = receiver.isFull();
+		} else {
+			receiverWasFull = true;
+		}
+	}
 
-    protected Item getSparkItem() {
-        return BotaniaItems.spark;
-    }
+	@Override
+	public void updateTransfers() {
+		inboundTransfers.clear();
+		outgoingTransfers.clear();
+		if (isRemoved()) {
+			return;
+		}
+		ItemStack upgrade = getUpgrade();
+		if (upgrade.is(BotaniaItems.SPARK_AUGMENT_RECESSIVE)) {
+			var otherSparks = ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+			Collections.shuffle(otherSparks);
+			for (var otherSpark : otherSparks) {
+				ItemStack otherUpgrade = otherSpark.getUpgrade();
+				if (otherSpark != this && otherUpgrade.is(BotaniaTags.Items.RECESSIVE_SPARK_PUSH_TARGET)) {
+					outgoingTransfers.add(otherSpark);
+				}
+			}
+		} else if (upgrade.is(BotaniaItems.SPARK_AUGMENT_DOMINANT)) {
+			List<ManaSpark> validSparks = ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+			Collections.shuffle(validSparks);
+			for (var spark : validSparks) {
+				ItemStack otherUpgrade = spark.getUpgrade();
+				if (spark != this && otherUpgrade.is(BotaniaTags.Items.DOMINANT_SPARK_PULL_SOURCE)
+						&& spark.getAttachedManaReceiver() instanceof ManaPool) {
+					inboundTransfers.add(spark);
+				}
+			}
+		}
+		filterTransfers();
+	}
 
-    private void dropAndKill() {
-        SparkUpgradeType upgrade = getUpgrade();
-        spawnAtLocation(new ItemStack(getSparkItem()), 0F);
-        if (upgrade != SparkUpgradeType.NONE) {
-            spawnAtLocation(SparkAugmentItem.getByType(upgrade), 0F);
-        }
-        discard();
-    }
+	private void particlesTowards(Entity e) {
+		XplatAbstractions.INSTANCE.sendToTracking(this,
+				new SparkManaFlowEffectPacket(getId(), e.getId(), getNetwork()));
+	}
 
-    @Override
-    public void remove(RemovalReason removalReason) {
-        super.remove(removalReason);
-        notifyOthers(getNetwork());
-    }
+	private void particlesFrom(Entity e) {
+		XplatAbstractions.INSTANCE.sendToTracking(this,
+				new SparkManaFlowEffectPacket(e.getId(), getId(), getNetwork()));
+	}
 
-    @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        if (isAlive() && !stack.isEmpty()) {
-            SparkUpgradeType upgrade = getUpgrade();
-            if (stack.getItem() instanceof WandOfTheForestItem) {
-                if (!level().isClientSide) {
-                    if (player.isShiftKeyDown() || !PlayerHelper.isTruePlayer(player)) {
-                        if (upgrade != SparkUpgradeType.NONE) {
-                            spawnAtLocation(SparkAugmentItem.getByType(upgrade), 0F);
-                            setUpgrade(SparkUpgradeType.NONE);
+	public static void particleBeam(Player player, @Nullable Entity e1, @Nullable Entity e2) {
+		if (e1 != null && e2 != null && !e1.level().isClientSide()) {
+			XplatAbstractions.INSTANCE.sendToPlayer(player, new SparkNetIndicatorEffectPacket(e1.getId(), e2.getId()));
+		}
+	}
 
-                            // Recalculate transfers, recessive and dominant will register the proper transfers
-                            outgoingTransfers.clear();
-                            notifyOthers(getNetwork());
-                        } else {
-                            dropAndKill();
-                        }
-                    } else {
-                        SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork())
-                                .forEach(s -> particleBeam(player, this, s.entity()));
-                    }
-                }
+	protected Item getSparkItem() {
+		return BotaniaIntegrationItems.ALPHA_SPARK.get();
+	}
 
-                return InteractionResult.sidedSuccess(level().isClientSide);
-            } else if (stack.getItem() instanceof SparkAugmentItem newUpgrade && upgrade == SparkUpgradeType.NONE) {
-                if (!level().isClientSide) {
-                    setUpgrade(newUpgrade.type);
-                    stack.shrink(1);
-                }
-                return InteractionResult.sidedSuccess(level().isClientSide);
-            } else if (stack.is(BotaniaItems.phantomInk)) {
-                if (!level().isClientSide) {
-                    setInvisible(true);
-                }
-                return InteractionResult.sidedSuccess(level().isClientSide);
-            } else if (stack.getItem() instanceof DyeItem dye) {
-                DyeColor color = dye.getDyeColor();
-                if (color != getNetwork()) {
-                    if (!level().isClientSide) {
-                        setNetwork(color);
-                        stack.shrink(1);
-                    }
-                    return InteractionResult.sidedSuccess(level().isClientSide);
-                }
-            }
-        }
+	private void dropAndKill() {
+		ItemStack upgrade = getUpgrade();
+		spawnAtLocation(new ItemStack(getSparkItem()), 0F);
+		if (!upgrade.isEmpty()) {
+			spawnAtLocation(upgrade, 0F);
+		}
+		discard();
+	}
 
-        return InteractionResult.PASS;
-    }
+	@Override
+	public void remove(Entity.RemovalReason removalReason) {
+		super.remove(removalReason);
+		notifyOthers(getNetwork());
+	}
 
-    @Override
-    protected void readAdditionalSaveData(CompoundTag cmp) {
-        super.readAdditionalSaveData(cmp);
-        setUpgrade(SparkUpgradeType.values()[cmp.getInt(TAG_UPGRADE)]);
-    }
+	@Override
+	public InteractionResult interact(Player player, InteractionHand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		if (isAlive() && !stack.isEmpty()) {
+			ItemStack upgrade = getUpgrade();
+			if (stack.getItem() instanceof WandOfTheForestItem) {
+				if (!level().isClientSide()) {
+					if (player.isShiftKeyDown() || !PlayerHelper.isTruePlayer(player)) {
+						if (!upgrade.isEmpty()) {
+							spawnAtLocation(upgrade, 0F);
+							setUpgrade(ItemStack.EMPTY);
 
-    @Override
-    protected void addAdditionalSaveData(CompoundTag cmp) {
-        super.addAdditionalSaveData(cmp);
-        cmp.putInt(TAG_UPGRADE, getUpgrade().ordinal());
-    }
+							// Recalculate transfers, recessive and dominant will register the proper transfers
+							outgoingTransfers.clear();
+							inboundTransfers.clear();
+							notifyOthers(getNetwork());
+						} else {
+							dropAndKill();
+						}
+					} else {
+						ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork())
+								.forEach(spark -> particleBeam(player, this, spark.entity()));
+					}
+				}
 
-    @Nullable
-    @Override
-    public SparkAttachable getAttachedTile() {
-        return XplatAbstractions.INSTANCE.findSparkAttachable(level(), getAttachPos(),
-                level().getBlockState(getAttachPos()), level().getBlockEntity(getAttachPos()), Direction.UP);
-    }
+				return InteractionResult.sidedSuccess(level().isClientSide());
+			} else if (stack.is(BotaniaTags.Items.MANA_SPARK_AUGMENTS) && upgrade.isEmpty()) {
+				if (!level().isClientSide()) {
+					setUpgrade(stack.split(1));
+				}
+				return InteractionResult.sidedSuccess(level().isClientSide());
+			} else if (stack.is(BotaniaItems.PHANTOM_INK)) {
+				if (!level().isClientSide()) {
+					setInvisible(true);
+				}
+				return InteractionResult.sidedSuccess(level().isClientSide());
+			} else if (stack.getItem() instanceof DyeItem dye) {
+				DyeColor color = dye.getDyeColor();
+				if (color != getNetwork()) {
+					if (!level().isClientSide()) {
+						setNetwork(color);
+						stack.shrink(1);
+					}
+					return InteractionResult.sidedSuccess(level().isClientSide());
+				}
+			}
+		}
 
-    @Nullable
-    @Override
-    public ManaReceiver getAttachedManaReceiver() {
-        return XplatAbstractions.INSTANCE.findManaReceiver(level(), getAttachPos(), Direction.UP);
-    }
+		return InteractionResult.PASS;
+	}
 
-    private void filterTransfers() {
-        Iterator<ManaSpark> iter = outgoingTransfers.iterator();
-        while (iter.hasNext()) {
-            ManaSpark spark = iter.next();
-            SparkUpgradeType upgr = getUpgrade();
-            SparkUpgradeType supgr = spark.getUpgrade();
-            ManaReceiver arecv = spark.getAttachedManaReceiver();
+	@Override
+	protected void readAdditionalSaveData(CompoundTag compoundTag) {
+		super.readAdditionalSaveData(compoundTag);
+		if (compoundTag.contains(TAG_UPGRADE, Tag.TAG_COMPOUND)) {
+			setUpgrade(ItemStack.parseOptional(registryAccess(), compoundTag.getCompound(TAG_UPGRADE)));
+		}
+	}
 
-            if (spark == this || !((Entity) spark).isAlive() || spark.areIncomingTransfersDone() ||
-                    getNetwork() != spark.getNetwork() || arecv == null || arecv.isFull() ||
-                    !(upgr == SparkUpgradeType.NONE && supgr == SparkUpgradeType.DOMINANT ||
-                            upgr == SparkUpgradeType.RECESSIVE &&
-                                    (supgr == SparkUpgradeType.NONE || supgr == SparkUpgradeType.DISPERSIVE) ||
-                            !(arecv instanceof ManaPool))) {
-                iter.remove();
-            }
-        }
-    }
+	@Override
+	protected void addAdditionalSaveData(CompoundTag compoundTag) {
+		super.addAdditionalSaveData(compoundTag);
+		ItemStack upgrade = getUpgrade();
+		if (!upgrade.isEmpty()) {
+			compoundTag.put(TAG_UPGRADE, upgrade.save(registryAccess()));
+		}
+	}
 
-    @Override
-    public Collection<ManaSpark> getOutgoingTransfers() {
-        return outgoingTransfers;
-    }
+	@Nullable
+	@Override
+	public ManaSparkAttachable getAttachedTile() {
+		return ManaSparkAttachable.LOOKUP.find(level(), getAttachPos());
+	}
 
-    private boolean hasTransfer(ManaSpark entity) {
-        return outgoingTransfers.contains(entity);
-    }
+	@Nullable
+	@Override
+	public ManaReceiver getAttachedManaReceiver() {
+		return ManaReceiver.LOOKUP.find(level(), getAttachPos(), Direction.UP);
+	}
 
-    @Override
-    public void registerTransfer(ManaSpark entity) {
-        if (hasTransfer(entity)) {
-            return;
-        }
-        outgoingTransfers.add(entity);
-        filterTransfers();
-    }
+	private void filterTransfers() {
+		ItemStack upgr = getUpgrade();
+		Iterator<ManaSpark> iter = outgoingTransfers.iterator();
+		while (iter.hasNext()) {
+			ManaSpark spark = iter.next();
+			ItemStack supgr = spark.getUpgrade();
+			ManaReceiver arecv = spark.getAttachedManaReceiver();
 
-    private void notifyOthers(DyeColor network) {
-        for (var spark : SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), network)) {
-            spark.updateTransfers();
-        }
-    }
+			if (spark == this
+					|| !((Entity) spark).isAlive()
+					|| spark.areIncomingTransfersDone()
+					|| getNetwork() != spark.getNetwork()
+					|| arecv == null
+					|| arecv.isFull()
+					|| !(supgr.is(BotaniaItems.SPARK_AUGMENT_DOMINANT) && upgr.is(BotaniaTags.Items.DOMINANT_SPARK_PULL_SOURCE)
+							|| upgr.is(BotaniaItems.SPARK_AUGMENT_RECESSIVE) && supgr.is(BotaniaTags.Items.RECESSIVE_SPARK_PUSH_TARGET)
+							|| !(arecv instanceof ManaPool))) {
+				iter.remove();
+			}
+		}
 
-    @Override
-    public SparkUpgradeType getUpgrade() {
-        return SparkUpgradeType.values()[entityData.get(UPGRADE)];
-    }
+		Iterator<ManaSpark> iter2 = inboundTransfers.iterator();
+		while (iter2.hasNext()) {
+			ManaSpark spark = iter2.next();
+			ItemStack supgr = spark.getUpgrade();
+			ManaReceiver otherManaReceiver = spark.getAttachedManaReceiver();
+			ManaReceiver myManaReceiver = getAttachedManaReceiver();
 
-    @Override
-    public void setUpgrade(SparkUpgradeType upgrade) {
-        entityData.set(UPGRADE, upgrade.ordinal());
-        updateTransfers();
-        notifyOthers(getNetwork());
-    }
+			if (spark == this
+					|| !((Entity) spark).isAlive()
+					|| getNetwork() != spark.getNetwork()
+					|| otherManaReceiver == null
+					|| otherManaReceiver.getCurrentMana() == 0
+					|| myManaReceiver == null
+					|| myManaReceiver.isFull()
+					|| !(upgr.is(BotaniaItems.SPARK_AUGMENT_DOMINANT) && supgr.is(BotaniaTags.Items.DOMINANT_SPARK_PULL_SOURCE)
+							|| !(otherManaReceiver instanceof ManaPool))) {
+				iter2.remove();
+			}
+		}
+	}
 
-    @Override
-    public void setNetwork(DyeColor color) {
-        // The previous network needs to filter this spark out
-        var previousNetwork = getNetwork();
-        super.setNetwork(color);
-        updateTransfers();
-        notifyOthers(color);
-        notifyOthers(previousNetwork);
-    }
+	@Override
+	public Collection<ManaSpark> getOutgoingTransfers() {
+		return outgoingTransfers;
+	}
 
-    @Override
-    public boolean areIncomingTransfersDone() {
-        if (getAttachedManaReceiver() instanceof ManaPool) {
-            return false;
-        }
+	private boolean hasTransfer(ManaSpark entity) {
+		return outgoingTransfers.contains(entity);
+	}
 
-        SparkAttachable attachable = getAttachedTile();
-        return attachable != null && attachable.areIncomingTransfersDone();
-    }
+	@Override
+	public void registerTransfer(ManaSpark entity) {
+		if (isRemoved() || hasTransfer(entity)) {
+			return;
+		}
+		outgoingTransfers.add(entity);
+		filterTransfers();
+	}
 
-    public record WandHud(AlphaSparkEntity entity) implements WandHUD {
+	private void notifyOthers(DyeColor network) {
+		for (var spark : ManaSparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), network)) {
+			spark.updateTransfers();
+		}
+	}
 
-        @Override
-        public void renderHUD(GuiGraphics gui, Window window, Font font, float partialTick) {
-            ItemStack sparkStack = new ItemStack(entity.getSparkItem());
-            ItemStack augmentStack = SparkAugmentItem.getByType(entity.getUpgrade());
-            DyeColor networkColor = entity.getNetwork();
-            Component networkColorName = Component.translatable("color.minecraft." + networkColor.getName())
-                    .withStyle(ChatFormatting.ITALIC);
-            int textColor = ColorHelper.getColorLegibleOnGrayBackground(networkColor);
+	@Override
+	public ItemStack getUpgrade() {
+		return entityData.get(UPGRADE);
+	}
 
-            int width = 4 + Collections.max(Arrays.asList(
-                    font.width(networkColorName),
-                    RenderHelper.itemWithNameWidth(sparkStack, font),
-                    RenderHelper.itemWithNameWidth(augmentStack, font)));
-            int height = augmentStack.isEmpty() ? 30 : 50;
-            int networkColorTextStart = font.width(networkColorName) / 2;
+	@Override
+	public void setUpgrade(ItemStack upgrade) {
+		entityData.set(UPGRADE, upgrade);
+		updateTransfers();
+		notifyOthers(getNetwork());
+	}
 
-            int centerX = window.getGuiScaledWidth() / 2;
-            int centerY = window.getGuiScaledHeight() / 2;
+	@Override
+	public void setNetwork(DyeColor color) {
+		// The previous network needs to filter this spark out
+		var previousNetwork = getNetwork();
+		super.setNetwork(color);
+		updateTransfers();
+		notifyOthers(color);
+		notifyOthers(previousNetwork);
+	}
 
-            RenderHelper.renderHUDBox(gui, centerX - width / 2, centerY + 8, centerX + width / 2, centerY + 8 + height);
+	@Override
+	public boolean areIncomingTransfersDone() {
+		if (getAttachedManaReceiver() instanceof ManaPool) {
+			return false;
+		}
 
-            RenderHelper.renderItemWithNameCentered(gui, window, font, sparkStack, centerY + 10, textColor);
-            RenderHelper.renderItemWithNameCentered(gui, window, font, augmentStack, centerY + 28, textColor);
-            gui.drawString(font, networkColorName, centerX - networkColorTextStart,
-                    centerY + (augmentStack.isEmpty() ? 28 : 46), textColor);
-        }
-    }
+		ManaSparkAttachable attachable = getAttachedTile();
+		return attachable != null && attachable.areIncomingTransfersDone();
+	}
+
+	public record WandHud(AlphaSparkEntity entity) implements WandHUD {
+		@Override
+		public void renderHUD(GuiGraphics gui, Window window, Font font, float partialTick) {
+			ItemStack sparkStack = new ItemStack(entity.getSparkItem());
+			ItemStack augmentStack = entity.getUpgrade();
+			DyeColor networkColor = entity.getNetwork();
+			Component networkColorName = Component.translatable("color.minecraft." + networkColor.getName())
+					.withStyle(ChatFormatting.ITALIC);
+			int textColor = ColorHelper.getColorLegibleOnGrayBackground(networkColor);
+
+			int width = 4 + Collections.max(Arrays.asList(
+					font.width(networkColorName),
+					RenderHelper.itemWithNameWidth(sparkStack, font),
+					RenderHelper.itemWithNameWidth(augmentStack, font)
+			));
+			int height = augmentStack.isEmpty() ? 30 : 50;
+			int networkColorTextStart = font.width(networkColorName) / 2;
+
+			int centerX = window.getGuiScaledWidth() / 2;
+			int centerY = window.getGuiScaledHeight() / 2;
+
+			RenderHelper.renderHUDBox(gui, centerX - width / 2, centerY + 8, centerX + width / 2, centerY + 8 + height);
+
+			RenderHelper.renderItemWithNameCentered(gui, window, font, sparkStack, centerY + 10, textColor);
+			RenderHelper.renderItemWithNameCentered(gui, window, font, augmentStack, centerY + 28, textColor);
+			gui.drawString(font, networkColorName, centerX - networkColorTextStart, centerY + (augmentStack.isEmpty() ? 28 : 46), textColor);
+		}
+	}
 }

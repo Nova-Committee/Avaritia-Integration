@@ -20,13 +20,17 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
-import vazkii.botania.api.BotaniaForgeCapabilities;
-import vazkii.botania.api.BotaniaForgeClientCapabilities;
+import vazkii.botania.api.block.WandHUD;
+import vazkii.botania.api.block.Wandable;
 import vazkii.botania.api.block_entity.BindableSpecialFlowerBlockEntity;
+import vazkii.botania.api.mana.ManaReceiver;
+import vazkii.botania.api.mana.spark.ManaSparkAttachable;
+import vazkii.botania.api.neoforge.BotaniaNeoForgeCapabilities;
 import vazkii.botania.client.render.block_entity.SpecialFlowerBlockEntityRenderer;
 
 public final class BotaniaModule implements Module {
@@ -52,7 +56,7 @@ public final class BotaniaModule implements Module {
     @Override
     public void registerEvent(IEventBus modBus, IEventBus gameBus) {
         modBus.addListener(BotaniaModule::addDispenserBehaviours);
-        modBus.addListener(BotaniaModule::registerCapabilities);
+        modBus.addListener(EventPriority.LOW, BotaniaModule::registerCapabilities);
     }
 
     public static void addDispenserBehaviours(FMLCommonSetupEvent event) {
@@ -62,18 +66,12 @@ public final class BotaniaModule implements Module {
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent e) {
-        e.registerBlockEntity(
-                BotaniaForgeCapabilities.MANA_RECEIVER,
-                BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
-                (be, direction) -> be);
-        e.registerBlockEntity(
-                BotaniaForgeCapabilities.WANDABLE,
-                BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
-                (be, direction) -> be);
-        e.registerBlockEntity(
-                BotaniaForgeCapabilities.SPARK_ATTACHABLE,
-                BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
-                (be, direction) -> be);
+        e.registerBlockEntity(BotaniaNeoForgeCapabilities.getBlockApiLookupById(ManaReceiver.LOOKUP),
+                BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), (be, direction) -> be);
+        e.registerBlockEntity(BotaniaNeoForgeCapabilities.getBlockApiLookupById(Wandable.LOOKUP),
+                BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), (be, direction) -> be);
+        e.registerBlockEntity(BotaniaNeoForgeCapabilities.getBlockApiLookupById(ManaSparkAttachable.LOOKUP),
+                BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), (be, unused) -> be);
     }
 
     @Override
@@ -96,28 +94,24 @@ public final class BotaniaModule implements Module {
 
     @Override
     public void registerClientEvent(IEventBus modBus, IEventBus gameBus) {
-        modBus.addListener(BotaniaModule::registerBlockEntityClientCapability);
-        modBus.addListener(BotaniaModule::registerEntityClientCapabilities);
+        modBus.addListener(EventPriority.LOW, BotaniaModule::registerBlockEntityClientCapability);
+        modBus.addListener(EventPriority.LOW, BotaniaModule::registerEntityClientCapabilities);
     }
 
     public static void registerBlockEntityClientCapability(RegisterCapabilitiesEvent e) {
-        e.registerBlockEntity(
-                BotaniaForgeClientCapabilities.BLOCK_WAND_HUD,
+        e.registerBlockEntity(BotaniaNeoForgeCapabilities.getBlockApiLookupById(WandHUD.BLOCK_LOOKUP),
                 BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(),
                 (be, unused) -> new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud<>(be));
-        e.registerBlockEntity(
-                BotaniaForgeClientCapabilities.BLOCK_WAND_HUD,
+        e.registerBlockEntity(BotaniaNeoForgeCapabilities.getBlockApiLookupById(WandHUD.BLOCK_LOOKUP),
                 BotaniaIntegrationBlockEntities.SOARLEANDER.get(),
                 (be, unused) -> new BindableSpecialFlowerBlockEntity.BindableFlowerWandHud<>(be));
-        e.registerBlockEntity(
-                BotaniaForgeClientCapabilities.BLOCK_WAND_HUD,
+        e.registerBlockEntity(BotaniaNeoForgeCapabilities.getBlockApiLookupById(WandHUD.BLOCK_LOOKUP),
                 BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(),
                 (be, unused) -> new InfinityManaPoolBlockEntity.WandHud(be));
     }
 
     private static void registerEntityClientCapabilities(RegisterCapabilitiesEvent e) {
-        e.registerEntity(
-                BotaniaForgeClientCapabilities.ENTITY_WAND_HUD,
+        e.registerEntity(BotaniaNeoForgeCapabilities.getEntityApiLookupById(WandHUD.ENTITY_LOOKUP),
                 BotaniaIntegrationEntities.ALPHA_SPARK_ENTITIES.get(),
                 (entity, unused) -> new AlphaSparkEntity.WandHud(entity));
     }

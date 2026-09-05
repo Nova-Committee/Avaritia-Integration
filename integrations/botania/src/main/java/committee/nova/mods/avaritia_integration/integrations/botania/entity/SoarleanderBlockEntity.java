@@ -97,7 +97,7 @@ public class SoarleanderBlockEntity extends GeneratingFlowerBlockEntity {
                     this.addMana(MANA_PER_KILL);
                 }
             }
-            this.sync();
+            this.markForPotentialSync();
         }
     }
 }

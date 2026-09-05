@@ -46,7 +46,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
                                 if (manaToSend > 0) {
                                     pool.receiveMana(manaToSend);
                                     this.addMana(-manaToSend);
-                                    this.sync();
+                                    this.markForPotentialSync();
                                     if (this.getMana() <= 0) {
                                         break;
                                     }
@@ -58,7 +58,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
                             if (manaToSend > 0) {
                                 receiver.receiveMana(manaToSend);
                                 this.addMana(-manaToSend);
-                                this.sync();
+                                this.markForPotentialSync();
                                 if (this.getMana() <= 0) {
                                     break;
                                 }
@@ -112,8 +112,5 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
         return Color.HSBtoRGB(hue, 1.0f, 1.0f) & 0xFFFFFF;
     }
 
-    @Override
-    public boolean isOvergrowthAffected() {
-        return true;
-    }
+
 }

@@ -40,7 +40,6 @@ import net.minecraft.world.phys.Vec3;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.common.BotaniaStats;
 import vazkii.botania.common.block.BotaniaBlocks;
 import vazkii.botania.common.block.TinyPotatoBlock;
@@ -96,7 +95,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
             }
             if (this.name.getString().toLowerCase(Locale.ROOT).trim().endsWith("shia labeouf") && this.nextDoIt == 0) {
                 this.nextDoIt = 40;
-                this.level.playSound(null, this.worldPosition, BotaniaSounds.doit, SoundSource.BLOCKS, 1.0F, 1.0F);
+                this.level.playSound(null, this.worldPosition, BotaniaSounds.DOIT, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
             player.awardStat(BotaniaStats.TINY_POTATOES_PETTED);
             PlayerHelper.grantCriterion((ServerPlayer) player,
@@ -232,13 +231,14 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
     public void setChanged() {
         super.setChanged();
         if (this.level != null && !this.level.isClientSide) {
-            VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(),
+                    Block.UPDATE_CLIENTS);
         }
     }
 
     @Override
     public @NotNull Component getName() {
-        return BotaniaBlocks.tinyPotato.getName();
+        return BotaniaBlocks.TINY_POTATO.getName();
     }
 
     @Override

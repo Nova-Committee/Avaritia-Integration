@@ -32,7 +32,8 @@ public final class BotaniaIntegrationBlocks {
             () -> new AsgardDandelionBlock(MobEffects.HUNGER, 0, BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY),
                     BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get));
     public static final DeferredBlock<Block> ASGARD_DANDELION_FLOATING = register("asgard_dandelion_floating",
-            () -> new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS,
+            () -> new FloatingSpecialFlowerBlock(
+                    BlockBehaviour.Properties.ofFullCopy(BotaniaBlocks.WHITE_FLOATING_FLOWER),
                     BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get));
     public static final DeferredBlock<Block> POTTED_ASGARD_DANDELION = register("potted_asgard_dandelion", false,
             () -> flowerPot(ASGARD_DANDELION.get(), 15));
@@ -41,13 +42,14 @@ public final class BotaniaIntegrationBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POPPY).lightLevel(level -> 5),
                     BotaniaIntegrationBlockEntities.SOARLEANDER::get));
     public static final DeferredBlock<Block> SOARLEANDER_FLOATING = register("soarleander_floating",
-            () -> new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS.lightLevel(level -> 5),
+            () -> new FloatingSpecialFlowerBlock(
+                    BlockBehaviour.Properties.ofFullCopy(BotaniaBlocks.WHITE_FLOATING_FLOWER).lightLevel(level -> 5),
                     BotaniaIntegrationBlockEntities.SOARLEANDER::get));
     public static final DeferredBlock<Block> POTTED_SOARLEANDER = register("potted_soarleander", false,
             () -> flowerPot(SOARLEANDER.get(), 5));
     public static final DeferredBlock<Block> INFINITY_MANA_POOL = register("infinity_mana_pool",
             () -> new InfinityManaPoolBlock(
-                    BlockBehaviour.Properties.ofFullCopy(BotaniaBlocks.livingrock).lightLevel(level -> 15)),
+                    BlockBehaviour.Properties.ofFullCopy(BotaniaBlocks.LIVINGROCK).lightLevel(level -> 15)),
             new Item.Properties().rarity(ModRarities.COSMIC.getValue()));
     public static final DeferredBlock<Block> INFINITY_POTATO = register("infinity_potato",
             InfinityTinyPotatoBlock::new);
