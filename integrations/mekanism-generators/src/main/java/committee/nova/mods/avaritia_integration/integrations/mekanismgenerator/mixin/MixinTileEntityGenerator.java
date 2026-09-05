@@ -36,13 +36,14 @@ public abstract class MixinTileEntityGenerator {
     private void avaritia_integration$bigIntegerInfinityBuffer(IContentsListener listener,
                                                                CallbackInfoReturnable<IEnergyContainerHolder> cir) {
         Object self = this;
-        if (!(self instanceof InfinitySolarGeneratorBlockEntity)
-                && !(self instanceof InfinityAdvancedSolarGeneratorBlockEntity)) {
+        if (!(self instanceof InfinitySolarGeneratorBlockEntity) &&
+                !(self instanceof InfinityAdvancedSolarGeneratorBlockEntity)) {
             return;
         }
         Supplier<Direction> facing = ((mekanism.common.tile.base.TileEntityMekanism) self).facingSupplier;
         EnergyContainerHelper builder = EnergyContainerHelper.forSide(facing);
-        builder.addContainer(energyContainer = BigIntegerEnergyContainer.output(MekBigEnergy.INFINITY_CAPACITY, listener),
+        builder.addContainer(
+                energyContainer = BigIntegerEnergyContainer.output(MekBigEnergy.INFINITY_CAPACITY, listener),
                 getEnergySides());
         cir.setReturnValue(builder.build());
     }
