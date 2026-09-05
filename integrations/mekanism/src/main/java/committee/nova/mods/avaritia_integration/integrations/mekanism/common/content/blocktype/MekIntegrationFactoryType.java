@@ -6,7 +6,7 @@ import committee.nova.mods.avaritia_integration.integrations.mekanism.common.reg
 
 import mekanism.api.annotations.NothingNullByDefault;
 import mekanism.api.text.IHasTranslationKey;
-import mekanism.common.MekanismLang;
+import mekanism.api.text.ILangEntry;
 import mekanism.common.registration.impl.BlockRegistryObject;
 
 import java.util.Locale;
@@ -17,15 +17,15 @@ public enum MekIntegrationFactoryType implements IHasTranslationKey {
 
     NEUTRON_COLLECTING("neutron_collecting", MekIntegrationLang.NEUTRON_COLLECTING,
             () -> MekIntegrationBlockTypes.NEUTRON_COLLECTOR, () -> MekIntegrationBlocks.NEUTRON_COLLECTOR),
-    SINGULARITY_COMPRESSING("singularity_compressing", MekIntegrationLang.NEUTRON_COMPRESSING,
+    SINGULARITY_COMPRESSING("singularity_compressing", MekIntegrationLang.SINGULARITY_COMPRESSING,
             () -> MekIntegrationBlockTypes.SINGULARITY_COMPRESSOR, () -> MekIntegrationBlocks.SINGULARITY_COMPRESSOR);
 
     private final String registryNameComponent;
-    private final MekanismLang langEntry;
+    private final ILangEntry langEntry;
     private final Supplier<MekIntegrationFactoryMachine<?>> baseMachine;
     private final Supplier<BlockRegistryObject<?, ?>> baseBlock;
 
-    MekIntegrationFactoryType(String registryNameComponent, MekanismLang langEntry,
+    MekIntegrationFactoryType(String registryNameComponent, ILangEntry langEntry,
                               Supplier<MekIntegrationFactoryMachine<?>> baseMachine,
                               Supplier<BlockRegistryObject<?, ?>> baseBlock) {
         this.registryNameComponent = registryNameComponent;

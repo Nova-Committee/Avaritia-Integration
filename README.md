@@ -4,7 +4,7 @@
 <hr>
 <p align="center">
     <a href="https://www.curseforge.com/minecraft/mc-mods/avaritia-integration">
-        <img src="https://img.shields.io/badge/Available%20for-MC%201.20.1-c70039" alt="Supported Versions">
+        <img src="https://img.shields.io/badge/Available%20for-MC%201.21.1-c70039" alt="Supported Versions">
     </a>
     <a href="https://www.curseforge.com/minecraft/mc-mods/avaritia-integration">
         <img src="https://cf.way2muchnoise.eu/1347675.svg" alt="CurseForge Download">
@@ -13,12 +13,12 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Nova-Committee/avaritia-integration/blob/forge/1.20.1/README.md">English</a> |
-    <a href="https://github.com/Nova-Committee/avaritia-integration/blob/forge/1.20.1/README_CN.md">简体中文</a>
+    <a href="README.md">English</a> |
+    <a href="README_CN.md">简体中文</a>
 </p>
 
-## **📕Introduction:**
-* This mod add capability between Re:Avaritia and many other mods.
+## **Introduction:**
+* This mod adds compatibility between Re:Avaritia and many other mods on Minecraft 1.21.1 (NeoForge).
 
 ## **✏️Authors:**
 - Programmer: `cnlimiter` `IAFEnvoy` `Frostbite-time` `CreepingCreeper` `Oganesson897` `cu6` `lostmyself8` `Lounode` `Y-Xiao233`
@@ -37,22 +37,23 @@
 * 🔲: Planned Support<br>
 * ❌: No Support Planned<br>
 
-| Mod                                 | Content | Status | Notes |
+| Mod | Content | Status | Notes |
 |-------------------------------------|:--------|:------:|-------|
-| Apotheosis                          |         |   🔲   |       |
-| Applied Energistics 2               |         |   ✅   |       |
-| Blood Magic                         |         |   ✅   |       |
-| Botania                             |         |   ✅   |       |
-| Create                              |         |   🚧   |       |
-| Ender IO                            |         |   ✅   |       |
-| GregTechCEu Modern                  |         |   🔲   |       |
-| Mekanism                            |         |   🔲   |       |
-| Mekanism Advanced Generators        |         |   🔲   |       |
-| NuclearCraft: Neoteric              |         |   🔲   |       |
-| PneumaticCraft: Repressurized       |         |   ✅   |       |
-| Refined Storage                     |         |   🚧   |       |
-| SlashBlade                          |         |   ✅   |       |
-| Tetra                               |         |   🔲   |       |
-| Tinker's Construct 3                |         |   ✅   |       |
-| Industrial Foregoing                |         |   ✅   |       |
-| Industrial Foregoing Extra Upgrades |         |   ✅   |       |
+| Applied Energistics 2 | Infinity ME component and storage cells | ✅ | |
+| Botania | Asgard Dandelion, Soarleander, Infinity Mana Pool, Infinity Potato, Alpha Spark | ✅ | Botania 455-SNAPSHOT or newer |
+| Create | Creative Mechanism, Creative Compound | ✅ | |
+| Ender IO | Infinity Capacitor, Infinity / Neutron grinding balls | ✅ | |
+| Industrial Foregoing | Neutron / Blaze Cube / Crystal Matrix / Infinity addons, Void Matter, Elderly Medulla | ✅ | |
+| Industrial Foregoing Extra Upgrades | Blaze Cube / Crystal Matrix / Neutron / Infinity energy addons | ✅ | |
+| Mekanism | Neutron Collector, Singularity Compressor, factories, alloys, circuits, energy tablets | ✅ | |
+| Mekanism Generators | Infinity / Neutron solar generators | ✅ | |
+| PneumaticCraft: Repressurized | Creative Compressed Iron | ✅ | |
+| Refined Storage | Infinity Storage Part | ✅ | |
+| Thermal Expansion | Creative augments | ✅ | Data-only |
+| Tinkers' Construct | Infinity / Neutronium / Crystal Matrix / Blaze Cube materials and modifiers | ✅ | Data-only |
+| Apotheosis | | 🔲 | |
+| Blood Magic | | 🔲 | |
+| GregTechCEu Modern | | 🔲 | |
+| NuclearCraft: Neoteric | | 🔲 | |
+| SlashBlade | | 🔲 | |
+| Tetra | | 🔲 | |

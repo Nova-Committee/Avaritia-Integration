@@ -4,6 +4,13 @@ ext.ai_mod_description = 'Avaritia Integration module for Mekanism.'
 ext.ai_run_directory = 'integrations/mekanism'
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
+neoForge {
+    unitTest {
+        enable()
+        testedMod = mods."${ai_mod_id}"
+    }
+}
+
 dependencies {
     implementation forge.reAvaritia
     implementation project(':core')
@@ -12,4 +19,10 @@ dependencies {
     runtimeOnly variantOf(forge.mekanism) { classifier('tools') }
     runtimeOnly forge.igleeLibrary
     implementation forge.evolvedMekanism
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }

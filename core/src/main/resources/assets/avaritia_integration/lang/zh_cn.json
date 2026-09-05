@@ -107,6 +107,11 @@
 	"block.avaritia_integration.neutron_solar_generator": "中子太阳能发电机",
 	"block.avaritia_integration.infinity_advanced_solar_generator": "无尽高级太阳能发电机",
 	"block.avaritia_integration.neutron_advanced_solar_generator": "中子高级太阳能发电机",
+	"factory.avaritia_integration.neutron_collecting": "中子态素收集",
+	"factory.avaritia_integration.singularity_compressing": "奇点压缩",
+	"description.avaritia_integration.neutron_collector": "从化学原料中提取中子态素的机器。",
+	"description.avaritia_integration.singularity_compressor": "将材料压缩为奇点的机器。",
+
 
 	"item.avaritia_integration.stredgeuniverse": "§c宇§6宙§e最§2强§b之§3刃§1「万物终结·无尽星空」",
 	"item.avaritia_integration.stredgeuniverse.tooltip1": "§5§o“在此解放，宇宙最强之力”",

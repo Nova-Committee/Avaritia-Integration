@@ -1,11 +1,23 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism.common;
 
-import mekanism.common.MekanismLang;
+import mekanism.api.annotations.NothingNullByDefault;
+import mekanism.api.text.ILangEntry;
 
-public class MekIntegrationLang {
+@NothingNullByDefault
+public enum MekIntegrationLang implements ILangEntry {
+    NEUTRON_COLLECTING("factory.avaritia_integration.neutron_collecting"),
+    SINGULARITY_COMPRESSING("factory.avaritia_integration.singularity_compressing"),
+    DESCRIPTION_NEUTRON_COLLECTING("description.avaritia_integration.neutron_collector"),
+    DESCRIPTION_SINGULARITY_COMPRESSING("description.avaritia_integration.singularity_compressor");
 
-    public static MekanismLang NEUTRON_COLLECTING;
-    public static MekanismLang DESCRIPTION_NEUTRON_COLLECTING;
-    public static MekanismLang NEUTRON_COMPRESSING;
-    public static MekanismLang DESCRIPTION_SINGULARITY_COMPRESSING;
+    private final String key;
+
+    MekIntegrationLang(String key) {
+        this.key = key;
+    }
+
+    @Override
+    public String getTranslationKey() {
+        return key;
+    }
 }
