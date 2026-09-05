@@ -47,7 +47,7 @@ import java.util.Set;
 public abstract class TileEntityChemicalToItemMIFactory<RECIPE extends MekanismRecipe<?>>
                                                        extends TileEntityMIFactory<RECIPE> {
 
-    private static final long MAX_CHEMICAL = 10_000;
+    public static final long MAX_CHEMICAL = 10_000;
 
     protected IChemicalTank[] inputTank;
     protected OutputInventorySlot[] outputSlot;

@@ -19,6 +19,7 @@ dependencies {
     runtimeOnly variantOf(forge.mekanism) { classifier('tools') }
     runtimeOnly forge.igleeLibrary
     implementation forge.evolvedMekanism
+    implementation forge.jei
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 }

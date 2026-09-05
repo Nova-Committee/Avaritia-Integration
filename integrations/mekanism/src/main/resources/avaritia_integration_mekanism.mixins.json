@@ -4,6 +4,7 @@
 	"compatibilityLevel": "JAVA_21",
 	"refmap": "avaritia_integration.refmap.json",
 	"mixins": ["MixinMekanismRecipeType"],
+	"client": ["MixinMekanismJEI"],
 	"injectors": {
 		"defaultRequire": 1
 	},

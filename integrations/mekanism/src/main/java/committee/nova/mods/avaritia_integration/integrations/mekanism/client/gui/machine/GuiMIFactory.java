@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism.client.gui.machine;
 
 import committee.nova.mods.avaritia_integration.integrations.mekanism.client.gui.element.tab.GuiMISortingTab;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.client.recipe_viewer.MekIntegrationRecipeViewerTypes;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.tile.factory.TileEntityChemicalToItemMIFactory;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.tile.factory.TileEntityItemToItemMIFactory;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.tile.factory.TileEntityMIFactory;
@@ -77,10 +78,14 @@ public class GuiMIFactory extends
 
         for (int i = 0; i < tile.tier.processes; i++) {
             int cacheIndex = i;
-            addRenderableWidget(new GuiProgress(() -> tile.getScaledProgress(1, cacheIndex), ProgressType.DOWN, this,
-                    4 + tile.getXPos(i), getProgressYPos()))
+            GuiProgress progress = addRenderableWidget(
+                    new GuiProgress(() -> tile.getScaledProgress(1, cacheIndex), ProgressType.DOWN, this,
+                            4 + tile.getXPos(i), getProgressYPos()))
                     .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT, tile.getWarningCheck(
                             CachedRecipe.OperationTracker.RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT, cacheIndex));
+            if (tile instanceof TileEntityItemToItemMIFactory<?>) {
+                progress.recipeViewerCategories(MekIntegrationRecipeViewerTypes.COMPRESSING);
+            }
         }
     }
 

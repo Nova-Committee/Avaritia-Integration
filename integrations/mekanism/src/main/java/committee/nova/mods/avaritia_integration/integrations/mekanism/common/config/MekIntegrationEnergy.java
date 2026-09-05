@@ -4,14 +4,22 @@ public final class MekIntegrationEnergy {
 
     private MekIntegrationEnergy() {}
 
-    /** Neutron collector: 10 MJ/t. Vanilla crystallizer is 400 J/t. */
-    public static final long NEUTRON_USAGE = 10_000_000L;
-    /** Neutron collector buffer: 10 TJ. Vanilla crystallizer is 80 kJ. */
-    public static final long NEUTRON_STORAGE = 10_000_000_000_000L;
-    /** Singularity compressor: 100 MJ/t. */
-    public static final long INFINITY_USAGE = 100_000_000L;
-    /** Singularity compressor buffer: unbounded. */
-    public static final long INFINITY_STORAGE = Long.MAX_VALUE;
+    /**
+     * Neutron collector: 1 MJ/t. Ultimate universal cable is 8.192 MJ/t; 10 MJ/t could not be fed.
+     */
+    public static final long NEUTRON_USAGE = 1_000_000L;
+    /**
+     * Neutron collector buffer: 200 ticks of usage (200 MJ). Same ratio as vanilla crystallizer.
+     */
+    public static final long NEUTRON_STORAGE = NEUTRON_USAGE * 200L;
+    /**
+     * Singularity compressor: 8 MJ/t, just under an ultimate cable. Factories still scale drain by process count.
+     */
+    public static final long INFINITY_USAGE = 8_000_000L;
+    /**
+     * Singularity compressor buffer: 200 ticks of usage (1.6 GJ).
+     */
+    public static final long INFINITY_STORAGE = INFINITY_USAGE * 200L;
 
     /** Neutron tablet charge: 1 TJ/t. Vanilla tablet is 5 kJ/t. */
     public static final long NEUTRON_TABLET_RATE = 1_000_000_000_000L;

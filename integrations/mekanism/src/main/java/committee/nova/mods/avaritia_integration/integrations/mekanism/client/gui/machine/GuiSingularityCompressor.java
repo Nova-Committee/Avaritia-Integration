@@ -1,5 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism.client.gui.machine;
 
+import committee.nova.mods.avaritia_integration.integrations.mekanism.client.recipe_viewer.MekIntegrationRecipeViewerTypes;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.tile.machine.TileEntitySingularityCompressor;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -35,7 +36,8 @@ public class GuiSingularityCompressor extends
         addRenderableWidget(new GuiEnergyTab(this, tile.getEnergyContainer(), tile::getActive));
         addRenderableWidget(new GuiProgress(tile::getScaledProgress, ProgressType.BAR, this, 86, 38))
                 .warning(WarningType.INPUT_DOESNT_PRODUCE_OUTPUT,
-                        tile.getWarningCheck(RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT));
+                        tile.getWarningCheck(RecipeError.INPUT_DOESNT_PRODUCE_OUTPUT))
+                .recipeViewerCategories(MekIntegrationRecipeViewerTypes.COMPRESSING);
     }
 
     @Override

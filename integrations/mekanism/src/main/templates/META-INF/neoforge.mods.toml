@@ -34,4 +34,11 @@ versionRange = "[${mod_version},)"
 ordering = "AFTER"
 side = "BOTH"
 
+[[dependencies."${mod_id}"]]
+modId = "jei"
+type = "optional"
+versionRange = "[19,)"
+ordering = "NONE"
+side = "CLIENT"
+
 ${dependency_blocks}

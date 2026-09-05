@@ -24,8 +24,8 @@ public class ItemBlockMekIntegrationFactory extends ItemBlockTooltip<BlockMekInt
     private static AttachedSideConfig getSideConfig(BlockMekIntegrationFactory<?> block) {
         return switch (Attribute.getOrThrow(block.builtInRegistryHolder(), AttributeMekIntegrationFactoryType.class)
                 .getMekIntegrationFactoryType()) {
-            case NEUTRON_COLLECTING -> AttachedSideConfig.ELECTRIC_MACHINE;
-            case SINGULARITY_COMPRESSING -> AttachedSideConfig.ADVANCED_MACHINE;
+            case NEUTRON_COLLECTING -> AttachedSideConfig.CRYSTALLIZER;
+            case SINGULARITY_COMPRESSING -> AttachedSideConfig.ELECTRIC_MACHINE;
         };
     }
 
