@@ -1,6 +1,5 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"category": "misc",
+	"type": "avaritia:shapeless_table",
 	"ingredients": [
 		{
 			"item": "avaritia_integration:crystal_matrix_long_rod"
@@ -9,5 +8,6 @@
 	"result": {
 		"count": 1,
 		"id": "avaritia_integration:crystal_matrix_spring"
-	}
+	},
+	"tier": 1
 }

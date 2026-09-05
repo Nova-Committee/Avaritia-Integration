@@ -1,5 +1,5 @@
 {
-	"type": "minecraft:crafting_shaped",
+	"type": "avaritia:shaped_table",
 	"category": "misc",
 	"key": {
 		"P": {
@@ -10,5 +10,7 @@
 	"result": {
 		"count": 1,
 		"id": "avaritia_integration:blaze_cube_dense_plate"
-	}
+	},
+	"show_notification": true,
+	"tier": 2
 }

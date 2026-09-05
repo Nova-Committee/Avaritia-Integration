@@ -1,6 +1,5 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"category": "misc",
+	"type": "avaritia:shapeless_table",
 	"ingredients": [
 		{
 			"item": "avaritia:blaze_cube"
@@ -9,5 +8,6 @@
 	"result": {
 		"count": 2,
 		"id": "avaritia_integration:blaze_cube_rod"
-	}
+	},
+	"tier": 2
 }
