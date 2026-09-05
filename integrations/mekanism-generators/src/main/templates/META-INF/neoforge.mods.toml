@@ -9,6 +9,10 @@ displayName = "${mod_name}"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
 
+[[mixins]]
+config = "${mod_id}.mixins.json"
+requiredMods = ["mekanismgenerators"]
+
 [[dependencies."${mod_id}"]]
 modId = "neoforge"
 type = "required"
