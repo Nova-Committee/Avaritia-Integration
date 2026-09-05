@@ -1,7 +1,7 @@
 [versions]
 minecraft = "1.21.1"
 minecraftRange = "[1.21.1,1.22)"
-neoForge = "21.1.219"
+neoForge = "21.1.249"
 neoForgeRange = "[21,)"
 loader = "4"
 loaderRange = "[4,)"
