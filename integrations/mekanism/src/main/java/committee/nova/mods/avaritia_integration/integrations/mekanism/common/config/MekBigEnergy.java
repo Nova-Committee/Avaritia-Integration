@@ -54,4 +54,18 @@ public final class MekBigEnergy {
         }
         return BigInteger.valueOf(energy);
     }
+
+    /**
+     * Long remainder for Mekanism {@code production - insert(...)} after a BigInteger insert.
+     * Uses accepted energy, not leftover signum: a huge leftover can still mean Long.MAX_VALUE
+     * was stored.
+     */
+    public static long longInsertRemainder(long requestedLong, BigInteger supplyRequested, BigInteger leftover) {
+        BigInteger accepted = supplyRequested.subtract(leftover);
+        if (accepted.signum() <= 0) {
+            return requestedLong;
+        }
+        long acceptedLong = Math.min(requestedLong, toMekanismLong(accepted));
+        return requestedLong - acceptedLong;
+    }
 }

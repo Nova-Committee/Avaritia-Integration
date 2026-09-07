@@ -23,8 +23,9 @@ public abstract class MixinTileEntitySolarGenerator {
                                                                Action action,
                                                                AutomationType automationType) {
         if (container instanceof BigIntegerEnergyContainer big && automationType == AutomationType.INTERNAL) {
-            BigInteger leftover = big.insertBig(MekBigEnergy.infinitySupplyTick(), action, automationType);
-            return leftover.signum() == 0 ? 0L : amount;
+            BigInteger supply = MekBigEnergy.infinitySupplyTick();
+            BigInteger leftover = big.insertBig(supply, action, automationType);
+            return MekBigEnergy.longInsertRemainder(amount, supply, leftover);
         }
         return container.insert(amount, action, automationType);
     }

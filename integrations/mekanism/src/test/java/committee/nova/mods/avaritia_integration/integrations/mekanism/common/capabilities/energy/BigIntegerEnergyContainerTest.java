@@ -39,4 +39,16 @@ class BigIntegerEnergyContainerTest {
         assertEquals(MekBigEnergy.DOUBLE_MAX, container.getStoredBig());
         assertEquals(BigInteger.ONE, container.getDoubleMaxOverflows());
     }
+
+    @Test
+    void partialBufferInsertBigReportsLongAccepted() {
+        BigIntegerEnergyContainer container = BigIntegerEnergyContainer.output(MekBigEnergy.INFINITY_CAPACITY, null);
+        container.insertBig(MekBigEnergy.DOUBLE_MAX, Action.EXECUTE, AutomationType.INTERNAL);
+        BigInteger supply = MekBigEnergy.infinitySupplyTick();
+        BigInteger leftover = container.insertBig(supply, Action.SIMULATE, AutomationType.INTERNAL);
+        assertEquals(0L, MekBigEnergy.longInsertRemainder(Long.MAX_VALUE, supply, leftover));
+        leftover = container.insertBig(supply, Action.EXECUTE, AutomationType.INTERNAL);
+        assertEquals(MekBigEnergy.DOUBLE_MAX, leftover);
+        assertEquals(MekBigEnergy.INFINITY_CAPACITY, container.getStoredBig());
+    }
 }

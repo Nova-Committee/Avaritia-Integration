@@ -32,4 +32,16 @@ class MekBigEnergyTest {
         assertEquals(BigInteger.ONE, MekBigEnergy.doubleMaxOverflows(supply));
         assertEquals(MekBigEnergy.LONG_MAX, MekBigEnergy.remainderAfterDoubleMax(supply));
     }
+
+    @Test
+    void longInsertRemainderUsesAcceptedNotLeftoverSignum() {
+        BigInteger supply = MekBigEnergy.infinitySupplyTick();
+        assertEquals(0L, MekBigEnergy.longInsertRemainder(Long.MAX_VALUE, supply, BigInteger.ZERO));
+        BigInteger leftoverAfterLongMaxRoom = supply.subtract(MekBigEnergy.LONG_MAX);
+        assertEquals(0L,
+                MekBigEnergy.longInsertRemainder(Long.MAX_VALUE, supply, leftoverAfterLongMaxRoom));
+        BigInteger leftoverAfterTinyRoom = supply.subtract(BigInteger.valueOf(42));
+        assertEquals(Long.MAX_VALUE - 42L,
+                MekBigEnergy.longInsertRemainder(Long.MAX_VALUE, supply, leftoverAfterTinyRoom));
+    }
 }
