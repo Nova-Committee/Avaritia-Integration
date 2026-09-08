@@ -1,0 +1,41 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "mysticalagradditions"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"c": {
+			"item": "avaritia:infinity_catalyst"
+		},
+		"e": {
+			"item": "mysticalagradditions:insanium_essence"
+		},
+		"g": {
+			"item": "mysticalagradditions:insanium_gemstone"
+		},
+		"i": {
+			"item": "mysticalagradditions:insanium_ingot"
+		}
+	},
+	"pattern": [
+		"  e e e  ",
+		" e  e  e ",
+		" e eee e ",
+		" eeiiiee ",
+		" eigggie ",
+		"eeigcgiee",
+		"eeigggiee",
+		" eeiiiee ",
+		"   eee   "
+	],
+	"result": {
+		"count": 1,
+		"id": "mysticalagradditions:creative_essence"
+	},
+	"show_notification": true,
+	"tier": 4
+}

@@ -1,0 +1,27 @@
+ext.ai_mod_id = 'avaritia_integration_gregtech'
+ext.ai_mod_name = 'Avaritia Integration GregTech'
+ext.ai_mod_description = 'Avaritia Integration module for GregTech CEu Modern.'
+ext.ai_run_directory = 'integrations/gregtech'
+ext.ai_dependency_blocks = '''[[dependencies."avaritia_integration_gregtech"]]
+modId = "gtceu"
+type = "optional"
+versionRange = "[7,)"
+ordering = "NONE"
+side = "BOTH"
+'''
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+repositories {
+    maven { url = 'https://maven.gtceu.com' }
+    maven { url = 'https://mvn.devos.one/snapshots/' }
+    maven { url = 'https://repo.repsy.io/mvn/toma/public' }
+}
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    implementation('com.gregtechceu.gtceu:gtceu-1.21.1:7.0.2') {
+        transitive = false
+    }
+    implementation 'com.tterrag.registrate:Registrate:MC1.21-1.3.0+67'
+}

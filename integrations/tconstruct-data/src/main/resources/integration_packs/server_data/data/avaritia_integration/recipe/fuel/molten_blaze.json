@@ -1,0 +1,16 @@
+{
+	"type": "tconstruct:melting_fuel",
+	"fluid": {
+		"fluid": "avaritia_integration:molten_blaze",
+		"amount": 50
+	},
+	"duration": 300,
+	"rate": 30,
+	"temperature": 3000,
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

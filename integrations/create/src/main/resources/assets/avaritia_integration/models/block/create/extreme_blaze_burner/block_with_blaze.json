@@ -1,0 +1,21 @@
+{
+	"parent": "block/block",
+	"loader": "neoforge:obj",
+	"flip_v": true,
+	"model": "create:models/block/blaze_burner/item.obj",
+	"textures": {
+		"0": "avaritia_integration:block/create/blaze_heater_blaze_brazier",
+		"1": "avaritia_integration:block/create/blaze_blaze_active",
+		"particle": "create:block/dark_metal_block"
+	},
+	"display": {
+		"gui": {
+			"rotation": [30, 315, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"fixed": {
+			"rotation": [0, 180, 0],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

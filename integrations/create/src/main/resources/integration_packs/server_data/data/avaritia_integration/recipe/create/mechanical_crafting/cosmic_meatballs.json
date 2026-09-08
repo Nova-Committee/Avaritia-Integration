@@ -1,0 +1,24 @@
+{
+	"neoforge:conditions": [{ "type": "neoforge:mod_loaded", "modid": "create" }],
+	"type": "create:mechanical_crafting",
+	"accept_mirrored": true,
+	"category": "misc",
+	"key": {
+		"A": { "item": "minecraft:porkchop" },
+		"B": { "item": "minecraft:beef" },
+		"C": { "item": "minecraft:mutton" },
+		"D": { "item": "minecraft:cod" },
+		"E": { "item": "minecraft:salmon" },
+		"F": { "item": "minecraft:tropical_fish" },
+		"G": { "item": "minecraft:pufferfish" },
+		"H": { "item": "minecraft:rabbit" },
+		"I": { "item": "minecraft:chicken" },
+		"J": { "item": "minecraft:rotten_flesh" },
+		"K": { "item": "minecraft:spider_eye" },
+		"L": { "tag": "c:eggs" },
+		"M": { "item": "avaritia:neutron_nugget" }
+	},
+	"pattern": ["ABCD", "EFGH", "IJKL", "M   "],
+	"result": { "count": 1, "id": "avaritia:cosmic_meatballs" },
+	"show_notification": false
+}

@@ -1,0 +1,27 @@
+ext.ai_mod_id = 'avaritia_integration_mysticalagriculture'
+ext.ai_mod_name = 'Avaritia Integration Mystical Agriculture'
+ext.ai_mod_description = 'Avaritia Integration module for Mystical Agriculture and Agradditions.'
+ext.ai_run_directory = 'integrations/mysticalagriculture'
+ext.ai_dependency_blocks = '''[[dependencies."avaritia_integration_mysticalagriculture"]]
+modId = "mysticalagriculture"
+type = "optional"
+versionRange = "[8,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_mysticalagriculture"]]
+modId = "mysticalagradditions"
+type = "optional"
+versionRange = "[8,)"
+ordering = "NONE"
+side = "BOTH"
+'''
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    implementation forge.cucumber
+    implementation forge.mysticalAgriculture
+    implementation forge.mysticalAgradditions
+}

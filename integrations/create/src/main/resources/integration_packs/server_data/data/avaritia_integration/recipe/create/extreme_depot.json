@@ -1,0 +1,23 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"D": {
+			"item": "create:depot"
+		},
+		"N": {
+			"tag": "c:ingots/neutron"
+		}
+	},
+	"pattern": [" N ", "NDN", " N "],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:extreme_depot"
+	}
+}

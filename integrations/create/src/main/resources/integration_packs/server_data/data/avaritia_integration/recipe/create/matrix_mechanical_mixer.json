@@ -1,0 +1,23 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"C": {
+			"item": "create:mechanical_mixer"
+		},
+		"M": {
+			"tag": "c:ingots/crystal_matrix"
+		}
+	},
+	"pattern": [" M ", "MCM", " M "],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:matrix_mechanical_mixer"
+	}
+}

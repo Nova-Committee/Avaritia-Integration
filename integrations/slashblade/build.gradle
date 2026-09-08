@@ -1,0 +1,18 @@
+ext.ai_mod_id = 'avaritia_integration_slashblade'
+ext.ai_mod_name = 'Avaritia Integration SlashBlade'
+ext.ai_mod_description = 'Avaritia Integration module for SlashBlade Resharped.'
+ext.ai_run_directory = 'integrations/slashblade'
+ext.ai_dependency_blocks = '''[[dependencies."avaritia_integration_slashblade"]]
+modId = "slashblade"
+type = "optional"
+versionRange = "[1,)"
+ordering = "AFTER"
+side = "BOTH"
+'''
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    implementation forge.slashbladeResharped
+}

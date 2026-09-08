@@ -17,6 +17,11 @@ botania = "456-SNAPSHOT"
 mekanism = "1.21.1-10.7.19.85"
 igleeLibrary = "7000755"
 evolvedMekanism = "7599592"
+slashbladeResharped = "2.0.7-1.21.1"
+mysticalAgriculture = "8.0.28"
+mysticalAgradditions = "8.0.14"
+cucumber = "8.0.16"
+gtceu = "7.0.2"
 
 [libraries]
 reAvaritia                  = { module = "curse.maven:re-avaritia-623969", version.ref = "reAvaritia" }
@@ -37,3 +42,8 @@ botania                     = { module = "vazkii.botania:botania-neoforge-1.21.1
 mekanism                    = { module = "mekanism:Mekanism", version.ref = "mekanism" }
 igleeLibrary                = { module = "curse.maven:iglee-library-541199", version.ref = "igleeLibrary" }
 evolvedMekanism             = { module = "curse.maven:evolved-mekanism-1230085", version.ref = "evolvedMekanism" }
+slashbladeResharped         = { module = "maven.modrinth:slashblade-resharped", version.ref = "slashbladeResharped" }
+mysticalAgriculture         = { module = "maven.modrinth:mystical-agriculture", version.ref = "mysticalAgriculture" }
+mysticalAgradditions        = { module = "maven.modrinth:mystical-agradditions", version.ref = "mysticalAgradditions" }
+cucumber                    = { module = "maven.modrinth:cucumber", version.ref = "cucumber" }
+gtceu                       = { module = "com.gregtechceu.gtceu:gtceu-1.21.1", version.ref = "gtceu" }

@@ -1,0 +1,34 @@
+{
+	"type": "tconstruct:modifier",
+	"inputs": [
+		{
+			"item": "avaritia:star_fuel"
+		},
+		{
+			"item": "avaritia:refined_coal"
+		},
+		{
+			"item": "avaritia:star_fuel"
+		},
+		{
+			"item": "avaritia:refined_coal"
+		},
+		{
+			"item": "avaritia:refined_coal"
+		}
+	],
+	"tools": {
+		"tag": "tconstruct:modifiable/melee"
+	},
+	"slots": {
+		"abilities": 1
+	},
+	"allow_crystal": true,
+	"result": "avaritia_integration:star_dash",
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

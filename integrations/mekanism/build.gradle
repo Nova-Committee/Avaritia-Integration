@@ -2,6 +2,20 @@ ext.ai_mod_id = 'avaritia_integration_mekanism'
 ext.ai_mod_name = 'Avaritia Integration Mekanism'
 ext.ai_mod_description = 'Avaritia Integration module for Mekanism.'
 ext.ai_run_directory = 'integrations/mekanism'
+ext.ai_dependency_blocks = '''[[dependencies."avaritia_integration_mekanism"]]
+modId = "mekanism"
+type = "optional"
+versionRange = "[10.7,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_mekanism"]]
+modId = "evolvedmekanism"
+type = "optional"
+versionRange = "[1,)"
+ordering = "AFTER"
+side = "BOTH"
+'''
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
 neoForge {

@@ -1,0 +1,15 @@
+{
+	"type": "tconstruct:material_melting",
+	"input": "avaritia_integration:blaze_cube",
+	"temperature": 1500,
+	"result": {
+		"fluid": "avaritia_integration:molten_blaze",
+		"amount": 100
+	},
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"item.avaritia_integration.ignis_cake": "炽热蛋糕",
+	"item.avaritia_integration.ignis_cake_base": "炽热蛋糕胚",
+	"item.avaritia_integration.star_cake": "星辰蛋糕",
+	"item.avaritia_integration.star_cake_base": "星辰蛋糕胚",
+	"block.avaritia_integration.extreme_basin": "极限搅拌盆",
+	"block.avaritia_integration.extreme_blaze_burner": "极限烈焰人燃烧室",
+	"block.avaritia_integration.extreme_crushing_wheel": "极限粉碎轮",
+	"block.avaritia_integration.extreme_crushing_wheel_controller": "极限粉碎轮控制器",
+	"block.avaritia_integration.extreme_depot": "极限置物台",
+	"block.avaritia_integration.extreme_encased_fan": "极限鼓风机",
+	"block.avaritia_integration.matrix_mechanical_mixer": "矩阵搅拌器",
+	"block.avaritia_integration.neutron_mechanical_press": "中子压印机",
+	"block.avaritia_integration.crystal_matrix_casing": "水晶矩阵机壳",
+	"avaritia_integration.recipe.extreme_mixing": "极限搅拌",
+	"avaritia_integration.recipe.liquid_burning": "液体燃烧",
+	"avaritia_integration.recipe.extreme_heat_requirement.normal": "常温",
+	"avaritia_integration.recipe.extreme_heat_requirement.blaze": "烈焰加热",
+	"avaritia_integration.recipe.extreme_heat_requirement.star": "星辰加热"
+}

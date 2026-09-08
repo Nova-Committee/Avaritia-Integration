@@ -1,0 +1,23 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"F": {
+			"item": "create:encased_fan"
+		},
+		"N": {
+			"tag": "c:ingots/neutron"
+		}
+	},
+	"pattern": [" N ", "NFN", " N "],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:extreme_encased_fan"
+	}
+}

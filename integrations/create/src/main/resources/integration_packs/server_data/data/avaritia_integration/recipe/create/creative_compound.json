@@ -1,0 +1,12 @@
+{
+	"neoforge:conditions": [{ "type": "neoforge:mod_loaded", "modid": "create" }],
+	"type": "avaritia_integration:extreme_mixing",
+	"heatRequirement": "star",
+	"ingredients": [
+		{ "item": "create:shadow_steel" },
+		{ "item": "create:refined_radiance" },
+		{ "item": "avaritia:enhancement_core" },
+		{ "item": "avaritia:neutron_pile", "count": 64 }
+	],
+	"results": [{ "count": 2, "id": "avaritia_integration:creative_compound" }]
+}

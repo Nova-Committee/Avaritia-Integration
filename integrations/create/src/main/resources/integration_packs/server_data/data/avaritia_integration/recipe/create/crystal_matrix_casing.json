@@ -1,0 +1,22 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "create:item_application",
+	"ingredients": [
+		{
+			"item": "create:andesite_casing"
+		},
+		{
+			"tag": "c:ingots/crystal_matrix"
+		}
+	],
+	"results": [
+		{
+			"id": "avaritia_integration:crystal_matrix_casing"
+		}
+	]
+}

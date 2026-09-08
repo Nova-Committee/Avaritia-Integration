@@ -1,0 +1,23 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"B": {
+			"item": "create:basin"
+		},
+		"M": {
+			"tag": "c:ingots/crystal_matrix"
+		}
+	},
+	"pattern": [" M ", "MBM", " M "],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:extreme_basin"
+	}
+}

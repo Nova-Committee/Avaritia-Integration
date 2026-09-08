@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cube_all",
+	"textures": {
+		"all": "avaritia_integration:block/create/crystal_matrix_casing"
+	}
+}

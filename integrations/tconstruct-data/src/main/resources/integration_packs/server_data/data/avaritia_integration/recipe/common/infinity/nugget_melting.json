@@ -1,0 +1,18 @@
+{
+	"type": "tconstruct:melting",
+	"ingredient": {
+		"item": "avaritia:infinity_nugget"
+	},
+	"result": {
+		"fluid": "avaritia_integration:molten_infinity",
+		"amount": 10
+	},
+	"temperature": 12000,
+	"time": 82,
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

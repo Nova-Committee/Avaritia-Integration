@@ -1,0 +1,20 @@
+{
+	"item.avaritia_integration.ignis_cake": "Ignis Cake",
+	"item.avaritia_integration.ignis_cake_base": "Ignis Cake Base",
+	"item.avaritia_integration.star_cake": "Star Cake",
+	"item.avaritia_integration.star_cake_base": "Star Cake Base",
+	"block.avaritia_integration.extreme_basin": "Extreme Basin",
+	"block.avaritia_integration.extreme_blaze_burner": "Extreme Blaze Burner",
+	"block.avaritia_integration.extreme_crushing_wheel": "Extreme Crushing Wheel",
+	"block.avaritia_integration.extreme_crushing_wheel_controller": "Extreme Crushing Wheel Controller",
+	"block.avaritia_integration.extreme_depot": "Extreme Depot",
+	"block.avaritia_integration.extreme_encased_fan": "Extreme Encased Fan",
+	"block.avaritia_integration.matrix_mechanical_mixer": "Matrix Mechanical Mixer",
+	"block.avaritia_integration.neutron_mechanical_press": "Neutron Mechanical Press",
+	"block.avaritia_integration.crystal_matrix_casing": "Crystal Matrix Casing",
+	"avaritia_integration.recipe.extreme_mixing": "Extreme Mixing",
+	"avaritia_integration.recipe.liquid_burning": "Liquid Burning",
+	"avaritia_integration.recipe.extreme_heat_requirement.normal": "Normal-Heated",
+	"avaritia_integration.recipe.extreme_heat_requirement.blaze": "Blaze-Heated",
+	"avaritia_integration.recipe.extreme_heat_requirement.star": "Star-Heated"
+}

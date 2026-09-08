@@ -1,0 +1,17 @@
+{
+	"variants": {
+		"axis=x": {
+			"model": "avaritia_integration:block/create/extreme_crushing_wheel/block",
+			"x": 90,
+			"y": 90
+		},
+		"axis=y": {
+			"model": "avaritia_integration:block/create/extreme_crushing_wheel/block"
+		},
+		"axis=z": {
+			"model": "avaritia_integration:block/create/extreme_crushing_wheel/block",
+			"x": 90,
+			"y": 180
+		}
+	}
+}

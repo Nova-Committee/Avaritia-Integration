@@ -1,0 +1,12 @@
+{
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"axis": "create:block/axis",
+		"axis_top": "create:block/axis_top",
+		"plates": "avaritia_integration:block/create/extreme_crushing_wheel_plates",
+		"insert": "avaritia_integration:block/create/extreme_crushing_wheel_insert",
+		"spruce_log_top": "avaritia_integration:block/create/matrix_mixer_base_inside",
+		"particle": "avaritia_integration:block/create/crystal_matrix_casing"
+	}
+}

@@ -25,7 +25,6 @@ import mekanism.common.lib.transmitter.TransmissionType;
 import mekanism.common.registration.impl.ContainerTypeRegistryObject;
 import mekanism.common.registration.impl.TileEntityTypeRegistryObject;
 import mekanism.common.tier.FactoryTier;
-import mekanism.common.util.EnumUtils;
 
 import java.util.function.Supplier;
 
@@ -43,9 +42,10 @@ public class MekIntegrationFactory<TILE extends TileEntityMIFactory<?>> extends 
         setMachineData(tier);
         add(new AttributeGui(containerRegistrar, null), new AttributeTier<>(tier));
 
-        if (tier.ordinal() < MekIntegrationUtils.getFactoryTier().length - 1) {
-            add(new AttributeUpgradeable(() -> MekIntegrationBlocks.getMekIntegrationFactory(
-                    EnumUtils.FACTORY_TIERS[tier.ordinal() + 1], origMachine.getMekIntegrationFactoryType())));
+        FactoryTier nextTier = MekIntegrationUtils.nextFactoryTier(tier);
+        if (nextTier != null) {
+            add(new AttributeUpgradeable(() -> MekIntegrationBlocks.getMekIntegrationFactory(nextTier,
+                    origMachine.getMekIntegrationFactoryType())));
         }
     }
 
@@ -76,7 +76,12 @@ public class MekIntegrationFactory<TILE extends TileEntityMIFactory<?>> extends 
                             () -> MekIntegrationContainerTypes.FACTORY, type.getBaseMachine(), tier));
             // Note, we can't just return the builder here as then it gets all confused about object types, so we just
             // assign the value here, and then return the builder itself as it is the same object
-            builder.withComputerSupport(tier, type.getRegistryNameComponentCapitalized() + "Factory");
+            String computerName = type.getRegistryNameComponentCapitalized() + "Factory";
+            if (tier.getBaseTier() != null) {
+                builder.withComputerSupport(tier, computerName);
+            } else {
+                builder.withComputerSupport(tier.name().toLowerCase(java.util.Locale.ROOT) + computerName);
+            }
             builder.withCustomShape(getShape(type));
             builder.with(switch (type) {
                 case NEUTRON_COLLECTING -> AttributeSideConfig.create(TransmissionType.ITEM, TransmissionType.CHEMICAL,

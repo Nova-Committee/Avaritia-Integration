@@ -9,6 +9,10 @@ displayName = "${mod_name}"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
 
+[[mixins]]
+config = "${mod_id}.mixins.json"
+requiredMods = ["create"]
+
 [[dependencies."${mod_id}"]]
 modId = "neoforge"
 type = "required"
@@ -29,5 +33,12 @@ type = "required"
 versionRange = "[${mod_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "jei"
+type = "optional"
+versionRange = "[19,)"
+ordering = "NONE"
+side = "CLIENT"
 
 ${dependency_blocks}

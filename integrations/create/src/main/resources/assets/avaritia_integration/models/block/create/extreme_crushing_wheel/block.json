@@ -1,0 +1,6 @@
+{
+	"parent": "avaritia_integration:block/create/extreme_crushing_wheel/textures",
+	"loader": "neoforge:obj",
+	"flip_v": true,
+	"model": "create:models/block/crushing_wheel/crushing_wheel.obj"
+}

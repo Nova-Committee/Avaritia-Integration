@@ -1,0 +1,29 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "slashblade"
+		}
+	],
+	"type": "avaritia:extreme_smithing",
+	"addition": [
+		{
+			"item": "avaritia:infinity_sword"
+		},
+		{
+			"item": "avaritia:enhancement_core"
+		},
+		{
+			"item": "avaritia:eternal_singularity"
+		}
+	],
+	"base": {
+		"item": "slashblade:slashblade"
+	},
+	"result": {
+		"id": "avaritia_integration:stredgeuniverse"
+	},
+	"template": {
+		"item": "avaritia:upgrade_smithing_template"
+	}
+}

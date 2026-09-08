@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.mekanism.client.jei;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.integrations.mekanism.client.jei.machine.ChemicalStackToItemStackRecipeCategory;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.client.recipe_viewer.MekIntegrationRecipeViewerTypes;
 import committee.nova.mods.avaritia_integration.integrations.mekanism.common.recipe.MekIntegrationRecipeType;
 
@@ -43,6 +44,7 @@ public class MekIntegrationJEI implements IModPlugin {
         AvaritiaIntegration.LOGGER.info("MekIntegrationJEI.registerCategories");
         IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
         registry.addRecipeCategories(
+                new ChemicalStackToItemStackRecipeCategory(guiHelper, MekIntegrationRecipeViewerTypes.COLLECTING),
                 new ItemStackToItemStackRecipeCategory(guiHelper, MekIntegrationRecipeViewerTypes.COMPRESSING));
     }
 
@@ -51,8 +53,12 @@ public class MekIntegrationJEI implements IModPlugin {
         if (!shouldLoad()) {
             return;
         }
+        RecipeRegistryHelper.register(registry, MekIntegrationRecipeViewerTypes.COLLECTING,
+                MekIntegrationRecipeType.COLLECTING);
         RecipeRegistryHelper.register(registry, MekIntegrationRecipeViewerTypes.COMPRESSING,
                 MekIntegrationRecipeType.MEK_COMPRESSING);
+        AvaritiaIntegration.LOGGER.info("Registered neutron collector JEI recipes ({})",
+                MekIntegrationRecipeType.COLLECTING.getRecipes().size());
         AvaritiaIntegration.LOGGER.info("Registered singularity compressor JEI recipes ({})",
                 MekIntegrationRecipeType.MEK_COMPRESSING.getRecipes().size());
     }
@@ -62,6 +68,7 @@ public class MekIntegrationJEI implements IModPlugin {
         if (!shouldLoad()) {
             return;
         }
-        CatalystRegistryHelper.register(registry, MekIntegrationRecipeViewerTypes.COMPRESSING);
+        CatalystRegistryHelper.register(registry, MekIntegrationRecipeViewerTypes.COLLECTING,
+                MekIntegrationRecipeViewerTypes.COMPRESSING);
     }
 }

@@ -1,0 +1,15 @@
+{
+	"type": "tconstruct:material_fluid",
+	"fluid": {
+		"fluid": "avaritia_integration:molten_infinity",
+		"amount": 90
+	},
+	"temperature": 12000,
+	"output": "avaritia_integration:infinity",
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

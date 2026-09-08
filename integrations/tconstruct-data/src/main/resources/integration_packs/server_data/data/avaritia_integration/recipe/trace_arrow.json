@@ -1,0 +1,26 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "tconstruct"
+		}
+	],
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"A": {
+			"item": "minecraft:arrow"
+		},
+		"E": {
+			"item": "minecraft:ender_eye"
+		},
+		"N": {
+			"tag": "c:ingots/neutron"
+		}
+	},
+	"pattern": [" A ", "AEA", " N "],
+	"result": {
+		"count": 4,
+		"id": "avaritia_integration:trace_arrow"
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"variants": {
+		"facing=down": {
+			"model": "avaritia_integration:block/create/extreme_encased_fan/block",
+			"x": 180
+		},
+		"facing=east": {
+			"model": "avaritia_integration:block/create/extreme_encased_fan/block",
+			"x": 90,
+			"y": 90
+		},
+		"facing=north": {
+			"model": "avaritia_integration:block/create/extreme_encased_fan/block",
+			"x": 90
+		},
+		"facing=south": {
+			"model": "avaritia_integration:block/create/extreme_encased_fan/block",
+			"x": 90,
+			"y": 180
+		},
+		"facing=up": {
+			"model": "avaritia_integration:block/create/extreme_encased_fan/block"
+		},
+		"facing=west": {
+			"model": "avaritia_integration:block/create/extreme_encased_fan/block",
+			"x": 90,
+			"y": 270
+		}
+	}
+}

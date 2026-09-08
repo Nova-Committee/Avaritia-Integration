@@ -1,0 +1,23 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"key": {
+		"P": {
+			"item": "create:mechanical_press"
+		},
+		"N": {
+			"tag": "c:ingots/neutron"
+		}
+	},
+	"pattern": [" N ", "NPN", " N "],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:neutron_mechanical_press"
+	}
+}

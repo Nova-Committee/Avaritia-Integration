@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"bonus_rolls": 0,
+			"conditions": [{ "condition": "minecraft:survives_explosion" }],
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "avaritia_integration:extreme_encased_fan"
+				}
+			],
+			"rolls": 1
+		}
+	]
+}

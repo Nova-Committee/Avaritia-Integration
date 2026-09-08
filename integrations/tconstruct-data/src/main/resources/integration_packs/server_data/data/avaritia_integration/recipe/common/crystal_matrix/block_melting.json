@@ -1,0 +1,18 @@
+{
+	"type": "tconstruct:melting",
+	"ingredient": {
+		"item": "avaritia:crystal_matrix"
+	},
+	"result": {
+		"fluid": "avaritia_integration:molten_crystal_matrix",
+		"amount": 810
+	},
+	"temperature": 2500,
+	"time": 312,
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

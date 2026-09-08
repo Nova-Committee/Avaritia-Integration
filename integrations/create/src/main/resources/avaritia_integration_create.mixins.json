@@ -1,0 +1,18 @@
+{
+	"required": true,
+	"package": "committee.nova.mods.avaritia_integration.integrations.create.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"refmap": "avaritia_integration_create.refmap.json",
+	"mixins": [
+		"BasinOperatingBlockEntityAccessor",
+		"DepotBlockEntityAccessor",
+		"MixinBasinOperatingBlockEntity",
+		"MixinBlazeBurnerBlockEntity",
+		"MixinDepotBehaviour",
+		"MixinMechanicalMixerBlockEntity"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"minVersion": "0.8"
+}

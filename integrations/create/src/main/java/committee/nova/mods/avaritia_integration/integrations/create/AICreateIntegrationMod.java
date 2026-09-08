@@ -1,5 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.create;
 
+import committee.nova.mods.avaritia_integration.api.load.IntegrationDataPackRegistrar;
 import committee.nova.mods.avaritia_integration.api.load.IntegrationRule;
 import committee.nova.mods.avaritia_integration.api.load.IntegrationRuntime;
 import committee.nova.mods.avaritia_integration.module.ModModule;
@@ -15,7 +16,10 @@ public final class AICreateIntegrationMod implements ModModule {
     private static final String DEPENDENCY_MOD_ID = "create";
 
     public AICreateIntegrationMod(IEventBus bus, ModContainer modContainer) {
-        if (IntegrationRuntime.shouldLoad(MOD_ID, this)) IntegrationRuntime.load(MOD_ID, bus, new CreateModule());
+        IntegrationDataPackRegistrar.register(bus, MOD_ID, "Avaritia Integration Create Data");
+        if (IntegrationRuntime.shouldLoad(MOD_ID, this)) {
+            IntegrationRuntime.load(MOD_ID, bus, new CreateModule());
+        }
     }
 
     @Override

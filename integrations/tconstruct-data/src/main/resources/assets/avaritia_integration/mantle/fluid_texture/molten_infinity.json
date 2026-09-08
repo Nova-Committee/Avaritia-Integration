@@ -1,11 +1,11 @@
 {
 	"color": "FFFFFFFF",
-	"flowing": "avaritia_integration:fluid/molten_infinity_flow",
+	"flowing": "avaritia_integration:block/molten_infinity_flow",
 	"fog": {
 		"calculate_color": true,
 		"end": 2.0,
 		"shape": "sphere",
 		"start": 0.25
 	},
-	"still": "avaritia_integration:fluid/molten_infinity_still"
+	"still": "avaritia_integration:block/molten_infinity_still"
 }

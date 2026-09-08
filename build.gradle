@@ -28,5 +28,20 @@ allprojects {
             }
         }
         maven { url 'https://modmaven.dev/' }
+        maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+        }
+        maven {
+            name = "GTCEu"
+            url = "https://maven.gtceu.com"
+            content {
+                includeGroup "com.gregtechceu.gtceu"
+            }
+        }
+        maven {
+            name = "DevOS Snapshots"
+            url = "https://mvn.devos.one/snapshots/"
+        }
     }
 }

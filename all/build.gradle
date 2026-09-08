@@ -93,6 +93,27 @@ type = "required"
 versionRange = "[${mod_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_slashblade"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_mysticalagriculture"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_gregtech"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
 """
 
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
@@ -111,7 +132,10 @@ dependencies {
             ':integrations:pneumaticcraft',
             ':integrations:refinedstorage',
             ':integrations:thermal-expansion-data',
-            ':integrations:tconstruct-data'
+            ':integrations:tconstruct-data',
+            ':integrations:slashblade',
+            ':integrations:mysticalagriculture',
+            ':integrations:gregtech'
     ]
 
     embeddedProjects.each { path ->

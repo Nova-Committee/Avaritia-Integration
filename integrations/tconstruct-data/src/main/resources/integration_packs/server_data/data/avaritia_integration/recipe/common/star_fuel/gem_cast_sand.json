@@ -1,0 +1,19 @@
+{
+	"type": "tconstruct:casting_table",
+	"cast": {
+		"tag": "tconstruct:casts/single_use/gem"
+	},
+	"cast_consumed": true,
+	"fluid": {
+		"fluid": "avaritia_integration:molten_star",
+		"amount": 90
+	},
+	"result": "avaritia:star_fuel",
+	"cooling_time": 108,
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

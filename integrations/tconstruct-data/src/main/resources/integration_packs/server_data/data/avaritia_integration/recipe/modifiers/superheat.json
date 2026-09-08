@@ -1,0 +1,34 @@
+{
+	"type": "tconstruct:modifier",
+	"inputs": [
+		{
+			"tag": "forge:bones"
+		},
+		{
+			"item": "avaritia:blaze_cube"
+		},
+		{
+			"tag": "forge:bones"
+		},
+		{
+			"tag": "forge:rods/blaze"
+		},
+		{
+			"tag": "forge:rods/blaze"
+		}
+	],
+	"tools": {
+		"tag": "tconstruct:modifiable/ranged"
+	},
+	"slots": {
+		"abilities": 1
+	},
+	"allow_crystal": true,
+	"result": "avaritia_integration:superheat",
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

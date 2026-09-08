@@ -2,32 +2,56 @@ package committee.nova.mods.avaritia_integration.integrations.mekanism.common.ut
 
 import net.neoforged.fml.ModList;
 
+import fr.iglee42.evolvedmekanism.tiers.EMFactoryTier;
 import mekanism.common.tier.FactoryTier;
 import mekanism.common.util.EnumUtils;
 
-import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class MekIntegrationUtils {
 
     private MekIntegrationUtils() {}
 
     /**
-     * 为了适配EMek，由于它在mixin没有采用重载序列化与反序列化的操作，导致Mek的FactoryTier识别不到新加入的Tier
-     * 因此需要在有Emek时将两个数组手动合并为一个。
-     *
-     * @return FactoryTier[]
+     * Evolved Mekanism extends {@link FactoryTier} at runtime. {@link EnumUtils#FACTORY_TIERS} may already include
+     * those values; never concatenate a second copy. Extra constants can also be null during early class init.
      */
     public static FactoryTier[] getFactoryTier() {
-        // Compatible wit Emek
+        Set<FactoryTier> tiers = new LinkedHashSet<>();
+        addAll(tiers, EnumUtils.FACTORY_TIERS);
         if (ModList.get().isLoaded("evolvedmekanism")) {
-            FactoryTier[] mergedTiers;
-            mergedTiers = Arrays.copyOf(EnumUtils.FACTORY_TIERS,
-                    EnumUtils.FACTORY_TIERS.length + MekIntegrationEnumUtils.EM_TIERS.length);
-            System.arraycopy(MekIntegrationEnumUtils.EM_TIERS, 0, mergedTiers, EnumUtils.FACTORY_TIERS.length,
-                    MekIntegrationEnumUtils.EM_TIERS.length);
-            return EnumUtils.FACTORY_TIERS;
-        } else {
-            return EnumUtils.FACTORY_TIERS;
+            add(tiers, EMFactoryTier.OVERCLOCKED);
+            add(tiers, EMFactoryTier.QUANTUM);
+            add(tiers, EMFactoryTier.DENSE);
+            add(tiers, EMFactoryTier.MULTIVERSAL);
+            add(tiers, EMFactoryTier.CREATIVE);
+        }
+        return tiers.toArray(FactoryTier[]::new);
+    }
+
+    public static FactoryTier nextFactoryTier(FactoryTier tier) {
+        FactoryTier[] tiers = getFactoryTier();
+        for (int i = 0; i < tiers.length - 1; i++) {
+            if (tiers[i] == tier) {
+                return tiers[i + 1];
+            }
+        }
+        return null;
+    }
+
+    private static void addAll(Set<FactoryTier> dest, FactoryTier[] source) {
+        if (source == null) {
+            return;
+        }
+        for (FactoryTier tier : source) {
+            add(dest, tier);
+        }
+    }
+
+    private static void add(Set<FactoryTier> dest, FactoryTier tier) {
+        if (tier != null) {
+            dest.add(tier);
         }
     }
 }

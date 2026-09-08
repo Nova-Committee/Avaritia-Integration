@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"facing=down": {
+			"model": "avaritia_integration:block/create/extreme_basin/block"
+		},
+		"facing=east": {
+			"model": "avaritia_integration:block/create/extreme_basin/block_directional",
+			"y": 270
+		},
+		"facing=north": {
+			"model": "avaritia_integration:block/create/extreme_basin/block_directional",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "avaritia_integration:block/create/extreme_basin/block_directional"
+		},
+		"facing=west": {
+			"model": "avaritia_integration:block/create/extreme_basin/block_directional",
+			"y": 90
+		}
+	}
+}

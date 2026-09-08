@@ -8,4 +8,6 @@ dependencies {
     implementation forge.reAvaritia
     implementation project(':core')
     implementation forge.create
+    implementation forge.jei
+    compileOnly fileTree(dir: 'build/create-jarjar', include: '*.jar')
 }

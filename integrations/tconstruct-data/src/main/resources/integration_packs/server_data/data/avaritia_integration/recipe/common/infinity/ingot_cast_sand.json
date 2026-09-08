@@ -1,0 +1,19 @@
+{
+	"type": "tconstruct:casting_table",
+	"cast": {
+		"tag": "tconstruct:casts/single_use/ingot"
+	},
+	"cast_consumed": true,
+	"fluid": {
+		"fluid": "avaritia_integration:molten_infinity",
+		"amount": 90
+	},
+	"result": "avaritia:infinity_ingot",
+	"cooling_time": 247,
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

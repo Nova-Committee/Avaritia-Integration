@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "avaritia_integration:block/create/neutron_mechanical_press/block",
+			"y": 90
+		},
+		"facing=north": {
+			"model": "avaritia_integration:block/create/neutron_mechanical_press/block"
+		},
+		"facing=south": {
+			"model": "avaritia_integration:block/create/neutron_mechanical_press/block",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "avaritia_integration:block/create/neutron_mechanical_press/block",
+			"y": 270
+		}
+	}
+}

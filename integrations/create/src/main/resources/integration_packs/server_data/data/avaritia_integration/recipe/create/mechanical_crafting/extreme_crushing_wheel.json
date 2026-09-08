@@ -1,0 +1,28 @@
+{
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "create:mechanical_crafting",
+	"accept_mirrored": false,
+	"category": "misc",
+	"key": {
+		"N": {
+			"tag": "c:ingots/neutron"
+		},
+		"W": {
+			"item": "create:crushing_wheel"
+		},
+		"C": {
+			"item": "avaritia_integration:crystal_matrix_casing"
+		}
+	},
+	"pattern": [" NNN ", "NNCNN", "NCWCN", "NNCNN", " NNN "],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:extreme_crushing_wheel"
+	},
+	"show_notification": false
+}

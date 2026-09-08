@@ -1,0 +1,15 @@
+{
+	"type": "tconstruct:material",
+	"ingredient": {
+		"item": "avaritia:infinity_ingot"
+	},
+	"value": 1,
+	"needed": 1,
+	"material": "avaritia_integration:infinity",
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}

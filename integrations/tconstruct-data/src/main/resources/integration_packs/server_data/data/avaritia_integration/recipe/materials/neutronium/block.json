@@ -1,0 +1,18 @@
+{
+	"type": "tconstruct:material",
+	"ingredient": {
+		"item": "avaritia:neutron"
+	},
+	"value": 9,
+	"needed": 1,
+	"material": "avaritia_integration:neutronium",
+	"leftover": {
+		"item": "avaritia:neutron_ingot"
+	},
+	"neoforge:conditions": [
+		{
+			"modid": "tconstruct",
+			"type": "neoforge:mod_loaded"
+		}
+	]
+}
