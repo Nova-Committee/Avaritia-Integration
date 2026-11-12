@@ -1,12 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner;
 
-import java.util.List;
-
-import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import committee.nova.mods.avaritia_integration.integrations.create.compat.cca.CCALiquidBlazeBurnerCompat;
 import committee.nova.mods.avaritia_integration.integrations.create.compat.cca.ICCABurnerCompat;
@@ -19,7 +12,6 @@ import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -30,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -39,11 +30,21 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+
+import java.util.List;
+
 public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+
     public static final int MAX_HEAT_CAPACITY = 10000;
 
     public enum FuelType {
-        NONE, BLAZE, STAR
+        NONE,
+        BLAZE,
+        STAR
     }
 
     protected FuelType activeFuel = FuelType.NONE;
@@ -69,8 +70,7 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-    }
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
 
     @Override
     public void tick() {
@@ -137,16 +137,17 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
         }
         return !level.getBlockState(worldPosition.above()).isAir();
     }
+
     public void updateBlockState() {
         ExtremeBlazeBurnerBlock.ExtremeHeatLevel heat = ExtremeBlazeBurnerBlock.ExtremeHeatLevel.SMOULDERING;
         if (activeFuel == FuelType.STAR) {
             heat = ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR;
         } else if (activeFuel == FuelType.BLAZE) {
-            heat = remainingBurnTime > 20 ? ExtremeBlazeBurnerBlock.ExtremeHeatLevel.BLAZE
-                    : ExtremeBlazeBurnerBlock.ExtremeHeatLevel.FADING;
+            heat = remainingBurnTime > 20 ? ExtremeBlazeBurnerBlock.ExtremeHeatLevel.BLAZE :
+                    ExtremeBlazeBurnerBlock.ExtremeHeatLevel.FADING;
         }
-        if (level != null && getBlockState().hasProperty(ExtremeBlazeBurnerBlock.EXTREME_HEAT_LEVEL)
-                && getBlockState().getValue(ExtremeBlazeBurnerBlock.EXTREME_HEAT_LEVEL) != heat) {
+        if (level != null && getBlockState().hasProperty(ExtremeBlazeBurnerBlock.EXTREME_HEAT_LEVEL) &&
+                getBlockState().getValue(ExtremeBlazeBurnerBlock.EXTREME_HEAT_LEVEL) != heat) {
             level.setBlockAndUpdate(worldPosition,
                     getBlockState().setValue(ExtremeBlazeBurnerBlock.EXTREME_HEAT_LEVEL, heat));
             notifyUpdate();
@@ -166,15 +167,15 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
     public boolean tryUpdateFuel(ItemStack itemStack, boolean forceOverflow, boolean simulate) {
         FuelType newFuel = FuelType.NONE;
         int newBurnTime = 0;
-        if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_STAR.matches(itemStack)
-                || itemStack.is(CreateIntegrationItems.STAR_CAKE.get())) {
+        if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_STAR.matches(itemStack) ||
+                itemStack.is(CreateIntegrationItems.STAR_CAKE.get())) {
             newFuel = FuelType.STAR;
             newBurnTime = MAX_HEAT_CAPACITY;
-        } else if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_BLAZE.matches(itemStack)
-                || itemStack.is(CreateIntegrationItems.IGNIS_CAKE.get())) {
-            newFuel = FuelType.BLAZE;
-            newBurnTime = 5000;
-        }
+        } else if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_BLAZE.matches(itemStack) ||
+                itemStack.is(CreateIntegrationItems.IGNIS_CAKE.get())) {
+                    newFuel = FuelType.BLAZE;
+                    newBurnTime = 5000;
+                }
         if (newFuel == FuelType.NONE) {
             return false;
         }

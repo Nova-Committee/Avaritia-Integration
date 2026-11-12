@@ -1,14 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.registry;
 
-import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.kinetics.base.SingleAxisRotatingVisual;
-import com.simibubi.create.content.kinetics.fan.EncasedFanRenderer;
-import com.simibubi.create.content.kinetics.fan.FanVisual;
-import com.simibubi.create.content.logistics.depot.DepotRenderer;
-import com.simibubi.create.content.processing.basin.BasinRenderer;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.entry.BlockEntityEntry;
-
 import committee.nova.mods.avaritia_integration.integrations.create.CreateModule;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin.ExtremeBasinBlockEntity;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner.ExtremeBlazeBurnerBlockEntity;
@@ -25,7 +16,17 @@ import committee.nova.mods.avaritia_integration.integrations.create.content.neut
 import committee.nova.mods.avaritia_integration.integrations.create.content.neutron_press.NeutronMechanicalPressRenderer;
 import committee.nova.mods.avaritia_integration.integrations.create.content.neutron_press.NeutronMechanicalPressVisual;
 
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.kinetics.base.SingleAxisRotatingVisual;
+import com.simibubi.create.content.kinetics.fan.EncasedFanRenderer;
+import com.simibubi.create.content.kinetics.fan.FanVisual;
+import com.simibubi.create.content.logistics.depot.DepotRenderer;
+import com.simibubi.create.content.processing.basin.BasinRenderer;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+
 public class CreateIntegrationBlockEntityTypes {
+
     private static final CreateRegistrate REGISTRATE = CreateModule.REGISTRATE;
     public static final BlockEntityEntry<ExtremeBlazeBurnerBlockEntity> EXTREME_HEATER;
     public static final BlockEntityEntry<NeutronMechanicalPressBlockEntity> NEUTRON_MECHANICAL_PRESS;
@@ -36,8 +37,7 @@ public class CreateIntegrationBlockEntityTypes {
     public static final BlockEntityEntry<ExtremeCrushingWheelBlockEntity> EXTREME_CRUSHING_WHEEL;
     public static final BlockEntityEntry<ExtremeCrushingWheelControllerBlockEntity> EXTREME_CRUSHING_WHEEL_CONTROLLER;
 
-    public static void register() {
-    }
+    public static void register() {}
 
     static {
         EXTREME_HEATER = REGISTRATE.blockEntity("extreme_blaze_heater", ExtremeBlazeBurnerBlockEntity::new)
@@ -46,7 +46,8 @@ public class CreateIntegrationBlockEntityTypes {
                 .renderer(() -> ExtremeBlazeBurnerRenderer::new)
                 .register();
 
-        NEUTRON_MECHANICAL_PRESS = REGISTRATE.blockEntity("neutron_mechanical_press", NeutronMechanicalPressBlockEntity::new)
+        NEUTRON_MECHANICAL_PRESS = REGISTRATE
+                .blockEntity("neutron_mechanical_press", NeutronMechanicalPressBlockEntity::new)
                 .visual(() -> NeutronMechanicalPressVisual::new)
                 .validBlocks(CreateIntegrationBlocks.NEUTRON_MECHANICAL_PRESS)
                 .renderer(() -> NeutronMechanicalPressRenderer::new)
@@ -55,7 +56,8 @@ public class CreateIntegrationBlockEntityTypes {
                 .validBlocks(CreateIntegrationBlocks.EXTREME_BASIN)
                 .renderer(() -> BasinRenderer::new)
                 .register();
-        MATRIX_MECHANICAL_MIXER = REGISTRATE.blockEntity("matrix_mechanical_mixer", MatrixMechanicalMixerBlockEntity::new)
+        MATRIX_MECHANICAL_MIXER = REGISTRATE
+                .blockEntity("matrix_mechanical_mixer", MatrixMechanicalMixerBlockEntity::new)
                 .visual(() -> MatrixMechanicalMixerVisual::new)
                 .validBlocks(CreateIntegrationBlocks.MATRIX_MECHANICAL_MIXER)
                 .renderer(() -> MatrixMechanicalMixerBlockRenderer::new)
@@ -77,7 +79,8 @@ public class CreateIntegrationBlockEntityTypes {
                 .renderer(() -> KineticBlockEntityRenderer::new)
                 .register();
 
-        EXTREME_CRUSHING_WHEEL_CONTROLLER = REGISTRATE.blockEntity("extreme_crushing_wheel_controller", ExtremeCrushingWheelControllerBlockEntity::new)
+        EXTREME_CRUSHING_WHEEL_CONTROLLER = REGISTRATE
+                .blockEntity("extreme_crushing_wheel_controller", ExtremeCrushingWheelControllerBlockEntity::new)
                 .validBlocks(CreateIntegrationBlocks.EXTREME_CRUSHING_WHEEL_CONTROLLER)
                 .register();
     }

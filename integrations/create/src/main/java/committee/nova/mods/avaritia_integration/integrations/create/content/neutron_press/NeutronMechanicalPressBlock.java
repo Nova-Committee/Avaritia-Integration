@@ -1,10 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.neutron_press;
 
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
-import com.simibubi.create.content.processing.basin.BasinBlock;
-import com.simibubi.create.foundation.block.IBE;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlockEntityTypes;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -18,15 +15,22 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class NeutronMechanicalPressBlock extends HorizontalKineticBlock implements IBE<NeutronMechanicalPressBlockEntity> {
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
+import com.simibubi.create.content.processing.basin.BasinBlock;
+import com.simibubi.create.foundation.block.IBE;
+
+public class NeutronMechanicalPressBlock extends HorizontalKineticBlock
+                                         implements IBE<NeutronMechanicalPressBlockEntity> {
+
     public NeutronMechanicalPressBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        if (context instanceof EntityCollisionContext
-                && ((EntityCollisionContext) context).getEntity() instanceof Player)
+        if (context instanceof EntityCollisionContext &&
+                ((EntityCollisionContext) context).getEntity() instanceof Player)
             return AllShapes.CASING_14PX.get(Direction.DOWN);
 
         return AllShapes.MECHANICAL_PROCESSOR_SHAPE;

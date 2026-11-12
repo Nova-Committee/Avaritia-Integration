@@ -1,11 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.matrix_mixer;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlockEntity;
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
-
 import committee.nova.mods.avaritia_integration.integrations.create.content.recipe.ExtremeBasinRecipe;
 
 import net.minecraft.core.BlockPos;
@@ -15,7 +9,14 @@ import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlockEntity;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
+
+import java.util.List;
+import java.util.Optional;
+
 public class MatrixMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity {
+
     public MatrixMechanicalMixerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -49,7 +50,8 @@ public class MatrixMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
         List<Recipe<?>> recipes = super.getMatchingRecipes();
         getBasin().ifPresent(basin -> {
             level.getRecipeManager().getAllRecipesFor(
-                    committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationRecipeTypes.EXTREME_MIXING.getType())
+                    committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationRecipeTypes.EXTREME_MIXING
+                            .getType())
                     .stream()
                     .map(RecipeHolder::value)
                     .filter(recipe -> ExtremeBasinRecipe.match(basin, recipe))

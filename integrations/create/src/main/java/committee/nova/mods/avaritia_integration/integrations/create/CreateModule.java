@@ -1,13 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create;
 
-import com.simibubi.create.AllCreativeModeTabs;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.api.contraption.storage.item.MountedItemStorageType;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.item.KineticStats;
-import com.simibubi.create.foundation.item.TooltipModifier;
-
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.integrations.create.content.BoilerHeaters;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin.ExtremeBasinBlockEntity;
@@ -19,11 +11,10 @@ import committee.nova.mods.avaritia_integration.integrations.create.registry.Cre
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlocks;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationDisplaySources;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationItems;
+import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationMountedStorageTypes;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationPartialModels;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationRecipeTypes;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationSpriteShifts;
-import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationMountedStorageTypes;
-
 import committee.nova.mods.avaritia_integration.module.Module;
 
 import net.createmod.catnip.lang.FontHelper;
@@ -31,6 +22,14 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+
+import com.simibubi.create.AllCreativeModeTabs;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.api.contraption.storage.item.MountedItemStorageType;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipModifier;
 
 public final class CreateModule implements Module {
 
@@ -67,7 +66,7 @@ public final class CreateModule implements Module {
     public void registerEvent(IEventBus modBus, IEventBus gameBus) {
         modBus.addListener(CreateModule::registerCapabilities);
         gameBus.addListener(ExtremeCrushingWheelBlockEntity::handleCrushedMobDrops);
-        gameBus.addListener(CreateModule::addCreateTabItems);
+        modBus.addListener(CreateModule::addCreateTabItems);
     }
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -86,10 +85,9 @@ public final class CreateModule implements Module {
         event.accept(AllItems.REFINED_RADIANCE);
     }
 
-
     @Override
     public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
-            CreativeModeTab.Output output) {
+                                        CreativeModeTab.Output output) {
         output.accept(CreateIntegrationItems.CREATIVE_MECHANISM.get());
         output.accept(CreateIntegrationItems.CREATIVE_COMPOUND.get());
         output.accept(CreateIntegrationItems.STAR_CAKE.get());

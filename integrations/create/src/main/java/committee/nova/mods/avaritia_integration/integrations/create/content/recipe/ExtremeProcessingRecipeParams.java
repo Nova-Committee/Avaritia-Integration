@@ -1,7 +1,14 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.createmod.catnip.codecs.stream.CatnipStreamCodecBuilders;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
@@ -10,18 +17,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.codec.CreateCodecs;
 
-import net.createmod.catnip.codecs.stream.CatnipStreamCodecBuilders;
-import net.minecraft.core.NonNullList;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.crafting.Ingredient;
-
-import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExtremeProcessingRecipeParams {
+
     public static final MapCodec<ExtremeProcessingRecipeParams> CODEC = codec();
     public static final StreamCodec<RegistryFriendlyByteBuf, ExtremeProcessingRecipeParams> STREAM_CODEC = streamCodec();
 
@@ -46,29 +46,30 @@ public class ExtremeProcessingRecipeParams {
                 ExtremeHeatCondition.CODEC.optionalFieldOf("heatRequirement", ExtremeHeatCondition.NORMAL)
                         .forGetter(params -> params.requiredHeat),
                 ExtremeHeatCondition.CODEC.optionalFieldOf("heat_requirement", ExtremeHeatCondition.NORMAL)
-                        .forGetter(params -> params.requiredHeat)
-        ).apply(instance, (ingredients, results, processingTime, processingTimeAlt, heat, heatAlt) -> {
-            ExtremeProcessingRecipeParams params = new ExtremeProcessingRecipeParams();
-            ingredients.forEach(either -> either
-                    .ifLeft(params.fluidIngredients::add)
-                    .ifRight(sized -> {
-                        for (int i = 0; i < Math.max(1, sized.count()); i++) {
-                            params.ingredients.add(sized.ingredient());
-                        }
-                    }));
-            results.forEach(either -> either
-                    .ifLeft(params.fluidResults::add)
-                    .ifRight(params.results::add));
-            params.processingDuration = processingTime > 0 ? processingTime : processingTimeAlt;
-            params.requiredHeat = heat != ExtremeHeatCondition.NORMAL ? heat : heatAlt;
-            return params;
-        }));
+                        .forGetter(params -> params.requiredHeat))
+                .apply(instance, (ingredients, results, processingTime, processingTimeAlt, heat, heatAlt) -> {
+                    ExtremeProcessingRecipeParams params = new ExtremeProcessingRecipeParams();
+                    ingredients.forEach(either -> either
+                            .ifLeft(params.fluidIngredients::add)
+                            .ifRight(sized -> {
+                                for (int i = 0; i < Math.max(1, sized.count()); i++) {
+                                    params.ingredients.add(sized.ingredient());
+                                }
+                            }));
+                    results.forEach(either -> either
+                            .ifLeft(params.fluidResults::add)
+                            .ifRight(params.results::add));
+                    params.processingDuration = processingTime > 0 ? processingTime : processingTimeAlt;
+                    params.requiredHeat = heat != ExtremeHeatCondition.NORMAL ? heat : heatAlt;
+                    return params;
+                }));
     }
 
     private static StreamCodec<RegistryFriendlyByteBuf, ExtremeProcessingRecipeParams> streamCodec() {
         return StreamCodec.of((buffer, params) -> {
             CatnipStreamCodecBuilders.nonNullList(Ingredient.CONTENTS_STREAM_CODEC).encode(buffer, params.ingredients);
-            CatnipStreamCodecBuilders.nonNullList(SizedFluidIngredient.STREAM_CODEC).encode(buffer, params.fluidIngredients);
+            CatnipStreamCodecBuilders.nonNullList(SizedFluidIngredient.STREAM_CODEC).encode(buffer,
+                    params.fluidIngredients);
             CatnipStreamCodecBuilders.nonNullList(ProcessingOutput.STREAM_CODEC).encode(buffer, params.results);
             CatnipStreamCodecBuilders.nonNullList(FluidStack.STREAM_CODEC).encode(buffer, params.fluidResults);
             ByteBufCodecs.VAR_INT.encode(buffer, params.processingDuration);
@@ -76,7 +77,8 @@ public class ExtremeProcessingRecipeParams {
         }, buffer -> {
             ExtremeProcessingRecipeParams params = new ExtremeProcessingRecipeParams();
             params.ingredients = CatnipStreamCodecBuilders.nonNullList(Ingredient.CONTENTS_STREAM_CODEC).decode(buffer);
-            params.fluidIngredients = CatnipStreamCodecBuilders.nonNullList(SizedFluidIngredient.STREAM_CODEC).decode(buffer);
+            params.fluidIngredients = CatnipStreamCodecBuilders.nonNullList(SizedFluidIngredient.STREAM_CODEC)
+                    .decode(buffer);
             params.results = CatnipStreamCodecBuilders.nonNullList(ProcessingOutput.STREAM_CODEC).decode(buffer);
             params.fluidResults = CatnipStreamCodecBuilders.nonNullList(FluidStack.STREAM_CODEC).decode(buffer);
             params.processingDuration = ByteBufCodecs.VAR_INT.decode(buffer);

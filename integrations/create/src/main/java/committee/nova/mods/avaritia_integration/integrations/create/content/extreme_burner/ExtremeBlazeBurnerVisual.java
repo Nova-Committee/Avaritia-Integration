@@ -1,10 +1,18 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner;
 
+import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationPartialModels;
+import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationSpriteShifts;
+
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.render.SpriteShiftEntry;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.processing.burner.ScrollInstance;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
-import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationPartialModels;
-import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationSpriteShifts;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visual.DynamicVisual;
 import dev.engine_room.flywheel.api.visual.TickableVisual;
@@ -17,17 +25,13 @@ import dev.engine_room.flywheel.lib.transform.Translate;
 import dev.engine_room.flywheel.lib.visual.AbstractBlockEntityVisual;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
 import dev.engine_room.flywheel.lib.visual.SimpleTickableVisual;
-import net.createmod.catnip.animation.AnimationTickHolder;
-import net.createmod.catnip.math.AngleHelper;
-import net.createmod.catnip.render.SpriteShiftEntry;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeBlazeBurnerBlockEntity> implements SimpleDynamicVisual, SimpleTickableVisual {
+public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeBlazeBurnerBlockEntity>
+                                      implements SimpleDynamicVisual, SimpleTickableVisual {
+
     private ExtremeBlazeBurnerBlock.ExtremeHeatLevel heatLevel;
 
     private final TransformedInstance head;
@@ -47,7 +51,8 @@ public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeB
 
     private boolean validBlockAbove;
 
-    public ExtremeBlazeBurnerVisual(VisualizationContext ctx, ExtremeBlazeBurnerBlockEntity blockEntity, float partialTick) {
+    public ExtremeBlazeBurnerVisual(VisualizationContext ctx, ExtremeBlazeBurnerBlockEntity blockEntity,
+                                    float partialTick) {
         super(ctx, blockEntity, partialTick);
 
         heatLevel = ExtremeBlazeBurnerBlock.ExtremeHeatLevel.SMOULDERING;
@@ -95,10 +100,12 @@ public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeB
             boolean hasRods = this.heatLevel.isAtLeast(ExtremeBlazeBurnerBlock.ExtremeHeatLevel.FADING);
 
             if (needsRods && !hasRods) {
-                PartialModel rodsModel = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ? CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS
-                        : CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS;
-                PartialModel rodsModel2 = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ? CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS_2
-                        : CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS_2;
+                PartialModel rodsModel = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ?
+                        CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS :
+                        CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS;
+                PartialModel rodsModel2 = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ?
+                        CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS_2 :
+                        CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS_2;
 
                 smallRods = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(rodsModel))
                         .createInstance();
@@ -128,7 +135,10 @@ public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeB
         }
 
         if (blockEntity.goggles && goggles == null) {
-            goggles = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(isInert ? AllPartialModels.BLAZE_GOGGLES_SMALL : AllPartialModels.BLAZE_GOGGLES))
+            goggles = instancerProvider()
+                    .instancer(InstanceTypes.TRANSFORMED,
+                            Models.partial(
+                                    isInert ? AllPartialModels.BLAZE_GOGGLES_SMALL : AllPartialModels.BLAZE_GOGGLES))
                     .createInstance();
             goggles.light(LightTexture.FULL_BRIGHT);
         } else if (!blockEntity.goggles && goggles != null) {
@@ -142,7 +152,8 @@ public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeB
                     .instancer(InstanceTypes.TRANSFORMED,
                             Models.partial(
                                     blockEntity.stockKeeper ? AllPartialModels.LOGISTICS_HAT :
-                                            blockEntity.hat ? AllPartialModels.TRAIN_HAT : CreateIntegrationPartialModels.CCA_LIQUID_HAT))
+                                            blockEntity.hat ? AllPartialModels.TRAIN_HAT :
+                                                    CreateIntegrationPartialModels.CCA_LIQUID_HAT))
                     .createInstance();
             hat.light(LightTexture.FULL_BRIGHT);
         } else if (!hatPresent && hat != null) {
@@ -209,24 +220,25 @@ public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeB
     }
 
     private void setupFlameInstance() {
-        flame = instancerProvider().instancer(AllInstanceTypes.SCROLLING, Models.partial(AllPartialModels.BLAZE_BURNER_FLAME))
+        flame = instancerProvider()
+                .instancer(AllInstanceTypes.SCROLLING, Models.partial(AllPartialModels.BLAZE_BURNER_FLAME))
                 .createInstance();
 
         flame.position(getVisualPosition())
                 .light(LightTexture.FULL_BRIGHT);
 
-        SpriteShiftEntry spriteShift =
-                heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ? CreateIntegrationSpriteShifts.STAR_BURNER_FLAME : CreateIntegrationSpriteShifts.BLAZE_BURNER_FLAME;
+        SpriteShiftEntry spriteShift = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ?
+                CreateIntegrationSpriteShifts.STAR_BURNER_FLAME : CreateIntegrationSpriteShifts.BLAZE_BURNER_FLAME;
 
         float spriteWidth = spriteShift.getTarget()
-                .getU1()
-                - spriteShift.getTarget()
-                .getU0();
+                .getU1() -
+                spriteShift.getTarget()
+                        .getU0();
 
         float spriteHeight = spriteShift.getTarget()
-                .getV1()
-                - spriteShift.getTarget()
-                .getV0();
+                .getV1() -
+                spriteShift.getTarget()
+                        .getV0();
 
         float speed = 1 / 32f + 1 / 64f * heatLevel.ordinal();
 
@@ -241,12 +253,10 @@ public class ExtremeBlazeBurnerVisual extends AbstractBlockEntityVisual<ExtremeB
     }
 
     @Override
-    public void updateLight(float partialTick) {
-    }
+    public void updateLight(float partialTick) {}
 
     @Override
-    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-    }
+    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {}
 
     @Override
     protected void _delete() {

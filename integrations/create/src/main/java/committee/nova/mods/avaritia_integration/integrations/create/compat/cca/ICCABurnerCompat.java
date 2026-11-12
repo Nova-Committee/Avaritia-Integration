@@ -8,6 +8,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
 public interface ICCABurnerCompat {
+
     IFluidHandler getFluidInventory();
 
     default boolean tryUpdateLiquid(ItemStack stack, @Nullable Player player, boolean simulate) {

@@ -36,6 +36,7 @@ public final class CreateIntegrationItems {
     }
 
     public static final class FuelItem extends Item {
+
         private final int burnTime;
 
         public FuelItem(Properties properties, int burnTime) {

@@ -1,15 +1,8 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.content.contraptions.behaviour.MovementContext;
-import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
-import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationPartialModels;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationSpriteShifts;
-import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.math.AngleHelper;
@@ -24,13 +17,24 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
+import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
+import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import org.jetbrains.annotations.Nullable;
 
 public class ExtremeBlazeBurnerRenderer extends SafeBlockEntityRenderer<ExtremeBlazeBurnerBlockEntity> {
+
     public ExtremeBlazeBurnerRenderer(BlockEntityRendererProvider.Context context) {}
 
     @Override
-    protected void renderSafe(ExtremeBlazeBurnerBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
+    protected void renderSafe(ExtremeBlazeBurnerBlockEntity be, float partialTicks, PoseStack ms,
+                              MultiBufferSource bufferSource, int light, int overlay) {
         ExtremeBlazeBurnerBlock.ExtremeHeatLevel heatLevel = be.getHeatLevelForRender();
 
         Level level = be.getLevel();
@@ -39,13 +43,17 @@ public class ExtremeBlazeBurnerRenderer extends SafeBlockEntityRenderer<ExtremeB
         float horizontalAngle = AngleHelper.rad(be.headAngle.getValue(partialTicks));
         boolean canDrawFlame = heatLevel.isAtLeast(ExtremeBlazeBurnerBlock.ExtremeHeatLevel.FADING);
         boolean drawGoggles = be.goggles;
-        PartialModel drawHat = be.hat ? AllPartialModels.TRAIN_HAT : be.stockKeeper ? AllPartialModels.LOGISTICS_HAT : be.hasStraw ? CreateIntegrationPartialModels.CCA_LIQUID_HAT : null;
+        PartialModel drawHat = be.hat ? AllPartialModels.TRAIN_HAT : be.stockKeeper ? AllPartialModels.LOGISTICS_HAT :
+                be.hasStraw ? CreateIntegrationPartialModels.CCA_LIQUID_HAT : null;
         int hashCode = be.hashCode();
 
-        renderShared(ms, null, bufferSource, level, blockState, heatLevel, animation, horizontalAngle, canDrawFlame, drawGoggles, drawHat, hashCode);
+        renderShared(ms, null, bufferSource, level, blockState, heatLevel, animation, horizontalAngle, canDrawFlame,
+                drawGoggles, drawHat, hashCode);
     }
 
-    public static void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource bufferSource, LerpedFloat headAngle, boolean conductor) {
+    public static void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld,
+                                           ContraptionMatrices matrices, MultiBufferSource bufferSource,
+                                           LerpedFloat headAngle, boolean conductor) {
         BlockState state = context.state;
         ExtremeBlazeBurnerBlock.ExtremeHeatLevel heatLevel = ExtremeBlazeBurnerBlock.getExtremeHeatLevelOf(state);
 
@@ -58,13 +66,15 @@ public class ExtremeBlazeBurnerRenderer extends SafeBlockEntityRenderer<ExtremeB
         boolean drawHat = conductor || context.blockEntityData.contains("TrainHat");
         int hashCode = context.hashCode();
 
-        renderShared(matrices.getViewProjection(), matrices.getModel(), bufferSource, level, state, heatLevel, 0, horizontalAngle, false, drawGoggles, drawHat ? AllPartialModels.TRAIN_HAT : null, hashCode);
+        renderShared(matrices.getViewProjection(), matrices.getModel(), bufferSource, level, state, heatLevel, 0,
+                horizontalAngle, false, drawGoggles, drawHat ? AllPartialModels.TRAIN_HAT : null, hashCode);
     }
 
     public static void renderShared(PoseStack ms, @Nullable PoseStack modelTransform, MultiBufferSource bufferSource,
-                                    Level level, BlockState blockState, ExtremeBlazeBurnerBlock.ExtremeHeatLevel heatLevel, float animation, float horizontalAngle,
+                                    Level level, BlockState blockState,
+                                    ExtremeBlazeBurnerBlock.ExtremeHeatLevel heatLevel, float animation,
+                                    float horizontalAngle,
                                     boolean canDrawFlame, boolean drawGoggles, PartialModel drawHat, int hashCode) {
-
         boolean blockAbove = animation > 0.125f;
         float time = AnimationTickHolder.getRenderTime(level);
         float renderTick = time + (hashCode % 13) * 16f;
@@ -80,18 +90,18 @@ public class ExtremeBlazeBurnerRenderer extends SafeBlockEntityRenderer<ExtremeB
         ms.pushPose();
 
         if (canDrawFlame && blockAbove) {
-            SpriteShiftEntry spriteShift =
-                    heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ? CreateIntegrationSpriteShifts.STAR_BURNER_FLAME : CreateIntegrationSpriteShifts.BLAZE_BURNER_FLAME;
+            SpriteShiftEntry spriteShift = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ?
+                    CreateIntegrationSpriteShifts.STAR_BURNER_FLAME : CreateIntegrationSpriteShifts.BLAZE_BURNER_FLAME;
 
             float spriteWidth = spriteShift.getTarget()
-                    .getU1()
-                    - spriteShift.getTarget()
-                    .getU0();
+                    .getU1() -
+                    spriteShift.getTarget()
+                            .getU0();
 
             float spriteHeight = spriteShift.getTarget()
-                    .getV1()
-                    - spriteShift.getTarget()
-                    .getV0();
+                    .getV1() -
+                    spriteShift.getTarget()
+                            .getV0();
 
             float speed = 1 / 32f + 1 / 64f * heatLevel.ordinal();
 
@@ -119,8 +129,8 @@ public class ExtremeBlazeBurnerRenderer extends SafeBlockEntityRenderer<ExtremeB
         draw(blazeBuffer, horizontalAngle, ms, solid);
 
         if (drawGoggles) {
-            PartialModel gogglesModel = blazeModel == AllPartialModels.BLAZE_INERT
-                    ? AllPartialModels.BLAZE_GOGGLES_SMALL : AllPartialModels.BLAZE_GOGGLES;
+            PartialModel gogglesModel = blazeModel == AllPartialModels.BLAZE_INERT ?
+                    AllPartialModels.BLAZE_GOGGLES_SMALL : AllPartialModels.BLAZE_GOGGLES;
 
             SuperByteBuffer gogglesBuffer = CachedBuffers.partial(gogglesModel, blockState);
             if (modelTransform != null)
@@ -150,10 +160,12 @@ public class ExtremeBlazeBurnerRenderer extends SafeBlockEntityRenderer<ExtremeB
         }
 
         if (heatLevel.isAtLeast(ExtremeBlazeBurnerBlock.ExtremeHeatLevel.FADING)) {
-            PartialModel rodsModel = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ? CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS
-                    : CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS;
-            PartialModel rodsModel2 = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ? CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS_2
-                    : CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS_2;
+            PartialModel rodsModel = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ?
+                    CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS :
+                    CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS;
+            PartialModel rodsModel2 = heatLevel == ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR ?
+                    CreateIntegrationPartialModels.BLAZE_BURNER_STAR_RODS_2 :
+                    CreateIntegrationPartialModels.BLAZE_BURNER_BLAZE_RODS_2;
 
             SuperByteBuffer rodsBuffer = CachedBuffers.partial(rodsModel, blockState);
             if (modelTransform != null)
@@ -175,10 +187,11 @@ public class ExtremeBlazeBurnerRenderer extends SafeBlockEntityRenderer<ExtremeB
 
     public static PartialModel getBlazeModel(ExtremeBlazeBurnerBlock.ExtremeHeatLevel heatLevel, boolean blockAbove) {
         if (heatLevel.isAtLeast(ExtremeBlazeBurnerBlock.ExtremeHeatLevel.STAR)) {
-            return blockAbove ? CreateIntegrationPartialModels.BLAZE_STAR_ACTIVE : CreateIntegrationPartialModels.BLAZE_STAR;
+            return blockAbove ? CreateIntegrationPartialModels.BLAZE_STAR_ACTIVE :
+                    CreateIntegrationPartialModels.BLAZE_STAR;
         } else if (heatLevel.isAtLeast(ExtremeBlazeBurnerBlock.ExtremeHeatLevel.FADING)) {
-            return blockAbove && heatLevel.isAtLeast(ExtremeBlazeBurnerBlock.ExtremeHeatLevel.BLAZE) ? CreateIntegrationPartialModels.BLAZE_BLAZE_ACTIVE
-                    : CreateIntegrationPartialModels.BLAZE_BLAZE;
+            return blockAbove && heatLevel.isAtLeast(ExtremeBlazeBurnerBlock.ExtremeHeatLevel.BLAZE) ?
+                    CreateIntegrationPartialModels.BLAZE_BLAZE_ACTIVE : CreateIntegrationPartialModels.BLAZE_BLAZE;
         } else {
             return CreateIntegrationPartialModels.EXTREME_BLAZE_INERT;
         }

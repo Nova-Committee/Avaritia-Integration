@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "avaritia_integration:item/seeds/crystal_matrix_seeds"
-  }
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "avaritia_integration:item/seeds/crystal_matrix_seeds"
+	}
 }

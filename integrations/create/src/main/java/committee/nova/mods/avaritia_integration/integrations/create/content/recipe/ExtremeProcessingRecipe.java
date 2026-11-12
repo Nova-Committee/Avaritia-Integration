@@ -1,18 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import com.google.common.base.Joiner;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.MapCodec;
-import com.simibubi.create.content.processing.recipe.ProcessingOutput;
-import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -25,13 +12,25 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+
+import com.google.common.base.Joiner;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
+import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public abstract class ExtremeProcessingRecipe implements Recipe<RecipeInput> {
+
     protected final ExtremeProcessingRecipeParams params;
     protected final NonNullList<Ingredient> ingredients;
     protected final NonNullList<ProcessingOutput> results;
@@ -101,7 +100,8 @@ public abstract class ExtremeProcessingRecipe implements Recipe<RecipeInput> {
     public List<ItemStack> rollResults(RandomSource randomSource) {
         List<ItemStack> rolled = new ArrayList<>();
         for (int i = 0; i < results.size(); i++) {
-            ItemStack stack = i == 0 && forcedResult != null ? forcedResult.get() : results.get(i).rollOutput(randomSource);
+            ItemStack stack = i == 0 && forcedResult != null ? forcedResult.get() :
+                    results.get(i).rollOutput(randomSource);
             if (!stack.isEmpty()) {
                 rolled.add(stack);
             }
@@ -191,6 +191,7 @@ public abstract class ExtremeProcessingRecipe implements Recipe<RecipeInput> {
 
     @FunctionalInterface
     public interface Factory {
+
         ExtremeProcessingRecipe create(ExtremeProcessingRecipeParams params);
     }
 }

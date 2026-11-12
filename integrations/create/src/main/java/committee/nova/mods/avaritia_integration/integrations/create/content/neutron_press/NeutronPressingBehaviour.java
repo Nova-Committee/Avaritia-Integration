@@ -1,14 +1,16 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.neutron_press;
 
-import com.simibubi.create.content.kinetics.press.PressingBehaviour;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
+import com.simibubi.create.content.kinetics.press.PressingBehaviour;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+
 public class NeutronPressingBehaviour extends PressingBehaviour {
+
     public <T extends SmartBlockEntity & PressingBehaviourSpecifics> NeutronPressingBehaviour(T be) {
         super(be);
     }

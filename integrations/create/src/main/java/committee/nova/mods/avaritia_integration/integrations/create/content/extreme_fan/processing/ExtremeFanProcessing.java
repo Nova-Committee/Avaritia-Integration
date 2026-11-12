@@ -1,16 +1,16 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_fan.processing;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ExtremeFanProcessing {
 
@@ -30,7 +30,8 @@ public final class ExtremeFanProcessing {
         }
         entity.setItem(stacks.removeFirst());
         for (ItemStack additional : stacks) {
-            ItemEntity entityIn = new ItemEntity(entity.level(), entity.getX(), entity.getY(), entity.getZ(), additional);
+            ItemEntity entityIn = new ItemEntity(entity.level(), entity.getX(), entity.getY(), entity.getZ(),
+                    additional);
             entityIn.setDeltaMovement(entity.getDeltaMovement());
             entity.level().addFreshEntity(entityIn);
         }
@@ -38,7 +39,8 @@ public final class ExtremeFanProcessing {
     }
 
     public static TransportedItemStackHandlerBehaviour.TransportedResult applyProcessing(TransportedItemStack transported,
-            Level world, FanProcessingType type) {
+                                                                                         Level world,
+                                                                                         FanProcessingType type) {
         TransportedItemStackHandlerBehaviour.TransportedResult ignore = TransportedItemStackHandlerBehaviour.TransportedResult
                 .doNothing();
         if (transported.processedBy != type) {

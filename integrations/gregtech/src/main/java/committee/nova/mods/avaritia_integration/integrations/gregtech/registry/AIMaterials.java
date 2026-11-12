@@ -1,12 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.gregtech.registry;
 
-import com.gregtechceu.gtceu.api.fluid.FluidBuilder;
-import com.gregtechceu.gtceu.api.fluid.store.FluidStorageKeys;
-import com.gregtechceu.gtceu.api.material.material.Material;
-import com.gregtechceu.gtceu.api.material.material.info.MaterialFlag;
-import com.gregtechceu.gtceu.api.material.material.properties.BlastProperty;
-import com.gregtechceu.gtceu.api.material.material.properties.PropertyKey;
-import com.gregtechceu.gtceu.api.tag.TagPrefix;
 import committee.nova.mods.avaritia.init.registry.ModBlocks;
 import committee.nova.mods.avaritia.init.registry.ModItems;
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
@@ -14,6 +7,14 @@ import committee.nova.mods.avaritia_integration.init.registry.AIFluids;
 import committee.nova.mods.avaritia_integration.init.registry.AIItems;
 
 import net.minecraft.world.level.ItemLike;
+
+import com.gregtechceu.gtceu.api.fluid.FluidBuilder;
+import com.gregtechceu.gtceu.api.fluid.store.FluidStorageKeys;
+import com.gregtechceu.gtceu.api.material.material.Material;
+import com.gregtechceu.gtceu.api.material.material.info.MaterialFlag;
+import com.gregtechceu.gtceu.api.material.material.properties.BlastProperty;
+import com.gregtechceu.gtceu.api.material.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.tag.TagPrefix;
 
 import static com.gregtechceu.gtceu.api.material.material.info.MaterialFlags.GENERATE_BOLT_SCREW;
 import static com.gregtechceu.gtceu.api.material.material.info.MaterialFlags.GENERATE_FOIL;
@@ -192,9 +193,12 @@ public final class AIMaterials {
     }
 
     private static void storeExistingMoltenFluids() {
-        Neutron.getProperty(PropertyKey.FLUID).getStorage().store(FluidStorageKeys.MOLTEN, AIFluids.source_molten_neutron, null);
-        CrystalMatrix.getProperty(PropertyKey.FLUID).getStorage().store(FluidStorageKeys.MOLTEN, AIFluids.source_molten_crystal_matrix, null);
-        Blaze_Cube.getProperty(PropertyKey.FLUID).getStorage().store(FluidStorageKeys.MOLTEN, AIFluids.source_molten_blaze, null);
+        Neutron.getProperty(PropertyKey.FLUID).getStorage().store(FluidStorageKeys.MOLTEN,
+                AIFluids.source_molten_neutron, null);
+        CrystalMatrix.getProperty(PropertyKey.FLUID).getStorage().store(FluidStorageKeys.MOLTEN,
+                AIFluids.source_molten_crystal_matrix, null);
+        Blaze_Cube.getProperty(PropertyKey.FLUID).getStorage().store(FluidStorageKeys.MOLTEN,
+                AIFluids.source_molten_blaze, null);
     }
 
     private static void ignore(TagPrefix prefix, Material material, ItemLike item) {

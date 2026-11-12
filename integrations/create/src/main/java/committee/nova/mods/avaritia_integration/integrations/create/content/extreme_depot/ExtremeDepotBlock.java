@@ -1,13 +1,14 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_depot;
 
-import com.simibubi.create.content.logistics.depot.DepotBlock;
-import com.simibubi.create.content.logistics.depot.DepotBlockEntity;
-
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlockEntityTypes;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import com.simibubi.create.content.logistics.depot.DepotBlock;
+import com.simibubi.create.content.logistics.depot.DepotBlockEntity;
+
 public class ExtremeDepotBlock extends DepotBlock {
+
     public ExtremeDepotBlock(Properties properties) {
         super(properties);
     }

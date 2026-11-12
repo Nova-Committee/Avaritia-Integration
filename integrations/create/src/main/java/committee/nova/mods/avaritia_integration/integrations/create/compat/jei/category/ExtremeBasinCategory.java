@@ -1,13 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.compat.jei.category;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.content.processing.recipe.ProcessingOutput;
-import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.item.ItemHelper;
-
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.integrations.create.content.recipe.ExtremeBasinRecipe;
 import committee.nova.mods.avaritia_integration.integrations.create.content.recipe.ExtremeHeatCondition;
@@ -20,16 +12,21 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.foundation.gui.AllGuiTextures;
+import com.simibubi.create.foundation.item.ItemHelper;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-
 import org.apache.commons.lang3.mutable.MutableInt;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -45,7 +42,8 @@ public class ExtremeBasinCategory extends CreateRecipeCategory<ExtremeBasinRecip
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ExtremeBasinRecipe recipe, IFocusGroup focuses) {
-        List<Pair<Ingredient, MutableInt>> condensedIngredients = ItemHelper.condenseIngredients(recipe.getIngredients());
+        List<Pair<Ingredient, MutableInt>> condensedIngredients = ItemHelper
+                .condenseIngredients(recipe.getIngredients());
         int size = condensedIngredients.size() + recipe.getFluidIngredients().size();
         int xOffset = size < 3 ? (3 - size) * 19 / 2 : 0;
         int i = 0;
@@ -98,7 +96,7 @@ public class ExtremeBasinCategory extends CreateRecipeCategory<ExtremeBasinRecip
 
     @Override
     public void draw(ExtremeBasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX,
-            double mouseY) {
+                     double mouseY) {
         ExtremeHeatCondition requiredHeat = recipe.getRequiredHeat();
         int vRows = (1 + recipe.getFluidResults().size() + recipe.getRollableResults().size()) / 2;
         if (vRows <= 2) {

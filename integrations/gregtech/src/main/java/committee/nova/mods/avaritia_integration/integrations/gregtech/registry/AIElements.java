@@ -1,8 +1,9 @@
 package committee.nova.mods.avaritia_integration.integrations.gregtech.registry;
 
+import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+
 import com.gregtechceu.gtceu.api.material.Element;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
-import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 
 public final class AIElements {
 

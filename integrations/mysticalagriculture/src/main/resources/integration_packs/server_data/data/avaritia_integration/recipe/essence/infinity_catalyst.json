@@ -12,11 +12,7 @@
 			"item": "mysticalagriculture:infinity_essence"
 		}
 	},
-	"pattern": [
-		" a ",
-		"aaa",
-		" a "
-	],
+	"pattern": [" a ", "aaa", " a "],
 	"result": {
 		"count": 1,
 		"id": "avaritia:infinity_catalyst"

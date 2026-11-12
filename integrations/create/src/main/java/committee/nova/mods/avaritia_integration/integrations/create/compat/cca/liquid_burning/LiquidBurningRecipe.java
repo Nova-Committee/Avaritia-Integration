@@ -1,8 +1,6 @@
 package committee.nova.mods.avaritia_integration.integrations.create.compat.cca.liquid_burning;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationRecipeTypes;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -13,11 +11,11 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-
-
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
-import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationRecipeTypes;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public record LiquidBurningRecipe(SizedFluidIngredient input, int burnTime, boolean starheated)
         implements Recipe<FluidRecipeInput> {
@@ -25,8 +23,8 @@ public record LiquidBurningRecipe(SizedFluidIngredient input, int burnTime, bool
     public static final MapCodec<LiquidBurningRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SizedFluidIngredient.FLAT_CODEC.fieldOf("input").forGetter(LiquidBurningRecipe::input),
             Codec.INT.fieldOf("burnTime").forGetter(LiquidBurningRecipe::burnTime),
-            Codec.BOOL.optionalFieldOf("starheated", false).forGetter(LiquidBurningRecipe::starheated)
-    ).apply(instance, LiquidBurningRecipe::new));
+            Codec.BOOL.optionalFieldOf("starheated", false).forGetter(LiquidBurningRecipe::starheated))
+            .apply(instance, LiquidBurningRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, LiquidBurningRecipe> STREAM_CODEC = StreamCodec.composite(
             SizedFluidIngredient.STREAM_CODEC, LiquidBurningRecipe::input,

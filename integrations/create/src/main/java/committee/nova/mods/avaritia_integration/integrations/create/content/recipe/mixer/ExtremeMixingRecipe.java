@@ -5,6 +5,7 @@ import committee.nova.mods.avaritia_integration.integrations.create.content.reci
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationRecipeTypes;
 
 public class ExtremeMixingRecipe extends ExtremeBasinRecipe {
+
     public ExtremeMixingRecipe(ExtremeProcessingRecipeParams params) {
         super(CreateIntegrationRecipeTypes.EXTREME_MIXING, params);
     }

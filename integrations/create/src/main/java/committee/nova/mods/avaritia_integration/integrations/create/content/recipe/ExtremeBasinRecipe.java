@@ -1,19 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.recipe;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
-import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.recipe.DummyCraftingContainer;
-import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin.ExtremeBasinBlockEntity;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner.ExtremeBlazeBurnerBlock;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationRecipeTypes;
@@ -27,14 +13,27 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
-
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.items.IItemHandler;
 
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
+import com.simibubi.create.foundation.recipe.DummyCraftingContainer;
+import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 public class ExtremeBasinRecipe extends ExtremeProcessingRecipe {
+
     public static <K extends SmartBlockEntity> boolean match(K be, Recipe<?> recipe) {
         FilteringBehaviour filter;
         if (be instanceof BasinBlockEntity basin) {
@@ -48,9 +47,8 @@ public class ExtremeBasinRecipe extends ExtremeProcessingRecipe {
             return false;
         }
         boolean filterTest = filter.test(recipe.getResultItem(be.getLevel().registryAccess()));
-        if (recipe instanceof ExtremeBasinRecipe basinRecipe
-                && basinRecipe.getRollableResults().isEmpty()
-                && !basinRecipe.getFluidResults().isEmpty()) {
+        if (recipe instanceof ExtremeBasinRecipe basinRecipe && basinRecipe.getRollableResults().isEmpty() &&
+                !basinRecipe.getFluidResults().isEmpty()) {
             filterTest = filter.test(basinRecipe.getFluidResults().getFirst());
         }
         return filterTest && apply(be, recipe, true);
@@ -62,8 +60,10 @@ public class ExtremeBasinRecipe extends ExtremeProcessingRecipe {
 
     private static <K extends SmartBlockEntity> boolean apply(K basin, Recipe<?> recipe, boolean test) {
         boolean isBasinRecipe = recipe instanceof ExtremeBasinRecipe;
-        IItemHandler availableItems = basin.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, basin.getBlockPos(), null);
-        IFluidHandler availableFluids = basin.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, basin.getBlockPos(), null);
+        IItemHandler availableItems = basin.getLevel().getCapability(Capabilities.ItemHandler.BLOCK,
+                basin.getBlockPos(), null);
+        IFluidHandler availableFluids = basin.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,
+                basin.getBlockPos(), null);
         if (availableItems == null || availableFluids == null) {
             return false;
         }
@@ -78,9 +78,8 @@ public class ExtremeBasinRecipe extends ExtremeProcessingRecipe {
         List<ItemStack> recipeOutputItems = new ArrayList<>();
         List<FluidStack> recipeOutputFluids = new ArrayList<>();
         List<Ingredient> ingredients = new LinkedList<>(recipe.getIngredients());
-        List<SizedFluidIngredient> fluidIngredients = isBasinRecipe
-                ? ((ExtremeBasinRecipe) recipe).getFluidIngredients()
-                : Collections.emptyList();
+        List<SizedFluidIngredient> fluidIngredients = isBasinRecipe ?
+                ((ExtremeBasinRecipe) recipe).getFluidIngredients() : Collections.emptyList();
 
         for (boolean simulate : Iterate.trueAndFalse) {
             if (!simulate && test) {
@@ -136,12 +135,15 @@ public class ExtremeBasinRecipe extends ExtremeProcessingRecipe {
             }
 
             if (fluidsAffected) {
-                basin.getBehaviour(SmartFluidTankBehaviour.INPUT).forEach(SmartFluidTankBehaviour.TankSegment::onFluidStackChanged);
-                basin.getBehaviour(SmartFluidTankBehaviour.OUTPUT).forEach(SmartFluidTankBehaviour.TankSegment::onFluidStackChanged);
+                basin.getBehaviour(SmartFluidTankBehaviour.INPUT)
+                        .forEach(SmartFluidTankBehaviour.TankSegment::onFluidStackChanged);
+                basin.getBehaviour(SmartFluidTankBehaviour.OUTPUT)
+                        .forEach(SmartFluidTankBehaviour.TankSegment::onFluidStackChanged);
             }
 
             if (simulate) {
-                CraftingInput remainderInput = new DummyCraftingContainer(availableItems, extractedItemsFromSlot).asCraftInput();
+                CraftingInput remainderInput = new DummyCraftingContainer(availableItems, extractedItemsFromSlot)
+                        .asCraftInput();
                 if (recipe instanceof ExtremeBasinRecipe basinRecipe) {
                     recipeOutputItems.addAll(basinRecipe.rollResults(basin.getLevel().random));
                     for (FluidStack fluidStack : basinRecipe.getFluidResults()) {

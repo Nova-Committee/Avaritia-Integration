@@ -1,6 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.gregtech;
 
-import com.gregtechceu.gtceu.data.material.GTMaterials;
 import committee.nova.mods.avaritia_integration.integrations.gregtech.registry.AIElements;
 import committee.nova.mods.avaritia_integration.integrations.gregtech.registry.AIMaterials;
 import committee.nova.mods.avaritia_integration.module.Module;
@@ -8,6 +7,8 @@ import committee.nova.mods.avaritia_integration.module.Module;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.RegisterEvent;
+
+import com.gregtechceu.gtceu.data.material.GTMaterials;
 
 public final class GregTechModule implements Module {
 

@@ -24,11 +24,7 @@
 			"item": "mysticalagradditions:neutronium_crux"
 		}
 	},
-	"pattern": [
-		"AIE",
-		"CNC",
-		"EIA"
-	],
+	"pattern": ["AIE", "CNC", "EIA"],
 	"result": {
 		"count": 1,
 		"id": "avaritia_integration:infinity_crux"

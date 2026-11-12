@@ -1,12 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_depot;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.simibubi.create.api.contraption.storage.SyncedMountedStorage;
-import com.simibubi.create.api.contraption.storage.item.MountedItemStorageType;
-import com.simibubi.create.api.contraption.storage.item.WrapperMountedItemStorage;
-import com.simibubi.create.content.contraptions.Contraption;
-
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationMountedStorageTypes;
 
 import net.minecraft.core.BlockPos;
@@ -16,13 +9,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.simibubi.create.api.contraption.storage.SyncedMountedStorage;
+import com.simibubi.create.api.contraption.storage.item.MountedItemStorageType;
+import com.simibubi.create.api.contraption.storage.item.WrapperMountedItemStorage;
+import com.simibubi.create.content.contraptions.Contraption;
 import org.jetbrains.annotations.Nullable;
 
 public class ExtremeDepotMountedStorage extends WrapperMountedItemStorage<ExtremeDepotMountedStorage.Handler>
-        implements SyncedMountedStorage {
+                                        implements SyncedMountedStorage {
 
     public static final MapCodec<ExtremeDepotMountedStorage> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
             .group(ItemStack.OPTIONAL_CODEC.optionalFieldOf("item", ItemStack.EMPTY)
@@ -49,7 +47,7 @@ public class ExtremeDepotMountedStorage extends WrapperMountedItemStorage<Extrem
 
     @Override
     public boolean handleInteraction(ServerPlayer player, Contraption contraption,
-            StructureTemplate.StructureBlockInfo info) {
+                                     StructureTemplate.StructureBlockInfo info) {
         return false;
     }
 
@@ -80,8 +78,8 @@ public class ExtremeDepotMountedStorage extends WrapperMountedItemStorage<Extrem
     }
 
     public static final class Handler extends ItemStackHandler {
-        private Runnable onChange = () -> {
-        };
+
+        private Runnable onChange = () -> {};
 
         private Handler(ItemStack stack) {
             super(1);

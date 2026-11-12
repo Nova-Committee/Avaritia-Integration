@@ -27,7 +27,7 @@ public final class SlashBladeModule implements Module {
 
     @Override
     public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
-            CreativeModeTab.Output output) {
+                                        CreativeModeTab.Output output) {
         ItemStack stack = SlashBladeIntegrationItems.STREDGEUNIVERSE.get().getDefaultInstance();
         if (SlashBladeIntegrationItems.STREDGEUNIVERSE.get() instanceof StredgeuniverseItem item) {
             item.setupBlade(stack, parameters.holders());

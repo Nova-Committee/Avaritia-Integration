@@ -41,7 +41,7 @@
 |-------------------------------------|:--------|:------:|-------|
 | Applied Energistics 2 | Infinity ME component and storage cells | ✅ | |
 | Botania | Asgard Dandelion, Soarleander, Infinity Mana Pool, Infinity Potato, Alpha Spark | ✅ | Botania 455-SNAPSHOT or newer |
-| Create | Creative Mechanism, Creative Compound | ✅ | |
+| Create | Creative Mechanism / Compound, Crystal Matrix Casing, Neutron Mechanical Press, Matrix Mechanical Mixer, Extreme Basin / Blaze Burner / Depot / Encased Fan / Crushing Wheels | ✅ | |
 | Ender IO | Infinity Capacitor, Infinity / Neutron grinding balls | ✅ | |
 | Industrial Foregoing | Neutron / Blaze Cube / Crystal Matrix / Infinity addons, Void Matter, Elderly Medulla | ✅ | |
 | Industrial Foregoing Extra Upgrades | Blaze Cube / Crystal Matrix / Neutron / Infinity energy addons | ✅ | |
@@ -50,10 +50,11 @@
 | PneumaticCraft: Repressurized | Creative Compressed Iron | ✅ | |
 | Refined Storage | Infinity Storage Part | ✅ | |
 | Thermal Expansion | Creative augments | ✅ | Data-only |
-| Tinkers' Construct | Infinity / Neutronium / Crystal Matrix / Blaze Cube materials and modifiers | ✅ | Data-only |
+| Tinkers' Construct | Infinity / Neutronium / Crystal Matrix / Blaze Cube materials and modifiers | ✅ | Includes fluid, block and arrow item registrations |
+| Mystical Agriculture | Blaze Cube, Crystal Matrix and Infinity crops | 🚧 | Implemented; runtime behavior not yet verified |
 | Apotheosis | | 🔲 | |
 | Blood Magic | | 🔲 | |
-| GregTechCEu Modern | | 🔲 | |
+| GregTechCEu Modern | Material / element registration and part unification | 🚧 | Implemented; runtime behavior not yet verified |
 | NuclearCraft: Neoteric | | 🔲 | |
-| SlashBlade | | 🔲 | |
+| SlashBlade | Stredge Universe blade and Meteorite Sword slash art / entity | 🚧 | Implemented; runtime behavior not yet verified |
 | Tetra | | 🔲 | |

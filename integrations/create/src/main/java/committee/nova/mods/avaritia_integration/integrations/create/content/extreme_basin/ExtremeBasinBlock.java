@@ -1,11 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin;
 
-import com.simibubi.create.content.processing.basin.BasinBlock;
-import com.simibubi.create.foundation.data.AssetLookup;
-import com.simibubi.create.foundation.data.SpecialBlockStateGen;
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlockEntityTypes;
 
 import net.minecraft.world.level.block.Block;
@@ -13,7 +7,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 
+import com.simibubi.create.content.processing.basin.BasinBlock;
+import com.simibubi.create.foundation.data.AssetLookup;
+import com.simibubi.create.foundation.data.SpecialBlockStateGen;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+
 public class ExtremeBasinBlock extends BasinBlock {
+
     public ExtremeBasinBlock(Properties properties) {
         super(properties);
     }
@@ -24,6 +25,7 @@ public class ExtremeBasinBlock extends BasinBlock {
     }
 
     public static class Generator extends SpecialBlockStateGen {
+
         @Override
         protected int getXRotation(BlockState state) {
             return 0;
@@ -36,7 +38,7 @@ public class ExtremeBasinBlock extends BasinBlock {
 
         @Override
         public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov,
-                BlockState state) {
+                                                    BlockState state) {
             return AssetLookup.partialBaseModel(ctx, prov, "block");
         }
     }

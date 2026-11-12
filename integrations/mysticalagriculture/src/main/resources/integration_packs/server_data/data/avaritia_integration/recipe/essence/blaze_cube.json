@@ -12,11 +12,7 @@
 			"item": "mysticalagriculture:blaze_cube_essence"
 		}
 	},
-	"pattern": [
-		"aaa",
-		"a a",
-		"aaa"
-	],
+	"pattern": ["aaa", "a a", "aaa"],
 	"result": {
 		"count": 1,
 		"id": "avaritia:blaze_cube"

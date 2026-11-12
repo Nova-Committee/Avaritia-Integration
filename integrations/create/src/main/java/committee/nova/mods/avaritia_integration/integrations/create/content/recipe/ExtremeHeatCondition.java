@@ -1,7 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.recipe;
 
-import com.mojang.serialization.Codec;
-
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner.ExtremeBlazeBurnerBlock;
 
@@ -10,9 +8,11 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 
+import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 
 public enum ExtremeHeatCondition implements StringRepresentable {
+
     NORMAL(0xffffff),
     BLAZE(0xE88300),
     STAR(0x5C93E8);

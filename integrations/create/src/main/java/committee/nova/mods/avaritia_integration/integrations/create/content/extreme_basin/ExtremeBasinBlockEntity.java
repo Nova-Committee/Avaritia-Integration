@@ -1,13 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin;
 
-import java.util.List;
-
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
-import com.simibubi.create.content.processing.basin.BasinInventory;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
-
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner.ExtremeBlazeBurnerBlock;
 import committee.nova.mods.avaritia_integration.integrations.create.content.matrix_mixer.MatrixMechanicalMixerBlockEntity;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlockEntityTypes;
@@ -16,14 +8,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
+import com.simibubi.create.content.processing.basin.BasinInventory;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
+import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class ExtremeBasinBlockEntity extends BasinBlockEntity {
+
     private @Nullable ExtremeBlazeBurnerBlock.ExtremeHeatLevel cachedExtremeHeatLevel;
 
     public ExtremeBasinBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -81,4 +80,3 @@ public class ExtremeBasinBlockEntity extends BasinBlockEntity {
         return ExtremeBlazeBurnerBlock.getExtremeHeatLevelOf(state);
     }
 }
-

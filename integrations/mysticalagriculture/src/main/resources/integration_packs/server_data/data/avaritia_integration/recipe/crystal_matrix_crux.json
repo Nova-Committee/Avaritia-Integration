@@ -18,11 +18,7 @@
 			"item": "mysticalagradditions:nether_star_crux"
 		}
 	},
-	"pattern": [
-		"EIE",
-		"IMI",
-		"EIE"
-	],
+	"pattern": ["EIE", "IMI", "EIE"],
 	"result": {
 		"count": 1,
 		"id": "avaritia_integration:crystal_matrix_crux"

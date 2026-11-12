@@ -1,22 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.compat.jei;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.Create;
-import com.simibubi.create.compat.jei.CreateJEI;
-import com.simibubi.create.compat.jei.DoubleItemIcon;
-import com.simibubi.create.compat.jei.EmptyBackground;
-import com.simibubi.create.compat.jei.ItemIcon;
-import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.content.kinetics.fan.processing.HauntingRecipe;
-import com.simibubi.create.content.kinetics.fan.processing.SplashingRecipe;
-import com.simibubi.create.content.kinetics.press.PressingRecipe;
-import com.simibubi.create.content.processing.basin.BasinRecipe;
-
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.integrations.create.compat.cca.liquid_burning.LiquidBurningRecipe;
 import committee.nova.mods.avaritia_integration.integrations.create.compat.jei.category.ExtremeMixingCategory;
@@ -34,14 +17,29 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 import net.minecraft.world.level.ItemLike;
 
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.Create;
+import com.simibubi.create.compat.jei.CreateJEI;
+import com.simibubi.create.compat.jei.DoubleItemIcon;
+import com.simibubi.create.compat.jei.EmptyBackground;
+import com.simibubi.create.compat.jei.ItemIcon;
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.simibubi.create.content.kinetics.fan.processing.HauntingRecipe;
+import com.simibubi.create.content.kinetics.fan.processing.SplashingRecipe;
+import com.simibubi.create.content.kinetics.press.PressingRecipe;
+import com.simibubi.create.content.processing.basin.BasinRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -71,7 +69,7 @@ public class CreateIntegrationJEI implements IModPlugin {
 
     @SuppressWarnings("unchecked")
     private static <T extends Recipe<?>> List<RecipeHolder<T>> typed(
-            net.minecraft.world.item.crafting.RecipeType<?> type) {
+                                                                     net.minecraft.world.item.crafting.RecipeType<?> type) {
         List<RecipeHolder<T>> out = new ArrayList<>();
         CreateJEI.consumeTypedRecipes(holder -> out.add((RecipeHolder<T>) holder), type);
         return out;
@@ -79,9 +77,11 @@ public class CreateIntegrationJEI implements IModPlugin {
 
     @SuppressWarnings("unchecked")
     private <T extends Recipe<?>> CreateRecipeCategory<T> build(String name, Class<T> recipeClass,
-            Supplier<List<RecipeHolder<T>>> recipes, List<Supplier<? extends ItemStack>> catalysts,
-            CreateRecipeCategory.Factory<T> factory, int width, int height,
-            mezz.jei.api.gui.drawable.IDrawable icon) {
+                                                                Supplier<List<RecipeHolder<T>>> recipes,
+                                                                List<Supplier<? extends ItemStack>> catalysts,
+                                                                CreateRecipeCategory.Factory<T> factory, int width,
+                                                                int height,
+                                                                mezz.jei.api.gui.drawable.IDrawable icon) {
         mezz.jei.api.recipe.RecipeType<RecipeHolder<T>> recipeType = (mezz.jei.api.recipe.RecipeType<RecipeHolder<T>>) (mezz.jei.api.recipe.RecipeType<?>) mezz.jei.api.recipe.RecipeType
                 .create(AvaritiaIntegration.MOD_ID, name, RecipeHolder.class);
         CreateRecipeCategory.Info<T> info = new CreateRecipeCategory.Info<>(recipeType,
@@ -132,7 +132,7 @@ public class CreateIntegrationJEI implements IModPlugin {
     }
 
     private <T extends Recipe<?>> void addCatalyst(IRecipeCatalystRegistration registration, ItemLike item,
-            ResourceLocation recipeId, Class<? extends T> recipeClass) {
+                                                   ResourceLocation recipeId, Class<? extends T> recipeClass) {
         registration.getJeiHelpers().getRecipeType(recipeId, recipeClass)
                 .ifPresent(type -> registration.addRecipeCatalyst(new ItemStack(item), type));
     }

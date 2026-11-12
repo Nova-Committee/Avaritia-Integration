@@ -1,21 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
-import com.mojang.serialization.MapCodec;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.content.logistics.stockTicker.StockTickerBlockEntity;
-import com.simibubi.create.content.logistics.stockTicker.StockTickerInteractionHandler;
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
-import com.simibubi.create.foundation.block.IBE;
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlockEntityTypes;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlocks;
 
@@ -49,17 +33,32 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
+import com.mojang.serialization.MapCodec;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.content.logistics.stockTicker.StockTickerBlockEntity;
+import com.simibubi.create.content.logistics.stockTicker.StockTickerInteractionHandler;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
+import com.simibubi.create.foundation.block.IBE;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class ExtremeBlazeBurnerBlock extends HorizontalDirectionalBlock
-        implements IBE<ExtremeBlazeBurnerBlockEntity>, IWrenchable {
+                                     implements IBE<ExtremeBlazeBurnerBlockEntity>, IWrenchable {
+
     public static final EnumProperty<ExtremeHeatLevel> EXTREME_HEAT_LEVEL = EnumProperty.create("extreme_blaze",
             ExtremeHeatLevel.class);
     public static final MapCodec<ExtremeBlazeBurnerBlock> CODEC = simpleCodec(ExtremeBlazeBurnerBlock::new);
@@ -104,7 +103,7 @@ public class ExtremeBlazeBurnerBlock extends HorizontalDirectionalBlock
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+                                              Player player, InteractionHand hand, BlockHitResult hit) {
         if (AllItems.GOGGLES.isIn(stack)) {
             return onBlockEntityUseItemOn(world, pos, ebe -> {
                 if (ebe.goggles) {
@@ -148,12 +147,13 @@ public class ExtremeBlazeBurnerBlock extends HorizontalDirectionalBlock
                 player.drop(leftover, false);
             }
         }
-        return res.getResult() == InteractionResult.SUCCESS ? ItemInteractionResult.SUCCESS
-                : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return res.getResult() == InteractionResult.SUCCESS ? ItemInteractionResult.SUCCESS :
+                ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     public static InteractionResultHolder<ItemStack> tryInsert(BlockState state, Level world, BlockPos pos,
-            ItemStack stack, boolean doNotConsume, boolean forceOverflow, boolean simulate) {
+                                                               ItemStack stack, boolean doNotConsume,
+                                                               boolean forceOverflow, boolean simulate) {
         if (!state.hasBlockEntity()) {
             return InteractionResultHolder.fail(ItemStack.EMPTY);
         }
@@ -237,14 +237,13 @@ public class ExtremeBlazeBurnerBlock extends HorizontalDirectionalBlock
         if (!blockState.hasProperty(EXTREME_HEAT_LEVEL)) {
             return BlazeBurnerBlock.HeatLevel.KINDLED;
         }
-        return blockState.getValue(EXTREME_HEAT_LEVEL).isAtLeast(ExtremeHeatLevel.FADING)
-                ? BlazeBurnerBlock.HeatLevel.SEETHING
-                : BlazeBurnerBlock.HeatLevel.KINDLED;
+        return blockState.getValue(EXTREME_HEAT_LEVEL).isAtLeast(ExtremeHeatLevel.FADING) ?
+                BlazeBurnerBlock.HeatLevel.SEETHING : BlazeBurnerBlock.HeatLevel.KINDLED;
     }
 
     public static ExtremeHeatLevel getExtremeHeatLevelOf(BlockState blockState) {
-        return blockState.hasProperty(EXTREME_HEAT_LEVEL) ? blockState.getValue(EXTREME_HEAT_LEVEL)
-                : ExtremeHeatLevel.SMOULDERING;
+        return blockState.hasProperty(EXTREME_HEAT_LEVEL) ? blockState.getValue(EXTREME_HEAT_LEVEL) :
+                ExtremeHeatLevel.SMOULDERING;
     }
 
     public static int getLight(BlockState state) {
@@ -253,7 +252,7 @@ public class ExtremeBlazeBurnerBlock extends HorizontalDirectionalBlock
     }
 
     public static void blockStateDataGen(DataGenContext<Block, ExtremeBlazeBurnerBlock> ctx,
-            RegistrateBlockstateProvider provider) {
+                                         RegistrateBlockstateProvider provider) {
         provider.getVariantBuilder(ctx.get()).forAllStates(state -> {
             ExtremeHeatLevel heatLevel = state.getValue(EXTREME_HEAT_LEVEL);
             Direction facing = state.getValue(FACING);
@@ -274,7 +273,11 @@ public class ExtremeBlazeBurnerBlock extends HorizontalDirectionalBlock
     }
 
     public enum ExtremeHeatLevel implements StringRepresentable {
-        SMOULDERING, FADING, BLAZE, STAR;
+
+        SMOULDERING,
+        FADING,
+        BLAZE,
+        STAR;
 
         public static ExtremeHeatLevel byIndex(int index) {
             return values()[index];

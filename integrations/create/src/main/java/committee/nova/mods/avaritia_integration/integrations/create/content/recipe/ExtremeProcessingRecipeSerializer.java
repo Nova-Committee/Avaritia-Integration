@@ -1,12 +1,13 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.recipe;
 
-import com.mojang.serialization.MapCodec;
-
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
+import com.mojang.serialization.MapCodec;
+
 public class ExtremeProcessingRecipeSerializer<T extends ExtremeProcessingRecipe> implements RecipeSerializer<T> {
+
     private final ExtremeProcessingRecipe.Factory factory;
 
     public ExtremeProcessingRecipeSerializer(ExtremeProcessingRecipe.Factory factory) {

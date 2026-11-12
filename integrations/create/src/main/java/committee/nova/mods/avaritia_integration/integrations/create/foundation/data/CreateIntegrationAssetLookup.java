@@ -1,10 +1,12 @@
 package committee.nova.mods.avaritia_integration.integrations.create.foundation.data;
 
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+
 public class CreateIntegrationAssetLookup {
+
     public static ModelFile partialBaseModel(DataGenContext<?, ?> ctx, RegistrateBlockstateProvider prov,
                                              String... suffix) {
         String string = "/block";

@@ -1,12 +1,13 @@
 package committee.nova.mods.avaritia_integration.integrations.create.compat.cca.liquid_burning;
 
-import com.mojang.serialization.MapCodec;
-
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
+import com.mojang.serialization.MapCodec;
+
 public class LiquidBurningRecipeSerializer implements RecipeSerializer<LiquidBurningRecipe> {
+
     @Override
     public MapCodec<LiquidBurningRecipe> codec() {
         return LiquidBurningRecipe.CODEC;

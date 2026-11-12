@@ -1,9 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.compat.cca;
 
-import java.util.Optional;
-
-import com.simibubi.create.foundation.fluid.SmartFluidTank;
-
 import committee.nova.mods.avaritia_integration.integrations.create.compat.cca.liquid_burning.FluidRecipeInput;
 import committee.nova.mods.avaritia_integration.integrations.create.compat.cca.liquid_burning.LiquidBurningRecipe;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner.ExtremeBlazeBurnerBlockEntity;
@@ -12,6 +8,10 @@ import committee.nova.mods.avaritia_integration.integrations.create.registry.Cre
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
+import com.simibubi.create.foundation.fluid.SmartFluidTank;
+
+import java.util.Optional;
 
 public class CCALiquidBlazeBurnerCompat implements ICCABurnerCompat {
 

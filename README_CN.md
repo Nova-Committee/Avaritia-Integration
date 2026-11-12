@@ -41,7 +41,7 @@
 |-------------------------------------|:--------|:------:|-------|
 | Applied Energistics 2 | 无尽 ME 组件与存储元件 | ✅ | |
 | Botania | 阿斯加德蒲公英、索利安德之嗜、无尽魔力池、无尽小土豆、阿尔法火花 | ✅ | 需要 Botania 455-SNAPSHOT 或更高 |
-| Create | 创世构件、创世化合物 | ✅ | |
+| Create | 创世构件 / 化合物、水晶矩阵机壳、中子机械压力机、矩阵动力搅拌器、极限工作盆 / 烈焰人燃烧室 / 置物台 / 鼓风机 / 粉碎轮 | ✅ | |
 | Ender IO | 无尽电容、无尽 / 中子研磨球 | ✅ | |
 | Industrial Foregoing | 中子 / 烈焰立方 / 水晶矩阵 / 无尽插件，虚空物质，远古髓液 | ✅ | |
 | Industrial Foregoing Extra Upgrades | 烈焰立方 / 水晶矩阵 / 中子 / 无尽能量插件 | ✅ | |
@@ -50,10 +50,11 @@
 | PneumaticCraft: Repressurized | 创造压缩铁锭 | ✅ | |
 | Refined Storage | 无限存储元件 | ✅ | |
 | Thermal Expansion | 创造升级 | ✅ | 仅数据包 |
-| Tinkers' Construct | 无尽 / 中子 / 水晶矩阵 / 烈焰立方材料与词条 | ✅ | 仅数据包 |
+| Tinkers' Construct | 无尽 / 中子 / 水晶矩阵 / 烈焰立方材料与词条 | ✅ | 含流体、方块和箭物品注册 |
+| Mystical Agriculture | 烈焰立方、水晶矩阵和无尽作物 | 🚧 | 已有实现，运行未验 |
 | Apotheosis | | 🔲 | |
 | Blood Magic | | 🔲 | |
-| GregTechCEu Modern | | 🔲 | |
+| GregTechCEu Modern | 材料 / 元素注册与部件统一 | 🚧 | 已有实现，运行未验 |
 | NuclearCraft: Neoteric | | 🔲 | |
-| SlashBlade | | 🔲 | |
+| SlashBlade | 宇宙终焉之刃与陨剑技能 / 实体 | 🚧 | 已有实现，运行未验 |
 | Tetra | | 🔲 | |

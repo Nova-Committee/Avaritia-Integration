@@ -1,6 +1,14 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_fan;
 
-import java.util.Iterator;
+import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_fan.processing.ExtremeFanProcessing;
+
+import net.createmod.catnip.math.VecHelper;
+import net.minecraft.core.Vec3i;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.content.kinetics.fan.AirCurrent;
@@ -8,19 +16,9 @@ import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessing;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
-
-import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_fan.processing.ExtremeFanProcessing;
-
-import net.createmod.catnip.math.VecHelper;
-import net.minecraft.core.Vec3i;
-import net.minecraft.util.Mth;
-
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.Iterator;
 
 public class ExtremeAirCurrent extends AirCurrent {
 
@@ -62,9 +60,9 @@ public class ExtremeAirCurrent extends AirCurrent {
                     processingType.spawnProcessingParticles(world, entity.position());
                     continue;
                 }
-                if (FanProcessing.canProcess(itemEntity, processingType)
-                        && ExtremeFanProcessing.applyProcessing(itemEntity, processingType)
-                        && source instanceof ExtremeEncasedFanBlockEntity fan) {
+                if (FanProcessing.canProcess(itemEntity, processingType) &&
+                        ExtremeFanProcessing.applyProcessing(itemEntity, processingType) &&
+                        source instanceof ExtremeEncasedFanBlockEntity fan) {
                     fan.award(AllAdvancements.FAN_PROCESSING);
                 }
                 continue;

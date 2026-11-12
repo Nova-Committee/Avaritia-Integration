@@ -1,8 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.mixin;
 
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
-
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationItems;
 
 import net.minecraft.sounds.SoundEvents;
@@ -10,6 +7,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,7 +29,7 @@ public abstract class MixinBlazeBurnerBlockEntity {
 
     @Inject(method = "tryUpdateFuel", at = @At("HEAD"), cancellable = true, remap = false)
     private void avaritia$starCakeFuel(ItemStack itemStack, boolean forceOverflow, boolean simulate,
-            CallbackInfoReturnable<Boolean> cir) {
+                                       CallbackInfoReturnable<Boolean> cir) {
         if (!itemStack.is(CreateIntegrationItems.STAR_CAKE.get())) {
             return;
         }

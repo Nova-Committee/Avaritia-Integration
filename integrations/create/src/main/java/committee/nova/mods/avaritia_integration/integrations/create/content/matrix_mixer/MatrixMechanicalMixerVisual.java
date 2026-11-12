@@ -1,9 +1,12 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.matrix_mixer;
 
+import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationPartialModels;
+
+import net.minecraft.core.Direction;
+
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.content.kinetics.base.SingleAxisRotatingVisual;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
-import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationPartialModels;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visual.DynamicVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
@@ -11,25 +14,32 @@ import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.OrientedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
-import net.minecraft.core.Direction;
 
 import java.util.function.Consumer;
 
-public class MatrixMechanicalMixerVisual extends SingleAxisRotatingVisual<MatrixMechanicalMixerBlockEntity> implements SimpleDynamicVisual {
+public class MatrixMechanicalMixerVisual extends SingleAxisRotatingVisual<MatrixMechanicalMixerBlockEntity>
+                                         implements SimpleDynamicVisual {
+
     private final RotatingInstance mixerHead;
     private final OrientedInstance mixerPole;
     private final MatrixMechanicalMixerBlockEntity mixer;
 
-    public MatrixMechanicalMixerVisual(VisualizationContext context, MatrixMechanicalMixerBlockEntity blockEntity, float partialTick) {
-        super(context, blockEntity, partialTick, Models.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_COGWHEEL));
+    public MatrixMechanicalMixerVisual(VisualizationContext context, MatrixMechanicalMixerBlockEntity blockEntity,
+                                       float partialTick) {
+        super(context, blockEntity, partialTick,
+                Models.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_COGWHEEL));
         this.mixer = blockEntity;
 
-        mixerHead = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_HEAD))
+        mixerHead = instancerProvider()
+                .instancer(AllInstanceTypes.ROTATING,
+                        Models.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_HEAD))
                 .createInstance();
 
         mixerHead.setRotationAxis(Direction.Axis.Y);
 
-        mixerPole = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_POLE))
+        mixerPole = instancerProvider()
+                .instancer(InstanceTypes.ORIENTED,
+                        Models.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_POLE))
                 .createInstance();
 
         animate(partialTick);

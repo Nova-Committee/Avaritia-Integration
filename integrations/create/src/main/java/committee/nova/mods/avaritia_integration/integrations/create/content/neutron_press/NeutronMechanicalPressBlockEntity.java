@@ -1,16 +1,16 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.neutron_press;
 
-import java.util.List;
-import java.util.Optional;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
+import java.util.List;
+import java.util.Optional;
 
 public class NeutronMechanicalPressBlockEntity extends MechanicalPressBlockEntity {
 

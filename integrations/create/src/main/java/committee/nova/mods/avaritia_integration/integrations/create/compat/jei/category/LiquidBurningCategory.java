@@ -1,8 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.compat.jei.category;
 
-import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.foundation.gui.AllGuiTextures;
-
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.integrations.create.compat.cca.liquid_burning.LiquidBurningRecipe;
 import committee.nova.mods.avaritia_integration.integrations.create.compat.jei.category.animations.AnimatedExtremeBlazeBurner;
@@ -12,6 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.simibubi.create.foundation.gui.AllGuiTextures;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -34,10 +33,11 @@ public class LiquidBurningCategory extends CreateRecipeCategory<LiquidBurningRec
 
     @Override
     public void draw(LiquidBurningRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX,
-            double mouseY) {
+                     double mouseY) {
         graphics.drawString(Minecraft.getInstance().font, formatTime(recipe.burnTime()),
                 getBackground().getWidth() / 2 + 48, 36, 4210752, false);
-        ExtremeHeatCondition requiredHeat = recipe.starheated() ? ExtremeHeatCondition.STAR : ExtremeHeatCondition.BLAZE;
+        ExtremeHeatCondition requiredHeat = recipe.starheated() ? ExtremeHeatCondition.STAR :
+                ExtremeHeatCondition.BLAZE;
         AllGuiTextures.JEI_LIGHT.render(graphics, 81, 38);
         AllGuiTextures.JEI_HEAT_BAR.render(graphics, 4, 30);
         graphics.drawString(Minecraft.getInstance().font,

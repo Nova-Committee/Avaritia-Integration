@@ -4,10 +4,27 @@ ext.ai_mod_description = 'Avaritia Integration module for Create.'
 ext.ai_run_directory = 'integrations/create'
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
+configurations {
+    createArchive {
+        canBeConsumed = false
+        canBeResolved = true
+        transitive = false
+    }
+}
+
+def createLibraries = layout.buildDirectory.dir('create-jarjar')
+def extractCreateLibraries = tasks.register('extractCreateLibraries', Sync) {
+    from({ configurations.createArchive.collect { zipTree(it) } }) {
+        include 'META-INF/jarjar/*.jar'
+    }
+    into createLibraries
+}
+
 dependencies {
+    createArchive forge.create
     implementation forge.reAvaritia
     implementation project(':core')
     implementation forge.create
     implementation forge.jei
-    compileOnly fileTree(dir: 'build/create-jarjar', include: '*.jar')
+    compileOnly files(fileTree(createLibraries) { include '**/*.jar' }).builtBy(extractCreateLibraries)
 }

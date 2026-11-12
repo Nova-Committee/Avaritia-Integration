@@ -1,17 +1,17 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.extreme_crusher;
 
-import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
-
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationBlockEntityTypes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
+import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
+
 public class ExtremeCrushingWheelControllerBlockEntity extends CrushingWheelControllerBlockEntity {
+
     public ExtremeCrushingWheelControllerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }

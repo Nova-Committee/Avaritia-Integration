@@ -1,18 +1,5 @@
 package committee.nova.mods.avaritia_integration.integrations.create.registry;
 
-import com.simibubi.create.AllTags;
-import com.simibubi.create.api.behaviour.display.DisplaySource;
-import com.simibubi.create.api.behaviour.interaction.ConductorBlockInteractionBehavior;
-import com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour;
-import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
-import com.simibubi.create.api.contraption.storage.item.MountedItemStorageType;
-import com.simibubi.create.content.decoration.encasing.CasingBlock;
-import com.simibubi.create.content.logistics.depot.MountedDepotInteractionBehaviour;
-import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
-import com.simibubi.create.content.processing.basin.BasinMovementBehaviour;
-import com.simibubi.create.content.processing.burner.BlazeBurnerMovementBehaviour;
-import com.simibubi.create.foundation.data.*;
-import com.tterrag.registrate.util.entry.BlockEntry;
 import committee.nova.mods.avaritia_integration.integrations.create.CreateModule;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin.ExtremeBasinBlock;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin.ExtremeBasinGenerator;
@@ -22,18 +9,30 @@ import committee.nova.mods.avaritia_integration.integrations.create.content.extr
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_depot.ExtremeDepotBlock;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_fan.ExtremeEncasedFanBlock;
 import committee.nova.mods.avaritia_integration.integrations.create.content.matrix_mixer.MatrixMechanicalMixerBlock;
-
 import committee.nova.mods.avaritia_integration.integrations.create.content.neutron_press.NeutronMechanicalPressBlock;
 import committee.nova.mods.avaritia_integration.integrations.create.foundation.data.CreateIntegrationAssetLookup;
 import committee.nova.mods.avaritia_integration.integrations.create.foundation.data.CreateIntegrationBlockStateGen;
 import committee.nova.mods.avaritia_integration.integrations.create.foundation.data.CreateIntegrationBuilderTransformers;
-import net.minecraft.client.renderer.RenderType;
+
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
+import com.simibubi.create.AllTags;
+import com.simibubi.create.api.behaviour.interaction.ConductorBlockInteractionBehavior;
+import com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour;
+import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
+import com.simibubi.create.content.decoration.encasing.CasingBlock;
+import com.simibubi.create.content.logistics.depot.MountedDepotInteractionBehaviour;
+import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
+import com.simibubi.create.content.processing.basin.BasinMovementBehaviour;
+import com.simibubi.create.content.processing.burner.BlazeBurnerMovementBehaviour;
+import com.simibubi.create.foundation.data.*;
+import com.tterrag.registrate.util.entry.BlockEntry;
+
 public class CreateIntegrationBlocks {
+
     private static final CreateRegistrate REGISTRATE = CreateModule.REGISTRATE;
     public static final BlockEntry<ExtremeBlazeBurnerBlock> EXTREME_BLAZE_BURNER;
     public static final BlockEntry<CasingBlock> CRYSTAL_MATRIX_CASING;
@@ -45,20 +44,21 @@ public class CreateIntegrationBlocks {
     public static final BlockEntry<ExtremeCrushingWheelBlock> EXTREME_CRUSHING_WHEEL;
     public static final BlockEntry<ExtremeCrushingWheelControllerBlock> EXTREME_CRUSHING_WHEEL_CONTROLLER;
 
-    public static void register() {
-    }
+    public static void register() {}
 
     static {
         EXTREME_BLAZE_BURNER = REGISTRATE.block("extreme_blaze_burner", ExtremeBlazeBurnerBlock::new)
                 .initialProperties(SharedProperties::softMetal)
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY).lightLevel(ExtremeBlazeBurnerBlock::getLight))
                 .transform(TagGen.pickaxeOnly())
-                
-                .tag(AllTags.AllBlockTags.FAN_PROCESSING_CATALYSTS_BLASTING.tag, AllTags.AllBlockTags.FAN_PROCESSING_CATALYSTS_SMOKING.tag,
+
+                .tag(AllTags.AllBlockTags.FAN_PROCESSING_CATALYSTS_BLASTING.tag,
+                        AllTags.AllBlockTags.FAN_PROCESSING_CATALYSTS_SMOKING.tag,
                         AllTags.AllBlockTags.FAN_TRANSPARENT.tag, AllTags.AllBlockTags.PASSIVE_BOILER_HEATERS.tag)
                 .blockstate(ExtremeBlazeBurnerBlock::blockStateDataGen)
                 .onRegister(MovementBehaviour.movementBehaviour(new BlazeBurnerMovementBehaviour()))
-                .onRegister(MovingInteractionBehaviour.interactionBehaviour(new ConductorBlockInteractionBehavior.BlazeBurner()))
+                .onRegister(MovingInteractionBehaviour
+                        .interactionBehaviour(new ConductorBlockInteractionBehavior.BlazeBurner()))
                 .item()
                 .model(AssetLookup.customBlockItemModel("create", "extreme_blaze_burner", "block_with_blaze"))
                 .build()
@@ -66,7 +66,8 @@ public class CreateIntegrationBlocks {
 
         CRYSTAL_MATRIX_CASING = REGISTRATE.block("crystal_matrix_casing", CasingBlock::new)
                 .properties(p -> p.mapColor(MapColor.COLOR_BLACK))
-                .transform(CreateIntegrationBuilderTransformers.casing(() -> CreateIntegrationSpriteShifts.CRYSTAL_MATRIX_CASING))
+                .transform(CreateIntegrationBuilderTransformers
+                        .casing(() -> CreateIntegrationSpriteShifts.CRYSTAL_MATRIX_CASING))
                 .register();
 
         NEUTRON_MECHANICAL_PRESS = REGISTRATE.block("neutron_mechanical_press", NeutronMechanicalPressBlock::new)
@@ -85,7 +86,7 @@ public class CreateIntegrationBlocks {
                         .sound(SoundType.NETHERITE_BLOCK))
                 .transform(TagGen.pickaxeOnly())
                 .blockstate(new ExtremeBasinGenerator()::generate)
-                
+
                 .onRegister(MovementBehaviour.movementBehaviour(new BasinMovementBehaviour()))
                 .item()
                 .transform(ModelGen.customItemModel("create", "_", "block"))
@@ -96,7 +97,7 @@ public class CreateIntegrationBlocks {
                 .properties(p -> p.noOcclusion().mapColor(MapColor.STONE))
                 .transform(TagGen.axeOrPickaxe())
                 .blockstate((c, p) -> p.simpleBlock(c.getEntry(), CreateIntegrationAssetLookup.partialBaseModel(c, p)))
-                
+
                 .onRegister(CreateIntegrationStress.setImpact(16.0))
                 .item(com.simibubi.create.content.processing.AssemblyOperatorBlockItem::new)
                 .transform(ModelGen.customItemModel("create", "_", "block"))
@@ -116,7 +117,7 @@ public class CreateIntegrationBlocks {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.PODZOL))
                 .blockstate(CreateIntegrationBlockStateGen.directionalBlockProvider(true))
-                
+
                 .transform(TagGen.axeOrPickaxe())
                 .onRegister(CreateIntegrationStress.setImpact(8.0))
                 .item()
@@ -128,14 +129,16 @@ public class CreateIntegrationBlocks {
                 .initialProperties(SharedProperties::stone)
                 .properties(BlockBehaviour.Properties::noOcclusion)
                 .transform(TagGen.pickaxeOnly())
-                .blockstate((c, p) -> CreateIntegrationBlockStateGen.axisBlock(c, p, s -> CreateIntegrationAssetLookup.partialBaseModel(c, p)))
-                
+                .blockstate((c, p) -> CreateIntegrationBlockStateGen.axisBlock(c, p,
+                        s -> CreateIntegrationAssetLookup.partialBaseModel(c, p)))
+
                 .onRegister(CreateIntegrationStress.setImpact(24.0))
                 .item()
                 .transform(ModelGen.customItemModel("create", "_", "block"))
                 .register();
 
-        EXTREME_CRUSHING_WHEEL_CONTROLLER = REGISTRATE.block("extreme_crushing_wheel_controller", ExtremeCrushingWheelControllerBlock::new)
+        EXTREME_CRUSHING_WHEEL_CONTROLLER = REGISTRATE
+                .block("extreme_crushing_wheel_controller", ExtremeCrushingWheelControllerBlock::new)
                 .properties(p -> p.mapColor(MapColor.STONE)
                         .noOcclusion()
                         .noLootTable()

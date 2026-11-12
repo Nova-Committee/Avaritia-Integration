@@ -2,7 +2,6 @@ package committee.nova.mods.avaritia_integration.integrations.create.compat.cca.
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
-
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public record FluidRecipeInput(FluidStack fluid) implements RecipeInput {

@@ -1,10 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.create.content.matrix_mixer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import committee.nova.mods.avaritia_integration.integrations.create.registry.CreateIntegrationPartialModels;
-import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -14,7 +11,13 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+
 public class MatrixMechanicalMixerBlockRenderer extends KineticBlockEntityRenderer<MatrixMechanicalMixerBlockEntity> {
+
     public MatrixMechanicalMixerBlockRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
@@ -25,16 +28,17 @@ public class MatrixMechanicalMixerBlockRenderer extends KineticBlockEntityRender
     }
 
     @Override
-    protected void renderSafe(MatrixMechanicalMixerBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+    protected void renderSafe(MatrixMechanicalMixerBlockEntity be, float partialTicks, PoseStack ms,
+                              MultiBufferSource buffer,
                               int light, int overlay) {
-
         if (VisualizationManager.supportsVisualization(be.getLevel())) return;
 
         BlockState blockState = be.getBlockState();
 
         VertexConsumer vb = buffer.getBuffer(RenderType.solid());
 
-        SuperByteBuffer superBuffer = CachedBuffers.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_COGWHEEL, blockState);
+        SuperByteBuffer superBuffer = CachedBuffers
+                .partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_COGWHEEL, blockState);
         standardKineticRotationTransform(superBuffer, be, light).renderInto(ms, vb);
 
         float renderedHeadOffset = be.getRenderedHeadOffset(partialTicks);
@@ -42,17 +46,18 @@ public class MatrixMechanicalMixerBlockRenderer extends KineticBlockEntityRender
         float time = AnimationTickHolder.getRenderTime(be.getLevel());
         float angle = ((time * speed * 6 / 10f) % 360) / 180 * (float) Math.PI;
 
-        SuperByteBuffer poleRender = CachedBuffers.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_POLE, blockState);
+        SuperByteBuffer poleRender = CachedBuffers.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_POLE,
+                blockState);
         poleRender.translate(0, -renderedHeadOffset, 0)
                 .light(light)
                 .renderInto(ms, vb);
 
         VertexConsumer vbCutout = buffer.getBuffer(RenderType.cutoutMipped());
-        SuperByteBuffer headRender = CachedBuffers.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_HEAD, blockState);
+        SuperByteBuffer headRender = CachedBuffers.partial(CreateIntegrationPartialModels.MATRIX_MECHANICAL_MIXER_HEAD,
+                blockState);
         headRender.rotateCentered(angle, Direction.UP)
                 .translate(0, -renderedHeadOffset, 0)
                 .light(light)
                 .renderInto(ms, vbCutout);
     }
-
 }

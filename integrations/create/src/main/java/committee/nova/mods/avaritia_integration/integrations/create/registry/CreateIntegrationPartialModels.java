@@ -1,9 +1,11 @@
 package committee.nova.mods.avaritia_integration.integrations.create.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 
 public class CreateIntegrationPartialModels {
+
     public static final PartialModel EXTREME_BLAZE_INERT = block("extreme_blaze_burner/blaze/inert");
     public static final PartialModel BLAZE_STAR = block("extreme_blaze_burner/blaze/star");
     public static final PartialModel BLAZE_STAR_ACTIVE = block("extreme_blaze_burner/blaze/star_active");
@@ -25,6 +27,5 @@ public class CreateIntegrationPartialModels {
         return PartialModel.of(AvaritiaIntegration.rl("block/create/" + path));
     }
 
-    public static void init() {
-    }
+    public static void init() {}
 }
