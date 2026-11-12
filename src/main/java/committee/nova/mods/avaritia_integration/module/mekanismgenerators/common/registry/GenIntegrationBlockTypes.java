@@ -38,7 +38,7 @@ public class GenIntegrationBlockTypes {
     public static final Generator<TileEntityNeutronSolarGenerator> NEUTRON_SOLAR_GENERATOR = GeneratorBuilder
             .createGenerator(() -> GenIntegrationTileEntityTypes.NEUTRON_SOLAR_GENERATOR, GeneratorsLang.DESCRIPTION_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.NEUTRON_SOLAR_GENERATOR)
-            .withEnergyConfig(() -> FloatingLong.MAX_VALUE)
+            .withEnergyConfig(() -> FloatingLong.createConst(10_000_000_000_000L))
             .withCustomShape(MekIntegrationBlockShapes.SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .withSupportedUpgrades(EnumSet.of(Upgrade.MUFFLING))
@@ -70,7 +70,7 @@ public class GenIntegrationBlockTypes {
     public static final Generator<TileEntityNeutronAdvancedSolarGenerator> NEUTRON_ADVANCED_SOLAR_GENERATOR = GeneratorBuilder
             .createGenerator(() -> GenIntegrationTileEntityTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR, GeneratorsLang.DESCRIPTION_ADVANCED_SOLAR_GENERATOR)
             .withGui(() -> GenIntegrationContainerTypes.NEUTRON_ADVANCED_SOLAR_GENERATOR)
-            .withEnergyConfig(() -> FloatingLong.MAX_VALUE)
+            .withEnergyConfig(() -> FloatingLong.createConst(10_000_000_000_000L))
             .withCustomShape(BlockShapes.ADVANCED_SOLAR_GENERATOR)
             .withSound(GeneratorsSounds.SOLAR_GENERATOR)
             .withSupportedUpgrades(EnumSet.of(Upgrade.MUFFLING))
