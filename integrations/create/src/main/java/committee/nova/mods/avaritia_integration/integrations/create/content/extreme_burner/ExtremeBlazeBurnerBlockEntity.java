@@ -49,6 +49,7 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
 
     protected FuelType activeFuel = FuelType.NONE;
     protected int remainingBurnTime;
+    protected boolean isCreative;
     public LerpedFloat headAnimation = LerpedFloat.linear();
     public LerpedFloat headAngle = LerpedFloat.angular();
     public boolean goggles;
@@ -84,6 +85,9 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
             if (!inWorld) {
                 return;
             }
+        }
+        if (isCreative) {
+            return;
         }
         if (!level.isClientSide) {
             fluidBurningTick();
@@ -159,12 +163,17 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
     }
 
     public void applyCreativeFuel() {
+        isCreative = true;
         activeFuel = FuelType.STAR;
         remainingBurnTime = MAX_HEAT_CAPACITY;
         updateBlockState();
+        notifyUpdate();
     }
 
     public boolean tryUpdateFuel(ItemStack itemStack, boolean forceOverflow, boolean simulate) {
+        if (isCreative) {
+            return false;
+        }
         FuelType newFuel = FuelType.NONE;
         int newBurnTime = 0;
         if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_STAR.matches(itemStack) ||
@@ -195,7 +204,7 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
     }
 
     public boolean tryUpdateLiquid(ItemStack stack, net.minecraft.world.entity.player.Player player, boolean simulate) {
-        if (!(fluidInventory instanceof CCALiquidBlazeBurnerCompat inv) || level == null) {
+        if (isCreative || !(fluidInventory instanceof CCALiquidBlazeBurnerCompat inv) || level == null) {
             return false;
         }
         return FluidUtil.tryEmptyContainer(stack, inv.getFluidInventory(), 1000, player, !simulate).isSuccess();
@@ -247,6 +256,7 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
         super.write(compound, registries, clientPacket);
         compound.putInt("FuelLevel", activeFuel.ordinal());
         compound.putInt("BurnTimeRemaining", remainingBurnTime);
+        compound.putBoolean("isCreative", isCreative);
         compound.putBoolean("Goggles", goggles);
         compound.putBoolean("Hat", hat);
         compound.putBoolean("Straw", hasStraw);
@@ -260,6 +270,7 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
         super.read(compound, registries, clientPacket);
         activeFuel = FuelType.values()[Mth.clamp(compound.getInt("FuelLevel"), 0, FuelType.values().length - 1)];
         remainingBurnTime = compound.getInt("BurnTimeRemaining");
+        isCreative = compound.getBoolean("isCreative");
         goggles = compound.getBoolean("Goggles");
         hat = compound.getBoolean("Hat");
         hasStraw = compound.getBoolean("Straw");
