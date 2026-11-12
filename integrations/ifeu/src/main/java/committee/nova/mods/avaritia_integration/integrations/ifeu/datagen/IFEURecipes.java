@@ -4,8 +4,10 @@ import committee.nova.mods.avaritia_integration.integrations.ifeu.registry.IFEUI
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 
 import com.hrznstudio.titanium.api.IRecipeProvider;
 
@@ -19,9 +21,32 @@ public class IFEURecipes extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput consumer) {
-        ((IRecipeProvider) IFEUIntegrationItems.ENERGY_ADDON_BLAZE_CUBE.get()).registerRecipe(consumer);
-        ((IRecipeProvider) IFEUIntegrationItems.ENERGY_ADDON_CRYSTAL_MATRIX.get()).registerRecipe(consumer);
-        ((IRecipeProvider) IFEUIntegrationItems.ENERGY_ADDON_NEUTRON.get()).registerRecipe(consumer);
         ((IRecipeProvider) IFEUIntegrationItems.ENERGY_ADDON_INFINITY.get()).registerRecipe(consumer);
+        RecipeOutput conversions = new RecipeOutput() {
+
+            @Override
+            public net.minecraft.advancements.Advancement.Builder advancement() {
+                return consumer.advancement();
+            }
+
+            @Override
+            public void accept(net.minecraft.resources.ResourceLocation id,
+                               net.minecraft.world.item.crafting.Recipe<?> recipe,
+                               net.minecraft.advancements.AdvancementHolder advancement,
+                               net.neoforged.neoforge.common.conditions.ICondition... conditions) {
+                consumer.accept(id,
+                        new committee.nova.mods.avaritia_integration.integrations.ifeu.LegacyEnergyConversionRecipe(
+                                (net.minecraft.world.item.crafting.ShapelessRecipe) recipe),
+                        advancement, conditions);
+            }
+        };
+        for (var legacy : java.util.List.of(IFEUIntegrationItems.ENERGY_ADDON_BLAZE_CUBE,
+                IFEUIntegrationItems.ENERGY_ADDON_CRYSTAL_MATRIX, IFEUIntegrationItems.ENERGY_ADDON_NEUTRON)) {
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, IFEUIntegrationItems.ENERGY_ADDON_INFINITY.get())
+                    .requires(legacy.get())
+                    .unlockedBy("has_legacy_addon", has(legacy.get()))
+                    .save(conversions, committee.nova.mods.avaritia_integration.AvaritiaIntegration.rl(
+                            "ifeu/convert_" + legacy.getId().getPath()));
+        }
     }
 }

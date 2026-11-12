@@ -13,13 +13,12 @@ public class IFEUModule implements Module {
     @Override
     public void init(IEventBus registryBus) {
         IFEUIntegrationItems.ITEMS.register(registryBus);
+        LegacyEnergyConversionRecipe.SERIALIZERS.register(registryBus);
     }
 
     @Override
     public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
                                         CreativeModeTab.Output output) {
-        IFEUIntegrationItems.ITEMS.getEntries().forEach(itemDeferredHolder -> {
-            output.accept(itemDeferredHolder.get());
-        });
+        output.accept(IFEUIntegrationItems.ENERGY_ADDON_INFINITY.get());
     }
 }

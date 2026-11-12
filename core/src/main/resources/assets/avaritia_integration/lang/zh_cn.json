@@ -153,7 +153,9 @@
 	"item.avaritia_integration.energy_addon_blaze_cube": "插件: 能量 Tier §b炽骨立方",
 	"item.avaritia_integration.energy_addon_crystal_matrix": "插件: 能量 Tier §b水晶矩阵",
 	"item.avaritia_integration.energy_addon_neutron": "插件: 能量 Tier §e中子",
-	"item.avaritia_integration.energy_addon_infinity": "插件: 能量 Tier §d无尽",
+	"item.avaritia_integration.energy_addon_infinity": "插件: §d无尽能量",
+	"tooltip.avaritia_integration.energy_addon_cap": "将机器储能与单次输入/输出上限提升至 2,147,483,647 FE。",
+	"tooltip.avaritia_integration.energy_addon_legacy": "旧版插件：单独放入合成栏，免费转换为无尽能量插件。",
 
 	"block.avaritia_integration.molten_blaze_fluid": "熔火之焰",
 	"fluid.avaritia_integration.molten_blaze": "熔火之焰",

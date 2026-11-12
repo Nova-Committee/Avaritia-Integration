@@ -1,0 +1,13 @@
+{
+  "type": "avaritia_integration:legacy_energy_conversion",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "avaritia_integration:energy_addon_crystal_matrix"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "avaritia_integration:energy_addon_infinity"
+  }
+}

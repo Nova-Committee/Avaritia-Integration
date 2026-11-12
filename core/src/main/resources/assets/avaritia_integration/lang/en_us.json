@@ -153,7 +153,9 @@
 	"item.avaritia_integration.energy_addon_blaze_cube": "Addon: Energy Tier §bBlaze Cube",
 	"item.avaritia_integration.energy_addon_crystal_matrix": "Addon: Energy Tier §bCrystal Matrix",
 	"item.avaritia_integration.energy_addon_neutron": "Addon: Energy Tier §eNeutron",
-	"item.avaritia_integration.energy_addon_infinity": "Addon: Energy Tier §dInfinity",
+	"item.avaritia_integration.energy_addon_infinity": "Addon: Energy §dInfinity",
+	"tooltip.avaritia_integration.energy_addon_cap": "Sets machine energy capacity and per-operation input/output to 2,147,483,647 FE.",
+	"tooltip.avaritia_integration.energy_addon_legacy": "Legacy addon: craft alone to convert to Infinity for free.",
 
 	"block.avaritia_integration.molten_blaze_fluid": "Molten Blaze",
 	"fluid.avaritia_integration.molten_blaze": "Molten Blaze",

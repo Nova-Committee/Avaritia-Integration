@@ -8,13 +8,10 @@
   "type": "industrialforegoing:dissolution_chamber",
   "input": [
     {
-      "tag": "c:storage_blocks/redstone"
+      "item": "ifeu:energy_addon_6"
     },
     {
       "tag": "c:storage_blocks/redstone"
-    },
-    {
-      "tag": "c:glass_panes/colorless"
     },
     {
       "tag": "c:glass_panes/colorless"
@@ -24,6 +21,9 @@
     },
     {
       "tag": "c:plastics"
+    },
+    {
+      "item": "avaritia_integration:infinity_gear"
     },
     {
       "item": "avaritia_integration:infinity_gear"
