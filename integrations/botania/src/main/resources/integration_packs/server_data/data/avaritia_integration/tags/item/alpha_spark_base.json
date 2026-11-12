@@ -1,0 +1,12 @@
+{
+	"values": [
+		{
+			"id": "botania:spark",
+			"required": false
+		},
+		{
+			"id": "botania:mana_spark",
+			"required": false
+		}
+	]
+}

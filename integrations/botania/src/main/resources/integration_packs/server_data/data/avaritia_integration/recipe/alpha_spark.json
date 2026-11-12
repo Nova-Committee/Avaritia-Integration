@@ -12,7 +12,7 @@
 		}
 	],
 	"base": {
-		"item": "botania:mana_spark"
+		"tag": "avaritia_integration:alpha_spark_base"
 	},
 	"result": {
 		"id": "avaritia_integration:alpha_spark"
