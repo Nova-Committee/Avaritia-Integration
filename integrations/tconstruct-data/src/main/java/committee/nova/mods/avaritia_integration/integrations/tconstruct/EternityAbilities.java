@@ -14,9 +14,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import slimeknights.tconstruct.library.modifiers.modules.technical.ArmorLevelModule;
+import slimeknights.tconstruct.library.tools.capability.TinkerDataCapability;
 
 public final class EternityAbilities {
 
@@ -43,6 +45,12 @@ public final class EternityAbilities {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 300, 0, false, false));
             }
         }
+    }
+
+    public static void respawn(PlayerEvent.PlayerRespawnEvent event) {
+        // TinkerData uses entity equality; respawn reuses the old network ID.
+        // Clear only our accumulated level before equipment hooks rebuild it.
+        TinkerDataCapability.getData(event.getEntity()).remove(TicIntegrationModifiers.ETERNITY);
     }
 
     private static void updateAttribute(Player player, Holder<Attribute> attribute, ResourceLocation id,

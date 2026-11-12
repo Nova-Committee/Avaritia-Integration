@@ -25,6 +25,7 @@ public final class TConstructModule implements Module {
         registryBus.addListener(TicIntegrationModifiers::registerSerializers);
         NeoForge.EVENT_BUS.addListener(EternityAbilities::tick);
         NeoForge.EVENT_BUS.addListener(EternityAbilities::protect);
+        NeoForge.EVENT_BUS.addListener(EternityAbilities::respawn);
     }
 
     @Override
