@@ -56,12 +56,12 @@
 
 ### Mekanism太阳能：并非全都比旧版高
 
-旧FloatingLong.MAX_VALUE实际是**18446744073709551615.9999**（无符号64位整数+四位小数），不能误写Double.MAX_VALUE。[旧类型初始化](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/FloatingLong.txt#L1813)。记该值为F，新long上限为L=9223372036854775807。
+旧FloatingLong.MAX_VALUE实际是**18446744073709551615.9999**（无符号64位整数+四位小数；其divide(2)会舍入为9223372036854775808，即L+1），不能误写Double.MAX_VALUE。[旧类型初始化](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/FloatingLong.txt#L1813)。记该值为F，新long上限为L=9223372036854775807。
 
 |项目|1.20.1|1.21.1当前实现|新/旧|
 |---|---|---|---|
-|中子普通太阳能配置峰值|F/2，约9.223372×10^18J/t|10^10J/t|约1.0842×10^-9|
-|中子高级太阳能配置峰值|F/2|10^11J/t|约1.0842×10^-8|
+|中子普通太阳能配置峰值|FloatingLong.divide(2)实际为L+1，约9.223372×10^18J/t|10^10J/t|约1.0842×10^-9|
+|中子高级太阳能配置峰值|同上，L+1|10^11J/t|约1.0842×10^-8|
 |中子太阳能缓冲（普通/高级）|F|10^13J|约5.4210×10^-7|
 |无尽太阳能配置峰值（普通/高级）|F|L|约0.5×，仅此API字段|
 |无尽太阳能真实内部缓冲|F|BigInteger(BigDecimal.valueOf(Double.MAX_VALUE))+L，约1.797693×10^308J|约9.7453×10^288×|
@@ -69,6 +69,19 @@
 |无尽太阳能对外I/O|FloatingLong范围|单次long接口至多L|内部巨大值不能当线缆单次传输率|
 
 中子参数拆分来自S，有明确“split neutron vs infinity generation”意图；无尽BigInteger来自M2，不属于S原始设计。必须同时写配置字段与实际Mixin消费者。[新内部注入:25](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism-generators/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanismgenerator/mixin/MixinTileEntitySolarGenerator.java#L25)、[大整数容量:16](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/config/MekBigEnergy.java#L16)、[真实缓冲替换:40](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism-generators/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanismgenerator/mixin/MixinTileEntityGenerator.java#L40)。没有实测全天候输出；不承诺每个世界tick都有内部注入。
+
+#### 主动设计与上游类型限制：分别判断
+
+精确旧依赖Mekanism10.4.15.75的真实计算已用JShell执行：`FloatingLong.MAX_VALUE.divide(2)`输出**9223372036854775808**，即L+1。数学上的F/2为9223372036854775807.99995，但FloatingLong保留四位小数并舍入，不能把数学值冒充实际返回值。见[原始执行记录](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/solar-type-limits.txt)、[精确计算附表](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/solar-type-limits.json)。
+
+|变化|类型约束造成的最低限度变化|现有实现及历史定性|
+|---|---|---|
+|中子峰值：旧L+1→新10^10/10^11|long无法精确表达L+1，但钳制到L只少**1J/t**，相对损失约1.0842×10^-19；仍保持原数量级|S父版本已经采用L；S再从L改为10^10/10^11，是**有明确拆档意图的主动数值降低**。约8～9个数量级的下降并非long类型必然结果|
+|中子缓冲：旧F→新10^13|若只用单一long，旧F无法完整保留；钳制L约为旧值的一半|降至10^13远低于long上限，是S的主动容量选择；不能全归因于类型迁移|
+|无尽配置峰值/对外long接口：旧F→L|单个long参数无法保留旧无符号范围及小数；至多L|约0.5×的**单字段/单次接口上限**有类型约束依据；不代表整台发电机总产能必然减半|
+|无尽内部缓冲/注入：旧F→约1.797693×10^308|long接口不强制内部也只用long；内部可另用大整数|M2主动引入BigInteger缓冲及注入，属于实现与数值设计选择；对外单次long上限仍在|
+
+直接证据：S父版[普通中子实现](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/pre-scale-NeutronSolarGeneratorBlockEntity.java)、[高级中子实现](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/pre-scale-NeutronAdvancedSolarGeneratorBlockEntity.java)均返回Long.MAX_VALUE；[S修改前后](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-ddd70d4.patch#L630)明确把它们换成专属常量。因此“上游改成long”与“为何选择10^10/10^11”是两个问题：前者限制表示范围，后者有历史主动调整证据。该结论不等于现值平衡合理，也不自动产生恢复旧值的任务，仍交由用户判断。
 
 ### Mekanism配方消耗
 
