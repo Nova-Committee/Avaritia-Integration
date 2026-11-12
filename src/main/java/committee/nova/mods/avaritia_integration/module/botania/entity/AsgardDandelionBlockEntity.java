@@ -39,7 +39,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
 
                         if (be instanceof ManaPool pool) {
                             if (!pool.isFull()) {
-                                int manaToSend = Math.min(this.getMana(), 32000);
+                                int manaToSend = Math.min(this.getMana(), 10_000_000);
                                 if (manaToSend > 0) {
                                     pool.receiveMana(manaToSend);
                                     this.addMana(-manaToSend);
@@ -51,7 +51,7 @@ public class AsgardDandelionBlockEntity extends GeneratingFlowerBlockEntity {
                             }
                         } else if (be instanceof ManaReceiver receiver && receiver.canReceiveManaFromBursts()) {
 
-                            int manaToSend = Math.min(this.getMana(), 32000);
+                            int manaToSend = Math.min(this.getMana(), 10_000_000);
                             if (manaToSend > 0) {
                                 receiver.receiveMana(manaToSend);
                                 this.addMana(-manaToSend);

@@ -85,7 +85,7 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
     }
 
     /**
-     * 给与周围所有生物3分钟2级所有正面BUFF
+     * 给予32格内所有生物10分钟5级所有正面效果
      * 补满玩家饥饿值
      *
      * @param world  世界
@@ -93,14 +93,14 @@ public class InfinityTinyPotatoBlockEntity extends BlockEntity implements Nameab
      * @param player 右键的玩家
      */
     private void addEffects(Level world, BlockPos pos, Player player) {
-        int radius = 10;
-        int time = 3600;
-        int lv = 1;
-        AABB bb = new AABB(pos.offset(-radius, -2, -radius), pos.offset(radius, 2, radius));
+        int radius = 32;
+        int time = 12000;
+        int lv = 4;
+        AABB bb = new AABB(pos).inflate(radius);
         List<LivingEntity> entityList = world.getEntitiesOfClass(LivingEntity.class, bb);
         for (LivingEntity living : entityList) {
             double sq = living.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
-            if (sq < radius) {
+            if (sq <= (double) radius * radius) {
                 for (MobEffect next : ForgeRegistries.MOB_EFFECTS.getValues()) {
                     if (next.isBeneficial())
                         living.addEffect(new MobEffectInstance(next, time, lv));

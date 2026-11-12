@@ -16,10 +16,10 @@ import vazkii.botania.api.block_entity.GeneratingFlowerBlockEntity;
 import vazkii.botania.api.block_entity.RadiusDescriptor;
 
 public class SoarleanderBlockEntity extends GeneratingFlowerBlockEntity {
-    private static final int MANA_PER_DAMAGE = 32;
-    private static final int MANA_PER_KILL = 1500;
-    private static final int MANA_PER_CHICKEN_KILL = 5000;
-    private static final float DAMAGE_AMOUNT = 4.0f;
+    private static final int MANA_PER_DAMAGE = 1000;
+    private static final int MANA_PER_KILL = 50000;
+    private static final int MANA_PER_CHICKEN_KILL = 250000;
+    private static final float DAMAGE_AMOUNT = 40.0f;
 
     public SoarleanderBlockEntity(BlockPos pos, BlockState state) {
         super(BotaniaIntegrationBlockEntities.SOARLEANDER.get(), pos, state);
@@ -27,7 +27,7 @@ public class SoarleanderBlockEntity extends GeneratingFlowerBlockEntity {
 
     @Override
     public int getMaxMana() {
-        return 32767;
+        return 10_000_000;
     }
 
     @Override

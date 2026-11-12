@@ -52,7 +52,10 @@ import java.util.*;
  * @author cnlimiter
  */
 public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
-    private static final int TRANSFER_RATE = 100000;
+    private static final int TRANSFER_RATE = Integer.MAX_VALUE;
+    private static final int SCAN_RANGE = 32;
+    private static final int SCAN_INTERVAL = 20;
+    private int scanTicks;
     private static final String TAG_UPGRADE = "upgrade";
     private static final EntityDataAccessor<Integer> UPGRADE = SynchedEntityData.defineId(AlphaSparkEntity.class, EntityDataSerializers.INT);
 
@@ -91,7 +94,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
         }
 
         // When loaded, initialize transfers
-        if (firstTick) {
+        if (firstTick || ++scanTicks % SCAN_INTERVAL == 0) {
             updateTransfers();
         }
 
@@ -109,7 +112,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
             case DISPERSIVE -> {
                 AABB aabb = VecHelper.boxForRange(
                         this.position().with(Direction.Axis.Y, getY() + (getBbHeight() / 2.0)),
-                        SparkHelper.SPARK_SCAN_RANGE);
+                        SCAN_RANGE);
                 List<Player> players = level().getEntitiesOfClass(Player.class, aabb, EntitySelector.ENTITY_STILL_ALIVE);
 
                 Map<Player, Map<ManaItem, Integer>> receivingPlayers = new HashMap<>();
@@ -187,7 +190,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
         checkReceiverFull();
 
         if (!transfers.isEmpty()) {
-            int manaTotal = Math.min(TRANSFER_RATE * transfers.size(), receiver.getCurrentMana());
+            int manaTotal = (int) Math.min((long) TRANSFER_RATE * transfers.size(), receiver.getCurrentMana());
             int count = transfers.size();
             int manaSpent = 0;
 
@@ -235,7 +238,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
         transfersTowardsSelfToRegister.clear();
         switch (getUpgrade()) {
             case RECESSIVE -> {
-                var otherSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+                var otherSparks = sparksAround(getNetwork());
                 Collections.shuffle(otherSparks);
                 for (var otherSpark : otherSparks) {
                     SparkUpgradeType otherUpgrade = otherSpark.getUpgrade();
@@ -248,7 +251,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
                 }
             }
             case DOMINANT -> {
-                List<ManaSpark> validSparks = SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork());
+                List<ManaSpark> validSparks = sparksAround(getNetwork());
                 for (var spark : validSparks) {
                     SparkUpgradeType otherUpgrade = spark.getUpgrade();
                     if (spark != this && otherUpgrade == SparkUpgradeType.NONE && spark.getAttachedManaReceiver() instanceof ManaPool) {
@@ -312,7 +315,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
                             dropAndKill();
                         }
                     } else {
-                        SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), getNetwork())
+                        sparksAround(getNetwork())
                                 .forEach(s -> particleBeam(player, this, s.entity()));
                     }
                 }
@@ -407,8 +410,20 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
         filterTransfers();
     }
 
+    private List<ManaSpark> sparksAround(DyeColor network) {
+        double x = getX(), y = getY() + getBbHeight() / 2, z = getZ();
+        AABB box = new AABB(x - SCAN_RANGE, y - SCAN_RANGE, z - SCAN_RANGE,
+                x + SCAN_RANGE, y + SCAN_RANGE, z + SCAN_RANGE);
+        List<ManaSpark> sparks = new ArrayList<>();
+        for (Entity entity : level().getEntitiesOfClass(Entity.class, box,
+                e -> e instanceof ManaSpark spark && spark != this && spark.getNetwork() == network)) {
+            sparks.add((ManaSpark) entity);
+        }
+        return sparks;
+    }
+
     private void notifyOthers(DyeColor network) {
-        for (var spark : SparkHelper.getSparksAround(level(), getX(), getY() + (getBbHeight() / 2), getZ(), network)) {
+        for (var spark : sparksAround(network)) {
             spark.updateTransfers();
         }
     }

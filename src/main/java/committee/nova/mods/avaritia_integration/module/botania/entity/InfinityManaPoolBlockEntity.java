@@ -89,7 +89,7 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
 
     public void receiveMana(int mana) {
         int old = this.mana;
-        this.mana = Math.max(0, Math.min(this.getCurrentMana() + mana, this.getMaxMana()));
+        this.mana = (int) Math.max(0L, Math.min((long) this.getCurrentMana() + mana, this.getMaxMana()));
         if (old != this.mana) {
             this.setChanged();
             this.markDispatchable();
@@ -326,8 +326,7 @@ public class InfinityManaPoolBlockEntity extends BotaniaBlockEntity implements M
                 ManaItem mana = XplatAbstractions.INSTANCE.findManaItem(stack);
                 if (!stack.isEmpty() && mana != null && (self.outputting && mana.canReceiveManaFromPool(self) || !self.outputting && mana.canExportManaToPool(self))) {
                     boolean didSomething = false;
-                    int bellowCount = self.outputting ? getBellowCount(level, worldPosition, self) : 0;
-                    int transfRate = 1000 * (bellowCount + 1);
+                    int transfRate = Integer.MAX_VALUE;
                     if (self.outputting) {
                         if (self.canSpare) {
                             if (self.getCurrentMana() > 0 && mana.getMana() < mana.getMaxMana()) {
