@@ -4,7 +4,21 @@ ext.ai_mod_description = 'Avaritia Integration data module for Tinkers Construct
 ext.ai_run_directory = 'integrations/tconstruct-data'
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
 
+// The NeoForge port publishes versioned artifacts as GitHub release assets.
+repositories {
+    ivy {
+        url = 'https://github.com/zhuchuovo'
+        patternLayout {
+            artifact '[module]-1.21.1/releases/download/v[revision]/[module]-1.21.1-[revision].[ext]'
+        }
+        metadataSources { artifact() }
+        content { includeGroup 'community.slimeknights' }
+    }
+}
+
 dependencies {
     implementation forge.reAvaritia
     implementation project(':core')
+    compileOnly 'community.slimeknights:TinkersConstruct:3.13.2'
+    compileOnly 'community.slimeknights:Mantle:1.13.1'
 }

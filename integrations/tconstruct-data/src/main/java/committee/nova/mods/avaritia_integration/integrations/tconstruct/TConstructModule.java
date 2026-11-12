@@ -4,6 +4,7 @@ import committee.nova.mods.avaritia_integration.integrations.tconstruct.registry
 import committee.nova.mods.avaritia_integration.integrations.tconstruct.registry.TicIntegrationFluidTypes;
 import committee.nova.mods.avaritia_integration.integrations.tconstruct.registry.TicIntegrationFluids;
 import committee.nova.mods.avaritia_integration.integrations.tconstruct.registry.TicIntegrationItems;
+import committee.nova.mods.avaritia_integration.integrations.tconstruct.registry.TicIntegrationModifiers;
 import committee.nova.mods.avaritia_integration.module.Module;
 
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,6 +20,8 @@ public final class TConstructModule implements Module {
         TicIntegrationFluids.REGISTRY.register(registryBus);
         TicIntegrationBlocks.REGISTRY.register(registryBus);
         TicIntegrationItems.REGISTRY.register(registryBus);
+        TicIntegrationModifiers.MODIFIERS.register(registryBus);
+        registryBus.addListener(TicIntegrationModifiers::registerSerializers);
     }
 
     @Override
