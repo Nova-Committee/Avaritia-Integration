@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:efficiency_addon_neutron",
-    "nbt": "{TitaniumAugment:{Efficiency:0.19999999f}}"
+    "nbt": "{TitaniumAugment:{Efficiency:0.05f}}"
   },
   "processingTime": 300
 }

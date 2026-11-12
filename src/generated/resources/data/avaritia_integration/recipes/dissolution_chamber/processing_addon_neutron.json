@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:processing_addon_neutron",
-    "nbt": "{TitaniumAugment:{Processing:9.0f}}"
+    "nbt": "{TitaniumAugment:{Processing:17.0f}}"
   },
   "processingTime": 300
 }

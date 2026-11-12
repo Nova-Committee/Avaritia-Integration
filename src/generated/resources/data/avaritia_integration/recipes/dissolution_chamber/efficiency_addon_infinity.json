@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:efficiency_addon_infinity",
-    "nbt": "{TitaniumAugment:{Efficiency:-0.20000005f}}"
+    "nbt": "{TitaniumAugment:{Efficiency:0.01f}}"
   },
   "processingTime": 400
 }

@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:speed_addon_crystal_matrix",
-    "nbt": "{TitaniumAugment:{Speed:6.0f}}"
+    "nbt": "{TitaniumAugment:{Speed:9.0f}}"
   },
   "processingTime": 200
 }

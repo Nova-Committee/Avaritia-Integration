@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:efficiency_addon_crystal_matrix",
-    "nbt": "{TitaniumAugment:{Efficiency:0.5f}}"
+    "nbt": "{TitaniumAugment:{Efficiency:0.1f}}"
   },
   "processingTime": 200
 }

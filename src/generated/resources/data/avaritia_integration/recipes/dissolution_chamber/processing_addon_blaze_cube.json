@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:processing_addon_blaze_cube",
-    "nbt": "{TitaniumAugment:{Processing:4.0f}}"
+    "nbt": "{TitaniumAugment:{Processing:5.0f}}"
   },
   "processingTime": 100
 }

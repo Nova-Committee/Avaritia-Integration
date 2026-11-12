@@ -40,7 +40,7 @@ public final class IndustrialForegoingModule implements Module {
                 output.accept(stack);
             }else if(obj.get() instanceof ModEfficiencyAddonItem efficiencyAddonItem){
                 ItemStack stack = new ItemStack(efficiencyAddonItem);
-                AugmentWrapper.setType(stack, AugmentTypes.EFFICIENCY, 1.0F - (float)efficiencyAddonItem.getTier() * 0.1F);
+                AugmentWrapper.setType(stack, AugmentTypes.EFFICIENCY, ModEfficiencyAddonItem.energyMultiplier(efficiencyAddonItem.getTier()));
                 output.accept(stack);
             }
         });

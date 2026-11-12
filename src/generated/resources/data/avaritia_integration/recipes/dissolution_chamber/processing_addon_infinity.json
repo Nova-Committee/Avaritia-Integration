@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:processing_addon_infinity",
-    "nbt": "{TitaniumAugment:{Processing:13.0f}}"
+    "nbt": "{TitaniumAugment:{Processing:33.0f}}"
   },
   "processingTime": 400
 }

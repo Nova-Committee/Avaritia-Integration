@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:speed_addon_blaze_cube",
-    "nbt": "{TitaniumAugment:{Speed:4.0f}}"
+    "nbt": "{TitaniumAugment:{Speed:5.0f}}"
   },
   "processingTime": 100
 }

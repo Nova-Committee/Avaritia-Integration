@@ -18,10 +18,24 @@ public class ModEfficiencyAddonItem extends AddonItem{
         super(tier,materialName);
     }
 
+    public static float energyMultiplier(int tier) {
+        return switch (tier) {
+            case 4 -> 0.25F;
+            case 8 -> 0.10F;
+            case 16 -> 0.05F;
+            default -> 0.01F;
+        };
+    }
+
+    @Override
+    protected void applyAugment(ItemStack stack) {
+        AugmentWrapper.setType(stack, AugmentTypes.EFFICIENCY, energyMultiplier(this.tier));
+    }
+
     @Override
     public void onCraftedBy(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull Player playerIn) {
         super.onCraftedBy(stack, worldIn, playerIn);
-        AugmentWrapper.setType(stack, AugmentTypes.EFFICIENCY, 1.0F - (float)this.tier * 0.1F);
+        applyAugment(stack);
     }
 
     @Override
@@ -42,7 +56,7 @@ public class ModEfficiencyAddonItem extends AddonItem{
     @Override
     public void addTooltipDetails(@Nullable BasicItem.Key key, ItemStack stack, List<Component> tooltip, boolean advanced) {
         super.addTooltipDetails(key, stack, tooltip, advanced);
-        float reduction = tier * -10;
+        float reduction = (1.0F - energyMultiplier(tier)) * -100.0F;
         tooltip.add(Component.translatable("tooltip.avaritia_integration.cooldown_amount").append(": " + reduction + "%").withStyle(ChatFormatting.GRAY));
     }
 }

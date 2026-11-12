@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:speed_addon_neutron",
-    "nbt": "{TitaniumAugment:{Speed:9.0f}}"
+    "nbt": "{TitaniumAugment:{Speed:17.0f}}"
   },
   "processingTime": 300
 }

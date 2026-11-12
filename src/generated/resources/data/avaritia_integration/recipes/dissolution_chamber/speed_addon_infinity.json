@@ -30,7 +30,7 @@
   "output": {
     "count": 1,
     "item": "avaritia_integration:speed_addon_infinity",
-    "nbt": "{TitaniumAugment:{Speed:13.0f}}"
+    "nbt": "{TitaniumAugment:{Speed:33.0f}}"
   },
   "processingTime": 400
 }
