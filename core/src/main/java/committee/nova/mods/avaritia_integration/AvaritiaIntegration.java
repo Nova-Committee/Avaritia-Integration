@@ -35,7 +35,7 @@ public class AvaritiaIntegration {
         AIBlocks.REGISTRY.register(bus);
         AIFluidTypes.REGISTRY.register(bus);
         AIFluids.REGISTRY.register(bus);
-        IntegrationLoadApi.reload();
+        IntegrationLoadApi.initialize();
     }
 
     public static ResourceLocation rl(String name) {

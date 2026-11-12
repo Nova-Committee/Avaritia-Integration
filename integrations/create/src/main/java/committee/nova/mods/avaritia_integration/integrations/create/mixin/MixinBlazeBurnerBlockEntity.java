@@ -30,7 +30,8 @@ public abstract class MixinBlazeBurnerBlockEntity {
     @Inject(method = "tryUpdateFuel", at = @At("HEAD"), cancellable = true, remap = false)
     private void avaritia$starCakeFuel(ItemStack itemStack, boolean forceOverflow, boolean simulate,
                                        CallbackInfoReturnable<Boolean> cir) {
-        if (!itemStack.is(CreateIntegrationItems.STAR_CAKE.get())) {
+        if (!committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_create") || !itemStack.is(CreateIntegrationItems.STAR_CAKE.get())) {
             return;
         }
         if (simulate) {

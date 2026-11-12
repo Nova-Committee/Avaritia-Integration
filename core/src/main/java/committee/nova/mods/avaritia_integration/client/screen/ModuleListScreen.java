@@ -1,8 +1,9 @@
 package committee.nova.mods.avaritia_integration.client.screen;
 
-import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
 import committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi;
+import committee.nova.mods.avaritia_integration.api.load.LoadDecision;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -11,74 +12,140 @@ import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
-// TODO:未完成,显示有问题
 @ApiStatus.Internal
 public class ModuleListScreen extends Screen {
 
+    private static final String PREFIX = "screen.avaritia_integration.module.";
     private final Screen parent;
+    private final Map<String, Boolean> saved = new LinkedHashMap<>();
+    private final Map<String, Boolean> draft = new LinkedHashMap<>();
+    private String revision;
     private ModuleListWidget widget;
-    private Button enableButton;
-    private boolean initialized = false;
+    private Button toggleButton;
+    private Button saveButton;
+    private Component status = Component.empty();
     private List<Component> tooltips = List.of();
+    private boolean initialized;
 
     public ModuleListScreen(Screen parent) {
-        super(Component.translatable("screen.%s.module.title".formatted(AvaritiaIntegration.MOD_ID)));
+        super(text("title"));
         this.parent = parent;
     }
 
     @Override
     public void init() {
-        super.init();
-        if (this.initialized) this.widget.updateSize(40, this.width - 40, 64, this.height - 32);
-        else {
-            this.initialized = true;
-            this.widget = new ModuleListWidget(this, this.minecraft, 40, this.width - 40, 64, this.height - 32);
-            this.widget.update();
+        if (!initialized) {
+            readConfiguration();
+            initialized = true;
         }
-        this.addWidget(this.widget);
-        this.addRenderableWidget(
-                Button.builder(Component.translatable("screen.%s.module.back".formatted(AvaritiaIntegration.MOD_ID)),
-                        button -> this.onClose()).bounds(40, 40, 100, 20).build());
-        this.enableButton = this.addRenderableWidget(
-                Button.builder(Component.literal("Reload"),
-                        button -> {
-                            IntegrationLoadApi.reload();
-                            this.widget.update();
-                            this.updateEnableButton();
-                        }).bounds(150, 40, 100, 20).build());
+        String selected = widget == null || widget.getSelected() == null ? null :
+                widget.getSelected().getData().integrationModId();
+        double scroll = widget == null ? 0 : widget.getScrollAmount();
+        widget = addRenderableWidget(new ModuleListWidget(this, minecraft, 16, width - 16, 78, height - 62));
+        widget.update(selected);
+        widget.setScrollAmount(scroll);
+        int buttonWidth = Math.min(150, (width - 40) / 2);
+        addRenderableWidget(Button.builder(text("reload"), button -> {
+            readConfiguration();
+            widget.update(selectedId());
+            updateEnableButton();
+        }).bounds(width / 2 - buttonWidth - 4, 50, buttonWidth, 20).build());
+        toggleButton = addRenderableWidget(Button.builder(text("enable"), button -> {
+            String id = selectedId();
+            if (id != null) draft.put(id, !isEnabled(id));
+            updateEnableButton();
+        }).bounds(width / 2 + 4, 50, buttonWidth, 20).build());
+        saveButton = addRenderableWidget(Button.builder(text("save"), button -> save())
+                .bounds(width / 2 - buttonWidth - 4, height - 28, buttonWidth, 20).build());
+        addRenderableWidget(Button.builder(text("cancel"), button -> onClose())
+                .bounds(width / 2 + 4, height - 28, buttonWidth, 20).build());
+        updateEnableButton();
+    }
+
+    private void readConfiguration() {
+        IntegrationLoadApi.reload();
+        revision = IntegrationLoadApi.revision();
+        saved.clear();
+        IntegrationLoadApi.configuredRules().forEach((id, rule) -> {
+            if (rule != null) saved.put(id, rule.isEnabled());
+        });
+        draft.clear();
+        draft.putAll(saved);
+        status = IntegrationLoadApi.loadError() == null ? Component.empty() :
+                text("read_failed").withStyle(ChatFormatting.RED);
+    }
+
+    private void save() {
+        Map<String, Boolean> changes = new LinkedHashMap<>();
+        draft.forEach((id, enabled) -> {
+            if (!Objects.equals(saved.get(id), enabled)) changes.put(id, enabled);
+        });
+        try {
+            String warning = IntegrationLoadApi.saveEnabled(revision, changes);
+            revision = IntegrationLoadApi.revision();
+            saved.clear();
+            saved.putAll(draft);
+            status = warning == null ? text("saved").withStyle(ChatFormatting.GREEN) :
+                    Component.literal(warning).withStyle(ChatFormatting.YELLOW);
+        } catch (IOException | IllegalArgumentException e) {
+            status = text("save_failed", e.getMessage()).withStyle(ChatFormatting.RED);
+        }
+        updateEnableButton();
     }
 
     public void updateEnableButton() {
-        this.enableButton.active = true;
-        this.enableButton.setMessage(Component.literal("Reload"));
+        if (toggleButton == null || saveButton == null) return;
+        String id = selectedId();
+        toggleButton.active = id != null && draft.containsKey(id) && IntegrationLoadApi.loadError() == null;
+        toggleButton.setMessage(text(id != null && isEnabled(id) ? "disable" : "enable"));
+        saveButton.active = !saved.equals(draft) && IntegrationLoadApi.loadError() == null;
+    }
+
+    private String selectedId() {
+        return widget.getSelected() == null ? null : widget.getSelected().getData().integrationModId();
+    }
+
+    boolean isEnabled(String id) {
+        return draft.getOrDefault(id, true);
+    }
+
+    Component nextState(String id) {
+        return text("next", text(isEnabled(id) ? "enabled" : "disabled"))
+                .append(!Objects.equals(saved.get(id), draft.get(id)) ? text("unsaved") :
+                        IntegrationLoadApi.needsRestart(id, isEnabled(id)) ? text("pending") : Component.empty());
+    }
+
+    Component currentState(LoadDecision decision) {
+        return text("current", Component.translatable("screen.avaritia_integration.load_state." +
+                decision.state().name().toLowerCase(java.util.Locale.ROOT)));
+    }
+
+    static net.minecraft.network.chat.MutableComponent text(String key, Object... args) {
+        return Component.translatable(PREFIX + key, args);
     }
 
     @Override
-    public void render(@NotNull GuiGraphics context, int mouseX, int mouseY, float delta) {
-        super.renderBackground(context, mouseX, mouseY, delta);
-        this.tooltips = List.of();
-        this.widget.render(context, mouseX, mouseY, delta);
-        assert this.minecraft != null;
-        if (!this.tooltips.isEmpty())
-            context.renderComponentTooltip(this.minecraft.font, this.tooltips, mouseX, mouseY);
-        context.drawCenteredString(this.font, this.title, this.width / 2, 20, 16777215);
-        context.drawCenteredString(this.font, Component.translatable("screen.avaritia_integration.module.warning"),
-                this.width / 2, 30, 16777215);
-        super.render(context, mouseX, mouseY, delta);
-    }
-
-    public void select(ModuleListWidget.ModuleEntry entry) {
-        this.widget.setSelected(entry);
-        this.updateEnableButton();
+    public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        tooltips = List.of();
+        super.render(graphics, mouseX, mouseY, delta);
+        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF);
+        graphics.drawCenteredString(font, text("warning"), width / 2, 28, 0xAAAAAA);
+        graphics.drawCenteredString(font, text("local_only"), width / 2, 39, 0xAAAAAA);
+        graphics.drawString(font,
+                net.minecraft.locale.Language.getInstance().getVisualOrder(font.substrByWidth(status, width - 32)), 16,
+                height - 51, 0xFFFFFF);
+        if (!tooltips.isEmpty()) graphics.renderComponentTooltip(font, tooltips, mouseX, mouseY);
     }
 
     @Override
     public void onClose() {
-        super.onClose();
-        assert this.minecraft != null;
-        this.minecraft.setScreen(this.parent);
+        minecraft.setScreen(parent);
     }
 
     void setTooltips(List<Component> tooltips) {

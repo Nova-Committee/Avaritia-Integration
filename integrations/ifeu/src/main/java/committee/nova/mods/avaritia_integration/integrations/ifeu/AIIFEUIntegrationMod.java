@@ -25,6 +25,7 @@ public final class AIIFEUIntegrationMod implements ModModule {
 
     @Override
     public IntegrationRule defaultLoadRule() {
-        return ModModule.rule(ModModule.dependency(DEPENDENCY_MOD_ID));
+        return ModModule.rule(ModModule.dependency(DEPENDENCY_MOD_ID),
+                ModModule.dependency("avaritia_integration_industrialforegoing"));
     }
 }

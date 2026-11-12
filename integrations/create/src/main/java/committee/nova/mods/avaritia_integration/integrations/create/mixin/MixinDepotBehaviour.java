@@ -23,7 +23,8 @@ public abstract class MixinDepotBehaviour {
 
     @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     private void avaritia$extremeDepotStack(SmartBlockEntity be, CallbackInfo ci) {
-        if (be instanceof ExtremeDepotBlockEntity) {
+        if (committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_create") && be instanceof ExtremeDepotBlockEntity) {
             maxStackSize = () -> 1024;
             enableMerging();
         }

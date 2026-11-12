@@ -20,7 +20,9 @@ public class MixinBasinOperatingBlockEntity {
 
     @Inject(method = "matchBasinRecipe", at = @At("RETURN"), cancellable = true, remap = false)
     private void avaritia$matchExtremeHeat(Recipe<?> recipe, CallbackInfoReturnable<Boolean> cir) {
-        if (!cir.getReturnValue() || !(recipe instanceof ExtremeBasinRecipe)) {
+        if (!committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_create") || !cir.getReturnValue() ||
+                !(recipe instanceof ExtremeBasinRecipe)) {
             return;
         }
         Optional<BasinBlockEntity> basin = ((BasinOperatingBlockEntityAccessor) this).avaritia$getBasin();
@@ -32,7 +34,8 @@ public class MixinBasinOperatingBlockEntity {
                        target = "Lcom/simibubi/create/content/processing/basin/BasinRecipe;apply(Lcom/simibubi/create/content/processing/basin/BasinBlockEntity;Lnet/minecraft/world/item/crafting/Recipe;)Z"),
               remap = false)
     private boolean avaritia$applyExtremeBasin(BasinBlockEntity basin, Recipe<?> recipe) {
-        if (recipe instanceof ExtremeBasinRecipe) {
+        if (committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_create") && recipe instanceof ExtremeBasinRecipe) {
             return ExtremeBasinRecipe.apply(basin, recipe);
         }
         return BasinRecipe.apply(basin, recipe);

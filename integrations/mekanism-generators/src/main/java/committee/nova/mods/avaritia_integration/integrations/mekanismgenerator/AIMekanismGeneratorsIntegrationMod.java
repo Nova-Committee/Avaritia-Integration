@@ -24,6 +24,7 @@ public final class AIMekanismGeneratorsIntegrationMod implements ModModule {
 
     @Override
     public IntegrationRule defaultLoadRule() {
-        return ModModule.rule(ModModule.dependency(MEKANISM_MOD_ID), ModModule.dependency(DEPENDENCY_MOD_ID));
+        return ModModule.rule(ModModule.dependency(MEKANISM_MOD_ID), ModModule.dependency(DEPENDENCY_MOD_ID),
+                ModModule.dependency("avaritia_integration_mekanism"));
     }
 }

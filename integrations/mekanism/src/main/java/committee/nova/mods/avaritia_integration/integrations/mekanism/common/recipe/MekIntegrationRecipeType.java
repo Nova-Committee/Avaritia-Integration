@@ -14,6 +14,17 @@ public class MekIntegrationRecipeType {
 
     private MekIntegrationRecipeType() {}
 
+    public static void register() {
+        COLLECTING = committee.nova.mods.avaritia_integration.integrations.mekanism.mixin.MixinMekanismRecipeType
+                .avaritia$register(
+                        mekanism.common.Mekanism.rl("collector"),
+                        type -> new SingleChemical<>(type, ChemicalStackToItemStackRecipe::getInput));
+        MEK_COMPRESSING = committee.nova.mods.avaritia_integration.integrations.mekanism.mixin.MixinMekanismRecipeType
+                .avaritia$register(
+                        mekanism.common.Mekanism.rl("compressor"),
+                        type -> new SingleItem<>(type, ItemStackToItemStackRecipe::getInput));
+    }
+
     public static RecipeTypeRegistryObject<SingleChemicalRecipeInput, ChemicalStackToItemStackRecipe, SingleChemical<ChemicalStackToItemStackRecipe>> COLLECTING;
 
     public static RecipeTypeRegistryObject<SingleRecipeInput, ItemStackToItemStackRecipe, SingleItem<ItemStackToItemStackRecipe>> MEK_COMPRESSING;

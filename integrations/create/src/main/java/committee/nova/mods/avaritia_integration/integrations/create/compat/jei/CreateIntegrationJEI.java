@@ -52,6 +52,9 @@ public class CreateIntegrationJEI implements IModPlugin {
 
     private void loadCategories() {
         allCategories.clear();
+        if (!committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_create"))
+            return;
         allCategories.add(build("extreme_mixing", ExtremeBasinRecipe.class,
                 () -> typed(CreateIntegrationRecipeTypes.EXTREME_MIXING.getType()),
                 List.<Supplier<? extends ItemStack>>of(CreateIntegrationBlocks.MATRIX_MECHANICAL_MIXER::asStack,
@@ -108,6 +111,9 @@ public class CreateIntegrationJEI implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        if (!committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_create"))
+            return;
         allCategories.forEach(c -> c.registerCatalysts(registration));
         addCatalyst(registration, CreateIntegrationBlocks.MATRIX_MECHANICAL_MIXER.asItem(), Create.asResource("mixing"),
                 BasinRecipe.class);

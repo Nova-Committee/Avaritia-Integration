@@ -15,6 +15,8 @@ public final class AIPneumaticCraftIntegrationMod implements ModModule {
     private static final String DEPENDENCY_MOD_ID = "pneumaticcraft";
 
     public AIPneumaticCraftIntegrationMod(IEventBus bus, ModContainer modContainer) {
+        committee.nova.mods.avaritia_integration.api.load.IntegrationDataPackRegistrar.register(bus, MOD_ID,
+                "Avaritia Integration PneumaticCraft Data");
         if (IntegrationRuntime.shouldLoad(MOD_ID, this) && IntegrationRuntime.load(MOD_ID, bus,
                 new PneumaticCraftModule()))
             ModRun.init(bus);

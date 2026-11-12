@@ -21,7 +21,7 @@ public final class IntegrationRuntime {
 
     public static boolean shouldLoad(String integrationModId, ModModule modModule) {
         IntegrationLoadApi.registerDefaultRule(integrationModId, modModule.defaultLoadRule());
-        LoadDecision decision = IntegrationLoadApi.explain(integrationModId);
+        LoadDecision decision = IntegrationLoadApi.startupDecision(integrationModId);
         if (!decision.shouldLoad()) {
             AvaritiaIntegration.LOGGER.info("Skip integration {}: {}", integrationModId, decision.message());
             return false;

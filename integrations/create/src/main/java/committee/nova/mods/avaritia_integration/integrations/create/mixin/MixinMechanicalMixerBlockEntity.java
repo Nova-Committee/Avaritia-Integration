@@ -17,7 +17,9 @@ public class MixinMechanicalMixerBlockEntity {
     @Inject(method = "matchStaticFilters", at = @At("HEAD"), cancellable = true, remap = false)
     private void avaritia$allowExtremeMixing(RecipeHolder<? extends Recipe<?>> recipe,
                                              CallbackInfoReturnable<Boolean> cir) {
-        if (recipe.value().getType() == CreateIntegrationRecipeTypes.EXTREME_MIXING.getType()) {
+        if (committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_create") &&
+                recipe.value().getType() == CreateIntegrationRecipeTypes.EXTREME_MIXING.getType()) {
             cir.setReturnValue(true);
         }
     }

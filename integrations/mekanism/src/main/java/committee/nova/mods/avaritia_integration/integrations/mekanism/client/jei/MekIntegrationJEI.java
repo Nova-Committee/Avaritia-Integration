@@ -27,7 +27,8 @@ public class MekIntegrationJEI implements IModPlugin {
     }
 
     private static boolean shouldLoad() {
-        return !Mekanism.hooks.emi.isLoaded();
+        return committee.nova.mods.avaritia_integration.api.load.IntegrationLoadApi
+                .shouldLoad("avaritia_integration_mekanism") && !Mekanism.hooks.emi.isLoaded();
     }
 
     @NotNull

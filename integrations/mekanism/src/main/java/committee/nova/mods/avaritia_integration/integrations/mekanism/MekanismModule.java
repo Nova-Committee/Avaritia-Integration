@@ -29,6 +29,8 @@ public final class MekanismModule implements Module {
 
     @Override
     public void init(IEventBus registryBus) {
+        committee.nova.mods.avaritia_integration.integrations.mekanism.common.recipe.MekIntegrationRecipeType
+                .register();
         MekIntegrationItems.ITEMS.register(registryBus);
         MekIntegrationBlocks.BLOCKS.register(registryBus);
         MekIntegrationContainerTypes.CONTAINER_TYPES.register(registryBus);

@@ -19,33 +19,35 @@ public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.Modul
     private final ModuleListScreen screen;
 
     public ModuleListWidget(ModuleListScreen screen, Minecraft client, int left, int right, int top, int bottom) {
-        super(client, right - left, bottom - top, top, bottom);
+        super(client, right - left, Math.max(36, bottom - top), top, 36);
         this.screen = screen;
-        this.updateSize(left, right, top, bottom);
+        setX(left);
     }
 
-    void updateSize(int left, int right, int top, int bottom) {}
+    public void update(String selectedId) {
+        clearEntries();
+        IntegrationLoadApi.explainAll().values().forEach(decision -> {
+            ModuleEntry entry = new ModuleEntry(screen,
+                    IntegrationLoadApi.startupDecision(decision.integrationModId()));
+            addEntry(entry);
+            if (decision.integrationModId().equals(selectedId)) setSelected(entry);
+        });
+    }
 
-    public void update() {
-        this.clearEntries();
-        IntegrationLoadApi.explainAll().values().forEach(x -> this.addEntry(new ModuleEntry(this.screen, x)));
+    @Override
+    public void setSelected(ModuleEntry entry) {
+        super.setSelected(entry);
+        screen.updateEnableButton();
     }
 
     @Override
     public int getRowWidth() {
-        return super.getRowWidth() + 30 * 2;
+        return width - 20;
     }
 
     @Override
     protected int getScrollbarPosition() {
-        return super.getScrollbarPosition() + 30 + 30;
-    }
-
-    @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        ModuleEntry entry = this.getSelected();
-        return entry != null && entry.keyPressed(keyCode, scanCode, modifiers) ||
-                super.keyPressed(keyCode, scanCode, modifiers);
+        return getRight() - 6;
     }
 
     public static class ModuleEntry extends Entry<ModuleEntry> {
@@ -60,27 +62,41 @@ public class ModuleListWidget extends ObjectSelectionList<ModuleListWidget.Modul
         }
 
         @Override
-        public void render(GuiGraphics context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX,
+        public void render(GuiGraphics graphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX,
                            int mouseY, boolean hovered, float tickDelta) {
-            context.drawString(this.client.font, this.data.integrationModId(), x + 32 + 3, y + 1, 16777215, true);
-            context.drawString(this.client.font, this.data.state().name(), x + 32 + 3, y + 1 + 9, 16777215, true);
-            if (this.isMouseOver(mouseX, mouseY))
-                this.screen.setTooltips(List.of(Component.literal(this.data.message())));
+            graphics.drawString(client.font, client.font.plainSubstrByWidth(data.integrationModId(), entryWidth - 8),
+                    x + 4, y + 2, 0xFFFFFF);
+            graphics.drawString(client.font,
+                    net.minecraft.locale.Language.getInstance()
+                            .getVisualOrder(client.font.substrByWidth(screen.currentState(data), entryWidth - 8)),
+                    x + 4, y + 12, data.shouldLoad() ? 0x99DD99 : 0xDDCC99);
+            graphics.drawString(client.font,
+                    net.minecraft.locale.Language.getInstance()
+                            .getVisualOrder(client.font.substrByWidth(screen.nextState(data.integrationModId()),
+                                    entryWidth - 8)),
+                    x + 4, y + 22, 0xCCCCCC);
+            if (hovered) {
+                screen.setTooltips(List.of(Component.literal(data.integrationModId()), screen.currentState(data),
+                        screen.nextState(data.integrationModId()), Component.literal(data.message()),
+                        Component.literal(IntegrationLoadApi.explain(data.integrationModId()).message())));
+            }
         }
 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            this.screen.select(this);
-            return false;
+            if (button != 0) return false;
+            list.setSelected(this);
+            return true;
         }
 
         public LoadDecision getData() {
-            return this.data;
+            return data;
         }
 
         @Override
         public @NotNull Component getNarration() {
-            return Component.literal(this.data.integrationModId());
+            return Component.literal(data.integrationModId()).append(" ").append(screen.currentState(data))
+                    .append(" ").append(screen.nextState(data.integrationModId()));
         }
     }
 }
