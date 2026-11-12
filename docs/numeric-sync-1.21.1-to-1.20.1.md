@@ -125,4 +125,4 @@
 |Botania|c404d47|[验收](../.dsh/evidence/sync-1201/botania-acceptance.md)，真实火花/花卉/土豆实体与池ticker|
 |Create盆输入声明|e4cc4ef|[验收](../.dsh/evidence/sync-1201/create-acceptance.md)，注册JSON和网络serializer往返81项；原validate为warn而非硬拒绝|
 
-最终构建及SHA256见[产物清单](../.dsh/evidence/sync-1201/final-artifacts.json)。1.20.1无生产未提交改动，比较树未修改。所有NOT_RUN详各验收报告。匠魂1.21.1真实双客户端尚因当前入口缺少启动/交互工具而阻塞，只有专服装备/持久化验证，不作图形验收通过。旧IF既有物品NBT不做全量迁移，新增/合成产物与既有完成回调按新数值写入。
+最终构建及SHA256见[产物清单](../.dsh/evidence/sync-1201/final-artifacts.json)。1.20.1无生产未提交改动，比较树未修改。所有NOT_RUN详各验收报告。匠魂1.21.1能力本体已有真实隔离专服的可受伤FakePlayer（ServerPlayer子类）、doTick、伤害消费者及存档重启证据；双真实客户端PVP/飞行同步画面/死亡重生/跨维度为NOT_RUN。此前“缺少启动/交互入口”的推断已撤回，标准CLI桥接tools/list已发现相关工具，见[纠正记录](../.dsh/evidence/sync-1201/graphical-tool-boundary.md)。助手建议将这些未执行场景另立任务，是否接受该验证边界由用户决定，不作图形验收通过。旧IF既有物品NBT不做全量迁移，新增/合成产物与既有完成回调按新数值写入。
