@@ -73,7 +73,11 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe> extends
     /**
      * How many ticks it takes, by default, to run an operation.
      */
-    protected static final int BASE_TICKS_REQUIRED = 200;
+    private int getBaseTicksRequired() {
+        return type == MekIntegrationFactoryType.NEUTRON_COLLECTING ?
+                committee.nova.mods.avaritia_integration.module.mekanism.common.config.MekIntegrationEnergy.NEUTRON_TICKS :
+                committee.nova.mods.avaritia_integration.module.mekanism.common.config.MekIntegrationEnergy.INFINITY_TICKS;
+    }
 
     protected FactoryRecipeCacheLookupMonitor<RECIPE>[] recipeCacheLookupMonitors;
     protected BooleanSupplier[] recheckAllRecipeErrors;
@@ -90,7 +94,7 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe> extends
     /**
      * How many ticks it takes, with upgrades, to run an operation
      */
-    private int ticksRequired = 200;
+    private int ticksRequired;
     protected boolean sorting;
     private boolean sortingNeeded = true;
     private FloatingLong lastUsage = FloatingLong.ZERO;
@@ -115,6 +119,7 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe> extends
     public TileEntityMIFactory(IBlockProvider blockProvider, BlockPos pos, BlockState state, List<RecipeError> errorTypes, Set<RecipeError> globalErrorTypes) {
         super(blockProvider, pos, state);
         type = Objects.requireNonNull(Attribute.get(blockProvider, AttributeMekIntegrationFactoryType.class)).getMekIntegrationFactoryType();
+        ticksRequired = getBaseTicksRequired();
         outputItemSlots = new ArrayList<>();
 
         configComponent = new TileComponentConfig(this, TransmissionType.ITEM, TransmissionType.ENERGY);
@@ -354,7 +359,7 @@ public abstract class TileEntityMIFactory<RECIPE extends MekanismRecipe> extends
     public void recalculateUpgrades(Upgrade upgrade) {
         super.recalculateUpgrades(upgrade);
         if (upgrade == Upgrade.SPEED) {
-            ticksRequired = MekanismUtils.getTicks(this, BASE_TICKS_REQUIRED);
+            ticksRequired = MekanismUtils.getTicks(this, getBaseTicksRequired());
         }
     }
 

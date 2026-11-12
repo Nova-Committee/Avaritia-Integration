@@ -1,7 +1,7 @@
 package committee.nova.mods.avaritia_integration.module.mekanism.common.registry;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
-import mekanism.api.math.FloatingLong;
+import committee.nova.mods.avaritia_integration.module.mekanism.common.config.MekIntegrationEnergy;
 import mekanism.common.capabilities.energy.BasicEnergyContainer;
 import mekanism.common.item.ItemEnergized;
 import mekanism.common.registration.impl.ItemDeferredRegister;
@@ -17,8 +17,8 @@ public class MekIntegrationItems {
 
     public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(AvaritiaIntegration.MOD_ID);
 
-    public static final ItemRegistryObject<ItemEnergized> INFINITY_ENERGY_TABLET = ITEMS.register("infinity_energy_tablet", () -> new ItemEnergized(() -> FloatingLong.create(Integer.MAX_VALUE), () -> FloatingLong.create(Integer.MAX_VALUE), BasicEnergyContainer.alwaysTrue, BasicEnergyContainer.alwaysTrue, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final ItemRegistryObject<ItemEnergized> NEUTRON_ENERGY_TABLET = ITEMS.register("neutron_energy_tablet", () -> new ItemEnergized(() -> FloatingLong.create(Integer.MAX_VALUE), () -> FloatingLong.create(Integer.MAX_VALUE), BasicEnergyContainer.alwaysTrue, BasicEnergyContainer.alwaysTrue, new Item.Properties().rarity(Rarity.RARE)));
+    public static final ItemRegistryObject<ItemEnergized> INFINITY_ENERGY_TABLET = ITEMS.register("infinity_energy_tablet", () -> new ItemEnergized(() -> MekIntegrationEnergy.INFINITY_TABLET_RATE, () -> MekIntegrationEnergy.INFINITY_TABLET_MAX, BasicEnergyContainer.alwaysTrue, BasicEnergyContainer.alwaysTrue, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final ItemRegistryObject<ItemEnergized> NEUTRON_ENERGY_TABLET = ITEMS.register("neutron_energy_tablet", () -> new ItemEnergized(() -> MekIntegrationEnergy.NEUTRON_TABLET_RATE, () -> MekIntegrationEnergy.NEUTRON_TABLET_MAX, BasicEnergyContainer.alwaysTrue, BasicEnergyContainer.alwaysTrue, new Item.Properties().rarity(Rarity.RARE)));
     public static final ItemRegistryObject<Item> INFINITY_CONTROL_CIRCUIT = ITEMS.register("infinity_control_circuit", Rarity.EPIC);
     public static final ItemRegistryObject<Item> NEUTRON_CONTROL_CIRCUIT = ITEMS.register("neutron_control_circuit", Rarity.EPIC);
     public static final ItemRegistryObject<Item> ALLOY_INFINITY = ITEMS.register("alloy_infinity", Rarity.EPIC);

@@ -11,7 +11,7 @@ import committee.nova.mods.avaritia_integration.module.mekanism.common.content.b
 import committee.nova.mods.avaritia_integration.module.mekanism.common.tile.machine.TileEntityNeutronCollector;
 import committee.nova.mods.avaritia_integration.module.mekanism.common.tile.machine.TileEntitySingularityCompressor;
 import committee.nova.mods.avaritia_integration.module.mekanism.common.util.MekIntegrationEnumUtils;
-import mekanism.common.config.MekanismConfig;
+import committee.nova.mods.avaritia_integration.module.mekanism.common.config.MekIntegrationEnergy;
 import mekanism.common.registries.MekanismSounds;
 import mekanism.common.tier.FactoryTier;
 import mekanism.common.util.EnumUtils;
@@ -29,7 +29,7 @@ public class MekIntegrationBlockTypes {
             .createMekIntegrationFactoryMachine(() -> MekIntegrationTileEntityTypes.NEUTRON_COLLECTOR, MekIntegrationLang.DESCRIPTION_NEUTRON_COLLECTING, MekIntegrationFactoryType.NEUTRON_COLLECTING)
             .withGui(() -> MekIntegrationContainerTypes.NEUTRON_COLLECTOR)
             .withSound(MekanismSounds.CHEMICAL_CRYSTALLIZER)
-            .withEnergyConfig(MekanismConfig.usage.chemicalCrystallizer, MekanismConfig.storage.chemicalCrystallizer)
+            .withEnergyConfig(() -> MekIntegrationEnergy.NEUTRON_USAGE, () -> MekIntegrationEnergy.NEUTRON_STORAGE)
             .withComputerSupport("neutronCollector")
             .build();
 
@@ -38,7 +38,7 @@ public class MekIntegrationBlockTypes {
             .createMekIntegrationFactoryMachine(() -> MekIntegrationTileEntityTypes.SINGULARITY_COMPRESSOR, MekIntegrationLang.DESCRIPTION_SINGULARITY_COMPRESSING, MekIntegrationFactoryType.SINGULARITY_COMPRESSING)
             .withGui(() -> MekIntegrationContainerTypes.SINGULARITY_COMPRESSOR)
             .withSound(MekanismSounds.CHEMICAL_CRYSTALLIZER)
-            .withEnergyConfig(MekanismConfig.usage.chemicalCrystallizer, MekanismConfig.storage.chemicalCrystallizer)
+            .withEnergyConfig(() -> MekIntegrationEnergy.INFINITY_USAGE, () -> MekIntegrationEnergy.INFINITY_STORAGE)
             .withComputerSupport("singularityCompressor")
             .build();
 
