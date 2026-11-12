@@ -199,7 +199,7 @@ public class ExtremeBasinRecipe extends ExtremeProcessingRecipe<Container> {
 
     @Override
     protected int getMaxInputCount() {
-        return 64;
+        return 81;
     }
 
     @Override
