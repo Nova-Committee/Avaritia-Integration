@@ -20,6 +20,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import com.simibubi.create.AllTags;
+import com.simibubi.create.api.behaviour.display.DisplaySource;
 import com.simibubi.create.api.behaviour.interaction.ConductorBlockInteractionBehavior;
 import com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
@@ -108,6 +109,7 @@ public class CreateIntegrationBlocks {
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
                 .transform(TagGen.axeOrPickaxe())
                 .blockstate((c, p) -> p.simpleBlock(c.getEntry(), CreateIntegrationAssetLookup.partialBaseModel(c, p)))
+                .transform(DisplaySource.displaySource(CreateIntegrationDisplaySources.ITEM_NAMES))
                 .onRegister(MovingInteractionBehaviour.interactionBehaviour(new MountedDepotInteractionBehaviour()))
                 .item()
                 .transform(ModelGen.customItemModel("create", "_", "block"))
