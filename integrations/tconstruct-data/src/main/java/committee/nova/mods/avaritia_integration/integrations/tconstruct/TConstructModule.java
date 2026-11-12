@@ -9,6 +9,7 @@ import committee.nova.mods.avaritia_integration.module.Module;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
 
 public final class TConstructModule implements Module {
 
@@ -22,6 +23,8 @@ public final class TConstructModule implements Module {
         TicIntegrationItems.REGISTRY.register(registryBus);
         TicIntegrationModifiers.MODIFIERS.register(registryBus);
         registryBus.addListener(TicIntegrationModifiers::registerSerializers);
+        NeoForge.EVENT_BUS.addListener(EternityAbilities::tick);
+        NeoForge.EVENT_BUS.addListener(EternityAbilities::protect);
     }
 
     @Override
