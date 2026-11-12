@@ -6,7 +6,7 @@
 
 同步真实共存模块的有效默认数值及真实消费入口，包含源码与已发布配方。数值相同标保持；没有对应模块/功能不凭空新增。明确排除本轮未获批准的Create加工加速、蛋糕时长/燃料契约统一。旧Blood Magic不动。1.21.1新增IFEU不反向加到旧版。模块启停不是本次数值同步范围。
 
-单位按各版本消费者原义：J、FE、uI、AE、mana，不混算。工厂进程数P以同档同P比较。历史原值与提交依据见[完整差异报告](numeric-comparison-1.20.1-1.21.1.md)。配方逐项依据见[252条原始附表](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/recipe-ledger.csv)，API字段重命名不当作数值差异。
+单位按各版本消费者原义：J、FE、uI、AE、mana，不混算。工厂进程数P以同档同P比较。历史原值与提交依据见[完整差异报告](numeric-comparison-1.20.1-1.21.1.md)。配方逐项依据见本地保留的252条原始附表，API字段重命名不当作数值差异。
 
 ## 完整有效数值映射
 
@@ -114,15 +114,17 @@
 
 ## 实施与验证记录（持续补充）
 
+下表所述验收报告、产物清单与工具纠正记录均保存在本地验证材料中，未随仓库发布；本节仅记录已执行结果及未验边界。
+
 本表创建并以c9b5d09提交时尚未修改1.20.1源码，满足先映射再实施。随后在独立sync/1.20.1-numeric-121工作树完成下列六项，未推送：
 
 |项目|本地提交|运行证据与边界|
 |---|---|---|
-|Mekanism机器/工厂/平板|172bb4d|[验收](../.dsh/evidence/sync-1201/mekanism-acceptance.md)，单机真实加工、basic工厂容量周期、平板cap|
-|Mek太阳能|da779a0|[验收](../.dsh/evidence/sync-1201/solar-acceptance.md)，四机真实产能与NBT保留存量；同时修专服客户端类加载边界|
-|EnderIO|505d30c|[验收](../.dsh/evidence/sync-1201/ender-if-acceptance.md)，实际电容槽与合金炉加工、球数据真实加载|
-|Industrial Foregoing|36cc2fb|[验收](../.dsh/evidence/sync-1201/ender-if-acceptance.md)，12台真实机器完整合成、产物增强NBT正确|
-|Botania|c404d47|[验收](../.dsh/evidence/sync-1201/botania-acceptance.md)，真实火花/花卉/土豆实体与池ticker|
-|Create盆输入声明|e4cc4ef|[验收](../.dsh/evidence/sync-1201/create-acceptance.md)，注册JSON和网络serializer往返81项；原validate为warn而非硬拒绝|
+|Mekanism机器/工厂/平板|172bb4d|本地验收报告记录：单机真实加工、basic工厂容量周期、平板cap|
+|Mek太阳能|da779a0|本地验收报告记录：四机真实产能与NBT保留存量；同时修专服客户端类加载边界|
+|EnderIO|505d30c|本地验收报告记录：实际电容槽与合金炉加工、球数据真实加载|
+|Industrial Foregoing|36cc2fb|本地验收报告记录：12台真实机器完整合成、产物增强NBT正确|
+|Botania|c404d47|本地验收报告记录：真实火花/花卉/土豆实体与池ticker|
+|Create盆输入声明|e4cc4ef|本地验收报告记录：注册JSON和网络serializer往返81项；原validate为warn而非硬拒绝|
 
-最终构建及SHA256见[产物清单](../.dsh/evidence/sync-1201/final-artifacts.json)。1.20.1无生产未提交改动，比较树未修改。所有NOT_RUN详各验收报告。匠魂1.21.1能力本体已有真实隔离专服的可受伤FakePlayer（ServerPlayer子类）、doTick、伤害消费者及存档重启证据；双真实客户端PVP/飞行同步画面/死亡重生/跨维度为NOT_RUN。此前“缺少启动/交互入口”的推断已撤回，标准CLI桥接tools/list已发现相关工具，见[纠正记录](../.dsh/evidence/sync-1201/graphical-tool-boundary.md)。助手建议将这些未执行场景另立任务，是否接受该验证边界由用户决定，不作图形验收通过。旧IF既有物品NBT不做全量迁移，新增/合成产物与既有完成回调按新数值写入。
+最终构建及SHA256见本地产物清单。1.20.1无生产未提交改动，比较树未修改。所有NOT_RUN详各验收报告。匠魂1.21.1能力本体已有真实隔离专服的可受伤FakePlayer（ServerPlayer子类）、doTick、伤害消费者及存档重启证据；双真实客户端PVP/飞行同步画面/死亡重生/跨维度为NOT_RUN。此前“缺少启动/交互入口”的推断已撤回，标准CLI桥接tools/list已发现相关工具，见本地工具发现纠正记录。助手建议将这些未执行场景另立任务，是否接受该验证边界由用户决定，不作图形验收通过。旧IF既有物品NBT不做全量迁移，新增/合成产物与既有完成回调按新数值写入。

@@ -1,6 +1,6 @@
 # Avaritia-Integration 1.20.1 与 1.21.1 数值设计对比
 
-> **历史对比快照**：下文表格的旧/新值对应调查时基线，不是修复和反向同步后的实时状态。2026-11-12后续已完成新版Create永久热源、匠魂能力及IFEU合并修复，并在独立1.20.1工作树同步六项数值。现状以[实施映射](numeric-sync-1.21.1-to-1.20.1.md)和[交付验收](../.dsh/evidence/sync-1201/final-report.md)为准。客户端未验边界见各报告。
+> **历史对比快照**：下文表格的旧/新值对应调查时基线，不是修复和反向同步后的实时状态。2026-11-12后续已完成新版Create永久热源、匠魂能力及IFEU合并修复，并在独立1.20.1工作树同步六项数值。现状以[实施映射](numeric-sync-1.21.1-to-1.20.1.md)和交付验收为准。客户端未验边界见各报告。
 
 日期：2026-11-12。旧版基线 `fd53d8a6c5cdd6b240ee35815f848e6e1b265b3d`（Forge1.20.1）；新版基线 `8e8edd1f040a61aa5bed423df72e663fc07c4a91`（NeoForge1.21.1）。本调查不调整任何玩法数值。这里的“当前值”取新版当前源码及发布资源，不直接照抄历史强化提交。倍率统一为新/旧；耗时减少对应理论速度倒数，不代表端到端吞吐实测。
 
@@ -15,7 +15,9 @@
 
 ## 检查范围与证据强度
 
-检查Git跟踪的旧281个/新272个生产Java文件、资源与生成资源；对JSON路径、单复数recipe目录、字段重命名、NBT→组件和模块迁移做人工复核。自动清单只负责找候选，不是行为测试。[原始清单](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/inventory.json)、[Java差异候选](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/java-mekanism.txt)、[252条配方消耗/输出附表](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/recipe-ledger.csv)、[JSON差异候选](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/json-numeric-differences.json)、[配方归一化差异](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/normalized-recipe-diffs.txt)。附表含各条原始来源，可复核完整配方而非只看代表项；其中NBT字符串和默认count需按消费者解释。
+检查Git跟踪的旧281个/新272个生产Java文件、资源与生成资源；对JSON路径、单复数recipe目录、字段重命名、NBT→组件和模块迁移做人工复核。自动清单只负责找候选，不是行为测试。本地调查材料包括原始清单、Java差异候选、252条配方消耗/输出附表、JSON差异候选及配方归一化差异。附表含各条原始来源，可复核完整配方而非只看代表项；其中NBT字符串和默认count需按消费者解释。
+
+原始清单、差异候选、配方附表、反编译记录与运行验收报告均为本地调查材料，未随仓库发布；下文保留其名称作为调查依据说明。公开可访问的依据为历史提交链接及仓库内源码链接。
 
 本报告是**静态实现/历史调查PASS**，不是全模块运行验收。未逐机器测吞吐、太阳天气/遮挡、上游升级组合或整合包覆盖配置。J、FE、uI、AE等保持各API原单位，不跨模组混算。升级“tier”不自动当作最终倍率。
 
@@ -23,17 +25,17 @@
 
 |标记|提交及其作用|
 |---|---|
-|S|[ddd70d4](https://github.com/Nova-Committee/Avaritia-Integration/commit/ddd70d4cf120d53d2a319d603d63b7928c9f6cb0)：Scale infinity-tier integration energy, speed, and augment data；[完整patch](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-ddd70d4.patch)|
-|M1|[67c12a4](https://github.com/Nova-Committee/Avaritia-Integration/commit/67c12a4ab0a3487087131268fde0eb7290031f02)：机器耗能与缓冲调至线缆可供给范围；[patch](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-67c12a4.patch)|
-|M2|[f570b4c](https://github.com/Nova-Committee/Avaritia-Integration/commit/f570b4cdb8428c47ee0ce841f0504bf9cab64a5b)：BigInteger太阳能与进一步降低机器耗能；[patch](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-f570b4c.patch)|
-|B1|[1ee07a0](https://github.com/Nova-Committee/Avaritia-Integration/commit/1ee07a0017132960b700256b3c6cb33425a9f6f6)：加强蒲公英；[patch](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-1ee07a0.patch)|
-|B2|[8ba3177](https://github.com/Nova-Committee/Avaritia-Integration/commit/8ba3177590f86345fe951aaafcbefbca35565f8b)：魔力池、火花扫描与土豆范围；[patch](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-8ba3177.patch)|
-|C|[a5339dc](https://github.com/Nova-Committee/Avaritia-Integration/commit/a5339dc2adb34167fb1cdac88f244f783729c23c)：Create6机器及剩余联动移植；[patch](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-a5339dc.patch)|
-|I|[ae0ca53](https://github.com/Nova-Committee/Avaritia-Integration/commit/ae0ca533adadd16d1478ae8ed0a9c09084ad3144)：新版本线增加IFEU；旧1.20.1基线无该模块；[patch](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-ae0ca53.patch)|
+|S|[ddd70d4](https://github.com/Nova-Committee/Avaritia-Integration/commit/ddd70d4cf120d53d2a319d603d63b7928c9f6cb0)：Scale infinity-tier integration energy, speed, and augment data；本地保留完整patch|
+|M1|[67c12a4](https://github.com/Nova-Committee/Avaritia-Integration/commit/67c12a4ab0a3487087131268fde0eb7290031f02)：机器耗能与缓冲调至线缆可供给范围；本地保留patch|
+|M2|[f570b4c](https://github.com/Nova-Committee/Avaritia-Integration/commit/f570b4cdb8428c47ee0ce841f0504bf9cab64a5b)：BigInteger太阳能与进一步降低机器耗能；本地保留patch|
+|B1|[1ee07a0](https://github.com/Nova-Committee/Avaritia-Integration/commit/1ee07a0017132960b700256b3c6cb33425a9f6f6)：加强蒲公英；本地保留patch|
+|B2|[8ba3177](https://github.com/Nova-Committee/Avaritia-Integration/commit/8ba3177590f86345fe951aaafcbefbca35565f8b)：魔力池、火花扫描与土豆范围；本地保留patch|
+|C|[a5339dc](https://github.com/Nova-Committee/Avaritia-Integration/commit/a5339dc2adb34167fb1cdac88f244f783729c23c)：Create6机器及剩余联动移植；本地保留patch|
+|I|[ae0ca53](https://github.com/Nova-Committee/Avaritia-Integration/commit/ae0ca533adadd16d1478ae8ed0a9c09084ad3144)：新版本线增加IFEU；旧1.20.1基线无该模块；本地保留patch|
 
 ## Mekanism机器、工厂和能量平板
 
-**关键纠偏：旧UsageConfig虽声明50/100J/t，但真实BlockTypes绑定的是上游chemicalCrystallizer。** 所以有效旧值应为上游默认400J/t、160000J容量，而不是未消费的50/100。旧依赖精确为Mekanism10.4.15.75；[绑定:32](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/module/mekanism/common/registry/MekIntegrationBlockTypes.java#L32)、[上游耗能](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/old-UsageConfig.txt#L245)、[上游容量](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/old-StorageConfig.txt#L257)。源码注释里“旧80kJ”不符合这个实际依赖，未采用该注释作数值证据。
+**关键纠偏：旧UsageConfig虽声明50/100J/t，但真实BlockTypes绑定的是上游chemicalCrystallizer。** 所以有效旧值应为上游默认400J/t、160000J容量，而不是未消费的50/100。旧依赖精确为Mekanism10.4.15.75；旧版 `MekIntegrationBlockTypes.java:32`（绑定）、上游耗能及容量反编译记录。源码注释里“旧80kJ”不符合这个实际依赖，未采用该注释作数值证据。
 
 |项目|1.20.1有效默认值|1.21.1当前值|倍率/变化|依据与定性|
 |---|---:|---:|---|---|
@@ -54,11 +56,11 @@
 |中子平板充放参数|2147483647J/t|1000000000000J/t|约465.66×|S|
 |无尽平板容量/充放参数|2147483647J(/t)|9223372036854775807J(/t)|4294967298×|S；有限long上限，不是数学无限|
 
-当前[常量:8](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/config/MekIntegrationEnergy.java#L8)、[工厂容量:52](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/content/blocktype/MekIntegrationFactory.java#L52)、[工厂气槽:98](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/tile/factory/TileEntityChemicalToItemMIFactory.java#L98)、[旧平板:20](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/module/mekanism/common/registry/MekIntegrationItems.java#L20)。工厂高阶P由上游/附属枚举提供，新版显式支持Evolved额外层级；跨不同附属版本不伪造同P吞吐倍率。
+当前[常量:8](../integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/config/MekIntegrationEnergy.java#L8)、[工厂容量:52](../integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/content/blocktype/MekIntegrationFactory.java#L52)、[工厂气槽:98](../integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/tile/factory/TileEntityChemicalToItemMIFactory.java#L98)、旧版 `MekIntegrationItems.java:20`（旧平板）。工厂高阶P由上游/附属枚举提供，新版显式支持Evolved额外层级；跨不同附属版本不伪造同P吞吐倍率。
 
 ### Mekanism太阳能：并非全都比旧版高
 
-旧FloatingLong.MAX_VALUE实际是**18446744073709551615.9999**（无符号64位整数+四位小数；其divide(2)会舍入为9223372036854775808，即L+1），不能误写Double.MAX_VALUE。[旧类型初始化](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/FloatingLong.txt#L1813)。记该值为F，新long上限为L=9223372036854775807。
+旧FloatingLong.MAX_VALUE实际是**18446744073709551615.9999**（无符号64位整数+四位小数；其divide(2)会舍入为9223372036854775808，即L+1），不能误写Double.MAX_VALUE；依据为本地保留的旧类型初始化反编译记录。记该值为F，新long上限为L=9223372036854775807。
 
 |项目|1.20.1|1.21.1当前实现|新/旧|
 |---|---|---|---|
@@ -70,11 +72,11 @@
 |无尽太阳能内部注入|按天气日照系数计算的F峰值|上游触发内部生产插入时，改注入上述BigInteger量|不能用一个固定天气无关倍率表达|
 |无尽太阳能对外I/O|FloatingLong范围|单次long接口至多L|内部巨大值不能当线缆单次传输率|
 
-中子参数拆分来自S，有明确“split neutron vs infinity generation”意图；无尽BigInteger来自M2，不属于S原始设计。必须同时写配置字段与实际Mixin消费者。[新内部注入:25](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism-generators/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanismgenerator/mixin/MixinTileEntitySolarGenerator.java#L25)、[大整数容量:16](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/config/MekBigEnergy.java#L16)、[真实缓冲替换:40](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/mekanism-generators/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanismgenerator/mixin/MixinTileEntityGenerator.java#L40)。没有实测全天候输出；不承诺每个世界tick都有内部注入。
+中子参数拆分来自S，有明确“split neutron vs infinity generation”意图；无尽BigInteger来自M2，不属于S原始设计。必须同时写配置字段与实际Mixin消费者。[新内部注入:25](../integrations/mekanism-generators/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanismgenerator/mixin/MixinTileEntitySolarGenerator.java#L25)、[大整数容量:16](../integrations/mekanism/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanism/common/config/MekBigEnergy.java#L16)、[真实缓冲替换:40](../integrations/mekanism-generators/src/main/java/committee/nova/mods/avaritia_integration/integrations/mekanismgenerator/mixin/MixinTileEntityGenerator.java#L40)。没有实测全天候输出；不承诺每个世界tick都有内部注入。
 
 #### 主动设计与上游类型限制：分别判断
 
-精确旧依赖Mekanism10.4.15.75的真实计算已用JShell执行：`FloatingLong.MAX_VALUE.divide(2)`输出**9223372036854775808**，即L+1。数学上的F/2为9223372036854775807.99995，但FloatingLong保留四位小数并舍入，不能把数学值冒充实际返回值。见[原始执行记录](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/solar-type-limits.txt)、[精确计算附表](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/solar-type-limits.json)。
+精确旧依赖Mekanism10.4.15.75的真实计算已用JShell执行：`FloatingLong.MAX_VALUE.divide(2)`输出**9223372036854775808**，即L+1。数学上的F/2为9223372036854775807.99995，但FloatingLong保留四位小数并舍入，不能把数学值冒充实际返回值。见原始执行记录、精确计算附表。
 
 |变化|类型约束造成的最低限度变化|现有实现及历史定性|
 |---|---|---|
@@ -83,11 +85,11 @@
 |无尽配置峰值/对外long接口：旧F→L|单个long参数无法保留旧无符号范围及小数；至多L|约0.5×的**单字段/单次接口上限**有类型约束依据；不代表整台发电机总产能必然减半|
 |无尽内部缓冲/注入：旧F→约1.797693×10^308|long接口不强制内部也只用long；内部可另用大整数|M2主动引入BigInteger缓冲及注入，属于实现与数值设计选择；对外单次long上限仍在|
 
-直接证据：S父版[普通中子实现](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/pre-scale-NeutronSolarGeneratorBlockEntity.java)、[高级中子实现](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/pre-scale-NeutronAdvancedSolarGeneratorBlockEntity.java)均返回Long.MAX_VALUE；[S修改前后](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/history-ddd70d4.patch#L630)明确把它们换成专属常量。因此“上游改成long”与“为何选择10^10/10^11”是两个问题：前者限制表示范围，后者有历史主动调整证据。该结论不等于现值平衡合理，也不自动产生恢复旧值的任务，仍交由用户判断。
+直接证据：S父版普通中子实现、高级中子实现均返回Long.MAX_VALUE；S修改前后明确把它们换成专属常量。因此“上游改成long”与“为何选择10^10/10^11”是两个问题：前者限制表示范围，后者有历史主动调整证据。该结论不等于现值平衡合理，也不自动产生恢复旧值的任务，仍交由用户判断。
 
 ### Mekanism配方消耗
 
-已对照同名实际JSON：27种奇点压缩仍各消耗1000原料；中子锭富集仍4份→1；浸注转换粉末10、富集物80；中子/无尽合金仍消耗80/40化学量。收集配方所需量：钚/钋1000、氘/氚/融合燃料10000、中子尘2000、中子粒5000、方块1，两版相同。`amount→count`、`infusion_conversion→chemical_conversion`属于API格式变化，不算加料/减料。[完整附表](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/recipe-ledger.csv)。新版新增4种粉碎尘配方均1→1，高阶工厂升级配方见附表；属于新增可达内容，不能给不存在的旧配方强算倍率。
+已对照同名实际JSON：27种奇点压缩仍各消耗1000原料；中子锭富集仍4份→1；浸注转换粉末10、富集物80；中子/无尽合金仍消耗80/40化学量。收集配方所需量：钚/钋1000、氘/氚/融合燃料10000、中子尘2000、中子粒5000、方块1，两版相同。`amount→count`、`infusion_conversion→chemical_conversion`属于API格式变化，不算加料/减料；逐项依据见本地配方附表。新版新增4种粉碎尘配方均1→1，高阶工厂升级配方见附表；属于新增可达内容，不能给不存在的旧配方强算倍率。
 
 ## Ender IO
 
@@ -104,9 +106,9 @@
 |无尽研磨球主产物/副产物倍率|5/5|5/5|1×|
 |无尽研磨球耐久预算/耗能系数|2147483647/0.01|相同|1×|
 
-重要：S的直接父版中子球为Output5、Bonus1、耐久40000，和旧1.20.1并非相同基线；S只把Bonus1→2.5、耐久40000→4000000、耗能0.1→0.05。所以不能据S标题说中子球全部属性相对1.20.1都提升。旧`grinding`与`chance`由[序列化器](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/old-GrindingBallRecipe$Serializer.txt#L31)及[getters](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/old-GrindingBallRecipe.txt#L113)核实映射，没按字段名字猜。
+重要：S的直接父版中子球为Output5、Bonus1、耐久40000，和旧1.20.1并非相同基线；S只把Bonus1→2.5、耐久40000→4000000、耗能0.1→0.05。所以不能据S标题说中子球全部属性相对1.20.1都提升。旧`grinding`与`chance`由序列化器及getters核实映射，没按字段名字猜。
 
-无尽电容合金炉理论容量640亿uI超int上限，`Math.round(float)`结果饱和到2147483647；未当真实机器测量值。[专项报告及依赖版本](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/enderio-capacitor-investigation/report.md)。两种研磨球制作均5锭→1，未改材料成本；无尽电容新有合成配方，而旧数据生成器对应部分被注释，不能把旧有注册等同于旧可正常合成。
+无尽电容合金炉理论容量640亿uI超int上限，`Math.round(float)`结果饱和到2147483647；未当真实机器测量值；专项报告及依赖版本保存在本地调查材料中。两种研磨球制作均5锭→1，未改材料成本；无尽电容新有合成配方，而旧数据生成器对应部分被注释，不能把旧有注册等同于旧可正常合成。
 
 ## Industrial Foregoing / IFEU
 
@@ -126,9 +128,9 @@
 |IFEU能量插件tier|无此模块|8/16/32/64|新增，无旧版倍率；I引入、S从7/8/9/10改为现值|
 |IFEU合成液体/时长|无|1000/1000/1000/2000mB，100/200/300/400tick|新增；无尽档用长老骨髓，非IF三类的虚空物质|
 
-依据：[旧注册](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/module/industrialforegoing/registry/IndustrialForegoingIntegrationItems.java#L24)、[新注册](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/industrialforegoing/src/main/java/committee/nova/mods/avaritia_integration/integrations/industrialforegoing/registry/IndustrialForegoingIntegrationItems.java#L26)、[新效率公式](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/industrialforegoing/src/main/java/committee/nova/mods/avaritia_integration/integrations/industrialforegoing/item/ModEfficiencyAddonItem.java#L23)、[旧实际NBT](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/generated/resources/data/avaritia_integration/recipes/dissolution_chamber/efficiency_addon_blaze_cube.json#L29)。
+依据：旧版 `IndustrialForegoingIntegrationItems.java:24`（旧注册）、[新注册](../integrations/industrialforegoing/src/main/java/committee/nova/mods/avaritia_integration/integrations/industrialforegoing/registry/IndustrialForegoingIntegrationItems.java#L26)、[新效率公式](../integrations/industrialforegoing/src/main/java/committee/nova/mods/avaritia_integration/integrations/industrialforegoing/item/ModEfficiencyAddonItem.java#L23)、旧版 `efficiency_addon_blaze_cube.json:29`（旧实际NBT）。
 
-**IFEU高档容量饱和值得用户审视。** 精确项目依赖CF8428353的实际消费者为`min(int(baseCapacity×10^((tier+2)/2)),2147483647)`，同时设容量/最大输入/最大输出。[消费者](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/EnergyAddonEntry.txt#L44)、[另一机器类型](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/EnumPropertyEnergyAddonEntry.txt#L51)。8/16/32/64对应未钳制系数10^5/10^9/10^17/10^33；32与64对任何正整数基础容量都会到int上限，16也在基础容量≥3时饱和。tier32→64不能解释为实际容量翻倍，本轮未跑真实机器组合。
+**IFEU高档容量饱和值得用户审视。** 精确项目依赖CF8428353的实际消费者为`min(int(baseCapacity×10^((tier+2)/2)),2147483647)`，同时设容量/最大输入/最大输出；本地保留EnergyAddonEntry及EnumPropertyEnergyAddonEntry两种消费者的反编译记录。8/16/32/64对应未钳制系数10^5/10^9/10^17/10^33；32与64对任何正整数基础容量都会到int上限，16也在基础容量≥3时饱和。tier32→64不能解释为实际容量翻倍，本轮未跑真实机器组合。
 
 ## Botania魔力、范围与效果
 
@@ -152,7 +154,7 @@
 |土豆真实距离判定|距离平方<10，且AABB高度±2|距离平方≤1024，AABB各向扩大32|旧半径受sqrt(10)≈3.162及高度限制；修正并扩大，不能仅写3.2×|
 |土豆补饥饿/饱和参数|20/30|20/30|1×|
 
-依据：[旧魔力池充放](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/module/botania/entity/InfinityManaPoolBlockEntity.java#L330)、[新充放](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/botania/src/main/java/committee/nova/mods/avaritia_integration/integrations/botania/entity/InfinityManaPoolBlockEntity.java#L364)、[夹竹桃常量及真实发放](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/botania/src/main/java/committee/nova/mods/avaritia_integration/integrations/botania/entity/SoarleanderBlockEntity.java#L85)、[土豆现值](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/botania/src/main/java/committee/nova/mods/avaritia_integration/integrations/botania/entity/InfinityTinyPotatoBlockEntity.java#L109)。魔力池配方扣魔力按上游配方执行；本轮未发现统一乘/除倍率，不能写新池可免费合成。蒲公英合成由旧9×9转为新版花药台配方，这是获取成本/流程变化而不是发电倍率，完整用料见附表。
+依据：旧版 `InfinityManaPoolBlockEntity.java:330`（旧魔力池充放）、[新充放](../integrations/botania/src/main/java/committee/nova/mods/avaritia_integration/integrations/botania/entity/InfinityManaPoolBlockEntity.java#L364)、[夹竹桃常量及真实发放](../integrations/botania/src/main/java/committee/nova/mods/avaritia_integration/integrations/botania/entity/SoarleanderBlockEntity.java#L85)、[土豆现值](../integrations/botania/src/main/java/committee/nova/mods/avaritia_integration/integrations/botania/entity/InfinityTinyPotatoBlockEntity.java#L109)。魔力池配方扣魔力按上游配方执行；本轮未发现统一乘/除倍率，不能写新池可免费合成。蒲公英合成由旧9×9转为新版花药台配方，这是获取成本/流程变化而不是发电倍率，完整用料见附表。
 
 ## Create：保留数值与移植差异必须分开
 
@@ -177,7 +179,7 @@
 |CCA液体兼容槽|4000mB|4000mB|1×|
 |风扇实体推力上限|5，普通/潜行阻力参数512/4096|相同|1×|
 
-依据：[旧十倍搅拌](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/module/create/content/matrix_mixer/MatrixMechanicalMixerBlockEntity.java#L175)、[新搅拌类完整入口](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/create/src/main/java/committee/nova/mods/avaritia_integration/integrations/create/content/matrix_mixer/MatrixMechanicalMixerBlockEntity.java#L18)、[旧燃料](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/module/create/content/extreme_burner/ExtremeBlazeBurnerBlockEntity.java#L317)、[新燃料](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/create/src/main/java/committee/nova/mods/avaritia_integration/integrations/create/content/extreme_burner/ExtremeBlazeBurnerBlockEntity.java#L167)。C标题证明是在移植中替换实现，没有找到单独平衡说明证明上述所有差异均为有意削弱，故列“移植差异待决”。旧CIKinetics的一大批上游式参数并不都被真实消费者读取，不能把删除未使用声明自动当削弱。
+依据：旧版 `MatrixMechanicalMixerBlockEntity.java:175`（旧十倍搅拌）、[新搅拌类完整入口](../integrations/create/src/main/java/committee/nova/mods/avaritia_integration/integrations/create/content/matrix_mixer/MatrixMechanicalMixerBlockEntity.java#L18)、旧版 `ExtremeBlazeBurnerBlockEntity.java:317`（旧燃料）、[新燃料](../integrations/create/src/main/java/committee/nova/mods/avaritia_integration/integrations/create/content/extreme_burner/ExtremeBlazeBurnerBlockEntity.java#L167)。C标题证明是在移植中替换实现，没有找到单独平衡说明证明上述所有差异均为有意削弱，故列“移植差异待决”。旧CIKinetics的一大批上游式参数并不都被真实消费者读取，不能把删除未使用声明自动当削弱。
 
 Create三条极限搅拌配方的数值未变：异彩化合物3黑曜石粉+3荧石粉+1玫瑰石英→1；创造化合物1暗影钢+1光辉石+1强化核心+64中子素尘→2；星燃料配方见附表，数量保持。盆内自定义Recipe使用count消费的真实逻辑需与上游Ingredient区分，本调查未额外改变处理。
 
@@ -209,7 +211,7 @@ Create三条极限搅拌配方的数值未变：异彩化合物3黑曜石粉+3�
 |Blood Magic|血球/网络1000000000 LP等|无模块，用户确认不需要|需求排除，无移植任务|
 |共用熔融材料|温度3300/2800/8300/12300、黏度10000、密度2000|相同|1×；无尽流体密度-2000、温度12300也保留|
 
-AE依据：[两种元件注册:24](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/ae2/src/main/java/committee/nova/mods/avaritia_integration/integrations/ae2/registry/AE2IntegrationItems.java#L24)、[普通元件实际容量:157](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/ae2/src/main/java/committee/nova/mods/avaritia_integration/integrations/ae2/me/AEUniversalCellInventory.java#L157)、[大整数long接口:196](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/integrations/ae2/src/main/java/committee/nova/mods/avaritia_integration/integrations/ae2/me/biginteger/AEBigIntegerCellInventory.java#L196)。匠魂17份材料定义/traits/统计/资源对象两版内容一致，见[旧完整材料](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/old-materials.json)、[新完整材料](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration/.dsh/evidence/numeric-comparison/new-materials.json)，包含全部handle/limb/grip等值；[旧护甲消费者:100](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/init/handler/TicHandler.java#L100)。Thermal[旧真实升级定义:21](/srv/projects/minecraft/3Nova/Avaritia/Avaritia-Integration-compare-1.20.1/src/main/java/committee/nova/mods/avaritia_integration/module/thermal_expansion/registry/ThermalExpansionIntegrationItems.java#L21)。
+AE依据：[两种元件注册:24](../integrations/ae2/src/main/java/committee/nova/mods/avaritia_integration/integrations/ae2/registry/AE2IntegrationItems.java#L24)、[普通元件实际容量:157](../integrations/ae2/src/main/java/committee/nova/mods/avaritia_integration/integrations/ae2/me/AEUniversalCellInventory.java#L157)、[大整数long接口:196](../integrations/ae2/src/main/java/committee/nova/mods/avaritia_integration/integrations/ae2/me/biginteger/AEBigIntegerCellInventory.java#L196)。匠魂17份材料定义/traits/统计/资源对象两版内容一致，见旧完整材料、新完整材料，包含全部handle/limb/grip等值；旧版 `TicHandler.java:100`（旧护甲消费者）。Thermal旧版 `ThermalExpansionIntegrationItems.java:21`（旧真实升级定义）。
 
 ## 单独留给用户的平衡判断清单（本轮没有改）
 
