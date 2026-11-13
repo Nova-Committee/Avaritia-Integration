@@ -22,6 +22,16 @@ public class MatrixMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
     }
 
     @Override
+    public void tick() {
+        boolean initializingProcessing = running && runningTicks == 20 && processingTicks < 0;
+        super.tick();
+        if (initializingProcessing && runningTicks == 20 && processingTicks > 0) {
+            // Halve only the newly initialized wait; keep Create's movement and recipe lifecycle.
+            processingTicks = processingTicks / 2 + processingTicks % 2;
+        }
+    }
+
+    @Override
     protected <I extends RecipeInput> boolean matchBasinRecipe(Recipe<I> recipe) {
         if (recipe instanceof ExtremeBasinRecipe) {
             Optional<BasinBlockEntity> basin = getBasin();
