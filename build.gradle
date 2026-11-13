@@ -8,11 +8,15 @@ plugins {
     id 'dev.vfyjxf.modaccessor' version "1.2.1"
 }
 
-version = minecraft_version + "-" + mod_version + "-" + mod_version_tag
+def releaseChannel = providers.gradleProperty('mod_version_tag').orElse('release').get()
+if (!(releaseChannel in ['release', 'alpha', 'beta'])) {
+    throw new GradleException('mod_version_tag must be release, alpha or beta')
+}
+version = minecraft_version + "-" + mod_version + "-" + releaseChannel
 group = mod_group_id
 
 base {
-    archivesName = mod_name + "-" + mod_platform
+    archivesName = "Avaritia-Integration-" + mod_platform
 }
 
 
