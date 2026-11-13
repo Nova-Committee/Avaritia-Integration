@@ -127,7 +127,7 @@ public class AIRecipes extends RecipeProvider implements IConditionBuilder {
                         Ingredient.of(BotaniaItems.spark),
                         CompoundIngredient.of(Ingredient.of(ModItems.endest_pearl.get()), Ingredient.of(ModItems.enhancement_core.get()), Ingredient.of(ModItems.infinity_catalyst.get())),
                         RecipeCategory.TOOLS,
-                        BotaniaIntegrationItems.alpha_spark)
+                        BotaniaIntegrationItems.ALPHA_SPARK.get())
                 .unlockedBy("has_item", has(ModItems.upgrade_smithing_template.get()))
                 .save(consumer);
 

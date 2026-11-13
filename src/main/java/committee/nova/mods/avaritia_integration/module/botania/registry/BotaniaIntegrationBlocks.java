@@ -25,25 +25,21 @@ import java.util.function.Supplier;
 public final class BotaniaIntegrationBlocks {
     public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(Registries.BLOCK, AvaritiaIntegration.MOD_ID);
 
-    public static final BlockBehaviour.Properties SOARLEANDER_FLOWER_PROPS = BotaniaBlocks.FLOATING_PROPS.lightLevel(level -> 5);
-
-    public static final Block asgard_dandelion = new AsgardDandelionBlock(MobEffects.HUNGER, 0, BotaniaBlocks.FLOATING_PROPS, BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get);
-    public static final Block asgard_dandelion_floating = new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS, BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get);
-    public static final Block potted_asgard_dandelion = flowerPot(asgard_dandelion, 15);
-    public static final Block soarleander = new SoarleanderBlock(MobEffects.WITHER, 1, SOARLEANDER_FLOWER_PROPS, BotaniaIntegrationBlockEntities.SOARLEANDER::get);
-    public static final Block soarleander_floating = new FloatingSpecialFlowerBlock(SOARLEANDER_FLOWER_PROPS, BotaniaIntegrationBlockEntities.SOARLEANDER::get);
-    public static final Block potted_soarleander = flowerPot(soarleander, 5);
-    public static final Block infinity_mana_pool = new InfinityManaPoolBlock(BlockBehaviour.Properties.copy(BotaniaBlocks.livingrock).lightLevel(level -> 15));
-    public static final Block infinity_potato = new InfinityTinyPotatoBlock();
-
-    public static final RegistryObject<Block> ASGARD_DANDELION = register("asgard_dandelion", () -> asgard_dandelion);
-    public static final RegistryObject<Block> ASGARD_DANDELION_FLOATING = register("asgard_dandelion_floating", () -> asgard_dandelion_floating);
-    public static final RegistryObject<Block> POTTED_ASGARD_DANDELION = register("potted_asgard_dandelion", false, () -> potted_asgard_dandelion);
-    public static final RegistryObject<Block> SOARLEANDER = register("soarleander", () -> soarleander);
-    public static final RegistryObject<Block> SOARLEANDER_FLOATING = register("soarleander_floating", () -> soarleander_floating);
-    public static final RegistryObject<Block> POTTED_SOARLEANDER = register("potted_soarleander", false, () -> potted_soarleander);
-    public static final RegistryObject<Block> INFINITY_MANA_POOL = register("infinity_mana_pool", () -> infinity_mana_pool, new Item.Properties().rarity(ModRarities.COSMIC));
-    public static final RegistryObject<Block> INFINITY_POTATO = register("infinity_potato", () -> infinity_potato);
+    public static final RegistryObject<Block> ASGARD_DANDELION = register("asgard_dandelion",
+            () -> new AsgardDandelionBlock(MobEffects.HUNGER, 0, BotaniaBlocks.FLOATING_PROPS, BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get));
+    public static final RegistryObject<Block> ASGARD_DANDELION_FLOATING = register("asgard_dandelion_floating",
+            () -> new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS, BotaniaIntegrationBlockEntities.ASGARD_DANDELION::get));
+    public static final RegistryObject<Block> POTTED_ASGARD_DANDELION = register("potted_asgard_dandelion", false,
+            () -> flowerPot(ASGARD_DANDELION.get(), 15));
+    public static final RegistryObject<Block> SOARLEANDER = register("soarleander",
+            () -> new SoarleanderBlock(MobEffects.WITHER, 1, BotaniaBlocks.FLOATING_PROPS.lightLevel(level -> 5), BotaniaIntegrationBlockEntities.SOARLEANDER::get));
+    public static final RegistryObject<Block> SOARLEANDER_FLOATING = register("soarleander_floating",
+            () -> new FloatingSpecialFlowerBlock(BotaniaBlocks.FLOATING_PROPS.lightLevel(level -> 5), BotaniaIntegrationBlockEntities.SOARLEANDER::get));
+    public static final RegistryObject<Block> POTTED_SOARLEANDER = register("potted_soarleander", false,
+            () -> flowerPot(SOARLEANDER.get(), 5));
+    public static final RegistryObject<Block> INFINITY_MANA_POOL = register("infinity_mana_pool",
+            () -> new InfinityManaPoolBlock(BlockBehaviour.Properties.copy(BotaniaBlocks.livingrock).lightLevel(level -> 15)), new Item.Properties().rarity(ModRarities.COSMIC));
+    public static final RegistryObject<Block> INFINITY_POTATO = register("infinity_potato", InfinityTinyPotatoBlock::new);
 
     private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> obj) {
         return register(id, obj, true, b -> new BlockItem(b, new Item.Properties()));

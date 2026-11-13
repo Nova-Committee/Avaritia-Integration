@@ -20,28 +20,28 @@ public final class BotaniaIntegrationBlockEntities {
             "asgard_dandelion",
             () -> BlockEntityType.Builder.of(
                     AsgardDandelionBlockEntity::new,
-                    BotaniaIntegrationBlocks.asgard_dandelion, BotaniaIntegrationBlocks.asgard_dandelion_floating
+                    BotaniaIntegrationBlocks.ASGARD_DANDELION.get(), BotaniaIntegrationBlocks.ASGARD_DANDELION_FLOATING.get()
             ).build(null)
     );
     public static final RegistryObject<BlockEntityType<SoarleanderBlockEntity>> SOARLEANDER = register(
             "soarleander",
             () -> BlockEntityType.Builder.of(
                     SoarleanderBlockEntity::new,
-                    BotaniaIntegrationBlocks.soarleander, BotaniaIntegrationBlocks.soarleander_floating
+                    BotaniaIntegrationBlocks.SOARLEANDER.get(), BotaniaIntegrationBlocks.SOARLEANDER_FLOATING.get()
             ).build(null)
     );
     public static final RegistryObject<BlockEntityType<InfinityManaPoolBlockEntity>> INFINITY_MANA_POOL = register(
             "infinity_mana_pool",
             () -> BlockEntityType.Builder.of(
                     InfinityManaPoolBlockEntity::new,
-                    BotaniaIntegrationBlocks.infinity_mana_pool
+                    BotaniaIntegrationBlocks.INFINITY_MANA_POOL.get()
             ).build(null)
     );
     public static final RegistryObject<BlockEntityType<InfinityTinyPotatoBlockEntity>> INFINITY_TINY_POTATO = register(
             "infinity_tiny_potato",
             () -> BlockEntityType.Builder.of(
                     InfinityTinyPotatoBlockEntity::new,
-                    BotaniaIntegrationBlocks.infinity_potato
+                    BotaniaIntegrationBlocks.INFINITY_POTATO.get()
             ).build(null)
     );
 

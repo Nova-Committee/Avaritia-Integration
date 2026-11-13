@@ -72,7 +72,7 @@ public class AlphaSparkEntity extends SparkBaseEntity implements ManaSpark {
     }
 
     public AlphaSparkEntity(Level world) {
-        this(BotaniaIntegrationEntities.ALPHA_SPARK, world);
+        this(BotaniaIntegrationEntities.ALPHA_SPARK_ENTITIES.get(), world);
     }
 
     @Override

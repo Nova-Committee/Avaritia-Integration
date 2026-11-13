@@ -64,7 +64,7 @@ public final class BotaniaModule implements Module {
 
     public static void addDispenserBehaviours(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            DispenserBlock.registerBehavior(BotaniaIntegrationItems.alpha_spark, new AlphaSparkBehavior());
+            DispenserBlock.registerBehavior(BotaniaIntegrationItems.ALPHA_SPARK.get(), new AlphaSparkBehavior());
         });
     }
 
@@ -80,7 +80,7 @@ public final class BotaniaModule implements Module {
 
     @Override
     public void processClient() {
-        EntityRenderers.register(BotaniaIntegrationEntities.ALPHA_SPARK, AlphaSparkRender::new);
+        EntityRenderers.register(BotaniaIntegrationEntities.ALPHA_SPARK_ENTITIES.get(), AlphaSparkRender::new);
         BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.INFINITY_MANA_POOL.get(), InfinityManaPoolBlockEntityRenderer::new);
         BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.ASGARD_DANDELION.get(), SpecialFlowerBlockEntityRenderer::new);
         BlockEntityRenderers.register(BotaniaIntegrationBlockEntities.SOARLEANDER.get(), SpecialFlowerBlockEntityRenderer::new);

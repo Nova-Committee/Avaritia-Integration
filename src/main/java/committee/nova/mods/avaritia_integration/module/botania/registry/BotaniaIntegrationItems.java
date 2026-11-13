@@ -11,10 +11,9 @@ import java.util.function.Supplier;
 
 public final class BotaniaIntegrationItems {
     public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(Registries.ITEM, AvaritiaIntegration.MOD_ID);
-    public static final Item alpha_spark = new AlphaSparkItem(new Item.Properties());
     public static final RegistryObject<Item> ALPHA_SPARK = register(
             "alpha_spark",
-            () -> alpha_spark
+            () -> new AlphaSparkItem(new Item.Properties())
     );
 
     public static <T extends Item> RegistryObject<T> register(String id, Supplier<T> obj) {

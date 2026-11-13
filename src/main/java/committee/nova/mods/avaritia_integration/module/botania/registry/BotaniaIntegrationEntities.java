@@ -15,18 +15,15 @@ import java.util.function.Supplier;
 public final class BotaniaIntegrationEntities {
     public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(Registries.ENTITY_TYPE, AvaritiaIntegration.MOD_ID);
 
-    public static final EntityType<AlphaSparkEntity> ALPHA_SPARK = EntityType.Builder.<AlphaSparkEntity>of(AlphaSparkEntity::new, MobCategory.MISC)
-            .sized(0.2F, 0.5F)
-            .fireImmune()
-            .clientTrackingRange(4)
-            .updateInterval(10)
-            .build(ResourceLocation.tryBuild(AvaritiaIntegration.MOD_ID, "alpha_spark").toString());
-
     public static final RegistryObject<EntityType<AlphaSparkEntity>> ALPHA_SPARK_ENTITIES = register(
             "alpha_spark",
-            () -> ALPHA_SPARK
+            () -> EntityType.Builder.<AlphaSparkEntity>of(AlphaSparkEntity::new, MobCategory.MISC)
+                    .sized(0.2F, 0.5F)
+                    .fireImmune()
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build(ResourceLocation.tryBuild(AvaritiaIntegration.MOD_ID, "alpha_spark").toString())
     );
-
 
     private static <T extends Entity> RegistryObject<EntityType<T>> register(String id, Supplier<EntityType<T>> obj) {
         return REGISTRY.register(id, obj);
