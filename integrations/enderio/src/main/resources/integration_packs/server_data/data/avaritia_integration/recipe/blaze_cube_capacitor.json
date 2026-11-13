@@ -1,29 +1,25 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "enderio"
-    }
-  ],
-  "type": "avaritia:shaped_table",
-  "category": "misc",
-  "key": {
-    "M": {
-      "item": "avaritia:blaze_cube"
-    },
-    "C": {
-      "item": "enderio:octadic_capacitor"
-    }
-  },
-  "pattern": [
-    "MMM",
-    "MCM",
-    "MMM"
-  ],
-  "result": {
-    "count": 1,
-    "id": "avaritia_integration:blaze_cube_capacitor"
-  },
-  "show_notification": true,
-  "tier": 1
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "enderio"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"M": {
+			"item": "avaritia:blaze_cube"
+		},
+		"C": {
+			"item": "enderio:octadic_capacitor"
+		}
+	},
+	"pattern": ["MMM", "MCM", "MMM"],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:blaze_cube_capacitor"
+	},
+	"show_notification": true,
+	"tier": 1
 }

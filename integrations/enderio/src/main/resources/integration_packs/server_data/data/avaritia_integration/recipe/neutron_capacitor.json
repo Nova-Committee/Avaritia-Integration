@@ -1,29 +1,25 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "enderio"
-    }
-  ],
-  "type": "avaritia:shaped_table",
-  "category": "misc",
-  "key": {
-    "M": {
-      "item": "avaritia:neutron_ingot"
-    },
-    "C": {
-      "item": "avaritia_integration:crystal_matrix_capacitor"
-    }
-  },
-  "pattern": [
-    "MMM",
-    "MCM",
-    "MMM"
-  ],
-  "result": {
-    "count": 1,
-    "id": "avaritia_integration:neutron_capacitor"
-  },
-  "show_notification": true,
-  "tier": 1
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "enderio"
+		}
+	],
+	"type": "avaritia:shaped_table",
+	"category": "misc",
+	"key": {
+		"M": {
+			"item": "avaritia:neutron_ingot"
+		},
+		"C": {
+			"item": "avaritia_integration:crystal_matrix_capacitor"
+		}
+	},
+	"pattern": ["MMM", "MCM", "MMM"],
+	"result": {
+		"count": 1,
+		"id": "avaritia_integration:neutron_capacitor"
+	},
+	"show_notification": true,
+	"tier": 1
 }
