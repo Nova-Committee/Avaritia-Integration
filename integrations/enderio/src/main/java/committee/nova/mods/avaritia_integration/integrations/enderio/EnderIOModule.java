@@ -18,6 +18,9 @@ public final class EnderIOModule implements Module {
     @Override
     public void collectCreativeTabItems(CreativeModeTab.ItemDisplayParameters parameters,
                                         CreativeModeTab.Output output) {
+        output.accept(EnderIOIntegrationItems.BLAZE_CUBE_CAPACITOR.get());
+        output.accept(EnderIOIntegrationItems.CRYSTAL_MATRIX_CAPACITOR.get());
+        output.accept(EnderIOIntegrationItems.NEUTRON_CAPACITOR.get());
         output.accept(EnderIOIntegrationItems.INFINITY_CAPACITOR.get());
         output.accept(EnderIOIntegrationItems.INFINITY_GRINDING_BALL.get());
         output.accept(EnderIOIntegrationItems.NEUTRON_GRINDING_BALL.get());

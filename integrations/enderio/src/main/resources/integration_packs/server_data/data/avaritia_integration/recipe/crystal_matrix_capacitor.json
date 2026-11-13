@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio"
+    }
+  ],
+  "type": "avaritia:shaped_table",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "avaritia:crystal_matrix_ingot"
+    },
+    "C": {
+      "item": "avaritia_integration:blaze_cube_capacitor"
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "avaritia_integration:crystal_matrix_capacitor"
+  },
+  "show_notification": true,
+  "tier": 1
+}

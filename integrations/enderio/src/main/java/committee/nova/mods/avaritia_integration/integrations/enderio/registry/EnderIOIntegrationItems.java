@@ -18,6 +18,16 @@ public final class EnderIOIntegrationItems {
 
     public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(AvaritiaIntegration.MOD_ID);
 
+    // Extend this version's native capacitor levels 1/2/3 at equal intervals.
+    public static final DeferredItem<Item> BLAZE_CUBE_CAPACITOR = register("blaze_cube_capacitor",
+            () -> new InfinityCapacitorItem(new Item.Properties().rarity(ModRarities.EPIC)
+                    .component(EIODataComponents.CAPACITOR_DATA, CapacitorData.simple(4.0F))));
+    public static final DeferredItem<Item> CRYSTAL_MATRIX_CAPACITOR = register("crystal_matrix_capacitor",
+            () -> new InfinityCapacitorItem(new Item.Properties().rarity(ModRarities.EPIC)
+                    .component(EIODataComponents.CAPACITOR_DATA, CapacitorData.simple(5.0F))));
+    public static final DeferredItem<Item> NEUTRON_CAPACITOR = register("neutron_capacitor",
+            () -> new InfinityCapacitorItem(new Item.Properties().rarity(ModRarities.LEGEND.getValue())
+                    .component(EIODataComponents.CAPACITOR_DATA, CapacitorData.simple(6.0F))));
     public static final DeferredItem<Item> INFINITY_CAPACITOR = register("infinity_capacitor",
             () -> new InfinityCapacitorItem(new Item.Properties().rarity(ModRarities.EPIC)
                     .component(EIODataComponents.CAPACITOR_DATA, CapacitorData.simple(1000.0F))));
