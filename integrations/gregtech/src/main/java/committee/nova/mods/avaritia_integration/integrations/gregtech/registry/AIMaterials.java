@@ -42,6 +42,7 @@ import static com.gregtechceu.gtceu.api.tag.TagPrefix.nugget;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.plate;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.plateDense;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.plateDouble;
+import static com.gregtechceu.gtceu.api.tag.TagPrefix.ring;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.rod;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.rodLong;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.screw;
@@ -147,6 +148,7 @@ public final class AIMaterials {
         ignore(gear, Blaze_Cube, AIItems.BLAZE_CUBE_GEAR);
         ignore(nugget, Blaze_Cube, AIItems.BLAZE_CUBE_NUGGET);
         ignore(plate, Blaze_Cube, AIItems.BLAZE_CUBE_PLATE);
+        ignore(ring, Blaze_Cube, AIItems.BLAZE_CUBE_RING);
         ignore(rod, Blaze_Cube, AIItems.BLAZE_CUBE_ROD);
         ignore(wireFine, Blaze_Cube, AIItems.BLAZE_CUBE_WIRE);
         ignore(bolt, Blaze_Cube, AIItems.BLAZE_CUBE_BOLT);
@@ -160,6 +162,7 @@ public final class AIMaterials {
         ignore(gear, CrystalMatrix, AIItems.CRYSTAL_MATRIX_GEAR);
         ignore(nugget, CrystalMatrix, AIItems.CRYSTAL_MATRIX_NUGGET);
         ignore(plate, CrystalMatrix, AIItems.CRYSTAL_MATRIX_PLATE);
+        ignore(ring, CrystalMatrix, AIItems.CRYSTAL_MATRIX_RING);
         ignore(rod, CrystalMatrix, AIItems.CRYSTAL_MATRIX_ROD);
         ignore(wireFine, CrystalMatrix, AIItems.CRYSTAL_MATRIX_WIRE);
         ignore(bolt, CrystalMatrix, AIItems.CRYSTAL_MATRIX_BOLT);
@@ -172,6 +175,7 @@ public final class AIMaterials {
         ignore(dust, Infinity, AIItems.INFINITY_DUST);
         ignore(gear, Infinity, AIItems.INFINITY_GEAR);
         ignore(plate, Infinity, AIItems.INFINITY_PLATE);
+        ignore(ring, Infinity, AIItems.INFINITY_RING);
         ignore(rod, Infinity, AIItems.INFINITY_ROD);
         ignore(wireFine, Infinity, AIItems.INFINITY_WIRE);
         ignore(bolt, Infinity, AIItems.INFINITY_BOLT);
@@ -183,6 +187,7 @@ public final class AIMaterials {
         ignore(plateDense, Neutron, AIItems.NEUTRON_DENSE_PLATE);
         ignore(dust, Neutron, AIItems.NEUTRON_DUST);
         ignore(plate, Neutron, AIItems.NEUTRON_PLATE);
+        ignore(ring, Neutron, AIItems.NEUTRON_RING);
         ignore(rod, Neutron, AIItems.NEUTRON_ROD);
         ignore(wireFine, Neutron, AIItems.NEUTRON_WIRE);
         ignore(bolt, Neutron, AIItems.NEUTRON_BOLT);
