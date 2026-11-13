@@ -39,7 +39,7 @@ import java.util.List;
 
 public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-    public static final int MAX_HEAT_CAPACITY = 10000;
+    public static final int MAX_HEAT_CAPACITY = 36000;
 
     public enum FuelType {
         NONE,
@@ -176,15 +176,19 @@ public class ExtremeBlazeBurnerBlockEntity extends SmartBlockEntity implements I
         }
         FuelType newFuel = FuelType.NONE;
         int newBurnTime = 0;
-        if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_STAR.matches(itemStack) ||
-                itemStack.is(CreateIntegrationItems.STAR_CAKE.get())) {
+        if (itemStack.is(CreateIntegrationItems.STAR_CAKE.get())) {
             newFuel = FuelType.STAR;
-            newBurnTime = MAX_HEAT_CAPACITY;
-        } else if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_BLAZE.matches(itemStack) ||
-                itemStack.is(CreateIntegrationItems.IGNIS_CAKE.get())) {
-                    newFuel = FuelType.BLAZE;
-                    newBurnTime = 5000;
-                }
+            newBurnTime = 36000;
+        } else if (itemStack.is(CreateIntegrationItems.IGNIS_CAKE.get())) {
+            newFuel = FuelType.BLAZE;
+            newBurnTime = 36000;
+        } else if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_STAR.matches(itemStack)) {
+            newFuel = FuelType.STAR;
+            newBurnTime = 10000;
+        } else if (CreateIntegrationTags.ItemTags.BLAZE_BURNER_FUEL_BLAZE.matches(itemStack)) {
+            newFuel = FuelType.BLAZE;
+            newBurnTime = 5000;
+        }
         if (newFuel == FuelType.NONE) {
             return false;
         }
