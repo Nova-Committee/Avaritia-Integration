@@ -28,11 +28,15 @@ def moduleSlug = providers.provider {
 }
 def archiveName = providers.provider {
     def slug = moduleSlug.get()
-    slug.isEmpty() ? "${mod_name}-${mod_loader}" : "${mod_name}-${slug}-${mod_loader}"
+    slug.isEmpty() ? "Avaritia-Integration-${mod_loader}" : "Avaritia-Integration-${slug}-${mod_loader}"
+}
+def releaseChannel = providers.gradleProperty('mod_version_tag').orElse('release').get()
+if (!(releaseChannel in ['release', 'alpha', 'beta'])) {
+    throw new GradleException('mod_version_tag must be release, alpha or beta')
 }
 def dependencyBlocks = providers.provider { project.ext.has('ai_dependency_blocks') ? project.ext.ai_dependency_blocks as String : '' }
 
-version = "${libs.versions.minecraft.get()}-${mod_version}-${mod_version_tag}"
+version = "${libs.versions.minecraft.get()}-${mod_version}-${releaseChannel}"
 
 base {
     archivesName = archiveName.get()
