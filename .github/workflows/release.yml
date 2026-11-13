@@ -1,0 +1,116 @@
+name: Neoforge Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+
+      - name: Set up JDK 21 for Gradle
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: zulu
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make Gradle Wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Read and validate release metadata
+        id: metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          get_property() {
+            sed -n "s/^${1}=//p" gradle.properties | tail -n 1 | tr -d '\r'
+          }
+          game_version="$(get_property mc_version)"
+          if [[ -z "$game_version" ]]; then
+            game_version="$(get_property minecraft_version)"
+          fi
+          # This branch stores Minecraft's version in the Gradle version catalog.
+          if [[ -z "$game_version" ]]; then
+            game_version="$(python3 -c 'import tomllib; print(tomllib.load(open("gradle/libs.versions.toml", "rb"))["versions"]["minecraft"])')"
+          fi
+          mod_version="$(get_property mod_version)"
+          version_tag="$(get_property mod_version_tag)"
+          if [[ -z "$game_version" || -z "$mod_version" || -z "$version_tag" ]]; then
+            echo "::error::Unable to read Minecraft version, mod_version or mod_version_tag"
+            exit 1
+          fi
+          case "$version_tag" in
+            release|alpha|beta) version_type="$version_tag" ;;
+            *) echo "::error::mod_version_tag must be release, alpha or beta"; exit 1 ;;
+          esac
+          expected_tag="v${mod_version}-${version_tag}-neoforge-${game_version}"
+          if [[ "$GITHUB_REF_NAME" != "$expected_tag" ]]; then
+            echo "::error::Tag must match $expected_tag for this branch"
+            exit 1
+          fi
+          {
+            echo "game_version=$game_version"
+            echo "version=${game_version}-${mod_version}-${version_tag}"
+            echo "version_type=$version_type"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate publishing configuration
+        shell: bash
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          RELEASE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MODRINTH_PROJECT_ID: ${{ vars.MODRINTH_PROJECT_ID }}
+          CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for key in MODRINTH_TOKEN CURSEFORGE_TOKEN RELEASE_GITHUB_TOKEN MODRINTH_PROJECT_ID CURSEFORGE_PROJECT_ID; do
+            if [[ -z "${!key}" ]]; then
+              echo "::error::Missing publishing configuration: $key"
+              missing=1
+            fi
+          done
+          if [[ "$missing" -ne 0 ]]; then exit 1; fi
+
+      - name: Build project
+        run: ./gradlew build --no-daemon
+
+      - name: Publish release
+        uses: Kira-NT/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3.1
+        with:
+          modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: ${{ vars.CURSEFORGE_PROJECT_ID }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            all/build/libs/Avaritia-Integration-all-neoforge-${{ steps.metadata.outputs.version }}.jar
+            core/build/libs/Avaritia-Integration-core-neoforge-${{ steps.metadata.outputs.version }}.jar
+            integrations/*/build/libs/Avaritia-Integration-*-neoforge-${{ steps.metadata.outputs.version }}.jar
+          name: "Avaritia Integration neoforge ${{ steps.metadata.outputs.version }}"
+          version: ${{ steps.metadata.outputs.version }}
+          version-type: ${{ steps.metadata.outputs.version_type }}
+          loaders: neoforge
+          game-versions: ${{ steps.metadata.outputs.game_version }}
+          game-version-filter: none
+          github-generate-changelog: true
+          retry-attempts: 2
+          fail-mode: fail
