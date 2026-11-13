@@ -228,6 +228,7 @@ tasks.named('processResources', ProcessResources).configure {
 
 
 tasks.named('jar', Jar).configure {
+    from(rootProject.file('LICENSE'))
     manifest {
         attributes([
                 'Specification-Title'     : mod_id,
