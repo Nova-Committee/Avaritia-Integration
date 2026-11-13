@@ -1,6 +1,7 @@
 package committee.nova.mods.avaritia_integration.integrations.create;
 
 import committee.nova.mods.avaritia_integration.AvaritiaIntegration;
+import committee.nova.mods.avaritia_integration.init.registry.AICreativeTabs;
 import committee.nova.mods.avaritia_integration.integrations.create.content.BoilerHeaters;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_basin.ExtremeBasinBlockEntity;
 import committee.nova.mods.avaritia_integration.integrations.create.content.extreme_burner.ExtremeBlazeBurnerBlockEntity;
@@ -35,6 +36,7 @@ public final class CreateModule implements Module {
 
     public static final String MOD_ID = "create";
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(AvaritiaIntegration.MOD_ID)
+            .defaultCreativeTab(AICreativeTabs.CREATIVE_TAB.getKey())
             .setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
                     .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
 
@@ -94,13 +96,5 @@ public final class CreateModule implements Module {
         output.accept(CreateIntegrationItems.STAR_CAKE_BASE.get());
         output.accept(CreateIntegrationItems.IGNIS_CAKE.get());
         output.accept(CreateIntegrationItems.IGNIS_CAKE_BASE.get());
-        output.accept(CreateIntegrationBlocks.EXTREME_BLAZE_BURNER.asItem());
-        output.accept(CreateIntegrationBlocks.CRYSTAL_MATRIX_CASING.asItem());
-        output.accept(CreateIntegrationBlocks.NEUTRON_MECHANICAL_PRESS.asItem());
-        output.accept(CreateIntegrationBlocks.EXTREME_BASIN.asItem());
-        output.accept(CreateIntegrationBlocks.MATRIX_MECHANICAL_MIXER.asItem());
-        output.accept(CreateIntegrationBlocks.EXTREME_DEPOT.asItem());
-        output.accept(CreateIntegrationBlocks.EXTREME_ENCASED_FAN.asItem());
-        output.accept(CreateIntegrationBlocks.EXTREME_CRUSHING_WHEEL.asItem());
     }
 }
