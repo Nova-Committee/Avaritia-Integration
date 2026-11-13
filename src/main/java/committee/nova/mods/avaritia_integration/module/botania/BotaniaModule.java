@@ -58,7 +58,7 @@ public final class BotaniaModule implements Module {
 
     @Override
     public void registerEvent(IEventBus modBus, IEventBus gameBus) {
-        gameBus.addListener(BotaniaModule::addDispenserBehaviours);
+        modBus.addListener(BotaniaModule::addDispenserBehaviours);
         gameBus.addGenericListener(BlockEntity.class, BotaniaModule::attachCommonCapability);
     }
 
