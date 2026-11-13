@@ -19,7 +19,7 @@ def dataExistingRoot = providers.provider { project.ext.has('ai_data_existing_ro
 def moduleSlug = providers.provider {
     def id = moduleModId.get()
     if (isAggregate.get()) {
-        return ''
+        return 'all'
     }
     if (id == mod_id) {
         return 'core'
@@ -27,8 +27,7 @@ def moduleSlug = providers.provider {
     return id.replaceFirst(/^avaritia_integration_/, '').replace('_', '-')
 }
 def archiveName = providers.provider {
-    def slug = moduleSlug.get()
-    slug.isEmpty() ? "Avaritia-Integration-${mod_loader}" : "Avaritia-Integration-${slug}-${mod_loader}"
+    "Avaritia-Integration-${moduleSlug.get()}-${mod_loader}"
 }
 def releaseChannel = providers.gradleProperty('mod_version_tag').orElse('release').get()
 if (!(releaseChannel in ['release', 'alpha', 'beta'])) {
