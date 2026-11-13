@@ -1,6 +1,7 @@
 name: Neoforge Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*"
@@ -61,15 +62,24 @@ jobs:
             *) echo "::error::mod_version_tag must be release, alpha or beta"; exit 1 ;;
           esac
           expected_tag="v${mod_version}-${version_tag}-neoforge-${game_version}"
-          if [[ "$GITHUB_REF_NAME" != "$expected_tag" ]]; then
-            echo "::error::Tag must match $expected_tag for this branch"
-            exit 1
-          fi
           {
+            echo "expected_tag=$expected_tag"
             echo "game_version=$game_version"
             echo "version=${game_version}-${mod_version}-${version_tag}"
             echo "version_type=$version_type"
           } >> "$GITHUB_OUTPUT"
+
+      - name: Validate release tag
+        if: github.event_name == 'push'
+        shell: bash
+        env:
+          EXPECTED_TAG: ${{ steps.metadata.outputs.expected_tag }}
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF_NAME" != "$EXPECTED_TAG" ]]; then
+            echo "::error::Tag must match $EXPECTED_TAG for this branch"
+            exit 1
+          fi
 
       - name: Validate publishing configuration
         shell: bash
@@ -158,9 +168,11 @@ jobs:
           PYVALIDATE
 
       - name: Build project
+        if: github.event_name == 'push'
         run: ./gradlew build --no-daemon
 
       - name: Publish release
+        if: github.event_name == 'push'
         uses: Kira-NT/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3.1
         with:
           modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
