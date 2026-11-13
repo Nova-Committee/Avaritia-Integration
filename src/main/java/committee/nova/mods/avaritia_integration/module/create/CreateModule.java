@@ -54,8 +54,8 @@ public final class CreateModule implements Module {
     @Override
     public void registerEvent(IEventBus modBus, IEventBus gameBus) {
         modBus.addListener(CreateIntegrationDataGen::gatherData);
-        modBus.addListener(ExtremeCrushingWheelBlockEntity::crushingIsFortunate);
-        modBus.addListener(ExtremeCrushingWheelBlockEntity::handleCrushedMobDrops);
+        gameBus.addListener(ExtremeCrushingWheelBlockEntity::crushingIsFortunate);
+        gameBus.addListener(ExtremeCrushingWheelBlockEntity::handleCrushedMobDrops);
 //        modBus.addListener(CreateIntegrationConfigs::onLoad);
 //        modBus.addListener(CreateIntegrationConfigs::onReload);
     }
