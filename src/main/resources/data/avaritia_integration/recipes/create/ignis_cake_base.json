@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:eggs"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "avaritia:blaze_cube"
+    }
+  ],
+  "results": [
+    {
+      "item": "avaritia_integration:ignis_cake_base"
+    }
+  ]
+}

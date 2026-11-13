@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "avaritia_integration:star_cake_base"
+    },
+    {
+      "amount": 250,
+      "fluid": "avaritia_integration:molten_star",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "avaritia_integration:star_cake"
+    }
+  ]
+}

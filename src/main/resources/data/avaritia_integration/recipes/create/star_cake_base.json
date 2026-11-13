@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:eggs"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "avaritia:neutron_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "avaritia_integration:star_cake_base"
+    }
+  ]
+}
