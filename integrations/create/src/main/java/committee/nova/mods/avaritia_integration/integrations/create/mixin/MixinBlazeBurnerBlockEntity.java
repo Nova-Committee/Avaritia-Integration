@@ -39,7 +39,7 @@ public abstract class MixinBlazeBurnerBlockEntity {
             return;
         }
         BlazeBurnerBlockEntity self = (BlazeBurnerBlockEntity) (Object) this;
-        remainingBurnTime = Integer.MAX_VALUE;
+        remainingBurnTime = 36000;
         activeFuel = BlazeBurnerBlockEntity.FuelType.SPECIAL;
         Level level = self.getLevel();
         if (level != null && level.isClientSide) {
