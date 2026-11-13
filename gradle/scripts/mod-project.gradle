@@ -158,6 +158,7 @@ sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
 tasks.withType(Jar).configureEach {
+    from(rootProject.file('LICENSE'))
     manifest.attributes([
             'Specification-Title'     : moduleName.get(),
             'Specification-Version'   : mod_version,

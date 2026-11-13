@@ -9,7 +9,7 @@
     <a href="https://www.curseforge.com/minecraft/mc-mods/avaritia-integration">
         <img src="https://cf.way2muchnoise.eu/1347675.svg" alt="CurseForge Download">
     </a>
-    <img src="https://img.shields.io/badge/license-MIT%2FCC%20BY--NC--SA%204.0-green" alt="License">
+    <img src="https://img.shields.io/badge/license-MIT%2FARR-green" alt="License">
 </p>
 
 <p align="center">
@@ -25,11 +25,11 @@
 - 美术: `MHanHanBing` `Neo-Tix`
 
 ## **🔒许可证:**
-- 代码: [MIT](https://www.mit.edu/~amini/LICENSE.md)
-- 素材: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- 代码: [MIT](LICENSE)
+- 贴图资源：**保留所有权利（All Rights Reserved，ARR）**。贴图所有者：**MHanHanBing**。未经作者事先书面许可，不得复制、再分发、修改或用于整合包。所有者保留追究未经授权使用行为法律责任的权利。
 
 ## **❗注意:**
-* 你&nbsp;<span style="color: #00ff00;"> **完全可以** </span>&nbsp;把本模组加入整合包。
+* 将本模组的贴图资源用于整合包前，须取得贴图所有者的书面许可。
 
 ## **🎮联动**
 * ✅: 完整支持<br>

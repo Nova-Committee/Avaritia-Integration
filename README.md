@@ -9,7 +9,7 @@
     <a href="https://www.curseforge.com/minecraft/mc-mods/avaritia-integration">
         <img src="https://cf.way2muchnoise.eu/1347675.svg" alt="CurseForge Download">
     </a>
-    <img src="https://img.shields.io/badge/license-MIT%2FCC%20BY--NC--SA%204.0-green" alt="License">
+    <img src="https://img.shields.io/badge/license-MIT%2FARR-green" alt="License">
 </p>
 
 <p align="center">
@@ -25,11 +25,11 @@
 - Artist: `MHanHanBing` `Neo-Tix`
 
 ## **🔒License:**
-- Code: [MIT](https://www.mit.edu/~amini/LICENSE.md)
-- Assets: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- Code: [MIT](LICENSE)
+- Texture resources: **All Rights Reserved (ARR)**. Texture owner: **MHanHanBing**. Without prior written permission from the author, these resources may not be copied, redistributed, modified, or used in modpacks. The owner reserves the right to pursue legal liability for unauthorized use.
 
 ## **❗Attention:**
-* You&nbsp;<span style="color: #00ff00;"> **DEFINITELY CAN** </span>&nbsp;add the mod to your modpack.
+* Including this mod's texture resources in a modpack requires prior written permission from the texture owner.
 
 ## **🎮Capability**
 * ✅: Fully Supported<br>
