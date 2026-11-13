@@ -94,7 +94,7 @@ jobs:
         run: |
           set -euo pipefail
           missing=0
-          for key in MODRINTH_TOKEN CURSEFORGE_TOKEN RELEASE_GITHUB_TOKEN MODRINTH_PROJECT_ID CURSEFORGE_PROJECT_ID; do
+          for key in CURSEFORGE_TOKEN RELEASE_GITHUB_TOKEN CURSEFORGE_PROJECT_ID; do
             if [[ -z "${!key}" ]]; then
               echo "::error::Missing publishing configuration: $key"
               missing=1
@@ -137,12 +137,18 @@ jobs:
           PYVALIDATE
 
       - name: Modrinth publishing preflight
+        id: modrinth
         shell: bash
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           MODRINTH_PROJECT_ID: ${{ vars.MODRINTH_PROJECT_ID }}
         run: |
           set -euo pipefail
+          echo "enabled=false" >> "$GITHUB_OUTPUT"
+          if [[ -z "$MODRINTH_PROJECT_ID" || -z "$MODRINTH_TOKEN" ]]; then
+            echo "::notice::Modrinth publishing skipped: project id/token not configured"
+            exit 0
+          fi
           response_file="$(mktemp)"
           trap 'rm -f "$response_file"' EXIT
           if ! status="$(curl -s -A "Nova-Committee/Avaritia-Integration-release" --connect-timeout 15 --max-time 45 -o "$response_file" -w '%{http_code}' -H "Authorization: $MODRINTH_TOKEN" "https://api.modrinth.com/v2/project/$MODRINTH_PROJECT_ID")"; then
@@ -152,7 +158,7 @@ jobs:
           case "$status" in
             200) ;;
             401|403) echo "::error::Modrinth preflight: HTTP $status; invalid credentials, insufficient permissions, or gateway rejection; cannot confirm key validity"; exit 1 ;;
-            404) echo "::error::Modrinth preflight: project does not exist or is inaccessible (draft projects require account membership)"; exit 1 ;;
+            404) echo "::warning::Modrinth project does not exist or is inaccessible (possibly an unpublished draft or missing membership); skipping Modrinth for this release"; exit 0 ;;
             *) echo "::error::Modrinth preflight: unexpected HTTP $status"; exit 1 ;;
           esac
           python3 - "$response_file" <<'PYVALIDATE'
@@ -168,17 +174,37 @@ jobs:
               sys.exit(1)
           print("Modrinth project verified: " + json.dumps(fields, ensure_ascii=True))
           PYVALIDATE
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
 
       - name: Build project
         if: github.event_name == 'push'
         run: ./gradlew build --no-daemon
 
-      - name: Publish release
-        if: github.event_name == 'push'
+      - name: Publish GitHub, CurseForge and Modrinth
+        if: github.event_name == 'push' && steps.modrinth.outputs.enabled == 'true'
         uses: Kira-NT/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3.1
         with:
           modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: ${{ vars.CURSEFORGE_PROJECT_ID }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            build/libs/Avaritia-Integration-forge-${{ steps.metadata.outputs.version }}.jar
+          name: "Avaritia Integration forge ${{ steps.metadata.outputs.version }}"
+          version: ${{ steps.metadata.outputs.version }}
+          version-type: ${{ steps.metadata.outputs.version_type }}
+          loaders: forge
+          game-versions: ${{ steps.metadata.outputs.game_version }}
+          game-version-filter: none
+          github-generate-changelog: true
+          retry-attempts: 2
+          fail-mode: fail
+
+      - name: Publish GitHub and CurseForge
+        if: github.event_name == 'push' && steps.modrinth.outputs.enabled != 'true'
+        uses: Kira-NT/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3.1
+        with:
           curseforge-id: ${{ vars.CURSEFORGE_PROJECT_ID }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
