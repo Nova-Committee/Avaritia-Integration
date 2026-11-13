@@ -16,6 +16,15 @@ public class ExtremeCrushingWheelControllerBlockEntity extends CrushingWheelCont
         super(type, pos, state);
     }
 
+    @Override
+    public void tick() {
+        // Keep entity intake and damage on Create's normal path; only skip item processing time.
+        if (crushingspeed != 0 && !hasEntity() && !inventory.isEmpty()) {
+            inventory.remainingTime = 0;
+        }
+        super.tick();
+    }
+
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
                 CreateIntegrationBlockEntityTypes.EXTREME_CRUSHING_WHEEL_CONTROLLER.get(),
