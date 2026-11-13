@@ -1,24 +1,24 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "create"
-    }
-  ],
-  "type": "create:filling",
-  "ingredients": [
-    {
-      "item": "avaritia_integration:star_cake_base"
-    },
-    {
-      "type": "neoforge:single",
-      "amount": 250,
-      "fluid": "avaritia_integration:molten_star"
-    }
-  ],
-  "results": [
-    {
-      "id": "avaritia_integration:star_cake"
-    }
-  ]
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "create:filling",
+	"ingredients": [
+		{
+			"item": "avaritia_integration:star_cake_base"
+		},
+		{
+			"type": "neoforge:single",
+			"amount": 250,
+			"fluid": "avaritia_integration:molten_star"
+		}
+	],
+	"results": [
+		{
+			"id": "avaritia_integration:star_cake"
+		}
+	]
 }

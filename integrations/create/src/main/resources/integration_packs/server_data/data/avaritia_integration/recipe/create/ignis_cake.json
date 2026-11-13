@@ -1,24 +1,24 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "create"
-    }
-  ],
-  "type": "create:filling",
-  "ingredients": [
-    {
-      "item": "avaritia_integration:ignis_cake_base"
-    },
-    {
-      "type": "neoforge:single",
-      "amount": 250,
-      "fluid": "avaritia_integration:molten_blaze"
-    }
-  ],
-  "results": [
-    {
-      "id": "avaritia_integration:ignis_cake"
-    }
-  ]
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "create"
+		}
+	],
+	"type": "create:filling",
+	"ingredients": [
+		{
+			"item": "avaritia_integration:ignis_cake_base"
+		},
+		{
+			"type": "neoforge:single",
+			"amount": 250,
+			"fluid": "avaritia_integration:molten_blaze"
+		}
+	],
+	"results": [
+		{
+			"id": "avaritia_integration:ignis_cake"
+		}
+	]
 }
