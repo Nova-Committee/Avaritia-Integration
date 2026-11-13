@@ -102,39 +102,22 @@ jobs:
           done
           if [[ "$missing" -ne 0 ]]; then exit 1; fi
 
-      - name: CurseForge publishing preflight
+      - name: Validate CurseForge upload configuration
         shell: bash
         env:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
         run: |
           set -euo pipefail
-          response_file="$(mktemp)"
-          trap 'rm -f "$response_file"' EXIT
-          if ! status="$(curl -s -A "Nova-Committee/Avaritia-Integration-release" --connect-timeout 15 --max-time 45 -o "$response_file" -w '%{http_code}' -H "x-api-key: $CURSEFORGE_TOKEN" "https://api.curseforge.com/v1/mods/$CURSEFORGE_PROJECT_ID")"; then
-            echo "::error::CurseForge preflight: network/TLS request failed; credentials were not validated"
+          if [[ ! "$CURSEFORGE_PROJECT_ID" =~ ^[0-9]+$ ]]; then
+            echo "::error::CURSEFORGE_PROJECT_ID must be a non-empty numeric project ID"
             exit 1
           fi
-          case "$status" in
-            200) ;;
-            401|403) echo "::error::CurseForge preflight: HTTP $status; invalid credentials, insufficient permissions, or gateway rejection; cannot confirm key validity"; exit 1 ;;
-            404) echo "::error::CurseForge preflight: project does not exist or is inaccessible (draft projects require account membership)"; exit 1 ;;
-            *) echo "::error::CurseForge preflight: unexpected HTTP $status"; exit 1 ;;
-          esac
-          python3 - "$response_file" <<'PYVALIDATE'
-          import json, os, sys
-          try:
-              with open(sys.argv[1]) as response:
-                  payload = json.load(response)
-              data = payload["data"]
-              if str(data["id"]) != os.environ["CURSEFORGE_PROJECT_ID"] or not isinstance(data.get("slug"), str) or not data["slug"].strip():
-                  raise ValueError("project ID mismatch or missing slug")
-              fields = {"id": data["id"], "slug": data["slug"]}
-          except (ValueError, KeyError, TypeError):
-              print("::error::CurseForge preflight: invalid project response; check project ID and API response schema")
-              sys.exit(1)
-          print("CurseForge project verified: " + json.dumps(fields, ensure_ascii=True))
-          PYVALIDATE
+          if [[ -z "$CURSEFORGE_TOKEN" ]]; then
+            echo "::error::CURSEFORGE_TOKEN upload token is required"
+            exit 1
+          fi
+          echo "::notice::CurseForge credential validity will be determined by the actual publishing step"
 
       - name: Modrinth publishing preflight
         id: modrinth
