@@ -27,3 +27,6 @@ qodana.yaml
 
 # Local verification evidence, server logs and build artifacts
 .dsh/
+
+# Internal development notes, kept locally only
+docs/
