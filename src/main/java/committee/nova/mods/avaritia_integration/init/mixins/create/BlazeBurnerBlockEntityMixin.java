@@ -24,7 +24,7 @@ public abstract class BlazeBurnerBlockEntityMixin {
         if (CreateIntegrationItems.STAR_CAKE.isIn(itemStack)) {
             if (simulate) cir.setReturnValue(true);
 
-            this.remainingBurnTime = Integer.MAX_VALUE;
+            this.remainingBurnTime = 36000;
             this.activeFuel = BlazeBurnerBlockEntity.FuelType.SPECIAL;
 
             if (self.getLevel().isClientSide) {
