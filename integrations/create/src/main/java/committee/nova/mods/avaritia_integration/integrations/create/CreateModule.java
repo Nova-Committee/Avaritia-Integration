@@ -25,7 +25,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
-import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.api.contraption.storage.item.MountedItemStorageType;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -69,7 +68,7 @@ public final class CreateModule implements Module {
     public void registerEvent(IEventBus modBus, IEventBus gameBus) {
         modBus.addListener(CreateModule::registerCapabilities);
         gameBus.addListener(ExtremeCrushingWheelBlockEntity::handleCrushedMobDrops);
-        modBus.addListener(CreateModule::addCreateTabItems);
+        modBus.addListener(CreateModule::addIntegrationTabItems);
     }
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -79,8 +78,8 @@ public final class CreateModule implements Module {
         ExtremeCrushingWheelControllerBlockEntity.registerCapabilities(event);
     }
 
-    private static void addCreateTabItems(BuildCreativeModeTabContentsEvent event) {
-        if (!event.getTabKey().equals(AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey())) {
+    private static void addIntegrationTabItems(BuildCreativeModeTabContentsEvent event) {
+        if (!event.getTabKey().equals(AICreativeTabs.CREATIVE_TAB.getKey())) {
             return;
         }
         for (ItemStack stack : new ItemStack[] { AllItems.CHROMATIC_COMPOUND.asStack(),
