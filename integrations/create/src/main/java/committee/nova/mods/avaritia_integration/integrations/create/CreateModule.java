@@ -20,6 +20,7 @@ import committee.nova.mods.avaritia_integration.module.Module;
 
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -82,9 +83,15 @@ public final class CreateModule implements Module {
         if (!event.getTabKey().equals(AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey())) {
             return;
         }
-        event.accept(AllItems.CHROMATIC_COMPOUND);
-        event.accept(AllItems.SHADOW_STEEL);
-        event.accept(AllItems.REFINED_RADIANCE);
+        for (ItemStack stack : new ItemStack[] { AllItems.CHROMATIC_COMPOUND.asStack(),
+                AllItems.SHADOW_STEEL.asStack(), AllItems.REFINED_RADIANCE.asStack() }) {
+            if (!event.getParentEntries().contains(stack)) {
+                event.accept(stack, CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
+            }
+            if (!event.getSearchEntries().contains(stack)) {
+                event.accept(stack, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
+            }
+        }
     }
 
     @Override
