@@ -58,3 +58,19 @@
 | NuclearCraft: Neoteric | | 🔲 | |
 | SlashBlade | 宇宙终焉之刃与陨剑技能 / 实体 | 🚧 | 已有实现，运行未验 |
 | Tetra | | 🔲 | |
+| Thaumaturge | 极元始珍珠与终结要素 | 🚧 | 需另行安装 Thaumaturge 1.1.0 或更新版本 |
+
+### Thaumaturge
+
+在注魔矩阵中心放 1 颗全新元始珍珠，外圈放 7 颗。顺利完成后，中心变为极元始珍珠，外圈的 7 颗各增加 1 点损伤。原生配方也接受已磨损的珍珠、结节和微粒。混用不同损伤值时，矩阵可能在同一座踏台继续消耗上一步留下的剩余物。
+
+在研究台用贪婪和异域合成 1 点终结研究点。首次发现终结时，Thaumaturge 还会额外奖励 2 点。注魔用的终结源质可通过魔豆杂交、蒸馏和装罐获得。「七阶」是设定文案。按基础要素在第一层计算，最长链为六层（地 → 生命 → 死亡 → 灵魂 → 贪婪 → 终结）。
+
+已有 `config/avaritia/integration/load_rules.json` 的实例请在现有配置中加入下面这一项并重启。原图与离线转换命令见[贴图转换说明](integrations/thaumaturge/tools/README.md)。
+
+```json
+"avaritia_integration_thaumaturge": {
+  "dependencies": [{"modid": "thaumaturge", "minVersion": "1.1.0"}],
+  "enabled": true
+}
+```

@@ -1,0 +1,29 @@
+{
+	"type": "thaumaturge:infusion",
+	"catalyst": { "item": "thaumaturge:primordial_pearl" },
+	"components": [
+		{ "item": "thaumaturge:primordial_pearl" },
+		{ "item": "thaumaturge:primordial_pearl" },
+		{ "item": "thaumaturge:primordial_pearl" },
+		{ "item": "thaumaturge:primordial_pearl" },
+		{ "item": "thaumaturge:primordial_pearl" },
+		{ "item": "thaumaturge:primordial_pearl" },
+		{ "item": "thaumaturge:primordial_pearl" }
+	],
+	"aspects": [
+		{ "aspect": "thaumaturge:aer", "amount": 64 },
+		{ "aspect": "thaumaturge:alienis", "amount": 64 },
+		{ "aspect": "thaumaturge:aqua", "amount": 64 },
+		{ "aspect": "thaumaturge:ignis", "amount": 64 },
+		{ "aspect": "thaumaturge:ordo", "amount": 64 },
+		{ "aspect": "thaumaturge:perditio", "amount": 64 },
+		{ "aspect": "thaumaturge:praecantatio", "amount": 64 },
+		{ "aspect": "avaritia_integration:terminus", "amount": 32 },
+		{ "aspect": "thaumaturge:terra", "amount": 64 }
+	],
+	"instability": 10,
+	"result": {
+		"id": "avaritia_integration:extremely_primordial_pearl",
+		"count": 1
+	}
+}

@@ -58,3 +58,19 @@
 | NuclearCraft: Neoteric | | 🔲 | |
 | SlashBlade | Stredge Universe blade and Meteorite Sword slash art / entity | 🚧 | Implemented; runtime behavior not yet verified |
 | Tetra | | 🔲 | |
+| Thaumaturge | Extremely Primordial Pearl and Terminus | 🚧 | Requires the separately installed Thaumaturge 1.1.0 or newer |
+
+### Thaumaturge
+
+Place one fresh Primordial Pearl on the central pedestal and seven on the surrounding pedestals. After a successful infusion, the central pearl becomes an Extremely Primordial Pearl and each surrounding fresh pearl gains one point of damage. The native ingredient also accepts worn pearls, nodules, and motes. Mixing damage values can let the matrix reuse an earlier remainder on the same pedestal.
+
+Combine Desiderium and Alienis at the Research Table to gain one Terminus research point. Thaumaturge also awards two bonus points when you discover the aspect for the first time. Terminus essentia for infusion comes from breeding mana beans, distilling them, and collecting the essentia in a jar. The seventh-order description is lore. Counting the six primal aspects as layer one, the longest component chain has six layers (Terra → Victus → Mortuus → Spiritus → Desiderium → Terminus).
+
+If `config/avaritia/integration/load_rules.json` already exists, add the following entry to the existing configuration and restart. See the [texture conversion instructions](integrations/thaumaturge/tools/README.md) for the original artwork and the offline conversion command.
+
+```json
+"avaritia_integration_thaumaturge": {
+  "dependencies": [{"modid": "thaumaturge", "minVersion": "1.1.0"}],
+  "enabled": true
+}
+```

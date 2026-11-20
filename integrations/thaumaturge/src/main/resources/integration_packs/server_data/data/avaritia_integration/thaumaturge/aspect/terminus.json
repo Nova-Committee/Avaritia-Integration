@@ -1,0 +1,6 @@
+{
+	"tag": "terminus",
+	"color": 16777215,
+	"components": ["thaumaturge:desiderium", "thaumaturge:alienis"],
+	"texture": "avaritia_integration:textures/aspects/terminus.png"
+}

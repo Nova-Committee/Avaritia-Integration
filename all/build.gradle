@@ -114,6 +114,13 @@ type = "required"
 versionRange = "[${mod_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies."avaritia_integration_all"]]
+modId = "avaritia_integration_thaumaturge"
+type = "required"
+versionRange = "[${mod_version},)"
+ordering = "AFTER"
+side = "BOTH"
 """
 
 apply from: rootProject.file('gradle/scripts/mod-project.gradle')
@@ -135,7 +142,8 @@ dependencies {
             ':integrations:tconstruct-data',
             ':integrations:slashblade',
             ':integrations:mysticalagriculture',
-            ':integrations:gregtech'
+            ':integrations:gregtech',
+            ':integrations:thaumaturge'
     ]
 
     embeddedProjects.each { path ->

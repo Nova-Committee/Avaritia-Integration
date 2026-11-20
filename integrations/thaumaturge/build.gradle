@@ -1,0 +1,20 @@
+ext.ai_mod_id = 'avaritia_integration_thaumaturge'
+ext.ai_mod_name = 'Avaritia Integration Thaumaturge'
+ext.ai_mod_description = 'Adds the Extremely Primordial Pearl and Terminus aspect to Thaumaturge.'
+ext.ai_run_directory = 'integrations/thaumaturge'
+ext.ai_dependency_blocks = """[[dependencies."avaritia_integration_thaumaturge"]]
+modId = "thaumaturge"
+type = "optional"
+versionRange = "[1.1.0,)"
+ordering = "AFTER"
+side = "BOTH"
+"""
+apply from: rootProject.file('gradle/scripts/mod-project.gradle')
+
+dependencies {
+    implementation forge.reAvaritia
+    implementation project(':core')
+    runtimeOnly forge.thaumaturge
+    runtimeOnly forge.lithostitched
+    runtimeOnly forge.thaumaturgeCurios
+}
